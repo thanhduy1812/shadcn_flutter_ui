@@ -13,9 +13,9 @@ class _MultiSelectExample1State extends State<MultiSelectExample1> {
   Widget build(BuildContext context) {
     return MultiSelect<String>(
       itemBuilder: (context, item) {
-        return Text(item);
+        return MultiSelectChip(value: item, child: Text(item));
       },
-      popup: SelectPopup(
+      popup: const SelectPopup(
           items: SelectItemList(children: [
         SelectItemButton(
           value: 'Apple',
@@ -35,7 +35,7 @@ class _MultiSelectExample1State extends State<MultiSelectExample1> {
           selectedValues = value;
         });
       },
-      constraints: BoxConstraints(
+      constraints: const BoxConstraints(
         minWidth: 200,
       ),
       value: selectedValues,

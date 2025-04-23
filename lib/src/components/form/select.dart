@@ -54,6 +54,8 @@ class ControlledSelect<T> extends StatelessWidget
   final SelectValueSelectionHandler<T>? valueSelectionHandler;
   @override
   final SelectValueSelectionPredicate<T>? valueSelectionPredicate;
+  @override
+  final Predicate<T>? showValuePredicate;
 
   const ControlledSelect({
     super.key,
@@ -78,11 +80,12 @@ class ControlledSelect<T> extends StatelessWidget
     required this.itemBuilder,
     this.valueSelectionHandler,
     this.valueSelectionPredicate,
+    this.showValuePredicate,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder<T?>(
+    return ControlledComponentAdapter<T?>(
       builder: (context, data) {
         return Select<T>(
           onChanged: data.onChanged,
@@ -104,6 +107,7 @@ class ControlledSelect<T> extends StatelessWidget
           itemBuilder: itemBuilder,
           valueSelectionHandler: valueSelectionHandler,
           valueSelectionPredicate: valueSelectionPredicate,
+          showValuePredicate: showValuePredicate,
           popup: popup,
         );
       },
@@ -166,6 +170,8 @@ class ControlledMultiSelect<T> extends StatelessWidget
   final SelectValueSelectionHandler<Iterable<T>>? valueSelectionHandler;
   @override
   final SelectValueSelectionPredicate<Iterable<T>>? valueSelectionPredicate;
+  @override
+  final Predicate<Iterable<T>>? showValuePredicate;
   final SelectValueBuilder<T> multiItemBuilder;
 
   const ControlledMultiSelect({
@@ -187,6 +193,7 @@ class ControlledMultiSelect<T> extends StatelessWidget
     this.disableHoverEffect = false,
     this.canUnselect = true,
     this.autoClosePopover = false,
+    this.showValuePredicate,
     required this.popup,
     required SelectValueBuilder<T> itemBuilder,
     this.valueSelectionHandler,
@@ -215,6 +222,9 @@ class ControlledMultiSelect<T> extends StatelessWidget
       autoClosePopover: autoClosePopover,
       popup: popup,
       itemBuilder: itemBuilder,
+      showValuePredicate: (test) {
+        return test.isNotEmpty && (showValuePredicate?.call(test) ?? true);
+      },
       valueSelectionHandler:
           valueSelectionHandler ?? _defaultMultiSelectValueSelectionHandler,
       valueSelectionPredicate:
@@ -226,11 +236,13 @@ class ControlledMultiSelect<T> extends StatelessWidget
 class SelectItemButton<T> extends StatelessWidget {
   final T value;
   final Widget child;
+  final AbstractButtonStyle style;
 
   const SelectItemButton({
     super.key,
     required this.value,
     required this.child,
+    this.style = const ButtonStyle.ghost(),
   });
 
   @override
@@ -246,7 +258,7 @@ class SelectItemButton<T> extends StatelessWidget {
       onPressed: () {
         data?.selectItem(value, !isSelected);
       },
-      style: const ButtonStyle.ghost().copyWith(
+      style: style.copyWith(
         padding: (context, states, value) => EdgeInsets.symmetric(
           vertical: 8 * scaling,
           horizontal: 8 * scaling,
@@ -257,7 +269,7 @@ class SelectItemButton<T> extends StatelessWidget {
       ),
       trailing: isSelected
           ? const Icon(
-              Icons.check,
+              LucideIcons.check,
             ).iconSmall()
           : hasSelection
               ? SizedBox(
@@ -402,6 +414,7 @@ mixin SelectBase<T> {
   SelectValueBuilder<T> get itemBuilder;
   SelectValueSelectionHandler<T>? get valueSelectionHandler;
   SelectValueSelectionPredicate<T>? get valueSelectionPredicate;
+  Predicate<T>? get showValuePredicate;
 }
 
 class Select<T> extends StatefulWidget with SelectBase<T> {
@@ -444,6 +457,8 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   final SelectValueSelectionHandler<T>? valueSelectionHandler;
   @override
   final SelectValueSelectionPredicate<T>? valueSelectionPredicate;
+  @override
+  final Predicate<T>? showValuePredicate;
 
   const Select({
     super.key,
@@ -465,6 +480,7 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
     this.enabled,
     this.valueSelectionHandler,
     this.valueSelectionPredicate,
+    this.showValuePredicate,
     required this.popup,
     required this.itemBuilder,
   });
@@ -484,6 +500,7 @@ class SelectState<T> extends State<Select<T>>
     super.initState();
     _focusNode = widget.focusNode ?? FocusNode();
     _valueNotifier = ValueNotifier(widget.value);
+    formValue = widget.value;
   }
 
   @override
@@ -549,7 +566,8 @@ class SelectState<T> extends State<Select<T>>
     }
     var selectionHandler = widget.valueSelectionHandler ??
         _defaultSingleSelectValueSelectionHandler;
-    widget.onChanged?.call(selectionHandler(widget.value, value, selected));
+    var newValue = selectionHandler(widget.value, value, selected);
+    widget.onChanged?.call(newValue);
     return true;
   }
 
@@ -649,7 +667,10 @@ class SelectState<T> extends State<Select<T>>
                       hasSelection: widget.value != null,
                     ),
                     child: Expanded(
-                      child: widget.value != null
+                      child: widget.value != null &&
+                              (widget.showValuePredicate
+                                      ?.call(widget.value as T) ??
+                                  true)
                           ? Builder(builder: (context) {
                               return widget.itemBuilder(
                                 context,
@@ -665,7 +686,7 @@ class SelectState<T> extends State<Select<T>>
                       color: theme.colorScheme.foreground,
                       opacity: 0.5,
                     ),
-                    child: const Icon(Icons.unfold_more).iconSmall(),
+                    child: const Icon(LucideIcons.chevronsUpDown).iconSmall(),
                   ),
                 ],
               ),
@@ -673,6 +694,38 @@ class SelectState<T> extends State<Select<T>>
           ),
         ),
       ),
+    );
+  }
+}
+
+class MultiSelectChip extends StatelessWidget {
+  final Object? value;
+  final Widget child;
+  final AbstractButtonStyle style;
+
+  const MultiSelectChip({
+    super.key,
+    this.style = const ButtonStyle.primary(),
+    required this.value,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final data = Data.maybeOf<SelectData>(context);
+    return Chip(
+      style: style,
+      trailing: data?.enabled == false
+          ? null
+          : ChipButton(
+              onPressed: () {
+                data?.onChanged(value, false);
+              },
+              child: const Icon(
+                LucideIcons.x,
+              ).iconSmall(),
+            ),
+      child: child,
     );
   }
 }
@@ -720,6 +773,8 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
   @override
   final SelectValueSelectionPredicate<Iterable<T>>? valueSelectionPredicate;
   final SelectValueBuilder<T> multiItemBuilder;
+  @override
+  final Predicate<Iterable<T>>? showValuePredicate;
 
   const MultiSelect({
     super.key,
@@ -741,6 +796,7 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
     this.enabled,
     this.valueSelectionHandler,
     this.valueSelectionPredicate,
+    this.showValuePredicate,
     required this.popup,
     required SelectValueBuilder<T> itemBuilder,
   }) : multiItemBuilder = itemBuilder;
@@ -749,30 +805,12 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
       BuildContext context, Iterable<T> value) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final data = Data.maybeOf<SelectData>(context);
     return Wrap(
       spacing: 4 * scaling,
       runSpacing: 4 * scaling,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        for (var value in value)
-          Chip(
-            style: const ButtonStyle.primary(),
-            trailing: ChipButton(
-              onPressed: data?.enabled == false
-                  ? null
-                  : () {
-                      data?.onChanged(value, false);
-                    },
-              child: const Icon(
-                Icons.close,
-              ).iconSmall(),
-            ),
-            child: multiItemBuilder(
-              context,
-              value,
-            ),
-          ),
+        for (var value in value) multiItemBuilder(context, value),
       ],
     );
   }
@@ -798,6 +836,9 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
       canUnselect: canUnselect,
       autoClosePopover: autoClosePopover ?? true,
       enabled: enabled,
+      showValuePredicate: (test) {
+        return test.isNotEmpty && (showValuePredicate?.call(test) ?? true);
+      },
       valueSelectionHandler:
           valueSelectionHandler ?? _defaultMultiSelectValueSelectionHandler,
       valueSelectionPredicate:
@@ -887,7 +928,7 @@ class SelectPopup<T> extends StatefulWidget {
     this.errorBuilder,
     this.surfaceBlur,
     this.surfaceOpacity,
-    this.autoClose = true,
+    this.autoClose,
     this.canUnselect,
     this.scrollController,
     this.shrinkWrap = true,
@@ -905,7 +946,7 @@ class SelectPopup<T> extends StatefulWidget {
     this.errorBuilder,
     this.surfaceBlur,
     this.surfaceOpacity,
-    this.autoClose = true,
+    this.autoClose,
     this.canUnselect,
     this.scrollController,
   })  : builder = null,
@@ -988,7 +1029,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
     final scaling = theme.scaling;
     return Data<SelectPopupHandle>.inherit(
       data: this,
-      child: SurfaceCard(
+      child: ModalContainer(
         clipBehavior: Clip.hardEdge,
         surfaceBlur: widget.surfaceBlur,
         surfaceOpacity: widget.surfaceOpacity,
@@ -1001,9 +1042,13 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
               TextField(
                 controller: _searchController,
                 border: false,
-                leading: const Icon(
-                  Icons.search,
-                ).iconSmall().iconMutedForeground(),
+                features: [
+                  InputFeature.leading(
+                    const Icon(
+                      LucideIcons.search,
+                    ).iconSmall().iconMutedForeground(),
+                  ),
+                ],
                 placeholder: widget.searchPlaceholder,
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 12) *

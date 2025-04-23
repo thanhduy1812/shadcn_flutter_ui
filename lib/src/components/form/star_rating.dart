@@ -54,7 +54,7 @@ class ControlledStarRating extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder(
+    return ControlledComponentAdapter(
       controller: controller,
       initialValue: initialValue,
       onChanged: onChanged,
@@ -239,30 +239,71 @@ class _StarRatingState extends State<StarRating>
               },
             ),
           },
-          child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              if (widget.onChanged != null && roundedValue != widget.value) {
-                widget.onChanged!(roundedValue);
-              }
+          child: MouseRegion(
+            onHover: (event) {
+              if (!_enabled) return;
+              if (widget.onChanged == null) return;
+              double size = context.size!.width;
+              double progress = (event.localPosition.dx / size).clamp(0.0, 1.0);
+              double newValue = (progress * widget.max).clamp(0.0, widget.max);
+              setState(() {
+                _changingValue = newValue;
+              });
             },
-            child: Flex(
-              direction: widget.direction,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (var i = 0; i < widget.max.ceil(); i++)
-                  MouseRegion(
-                    hitTestBehavior: HitTestBehavior.translucent,
-                    onHover: (event) {
-                      if (!_enabled) return;
-                      if (widget.onChanged == null) return;
-                      double progress =
-                          (event.localPosition.dx / starSize).clamp(0.0, 1.0);
-                      setState(() {
-                        _changingValue = (i + progress);
-                      });
-                    },
-                    child: Stack(
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                if (widget.onChanged != null && roundedValue != widget.value) {
+                  widget.onChanged!(roundedValue);
+                }
+              },
+              onTapDown: (details) {
+                if (!_enabled) return;
+                if (widget.onChanged == null) return;
+                double totalStarSize =
+                    starSize + (starSpacing * (widget.max.ceil() - 1));
+                double progress =
+                    (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
+                double newValue =
+                    (progress * widget.max).clamp(0.0, widget.max);
+                widget.onChanged!(newValue);
+              },
+              onPanUpdate: (details) {
+                if (!_enabled) return;
+                if (widget.onChanged == null) return;
+                int totalStars = widget.max.ceil();
+                double totalStarSize =
+                    starSize * totalStars + (starSpacing * (totalStars - 1));
+                double progress =
+                    (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
+                double newValue =
+                    (progress * widget.max).clamp(0.0, widget.max);
+                setState(() {
+                  _changingValue = newValue;
+                });
+              },
+              onPanEnd: (details) {
+                if (!_enabled) return;
+                if (widget.onChanged == null) return;
+                widget.onChanged!(_changingValue ?? roundedValue);
+                setState(() {
+                  _changingValue = null;
+                });
+              },
+              onPanCancel: () {
+                if (!_enabled) return;
+                if (widget.onChanged == null) return;
+                widget.onChanged!(_changingValue ?? roundedValue);
+                setState(() {
+                  _changingValue = null;
+                });
+              },
+              child: Flex(
+                direction: widget.direction,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (var i = 0; i < widget.max.ceil(); i++)
+                    Stack(
                       fit: StackFit.passthrough,
                       children: [
                         ShaderMask(
@@ -294,9 +335,9 @@ class _StarRatingState extends State<StarRating>
                         _buildStar(context, true),
                       ],
                     ),
-                  ),
-              ],
-            ).gap(starSpacing),
+                ],
+              ).gap(starSpacing),
+            ),
           ),
         );
       },

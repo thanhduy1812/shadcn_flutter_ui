@@ -105,7 +105,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                             }
                           });
                         },
-                        child: const Icon(Icons.arrow_back).iconXSmall(),
+                        child: const Icon(LucideIcons.arrowLeft).iconXSmall(),
                       ),
                       SizedBox(
                         width: theme.scaling * 16,
@@ -165,11 +165,15 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                               }
                             });
                           },
-                          child: const Icon(Icons.arrow_forward).iconXSmall(),
+                          child:
+                              const Icon(LucideIcons.arrowRight).iconXSmall(),
                         ),
                     ],
                   ),
                 ),
+                if (_viewType == CalendarViewType.date &&
+                    viewMode == CalendarSelectionMode.range)
+                  Gap(theme.scaling * 16),
                 if (_viewType == CalendarViewType.date &&
                     viewMode == CalendarSelectionMode.range)
                   Expanded(
@@ -227,7 +231,8 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                               }
                             });
                           },
-                          child: const Icon(Icons.arrow_forward).iconXSmall(),
+                          child:
+                              const Icon(LucideIcons.arrowRight).iconXSmall(),
                         ),
                       ],
                     ),
@@ -271,6 +276,9 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                 ),
                 if (_viewType == CalendarViewType.date &&
                     viewMode == CalendarSelectionMode.range)
+                  Gap(theme.scaling * 16),
+                if (_viewType == CalendarViewType.date &&
+                    viewMode == CalendarSelectionMode.range)
                   buildView(
                     context,
                     _yearSelectStart,
@@ -309,7 +317,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                     }
                   });
                 },
-                child: const Icon(Icons.arrow_back).iconXSmall(),
+                child: const Icon(LucideIcons.arrowLeft).iconXSmall(),
               ),
               SizedBox(
                 width: theme.scaling * 16,
@@ -360,7 +368,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                     }
                   });
                 },
-                child: const Icon(Icons.arrow_forward).iconXSmall(),
+                child: const Icon(LucideIcons.arrowRight).iconXSmall(),
               ),
             ],
           ),
@@ -846,8 +854,6 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    ShadcnLocalizations localizations =
-        Localizations.of(context, ShadcnLocalizations);
     return CalendarGrid(
       data: _gridData,
       itemBuilder: (item) {
