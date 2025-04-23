@@ -1,5 +1,5 @@
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 class DatePickerController extends ValueNotifier<DateTime?>
     with ComponentController<DateTime?> {
@@ -103,7 +103,7 @@ class DatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
     return ObjectFormField(
       dialogTitle: dialogTitle,
       enabled: enabled,
@@ -198,7 +198,7 @@ class DateRangePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
     return ObjectFormField(
       popoverAlignment: popoverAlignment,
       popoverAnchorAlignment: popoverAnchorAlignment,

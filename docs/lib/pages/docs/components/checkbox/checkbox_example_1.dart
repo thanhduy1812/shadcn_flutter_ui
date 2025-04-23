@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class CheckboxExample1 extends StatefulWidget {
   const CheckboxExample1({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 enum CalendarViewType {
   date,
@@ -58,7 +58,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
     _yearSelectStart = (_view.year ~/ 16) * 16;
   }
 
-  String getHeaderText(ShadcnLocalizations localizations, CalendarView view,
+  String getHeaderText(VNLookLocalizations localizations, CalendarView view,
       CalendarViewType viewType) {
     if (viewType == CalendarViewType.date) {
       return '${localizations.getMonth(view.month)} ${view.year}';
@@ -71,7 +71,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
     final viewMode = widget.viewMode ?? widget.selectionMode;
     if (widget.selectionMode == CalendarSelectionMode.range) {
@@ -924,7 +924,7 @@ class MonthCalendar extends StatelessWidget {
     final theme = Theme.of(context);
     // same as Calendar, but instead of showing date
     // it shows month in a 4x3 grid
-    ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
     List<Widget> rows = [];
     List<Widget> months = [];
     for (int i = 1; i <= 12; i++) {
@@ -1471,7 +1471,7 @@ class CalendarGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     // return GridView.builder(
     //   shrinkWrap: true,
     //   itemCount: data.items.length,

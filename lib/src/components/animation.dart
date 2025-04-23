@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:shadcn_flutter/src/util.dart';
+import 'package:vnl_ui/src/util.dart';
 
 typedef AnimatedChildBuilder<T> = Widget Function(
     BuildContext context, T value, Widget? child);

@@ -58,7 +58,7 @@ main() {
   //   diagnosticList.add(ErrorDescription(
   //       'This method is only intended as a helper method to get either ColorSchemes.light$label() or ColorSchemes.dark$label().'));
   //   diagnosticList.add(ErrorHint(
-  //     'To use system theme mode, do this ShadcnApp(theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.light)), darkTheme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.dark)), themeMode: ThemeMode.system,) instead of ShadcnApp(theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.system)),).',
+  //     'To use system theme mode, do this VNLookApp(theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.light)), darkTheme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.dark)), themeMode: ThemeMode.system,) instead of VNLookApp(theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.system)),).',
   //   ));
   // }
   // throw FlutterError.fromParts(diagnosticList);
@@ -69,11 +69,11 @@ main() {
   result +=
       '    diagnosticList.add(ErrorDescription(\'This method is only intended as a helper method to get either ColorSchemes.light\$label() or ColorSchemes.dark\$label().\'));\n';
   // result +=
-  //     '    diagnosticList.add(ErrorHint(\'To use system theme mode, do this ShadcnApp(theme: ThemeData(colorScheme: ColorSchemes.\${label.toLowerCase()}(ThemeMode.light)), darkTheme: ThemeData(colorScheme: ColorSchemes.\${label.toLowerCase()}(ThemeMode.dark)), themeMode: ThemeMode.system,) instead of ShadcnApp(theme: ThemeData(colorScheme: ColorSchemes.\${label.toLowerCase()}(ThemeMode.system)),).\'));\n';
+  //     '    diagnosticList.add(ErrorHint(\'To use system theme mode, do this VNLookApp(theme: ThemeData(colorScheme: ColorSchemes.\${label.toLowerCase()}(ThemeMode.light)), darkTheme: ThemeData(colorScheme: ColorSchemes.\${label.toLowerCase()}(ThemeMode.dark)), themeMode: ThemeMode.system,) instead of VNLookApp(theme: ThemeData(colorScheme: ColorSchemes.\${label.toLowerCase()}(ThemeMode.system)),).\'));\n';
   // try to use \n in the string so the code example is more readable
   result +=
       '    diagnosticList.add(ErrorHint(\'To use system theme mode, do this:\\n\'\n';
-  result += '      \'ShadcnApp(\\n\'\n';
+  result += '      \'VNLookApp(\\n\'\n';
   result +=
       '      \'  theme: ThemeData(colorScheme: ColorSchemes.\${label.toLowerCase()}(ThemeMode.light)),\\n\'\n';
   result +=
@@ -82,14 +82,14 @@ main() {
       '      \'  themeMode: ThemeMode.system, // optional, default is ThemeMode.system\\n\'\n';
   result += '      \')\\n\'\n';
   result += '      \'or:\\n\'\n';
-  result += '      \'ShadcnApp(\\n\'\n';
+  result += '      \'VNLookApp(\\n\'\n';
   result +=
       '      \'  theme: ThemeData(colorScheme: ColorSchemes.light\$label()),\\n\'\n';
   result +=
       '      \'  darkTheme: ThemeData(colorScheme: ColorScheme.dark\$label()),\\n\'\n';
   result += '      \')\\n\'\n';
   result += '      \'instead of:\\n\'\n';
-  result += '      \'ShadcnApp(\\n\'\n';
+  result += '      \'VNLookApp(\\n\'\n';
   result +=
       '      \'  theme: ThemeData(colorScheme: ColorSchemes.\${label.toLowerCase()}(ThemeMode.system)),\\n\'\n';
   result += '      \')\'));\n';

@@ -2,25 +2,25 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
-class ShadcnLocalizationsDelegate
-    extends LocalizationsDelegate<ShadcnLocalizations> {
-  static const ShadcnLocalizationsDelegate delegate =
-      ShadcnLocalizationsDelegate();
-  const ShadcnLocalizationsDelegate();
+class VNLookLocalizationsDelegate
+    extends LocalizationsDelegate<VNLookLocalizations> {
+  static const VNLookLocalizationsDelegate delegate =
+      VNLookLocalizationsDelegate();
+  const VNLookLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) => true;
 
   @override
-  Future<ShadcnLocalizations> load(Locale locale) {
-    return SynchronousFuture<ShadcnLocalizations>(
-        DefaultShadcnLocalizations.instance);
+  Future<VNLookLocalizations> load(Locale locale) {
+    return SynchronousFuture<VNLookLocalizations>(
+        DefaultVNLookLocalizations.instance);
   }
 
   @override
-  bool shouldReload(ShadcnLocalizationsDelegate old) => false;
+  bool shouldReload(VNLookLocalizationsDelegate old) => false;
 }
 
 const _fileByteUnits =
@@ -98,14 +98,14 @@ enum DatePart {
   const DatePart(this.getter, this.computeValueRange, {this.length = 2});
 }
 
-abstract class ShadcnLocalizations {
-  static ShadcnLocalizations of(BuildContext context) {
-    return Localizations.of<ShadcnLocalizations>(
-            context, ShadcnLocalizations) ??
-        DefaultShadcnLocalizations.instance;
+abstract class VNLookLocalizations {
+  static VNLookLocalizations of(BuildContext context) {
+    return Localizations.of<VNLookLocalizations>(
+            context, VNLookLocalizations) ??
+        DefaultVNLookLocalizations.instance;
   }
 
-  const ShadcnLocalizations();
+  const VNLookLocalizations();
   // String formatFileSize(int bytes);
   String get formNotEmpty;
   String get invalidValue;
@@ -375,10 +375,10 @@ abstract class ShadcnLocalizations {
   Map<String, String> get localizedMimeTypes;
 }
 
-class DefaultShadcnLocalizations extends ShadcnLocalizations {
-  static const ShadcnLocalizations instance = DefaultShadcnLocalizations();
+class DefaultVNLookLocalizations extends VNLookLocalizations {
+  static const VNLookLocalizations instance = DefaultVNLookLocalizations();
 
-  const DefaultShadcnLocalizations();
+  const DefaultVNLookLocalizations();
 
   @override
   final Map<String, String> localizedMimeTypes = const {

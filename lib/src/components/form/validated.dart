@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 typedef ValidatedBuilder = Widget Function(
     BuildContext context, ValidationResult? error, Widget? child);

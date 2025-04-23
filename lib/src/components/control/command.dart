@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 typedef CommandBuilder = Stream<List<Widget>> Function(
     BuildContext context, String? query);
@@ -12,7 +12,7 @@ class CommandEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return Center(
         child:
             Text(localizations.commandEmpty).withPadding(vertical: 24).small());
@@ -147,7 +147,7 @@ class _CommandState extends State<Command> {
                       border: false,
                       // focusNode: _textFieldFocus,
                       placeholder: widget.searchPlaceholder ??
-                          Text(ShadcnLocalizations.of(context).commandSearch),
+                          Text(VNLookLocalizations.of(context).commandSearch),
                     ),
                   ),
                   if (canPop)

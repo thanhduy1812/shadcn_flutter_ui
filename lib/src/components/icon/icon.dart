@@ -1,4 +1,4 @@
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 extension IconExtension on Widget {
   Widget iconX4Small() {

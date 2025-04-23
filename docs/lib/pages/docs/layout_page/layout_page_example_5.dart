@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class LayoutPageExample5 extends StatelessWidget {
   const LayoutPageExample5({super.key});

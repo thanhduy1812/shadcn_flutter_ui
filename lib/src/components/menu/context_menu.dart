@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class DesktopEditableTextContextMenu extends StatelessWidget {
   final BuildContext anchorContext;
@@ -18,7 +18,7 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     var undoHistoryController = this.undoHistoryController;
     var contextMenuButtonItems =
         List.of(editableTextState.contextMenuButtonItems);
@@ -122,7 +122,7 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
     }
     if (undoHistoryController == null) {
       return TextFieldTapRegion(
-        child: ShadcnUI(
+        child: VNLookUI(
           child: ContextMenuPopup(
             anchorSize: Size.zero,
             anchorContext: anchorContext,
@@ -141,7 +141,7 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
       );
     }
     return TextFieldTapRegion(
-      child: ShadcnUI(
+      child: VNLookUI(
         child: AnimatedBuilder(
             animation: undoHistoryController,
             builder: (context, child) {
@@ -209,7 +209,7 @@ class MobileEditableTextContextMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     var undoHistoryController = this.undoHistoryController;
     var contextMenuButtonItems =
         List.of(editableTextState.contextMenuButtonItems);
@@ -313,7 +313,7 @@ class MobileEditableTextContextMenu extends StatelessWidget {
         if (destructiveCategory.isNotEmpty) destructiveCategory,
       ];
       return TextFieldTapRegion(
-        child: ShadcnUI(
+        child: VNLookUI(
           child: ContextMenuPopup(
             anchorSize: Size.zero,
             anchorContext: anchorContext,
@@ -331,7 +331,7 @@ class MobileEditableTextContextMenu extends StatelessWidget {
     }
 
     return TextFieldTapRegion(
-      child: ShadcnUI(
+      child: VNLookUI(
         child: AnimatedBuilder(
             animation: undoHistoryController,
             builder: (context, child) {

@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class ButtonExample7 extends StatelessWidget {
   const ButtonExample7({super.key});

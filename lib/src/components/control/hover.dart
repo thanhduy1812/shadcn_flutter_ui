@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 /// A widget that tracks the hover state of the mouse cursor
 /// and will call the [onHover] with period of [debounceDuration] when the cursor is hovering over the child widget.

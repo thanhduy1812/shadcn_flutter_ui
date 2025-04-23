@@ -116,7 +116,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 ```dart
 void main() {
   runApp(
-    ShadcnApp(
+    VNLookApp(
       title: 'My App',
       home: MyHomePage(),
       theme: ThemeData(

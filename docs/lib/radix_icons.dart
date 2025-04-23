@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 const Map<String, IconData> kRadixIcons = {
   'zoomOut': RadixIcons.zoomOut,
   'zoomIn': RadixIcons.zoomIn,

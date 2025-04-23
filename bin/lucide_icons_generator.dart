@@ -31,7 +31,7 @@ main() async {
   targetClass.writeAsStringSync(builder);
 
   String iconDocsClass =
-      'import \'package:shadcn_flutter/shadcn_flutter.dart\';\nconst Map<String, IconData> kLucideIcons = {\n';
+      'import \'package:vnl_ui/vnl_ui.dart\';\nconst Map<String, IconData> kLucideIcons = {\n';
   for (String key in generalizedIcons.keys) {
     iconDocsClass += '  \'$key\': LucideIcons.$key,\n';
   }

@@ -85,8 +85,8 @@ import 'package:docs/pages/docs/web_preloader_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 import 'package:yaml/yaml.dart';
 
 import 'pages/docs/components/badge_example.dart';
@@ -124,7 +124,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   _docs = jsonDecode(await rootBundle.loadString('docs.json'));
   String pubspecYml = await rootBundle.loadString('pubspec.lock');
-  var dep = loadYaml(pubspecYml)['packages']['shadcn_flutter']['version'];
+  var dep = loadYaml(pubspecYml)['packages']['vnl_ui']['version'];
   if (dep is String) {
     _packageLatestVersion = dep;
   }
@@ -842,10 +842,10 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Data.inherit(
       data: this,
-      child: ShadcnApp.router(
+      child: VNLookApp.router(
         routerConfig: router,
         debugShowCheckedModeBanner: false,
-        title: 'shadcn/ui Flutter',
+        title: 'vnl_ui Flutter',
         scaling: AdaptiveScaling(scaling),
         enableScrollInterception: true,
         // popoverHandler: DialogOverlayHandler(),

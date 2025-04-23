@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 const int _kIndeterminateLinearDuration = 1800;
 

@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class ItemPicker<T> extends StatelessWidget {
   final ItemChildDelegate<T> items;
@@ -25,7 +25,7 @@ class ItemPicker<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return ObjectFormField(
         value: value,
         placeholder: placeholder ?? const SizedBox.shrink(),

@@ -1,5 +1,5 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:shadcn_flutter/src/components/display/fade_scroll.dart';
+import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_ui/src/components/display/fade_scroll.dart';
 
 class TabPaneData<T> extends SortableData<T> {
   const TabPaneData(super.data);

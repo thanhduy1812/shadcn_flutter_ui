@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart' as email_validator;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart' as widgets;
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 abstract class Validator<T> {
   const Validator();
@@ -173,14 +173,14 @@ class ValidatorBuilder<T> extends Validator<T> {
 class NotValidator<T> extends Validator<T> {
   final Validator<T> validator;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const NotValidator(this.validator, {this.message});
 
   @override
   FutureOr<ValidationResult?> validate(
       BuildContext context, T? value, FormValidationMode state) {
-    var localizations = Localizations.of(context, ShadcnLocalizations);
+    var localizations = Localizations.of(context, VNLookLocalizations);
     var result = validator.validate(context, value, state);
     if (result is Future<ValidationResult?>) {
       return result.then((value) {
@@ -269,7 +269,7 @@ class OrValidator<T> extends Validator<T> {
 
 class NonNullValidator<T> extends Validator<T> {
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const NonNullValidator({this.message});
 
@@ -277,7 +277,7 @@ class NonNullValidator<T> extends Validator<T> {
   FutureOr<ValidationResult?> validate(
       BuildContext context, T? value, FormValidationMode state) {
     if (value == null) {
-      var localizations = Localizations.of(context, ShadcnLocalizations);
+      var localizations = Localizations.of(context, VNLookLocalizations);
       return InvalidResult(message ?? localizations.formNotEmpty, state: state);
     }
     return null;
@@ -299,7 +299,7 @@ class NotEmptyValidator extends NonNullValidator<String> {
   FutureOr<ValidationResult?> validate(
       BuildContext context, String? value, FormValidationMode state) {
     if (value == null || value.isEmpty) {
-      var localizations = Localizations.of(context, ShadcnLocalizations);
+      var localizations = Localizations.of(context, VNLookLocalizations);
       return InvalidResult(message ?? localizations.formNotEmpty, state: state);
     }
     return null;
@@ -318,7 +318,7 @@ class LengthValidator extends Validator<String> {
   final int? min;
   final int? max;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const LengthValidator({this.min, this.max, this.message});
 
@@ -328,8 +328,8 @@ class LengthValidator extends Validator<String> {
     if (value == null) {
       return null;
     }
-    ShadcnLocalizations localizations =
-        Localizations.of(context, ShadcnLocalizations);
+    VNLookLocalizations localizations =
+        Localizations.of(context, VNLookLocalizations);
     if (min != null && value.length < min!) {
       return InvalidResult(message ?? localizations.formLengthLessThan(min!),
           state: state);
@@ -359,7 +359,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
   final FormKey<T> key;
   final CompareType type;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const CompareWith(this.key, this.type, {this.message});
   const CompareWith.equal(this.key, {this.message}) : type = CompareType.equal;
@@ -387,7 +387,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
   @override
   FutureOr<ValidationResult?> validate(
       BuildContext context, T? value, FormValidationMode state) {
-    var localizations = Localizations.of(context, ShadcnLocalizations);
+    var localizations = Localizations.of(context, VNLookLocalizations);
     var otherValue = context.getFormValue(key);
     if (otherValue == null) {
       return InvalidResult(message ?? localizations.invalidValue, state: state);
@@ -451,7 +451,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
 
 class SafePasswordValidator extends Validator<String> {
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
   final bool requireDigit;
   final bool requireLowercase;
   final bool requireUppercase;
@@ -473,27 +473,27 @@ class SafePasswordValidator extends Validator<String> {
     if (requireDigit && !RegExp(r'\d').hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations).formPasswordDigits,
+              Localizations.of(context, VNLookLocalizations).formPasswordDigits,
           state: state);
     }
     if (requireLowercase && !RegExp(r'[a-z]').hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations)
+              Localizations.of(context, VNLookLocalizations)
                   .formPasswordLowercase,
           state: state);
     }
     if (requireUppercase && !RegExp(r'[A-Z]').hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations)
+              Localizations.of(context, VNLookLocalizations)
                   .formPasswordUppercase,
           state: state);
     }
     if (requireSpecialChar && !RegExp(r'[\W_]').hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations)
+              Localizations.of(context, VNLookLocalizations)
                   .formPasswordSpecial,
           state: state);
     }
@@ -519,7 +519,7 @@ class MinValidator<T extends num> extends Validator<T> {
   final T min;
   final bool inclusive;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const MinValidator(this.min, {this.inclusive = true, this.message});
 
@@ -533,7 +533,7 @@ class MinValidator<T extends num> extends Validator<T> {
       if (value < min) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formGreaterThanOrEqualTo(min),
             state: state);
       }
@@ -541,7 +541,7 @@ class MinValidator<T extends num> extends Validator<T> {
       if (value <= min) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formGreaterThan(min),
             state: state);
       }
@@ -565,7 +565,7 @@ class MaxValidator<T extends num> extends Validator<T> {
   final T max;
   final bool inclusive;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const MaxValidator(this.max, {this.inclusive = true, this.message});
 
@@ -579,7 +579,7 @@ class MaxValidator<T extends num> extends Validator<T> {
       if (value > max) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formLessThanOrEqualTo(max),
             state: state);
       }
@@ -587,7 +587,7 @@ class MaxValidator<T extends num> extends Validator<T> {
       if (value >= max) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formLessThan(max),
             state: state);
       }
@@ -612,7 +612,7 @@ class RangeValidator<T extends num> extends Validator<T> {
   final T max;
   final bool inclusive;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const RangeValidator(this.min, this.max,
       {this.inclusive = true, this.message});
@@ -627,7 +627,7 @@ class RangeValidator<T extends num> extends Validator<T> {
       if (value < min || value > max) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formBetweenInclusively(min, max),
             state: state);
       }
@@ -635,7 +635,7 @@ class RangeValidator<T extends num> extends Validator<T> {
       if (value <= min || value >= max) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formBetweenExclusively(min, max),
             state: state);
       }
@@ -656,7 +656,7 @@ class RangeValidator<T extends num> extends Validator<T> {
 class RegexValidator extends Validator<String> {
   final RegExp pattern;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const RegexValidator(this.pattern, {this.message});
 
@@ -669,7 +669,7 @@ class RegexValidator extends Validator<String> {
     if (!pattern.hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations).invalidValue,
+              Localizations.of(context, VNLookLocalizations).invalidValue,
           state: state);
     }
     return null;
@@ -689,7 +689,7 @@ class RegexValidator extends Validator<String> {
 // email validator using email_validator package
 class EmailValidator extends Validator<String> {
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const EmailValidator({this.message});
 
@@ -702,7 +702,7 @@ class EmailValidator extends Validator<String> {
     if (!email_validator.EmailValidator.validate(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations).invalidEmail,
+              Localizations.of(context, VNLookLocalizations).invalidEmail,
           state: state);
     }
     return null;
@@ -719,7 +719,7 @@ class EmailValidator extends Validator<String> {
 
 class URLValidator extends Validator<String> {
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const URLValidator({this.message});
 
@@ -733,7 +733,7 @@ class URLValidator extends Validator<String> {
       Uri.parse(value);
     } on FormatException {
       return InvalidResult(
-          message ?? Localizations.of(context, ShadcnLocalizations).invalidURL,
+          message ?? Localizations.of(context, VNLookLocalizations).invalidURL,
           state: state);
     }
     return null;
@@ -752,7 +752,7 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
   final T? value;
   final CompareType type;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const CompareTo(this.value, this.type, {this.message});
   const CompareTo.equal(this.value, {this.message}) : type = CompareType.equal;
@@ -780,7 +780,7 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
   @override
   FutureOr<ValidationResult?> validate(
       BuildContext context, T? value, FormValidationMode state) {
-    var localizations = Localizations.of(context, ShadcnLocalizations);
+    var localizations = Localizations.of(context, VNLookLocalizations);
     var compare = _compare(value, this.value);
     switch (type) {
       case CompareType.greater:

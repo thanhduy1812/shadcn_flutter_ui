@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart' as c;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as m;
 import 'package:flutter/services.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 import 'platform_interface.dart'
     if (dart.library.js_interop) 'platform/platform_implementations_web.dart';
 
-class ShadcnApp extends StatefulWidget {
-  const ShadcnApp({
+class VNLookApp extends StatefulWidget {
+  const VNLookApp({
     super.key,
     this.navigatorKey,
     this.home,
@@ -61,7 +61,7 @@ class ShadcnApp extends StatefulWidget {
         backButtonDispatcher = null,
         routerConfig = null;
 
-  const ShadcnApp.router({
+  const VNLookApp.router({
     super.key,
     this.routeInformationProvider,
     this.routeInformationParser,
@@ -181,11 +181,11 @@ class ShadcnApp extends StatefulWidget {
   final bool enableThemeAnimation;
 
   @override
-  State<ShadcnApp> createState() => _ShadcnAppState();
+  State<VNLookApp> createState() => _VNLookAppState();
 }
 
-class ShadcnScrollBehavior extends ScrollBehavior {
-  const ShadcnScrollBehavior();
+class VNLookScrollBehavior extends ScrollBehavior {
+  const VNLookScrollBehavior();
 
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
@@ -245,9 +245,9 @@ class ShadcnScrollBehavior extends ScrollBehavior {
   }
 }
 
-class _ShadcnAppState extends State<ShadcnApp> {
-  final ShadcnFlutterPlatformImplementations _platform =
-      ShadcnFlutterPlatformImplementations();
+class _VNLookAppState extends State<VNLookApp> {
+  final VNLookPlatformImplementations _platform =
+      VNLookPlatformImplementations();
   late HeroController _heroController;
 
   void _dispatchAppInitialized() {
@@ -261,10 +261,10 @@ class _ShadcnAppState extends State<ShadcnApp> {
   void initState() {
     super.initState();
     _platform.onThemeChanged(widget.theme);
-    // _heroController = ShadcnApp.createMaterialHeroController();
+    // _heroController = VNLookApp.createMaterialHeroController();
     _heroController = HeroController(
       createRectTween: (begin, end) {
-        return ShadcnRectArcTween(begin: begin, end: end);
+        return VNLookRectArcTween(begin: begin, end: end);
       },
     );
     // Future.delayed(const Duration(milliseconds: 10), _dispatchAppInitialized);
@@ -281,7 +281,7 @@ class _ShadcnAppState extends State<ShadcnApp> {
   }
 
   @override
-  void didUpdateWidget(covariant ShadcnApp oldWidget) {
+  void didUpdateWidget(covariant VNLookApp oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (kIsWeb &&
         widget.disableBrowserContextMenu !=
@@ -310,12 +310,12 @@ class _ShadcnAppState extends State<ShadcnApp> {
       m.DefaultMaterialLocalizations.delegate,
       c.DefaultCupertinoLocalizations.delegate,
       DefaultWidgetsLocalizations.delegate,
-      ShadcnLocalizationsDelegate.delegate,
+      VNLookLocalizationsDelegate.delegate,
     ];
   }
 
   Widget _builder(BuildContext context, Widget? child) {
-    return ShadcnLayer(
+    return VNLookLayer(
       theme: widget.theme,
       scaling: widget.scaling,
       initialRecentColors: widget.initialRecentColors,
@@ -442,7 +442,7 @@ class _ShadcnAppState extends State<ShadcnApp> {
           color: m.Colors.transparent,
           child: m.ScaffoldMessenger(
             child: ScrollConfiguration(
-              behavior: (widget.scrollBehavior ?? const ShadcnScrollBehavior()),
+              behavior: (widget.scrollBehavior ?? const VNLookScrollBehavior()),
               child: HeroControllerScope(
                 controller: _heroController,
                 child: result,
@@ -455,7 +455,7 @@ class _ShadcnAppState extends State<ShadcnApp> {
   }
 }
 
-class ShadcnLayer extends StatelessWidget {
+class VNLookLayer extends StatelessWidget {
   final Widget? child;
   final ThemeData theme;
   final ThemeData? darkTheme;
@@ -471,7 +471,7 @@ class ShadcnLayer extends StatelessWidget {
   final OverlayHandler? menuHandler;
   final bool enableThemeAnimation;
 
-  const ShadcnLayer({
+  const VNLookLayer({
     super.key,
     required this.theme,
     this.scaling,
@@ -512,7 +512,7 @@ class ShadcnLayer extends StatelessWidget {
           (mobileMode
               ? const FixedTooltipOverlayHandler()
               : const PopoverOverlayHandler()),
-      child: ShadcnAnimatedTheme(
+      child: VNLookAnimatedTheme(
         duration: kDefaultDuration,
         data: scaledTheme,
         child: Builder(builder: (context) {
@@ -520,7 +520,7 @@ class ShadcnLayer extends StatelessWidget {
           return DataMessengerRoot(
             child: ScrollViewInterceptor(
               enabled: enableScrollInterception,
-              child: ShadcnSkeletonizerConfigLayer(
+              child: VNLookSkeletonizerConfigLayer(
                 theme: theme,
                 child: DefaultTextStyle.merge(
                   style: theme.typography.base.copyWith(
@@ -559,14 +559,14 @@ class ShadcnLayer extends StatelessWidget {
   }
 }
 
-class ShadcnAnimatedTheme extends StatelessWidget {
+class VNLookAnimatedTheme extends StatelessWidget {
   final Widget child;
   final ThemeData data;
   final Duration duration;
   final Curve curve;
   final VoidCallback? onEnd;
 
-  const ShadcnAnimatedTheme({
+  const VNLookAnimatedTheme({
     super.key,
     required this.data,
     required this.duration,
@@ -592,8 +592,8 @@ class ShadcnAnimatedTheme extends StatelessWidget {
   }
 }
 
-class ShadcnRectArcTween extends RectTween {
-  ShadcnRectArcTween({
+class VNLookRectArcTween extends RectTween {
+  VNLookRectArcTween({
     super.begin,
     super.end,
   });
@@ -607,11 +607,11 @@ class ShadcnRectArcTween extends RectTween {
     final _BorderRadiusCorner diagonal = _findMax<_BorderRadiusCorner>(
         _allDiagonals,
         (_BorderRadiusCorner d) => _diagonalSupport(centersVector, d));
-    _beginArc = ShadcnPointArcTween(
+    _beginArc = VNLookPointArcTween(
       begin: _cornerFor(begin!, diagonal.beginId),
       end: _cornerFor(end!, diagonal.beginId),
     );
-    _endArc = ShadcnPointArcTween(
+    _endArc = VNLookPointArcTween(
       begin: _cornerFor(begin!, diagonal.endId),
       end: _cornerFor(end!, diagonal.endId),
     );
@@ -635,7 +635,7 @@ class ShadcnRectArcTween extends RectTween {
     };
   }
 
-  ShadcnPointArcTween? get beginArc {
+  VNLookPointArcTween? get beginArc {
     if (begin == null) {
       return null;
     }
@@ -645,8 +645,8 @@ class ShadcnRectArcTween extends RectTween {
     return _beginArc;
   }
 
-  late ShadcnPointArcTween _beginArc;
-  ShadcnPointArcTween? get endArc {
+  late VNLookPointArcTween _beginArc;
+  VNLookPointArcTween? get endArc {
     if (end == null) {
       return null;
     }
@@ -656,7 +656,7 @@ class ShadcnRectArcTween extends RectTween {
     return _endArc;
   }
 
-  late ShadcnPointArcTween _endArc;
+  late VNLookPointArcTween _endArc;
 
   @override
   set begin(Rect? value) {
@@ -721,8 +721,8 @@ class _BorderRadiusCorner {
 
 const double _kOnAxisDelta = 2.0;
 
-class ShadcnPointArcTween extends Tween<Offset> {
-  ShadcnPointArcTween({
+class VNLookPointArcTween extends Tween<Offset> {
+  VNLookPointArcTween({
     super.begin,
     super.end,
   });
@@ -861,11 +861,11 @@ class ShadcnPointArcTween extends Tween<Offset> {
   }
 }
 
-class ShadcnUI extends StatelessWidget {
+class VNLookUI extends StatelessWidget {
   final TextStyle? textStyle;
   final Widget child;
 
-  const ShadcnUI({
+  const VNLookUI({
     super.key,
     this.textStyle,
     required this.child,

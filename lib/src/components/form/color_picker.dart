@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 class ColorInputController extends ValueNotifier<ColorDerivative>
     with ComponentController<ColorDerivative> {
@@ -770,7 +770,7 @@ class _ColorInputSetState extends State<ColorInputSet> {
   int _tabIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
     return LayoutBuilder(builder: (context, constraints) {
       return IntrinsicWidth(
@@ -1039,7 +1039,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     String aLabel;
     String bLabel;
     String cLabel;
@@ -1582,7 +1582,7 @@ class ColorInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
     return ObjectFormField(
       enabled: enabled,
@@ -1928,7 +1928,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
     return AlertDialog(
       title: widget.title,

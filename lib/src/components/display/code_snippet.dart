@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:syntax_highlight/syntax_highlight.dart';
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 class CodeSnippet extends StatefulWidget {
   final BoxConstraints? constraints;
@@ -159,7 +159,7 @@ class _CodeSnippetState extends State<CodeSnippet> {
                           showDuration: const Duration(seconds: 2),
                           builder: (context, overlay) {
                             final localizations =
-                                ShadcnLocalizations.of(context);
+                                VNLookLocalizations.of(context);
                             return Alert(
                               leading: const Icon(
                                 LucideIcons.copyCheck,

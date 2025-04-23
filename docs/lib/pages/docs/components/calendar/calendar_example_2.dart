@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class CalendarExample2 extends StatefulWidget {
   const CalendarExample2({super.key});
@@ -12,7 +12,7 @@ class _CalendarExample2State extends State<CalendarExample2> {
   CalendarView _view = CalendarView.now();
   @override
   Widget build(BuildContext context) {
-    ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
     return Card(
       child: IntrinsicWidth(
         child: Column(

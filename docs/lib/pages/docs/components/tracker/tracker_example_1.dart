@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class TrackerExample1 extends StatelessWidget {
   const TrackerExample1({super.key});

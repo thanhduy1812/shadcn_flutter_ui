@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class BadgeExample3 extends StatelessWidget {
   const BadgeExample3({super.key});

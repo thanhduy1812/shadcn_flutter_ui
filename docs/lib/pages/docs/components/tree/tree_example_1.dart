@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class TreeExample1 extends StatefulWidget {
   const TreeExample1({super.key});

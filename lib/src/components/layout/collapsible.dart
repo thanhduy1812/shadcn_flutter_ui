@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 /// {@template collapsible_theme}
 /// Styling options for [Collapsible], [CollapsibleTrigger].
@@ -74,7 +74,7 @@ class CollapsibleTheme {
       iconGap.hashCode;
 }
 
-/// https://sunarya-thito.github.io/shadcn_flutter/#/components/collapsible
+/// https://sunarya-thito.github.io/vnl_ui/#/components/collapsible
 class Collapsible extends StatefulWidget {
   final List<Widget> children;
 
@@ -84,7 +84,7 @@ class Collapsible extends StatefulWidget {
   /// If overridden, the parent widget is responsible for managing the expansion state.
   final ValueChanged<bool>? onExpansionChanged;
 
-  /// https://sunarya-thito.github.io/shadcn_flutter/#/components/collapsible
+  /// https://sunarya-thito.github.io/vnl_ui/#/components/collapsible
   const Collapsible({
     super.key,
     required this.children,

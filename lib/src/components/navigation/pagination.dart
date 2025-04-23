@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class Pagination extends StatelessWidget {
   final int page;
@@ -66,7 +66,7 @@ class Pagination extends StatelessWidget {
   bool get hasMorePreviousPages => firstShownPage > 1;
   bool get hasMoreNextPages => lastShownPage < totalPages;
 
-  Widget _buildPreviousLabel(ShadcnLocalizations localizations) {
+  Widget _buildPreviousLabel(VNLookLocalizations localizations) {
     if (showLabel) {
       return GhostButton(
         onPressed: hasPrevious ? () => onPageChanged(page - 1) : null,
@@ -80,7 +80,7 @@ class Pagination extends StatelessWidget {
     );
   }
 
-  Widget _buildNextLabel(ShadcnLocalizations localizations) {
+  Widget _buildNextLabel(VNLookLocalizations localizations) {
     if (showLabel) {
       return GhostButton(
         onPressed: hasNext ? () => onPageChanged(page + 1) : null,
@@ -98,7 +98,7 @@ class Pagination extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
     return IntrinsicHeight(
       child: Row(
         mainAxisSize: MainAxisSize.min,

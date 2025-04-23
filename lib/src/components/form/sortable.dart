@@ -1,6 +1,6 @@
 import 'package:flutter/rendering.dart';
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 typedef SortableItemBuilder<T> = T Function(BuildContext context, int index);
 typedef SortableWidgetBuilder<T> = Widget Function(

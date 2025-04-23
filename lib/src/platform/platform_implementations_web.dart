@@ -1,6 +1,6 @@
 import 'dart:js_interop';
 
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 @JS("Window")
 extension type _Window(JSObject _) implements JSObject {
@@ -8,12 +8,12 @@ extension type _Window(JSObject _) implements JSObject {
   external void dispatchEvent(JSObject event);
 
   external _GlobalThis get globalThis;
-  external set shadcnAppLoaded(bool value);
+  external set vnLookAppLoaded(bool value);
 }
 
 @JS()
 extension type _GlobalThis(JSObject _) implements JSObject {
-  external JSObject? get ShadcnApp;
+  external JSObject? get VNLookApp;
 }
 
 @JS("Event")
@@ -24,28 +24,37 @@ extension type _Event._(JSObject _) implements JSObject {
 @JS("window")
 external _Window get _window;
 
-@JS("ShadcnAppThemeChangedEvent")
-extension type _ShadcnAppThemeChangedEvent._(JSObject _) implements JSObject {
-  external _ShadcnAppThemeChangedEvent(_ShadcnAppTheme theme);
+@JS('vnLookAppLoaded')
+external bool get vnLookAppLoaded;
+
+@JS('vnLookAppLoaded')
+external set vnLookAppLoaded(bool value);
+
+@JS('VNLookApp')
+external JSObject? get VNLookApp;
+
+@JS("VNLookAppThemeChangedEvent")
+extension type _VNLookAppThemeChangedEvent._(JSObject _) implements JSObject {
+  external _VNLookAppThemeChangedEvent(_VNLookAppTheme theme);
 }
 
-@JS("ShadcnAppTheme")
-extension type _ShadcnAppTheme._(JSObject _) implements JSObject {
-  external _ShadcnAppTheme(
+@JS("VNLookAppTheme")
+extension type _VNLookAppTheme._(JSObject _) implements JSObject {
+  external _VNLookAppTheme(
       String background, String foreground, String primary);
 }
 
-class ShadcnFlutterPlatformImplementations {
+class VNLookPlatformImplementations {
   bool get _isPreloaderAvailable {
-    return _window.globalThis.ShadcnApp != null;
+    return _window.globalThis.VNLookApp != null;
   }
 
   void onAppInitialized() {
     if (!_isPreloaderAvailable) {
       return;
     }
-    _window.shadcnAppLoaded = true;
-    final event = _Event("shadcn_flutter_app_ready");
+    _window.vnLookAppLoaded = true;
+    final event = _Event("vnl_ui_app_ready");
     _window.dispatchEvent(event);
   }
 
@@ -53,12 +62,12 @@ class ShadcnFlutterPlatformImplementations {
     if (!_isPreloaderAvailable) {
       return;
     }
-    final shadcnAppTheme = _ShadcnAppTheme(
+    final vnLookAppTheme = _VNLookAppTheme(
       _colorToCssRgba(theme.colorScheme.background),
       _colorToCssRgba(theme.colorScheme.foreground),
       _colorToCssRgba(theme.colorScheme.primary),
     );
-    final event = _ShadcnAppThemeChangedEvent(shadcnAppTheme);
+    final event = _VNLookAppThemeChangedEvent(vnLookAppTheme);
     _window.dispatchEvent(event);
   }
 }

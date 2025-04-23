@@ -148,7 +148,7 @@
 * Added clipBehavior param to TextField
 * Fix RecentColorsScope state disposal
 * Scroll Interception is no longer enabled by default
-* Added ShadcnLayer widget to wrap shadcn flutter components without ShadcnApp widget
+* Added VNLookLayer widget to wrap shadcn flutter components without VNLookApp widget
 
 ## 0.0.20
 * Replaced photoUrl to image provider in Avatar component

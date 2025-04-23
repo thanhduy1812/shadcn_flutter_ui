@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/rendering.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 typedef RefreshIndicatorBuilder = Widget Function(
     BuildContext context, RefreshTriggerStage stage);
@@ -54,7 +54,7 @@ class DefaultRefreshIndicator extends StatefulWidget {
 
 class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
   Widget buildRefreshingContent(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -66,7 +66,7 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
 
   Widget buildCompletedContent(BuildContext context) {
     final theme = Theme.of(context);
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -94,7 +94,7 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
   }
 
   Widget buildPullingContent(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return AnimatedBuilder(
         animation: widget.stage.extent,
         builder: (context, child) {
@@ -127,7 +127,7 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
   }
 
   Widget buildIdleContent(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

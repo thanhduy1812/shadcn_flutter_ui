@@ -392,13 +392,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
-  shadcn_flutter:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.0.32"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -620,6 +613,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.3.1"
+  vnl_ui:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.0.34"
   web:
     dependency: transitive
     description:

@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class TimePickerController extends ValueNotifier<TimeOfDay?>
     with ComponentController<TimeOfDay?> {
@@ -98,7 +98,7 @@ class TimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
     bool use24HourFormat =
         this.use24HourFormat ?? MediaQuery.of(context).alwaysUse24HourFormat;
     return ObjectFormField(
@@ -256,7 +256,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Padding(
@@ -413,7 +413,7 @@ class DurationPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
     return ObjectFormField(
       value: value,
       placeholder: placeholder ?? Text(localizations.placeholderDurationPicker),
@@ -553,7 +553,7 @@ class _DurationPickerDialogState extends State<DurationPickerDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Padding(

@@ -1,4 +1,4 @@
-library shadcn_flutter;
+library vnl_ui;
 
 // bundle from https://pub.dev/packages/country_flags
 export 'package:country_flags/country_flags.dart' show CountryFlag;
@@ -26,71 +26,8 @@ export 'package:flutter/widgets.dart'
         FormField;
 // bundle from gap
 export 'package:gap/gap.dart';
-// hide pixel_snap overriden widgets
-// Column,
-// Row,
-// Text,
-// RichText,
-// Center,
-// FractionallySizedBox,
-// Align,
-// Baseline,
-// ConstrainedBox,
-// DecoratedBox,
-// Container,
-// FittedBox,
-// IntrinsicWidth,
-// LimitedBox,
-// OverflowBox,
-// Padding,
-// SizedBox,
-// SizedOverflowBox,
-// Positioned,
-// PhysicalModel,
-// CustomPaint,
-// Icon,
-// Image,
-// ImageIcon,
-// AnimatedAlign,
-// AnimatedContainer,
-// AnimatedCrossFade,
-// AnimatedPositioned,
-// AnimatedPhysicalModel,
-// AnimatedSize;
 // bundle from https://pub.dev/packages/phonecodes
 export 'package:phonecodes/phonecodes.dart' show Countries, Country;
-// export 'package:pixel_snap/widgets.dart'
-//     show
-//         Column,
-//         Row,
-//         Text,
-//         RichText,
-//         Center,
-//         FractionallySizedBox,
-//         Align,
-//         Baseline,
-//         ConstrainedBox,
-//         DecoratedBox,
-//         Container,
-//         FittedBox,
-//         IntrinsicWidth,
-//         LimitedBox,
-//         OverflowBox,
-//         Padding,
-//         SizedBox,
-//         SizedOverflowBox,
-//         Positioned,
-//         PhysicalModel,
-//         CustomPaint,
-//         Icon,
-//         Image,
-//         ImageIcon,
-//         AnimatedAlign,
-//         AnimatedContainer,
-//         AnimatedCrossFade,
-//         AnimatedPositioned,
-//         AnimatedPhysicalModel,
-//         AnimatedSize;
 // bundle from skeletonizer https://pub.dev/packages/skeletonizer
 export 'package:skeletonizer/skeletonizer.dart' show Bone, BoneMock;
 
@@ -202,4 +139,4 @@ export 'src/theme/typography.dart';
 export 'src/util.dart';
 export 'src/components/form/input.dart';
 export 'src/components/form/object_input.dart';
-export 'src/components/form/item_picker.dart';
+export 'src/components/form/item_picker.dart'; 

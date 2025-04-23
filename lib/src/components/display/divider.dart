@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 class DividerProperties {
   final Color color;

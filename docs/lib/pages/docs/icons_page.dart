@@ -1,5 +1,5 @@
 import 'package:docs/radix_icons.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 import '../../bootstrap_icons.dart';
 import '../../lucide_icons.dart';
@@ -142,7 +142,7 @@ class _IconsPageState extends State<IconsPage> {
                           left: 0,
                           right: 0,
                           bottom: 0,
-                          child: ShadcnUI(
+                          child: VNLookUI(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.stretch,

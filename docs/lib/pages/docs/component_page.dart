@@ -1,7 +1,7 @@
 import 'package:docs/pages/docs_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 import '../widget_usage_example.dart';
 

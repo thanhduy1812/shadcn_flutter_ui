@@ -1,11 +1,11 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import '../../../vnl_ui.dart';
 
-class ShadcnSkeletonizerConfigLayer extends StatelessWidget {
+class VNLookSkeletonizerConfigLayer extends StatelessWidget {
   final ThemeData theme;
   final Widget child;
 
-  const ShadcnSkeletonizerConfigLayer({
+  const VNLookSkeletonizerConfigLayer({
     super.key,
     required this.theme,
     required this.child,

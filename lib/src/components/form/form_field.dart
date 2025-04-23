@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 enum PromptMode {
   dialog,
@@ -254,7 +254,7 @@ class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>>
     if (!widget.decorate) {
       return widget.editorBuilder(context, this);
     }
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
     return Data<ObjectFormHandler<T>>.inherit(
       data: this,

@@ -12,9 +12,9 @@ import 'package:flutter/foundation.dart'
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:shadcn_flutter/src/components/layout/hidden.dart';
+import 'package:vnl_ui/src/components/layout/hidden.dart';
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 export 'package:flutter/services.dart'
     show

@@ -37,7 +37,7 @@ main() {
   targetClass.writeAsStringSync(builder);
 
   String iconDocsClass =
-      'import \'package:shadcn_flutter/shadcn_flutter.dart\';\nconst Map<String, IconData> kBootstrapIcons = {\n';
+      'import \'package:vnl_ui/vnl_ui.dart\';\nconst Map<String, IconData> kBootstrapIcons = {\n';
   // for (int i = 0; i < svgToOtfResult.glyphList.length; i++) {
   //   iconDocsClass += '  \'${variableNames[i]}\': $name.${variableNames[i]},\n';
   // }

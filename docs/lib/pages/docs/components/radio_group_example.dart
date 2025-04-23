@@ -1,6 +1,6 @@
 import 'package:docs/pages/docs/components/radio_group/radio_group_example_1.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 import '../component_page.dart';
 

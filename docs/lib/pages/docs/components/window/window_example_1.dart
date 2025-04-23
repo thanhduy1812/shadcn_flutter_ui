@@ -1,5 +1,5 @@
 import 'package:docs/debug.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class WindowExample1 extends StatefulWidget {
   const WindowExample1({super.key});

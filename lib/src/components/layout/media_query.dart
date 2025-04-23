@@ -1,4 +1,4 @@
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 class MediaQueryVisibility extends StatelessWidget {
   final double? minWidth;

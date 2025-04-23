@@ -1,6 +1,6 @@
-import 'package:shadcn_flutter/src/components/control/hover.dart';
+import 'package:vnl_ui/src/components/control/hover.dart';
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 class TooltipContainer extends StatelessWidget {
   final Widget child;

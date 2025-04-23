@@ -40,7 +40,7 @@ const shadcn_flutter_config = {
     ]
 };
 
-class ShadcnAppConfig {
+class VNLookAppConfig {
     background;
     foreground;
     fontFamily;
@@ -79,13 +79,13 @@ class ShadcnAppConfig {
     }
 }
 
-class ShadcnAppThemeChangedEvent extends CustomEvent {
+class VNLookAppThemeChangedEvent extends CustomEvent {
     constructor(theme) {
         super('shadcn_flutter_theme_changed', { detail: theme });
     }
 }
 
-class ShadcnAppTheme {
+class VNLookAppTheme {
     background;
     foreground;
     primary;
@@ -97,7 +97,7 @@ class ShadcnAppTheme {
     }
 }
 
-class ShadcnApp {
+class VNLookApp {
     config;
 
     constructor(config) {
@@ -109,7 +109,7 @@ class ShadcnApp {
         this.#loadExternalScripts(0);
         window.addEventListener('shadcn_flutter_app_ready', this.onAppReady);
         window.addEventListener('shadcn_flutter_theme_changed', this.onThemeChanged);
-        if (globalThis.shadcnAppLoaded) {
+        if (globalThis.vnLookAppLoaded) {
             this.onAppReady();
         }
     }
@@ -232,12 +232,12 @@ class ShadcnApp {
     }
 }
 
-globalThis.ShadcnApp = ShadcnApp;
-globalThis.ShadcnAppConfig = ShadcnAppConfig;
-globalThis.ShadcnAppThemeChangedEvent = ShadcnAppThemeChangedEvent;
-globalThis.ShadcnAppTheme = ShadcnAppTheme;
+globalThis.VNLookApp = VNLookApp;
+globalThis.VNLookAppConfig = VNLookAppConfig;
+globalThis.VNLookAppThemeChangedEvent = VNLookAppThemeChangedEvent;
+globalThis.VNLookAppTheme = VNLookAppTheme;
 
-const shadcn_flutter = new ShadcnApp(new ShadcnAppConfig(shadcn_flutter_config));
+const shadcn_flutter = new VNLookApp(new VNLookAppConfig(shadcn_flutter_config));
 document.addEventListener('DOMContentLoaded', () => {
     shadcn_flutter.loadApp();
 });

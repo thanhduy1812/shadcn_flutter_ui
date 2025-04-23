@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class DateInput extends StatefulWidget with ControlledComponent<DateTime?> {
   @override
@@ -121,7 +121,7 @@ class _DateInputState extends State<DateInput> {
   NullableDate _convertToDateTime(List<String?> values) {
     Map<DatePart, String?> parts = {};
     var datePartsOrder =
-        widget.datePartsOrder ?? ShadcnLocalizations.of(context).datePartsOrder;
+        widget.datePartsOrder ?? VNLookLocalizations.of(context).datePartsOrder;
     for (int i = 0; i < values.length; i++) {
       parts[datePartsOrder[i]] = values[i];
     }
@@ -141,7 +141,7 @@ class _DateInputState extends State<DateInput> {
 
   List<String?> _convertFromDateTime(NullableDate? value) {
     var datePartsOrder =
-        widget.datePartsOrder ?? ShadcnLocalizations.of(context).datePartsOrder;
+        widget.datePartsOrder ?? VNLookLocalizations.of(context).datePartsOrder;
     if (value == null) {
       return datePartsOrder.map((part) => null).toList();
     }
@@ -173,7 +173,7 @@ class _DateInputState extends State<DateInput> {
   }
 
   Widget _getPlaceholder(DatePart part) {
-    var localizations = ShadcnLocalizations.of(context);
+    var localizations = VNLookLocalizations.of(context);
     return Text(localizations.getDatePartAbbreviation(part));
   }
 
@@ -223,7 +223,7 @@ class _DateInputState extends State<DateInput> {
   @override
   Widget build(BuildContext context) {
     var datePartsOrder =
-        widget.datePartsOrder ?? ShadcnLocalizations.of(context).datePartsOrder;
+        widget.datePartsOrder ?? VNLookLocalizations.of(context).datePartsOrder;
     return FormattedObjectInput<NullableDate>(
       popupBuilder: (context, controller) {
         return SurfaceCard(
@@ -413,7 +413,7 @@ class _TimeInputState extends State<TimeInput> {
   }
 
   Widget _getPlaceholder(TimePart part) {
-    var localizations = ShadcnLocalizations.of(context);
+    var localizations = VNLookLocalizations.of(context);
     return Text(localizations.getTimePartAbbreviation(part));
   }
 
@@ -561,7 +561,7 @@ class _DurationInputState extends State<DurationInput> {
   }
 
   Widget _getPlaceholder(TimePart part) {
-    var localizations = ShadcnLocalizations.of(context);
+    var localizations = VNLookLocalizations.of(context);
     return Text(localizations.getTimePartAbbreviation(part));
   }
 

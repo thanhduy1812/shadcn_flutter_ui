@@ -1,4 +1,4 @@
-name: shadcn_flutter
+name: vnl_ui
 description: "Beautifully designed components from Shadcn/UI is now available for Flutter"
 version: 0.0.34
 homepage: "https://github.com/sunarya-thito/shadcn_flutter"
@@ -94,5 +94,5 @@ topics:
   - user-interface
   - design
   - components
-  - shadcn-ui
+  - vnl-ui
 

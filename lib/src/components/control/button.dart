@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 
 class ToggleController extends ValueNotifier<bool>
     with ComponentController<bool> {

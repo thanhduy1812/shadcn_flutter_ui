@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../../shadcn_flutter.dart';
+import '../../../vnl_ui.dart';
 import '../../resizer.dart';
 
 class TableTheme {

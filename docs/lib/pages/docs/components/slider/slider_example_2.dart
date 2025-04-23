@@ -1,4 +1,4 @@
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:vnl_ui/vnl_ui.dart';
 
 class SliderExample2 extends StatefulWidget {
   const SliderExample2({super.key});
