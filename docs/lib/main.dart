@@ -845,7 +845,7 @@ class MyAppState extends State<MyApp> {
       child: VNLookApp.router(
         routerConfig: router,
         debugShowCheckedModeBanner: false,
-        title: 'vnl_ui Flutter',
+        title: 'VNL UI Flutter',
         scaling: AdaptiveScaling(scaling),
         enableScrollInterception: true,
         // popoverHandler: DialogOverlayHandler(),

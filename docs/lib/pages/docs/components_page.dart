@@ -84,7 +84,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
           children: [
             const Text('Components').h1(),
             const Text(
-                    'Beautifully designed components from Shadcn/UI is now available for Flutter.')
+                    'Beautifully designed components from VNL UI is now available for Flutter.')
                 .lead(),
             const Gap(16),
             const Align(
@@ -1042,7 +1042,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                                 child: Basic(
                                   title: const Text('Installation').medium(),
                                   content: const Text(
-                                          'How to install Shadcn/UI for Flutter')
+                                          'How to install VNL UI for Flutter')
                                       .muted(),
                                   mainAxisAlignment: MainAxisAlignment.start,
                                 ),
