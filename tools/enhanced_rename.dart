@@ -103,7 +103,7 @@ Future<void> main(List<String> args) async {
       } else if (file.existsSync() && file.statSync().type == FileSystemEntityType.file) {
         filesToProcess.add(file);
       } else {
-        print('Path does not exist or is not recognized: ${arg}');
+        print('Path does not exist or is not recognized: $arg');
       }
     }
   } else {

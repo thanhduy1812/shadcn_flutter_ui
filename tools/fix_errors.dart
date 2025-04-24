@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:path/path.dart' as path;
 
 // Common error patterns
 final Map<String, String> errorPatterns = {

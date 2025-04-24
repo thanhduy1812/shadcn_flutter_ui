@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:path/path.dart' as path;
 
 // External library packages to exclude
 final Set<String> externalPackages = {

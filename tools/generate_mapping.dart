@@ -193,7 +193,7 @@ void main(List<String> args) async {
   buffer.writeln('};');
   
   // Write the file
-  final String outputFile = 'tools/class_mapping.dart';
+  const String outputFile = 'tools/class_mapping.dart';
   await File(outputFile).writeAsString(buffer.toString());
   
   print('Mapping generated with:');

@@ -1,10 +1,8 @@
 import 'dart:collection';
 import 'dart:ui';
 
-import 'package:flutter/material.dart' as m;
 import 'package:vnl_ui/vnl_ui.dart';
 
-import 'generated_colors.dart';
 
 Color _fromAHSL(double a, double h, double s, double l) {
   return HSLColor.fromAHSL(a, h, s, l).toColor();

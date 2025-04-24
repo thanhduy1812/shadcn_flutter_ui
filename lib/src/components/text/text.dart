@@ -1,9 +1,7 @@
 import 'package:flutter/rendering.dart';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart' as m show SelectableText, TextButton, Colors, ButtonStyle, MaterialTapTargetSize;
 
 import '../../../vnl_ui.dart';
-import 'package:vnl_ui/src/components/text/selectable.dart';
 
 abstract class VNLTextModifier extends StatelessWidget {
   const VNLTextModifier({super.key});
