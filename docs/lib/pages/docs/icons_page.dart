@@ -1,5 +1,5 @@
 import 'package:docs/radix_icons.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../bootstrap_icons.dart';
 import '../../lucide_icons.dart';
@@ -45,8 +45,7 @@ class _IconsPageState extends State<IconsPage> {
       context: context,
       builder: (context) {
         return VNLAlertDialog(
-          title:
-              Text(capitalizeWords(_separateByCamelCase(entry.key)).join(' ')),
+          title: Text(capitalizeWords(_separateByCamelCase(entry.key)).join(' ')),
           leading: Icon(entry.value, size: 48),
           content: IntrinsicWidth(
             child: Column(
@@ -148,9 +147,7 @@ class _IconsPageState extends State<IconsPage> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const Text('Icons').h1(),
-                                const Text(
-                                        'Use bundled icons in your application')
-                                    .lead(),
+                                const Text('Use bundled icons in your application').lead(),
                                 Row(
                                   children: [
                                     Expanded(
@@ -161,14 +158,10 @@ class _IconsPageState extends State<IconsPage> {
                                           children: [
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('${kRadixIcons.length}')
-                                                    .textLarge(),
-                                                const Text('Radix Icons')
-                                                    .muted()
-                                                    .textSmall(),
+                                                Text('${kRadixIcons.length}').textLarge(),
+                                                const Text('Radix Icons').muted().textSmall(),
                                               ],
                                             ),
                                             Positioned(
@@ -177,9 +170,7 @@ class _IconsPageState extends State<IconsPage> {
                                               child: const Icon(
                                                 RadixIcons.iconjarLogo,
                                                 size: 96,
-                                              )
-                                                  .iconMutedForeground()
-                                                  .withOpacity(0.3),
+                                              ).iconMutedForeground().withOpacity(0.3),
                                             ),
                                           ],
                                         ),
@@ -193,14 +184,10 @@ class _IconsPageState extends State<IconsPage> {
                                           children: [
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('${kBootstrapIcons.length}')
-                                                    .textLarge(),
-                                                const Text('Bootstrap Icons')
-                                                    .muted()
-                                                    .textSmall(),
+                                                Text('${kBootstrapIcons.length}').textLarge(),
+                                                const Text('Bootstrap Icons').muted().textSmall(),
                                               ],
                                             ),
                                             Positioned(
@@ -209,9 +196,7 @@ class _IconsPageState extends State<IconsPage> {
                                               child: const Icon(
                                                 BootstrapIcons.bootstrap,
                                                 size: 96,
-                                              )
-                                                  .iconMutedForeground()
-                                                  .withOpacity(0.3),
+                                              ).iconMutedForeground().withOpacity(0.3),
                                             ),
                                           ],
                                         ),
@@ -225,14 +210,10 @@ class _IconsPageState extends State<IconsPage> {
                                           children: [
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('${kLucideIcons.length}')
-                                                    .textLarge(),
-                                                const Text('Lucide Icons')
-                                                    .muted()
-                                                    .textSmall(),
+                                                Text('${kLucideIcons.length}').textLarge(),
+                                                const Text('Lucide Icons').muted().textSmall(),
                                               ],
                                             ),
                                             Positioned(
@@ -241,9 +222,7 @@ class _IconsPageState extends State<IconsPage> {
                                               child: const Icon(
                                                 LucideIcons.badgeInfo,
                                                 size: 96,
-                                              )
-                                                  .iconMutedForeground()
-                                                  .withOpacity(0.3),
+                                              ).iconMutedForeground().withOpacity(0.3),
                                             ),
                                           ],
                                         ),
@@ -304,8 +283,7 @@ class _IconsPageState extends State<IconsPage> {
                     ),
                     SliverPadding(
                       padding: const EdgeInsets.only(top: 16),
-                      sliver
-                          : SliverGrid(
+                      sliver: SliverGrid(
                         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 120,
                           mainAxisSpacing: 8,
@@ -378,8 +356,7 @@ class _Header extends SliverPersistentHeaderDelegate {
   _Header(this.text);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     final theme = Theme.of(context);
     return Container(
       color: theme.colorScheme.background,

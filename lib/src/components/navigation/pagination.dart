@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLPagination extends StatelessWidget {
   final int page;
@@ -37,8 +37,7 @@ class VNLPagination extends StatelessWidget {
       if (start < 1) {
         yield* List.generate(maxPages, (index) => index + 1);
       } else if (end > totalPages) {
-        yield* List.generate(
-            maxPages, (index) => totalPages - maxPages + index + 1);
+        yield* List.generate(maxPages, (index) => totalPages - maxPages + index + 1);
       } else {
         yield* List.generate(maxPages, (index) => start + index);
       }
@@ -104,8 +103,7 @@ class VNLPagination extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (!hidePreviousOnFirstPage || hasPrevious)
-            _buildPreviousLabel(localizations),
+          if (!hidePreviousOnFirstPage || hasPrevious) _buildPreviousLabel(localizations),
           if (hasMorePreviousPages) ...[
             if (showSkipToFirstPage && firstShownPage - 1 > 1)
               GhostButton(

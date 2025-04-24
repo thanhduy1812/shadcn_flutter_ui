@@ -1,7 +1,7 @@
 import 'package:docs/pages/docs/components/text_area/text_area_example_1.dart';
 import 'package:docs/pages/docs/components/text_area/text_area_example_2.dart';
 import 'package:docs/pages/docs/components/text_area/text_area_example_3.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -13,8 +13,7 @@ class TextAreaExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'text_area',
-      description:
-          'TextArea is a component that allows users to enter multiple lines of text.',
+      description: 'TextArea is a component that allows users to enter multiple lines of text.',
       displayName: 'TextArea',
       children: [
         WidgetUsageExample(

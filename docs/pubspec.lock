@@ -613,7 +613,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.3.1"
-  vnl_ui:
+  vnl_common_ui:
     dependency: "direct main"
     description:
       path: ".."

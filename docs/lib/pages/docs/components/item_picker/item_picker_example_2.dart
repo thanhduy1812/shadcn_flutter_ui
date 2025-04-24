@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ItemPickerExample2 extends StatelessWidget {
   const ItemPickerExample2({super.key});
@@ -16,8 +16,7 @@ class ItemPickerExample2 extends StatelessWidget {
             },
           ),
           builder: (context, item) {
-            return ItemPickerOption(
-                value: item, child: Text(item.toString()).large);
+            return ItemPickerOption(value: item, child: Text(item.toString()).large);
           },
         ).then(
           (value) {

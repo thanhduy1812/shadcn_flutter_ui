@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/checkbox/checkbox_example_1.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -12,8 +12,7 @@ class CheckboxExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'checkbox',
-      description:
-          'Checkboxes allow the user to select one or more items from a set.',
+      description: 'Checkboxes allow the user to select one or more items from a set.',
       displayName: 'Checkbox',
       children: [
         WidgetUsageExample(

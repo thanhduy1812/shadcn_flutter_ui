@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLTabs extends StatelessWidget {
   final int index;
@@ -14,8 +14,7 @@ class VNLTabs extends StatelessWidget {
     this.padding,
   });
 
-  Widget _childBuilder(
-      BuildContext context, TabContainerData data, Widget child) {
+  Widget _childBuilder(BuildContext context, TabContainerData data, Widget child) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final i = data.index;
@@ -28,8 +27,7 @@ class VNLTabs extends StatelessWidget {
         hitTestBehavior: HitTestBehavior.translucent,
         cursor: SystemMouseCursors.click,
         child: AnimatedContainer(
-          duration: const Duration(
-              milliseconds: 50), // slightly faster than kDefaultDuration
+          duration: const Duration(milliseconds: 50), // slightly faster than kDefaultDuration
           alignment: Alignment.center,
           padding: padding ??
               const EdgeInsets.symmetric(
@@ -43,9 +41,7 @@ class VNLTabs extends StatelessWidget {
               theme.radiusMd,
             ),
           ),
-          child: (i == index ? child.foreground() : child.muted())
-              .small()
-              .medium(),
+          child: (i == index ? child.foreground() : child.muted()).small().medium(),
         ),
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/popover/popover_example_1.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -11,8 +11,7 @@ class PopoverExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'popover',
-      description:
-          'A floating message that appears when a user interacts with a target.',
+      description: 'A floating message that appears when a user interacts with a target.',
       displayName: 'Popover',
       children: [
         WidgetUsageExample(

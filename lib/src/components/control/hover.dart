@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// A widget that tracks the hover state of the mouse cursor
 /// and will call the [onHover] with period of [debounceDuration] when the cursor is hovering over the child widget.
@@ -24,8 +24,7 @@ class HoverActivity extends StatefulWidget {
   State<HoverActivity> createState() => _HoverActivityState();
 }
 
-class _HoverActivityState extends State<HoverActivity>
-    with SingleTickerProviderStateMixin {
+class _HoverActivityState extends State<HoverActivity> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -75,8 +74,7 @@ class Hover extends StatefulWidget {
   final Widget child;
   final void Function(bool hovered) onHover;
   final Duration waitDuration;
-  final Duration
-      minDuration; // The minimum duration to show the hover, if the cursor is quickly moved over the widget.
+  final Duration minDuration; // The minimum duration to show the hover, if the cursor is quickly moved over the widget.
   final Duration showDuration; // The duration to show the hover
   final HitTestBehavior hitTestBehavior;
 
@@ -118,9 +116,8 @@ class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
     int? enterTime = _enterTime;
     if (enterTime != null) {
       int duration = DateTime.now().millisecondsSinceEpoch - enterTime;
-      _controller.reverseDuration = cursorOut
-          ? Duration(milliseconds: duration < minDuration ? minDuration : 0)
-          : widget.showDuration;
+      _controller.reverseDuration =
+          cursorOut ? Duration(milliseconds: duration < minDuration ? minDuration : 0) : widget.showDuration;
       _controller.reverse();
     }
     _enterTime = null;
@@ -143,9 +140,8 @@ class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final platform = Theme.of(context).platform;
-    bool enableLongPress = platform == TargetPlatform.iOS ||
-        platform == TargetPlatform.android ||
-        platform == TargetPlatform.fuchsia;
+    bool enableLongPress =
+        platform == TargetPlatform.iOS || platform == TargetPlatform.android || platform == TargetPlatform.fuchsia;
     return TapRegion(
       onTapOutside: (details) {
         _onExit(true);

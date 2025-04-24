@@ -1,11 +1,10 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class NavigationSidebarExample1 extends StatefulWidget {
   const NavigationSidebarExample1({super.key});
 
   @override
-  State<NavigationSidebarExample1> createState() =>
-      _NavigationSidebarExample1State();
+  State<NavigationSidebarExample1> createState() => _NavigationSidebarExample1State();
 }
 
 class _NavigationSidebarExample1State extends State<NavigationSidebarExample1> {
@@ -51,8 +50,7 @@ class _NavigationSidebarExample1State extends State<NavigationSidebarExample1> {
             buildButton('Top Songs', BootstrapIcons.musicNoteList),
             buildButton('Top Albums', BootstrapIcons.musicNoteList),
             buildButton('Top Artists', BootstrapIcons.musicNoteList),
-            buildButton('Logic Discography With Some Spice',
-                BootstrapIcons.musicNoteList),
+            buildButton('Logic Discography With Some Spice', BootstrapIcons.musicNoteList),
             buildButton('Bedtime Beats', BootstrapIcons.musicNoteList),
             buildButton('Feeling Happy', BootstrapIcons.musicNoteList),
             buildButton('I miss Y2K Pop', BootstrapIcons.musicNoteList),

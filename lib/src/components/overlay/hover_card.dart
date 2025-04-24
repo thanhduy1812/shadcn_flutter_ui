@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLHoverCard extends StatefulWidget {
   final Widget child;
@@ -62,9 +62,7 @@ class _HoverCardState extends State<VNLHoverCard> {
       onEnter: (_) {
         int count = ++_hoverCount;
         Future.delayed(widget.wait, () {
-          if (count == _hoverCount &&
-              !_controller.hasOpenPopover &&
-              context.mounted) {
+          if (count == _hoverCount && !_controller.hasOpenPopover && context.mounted) {
             _showPopover(context);
           }
         });
@@ -91,8 +89,7 @@ class _HoverCardState extends State<VNLHoverCard> {
     OverlayHandler? handler = widget.handler;
     if (handler == null) {
       final overlayManager = OverlayManager.of(context);
-      handler =
-          OverlayManagerAsTooltipOverlayHandler(overlayManager: overlayManager);
+      handler = OverlayManagerAsTooltipOverlayHandler(overlayManager: overlayManager);
     }
     _controller.show(
       context: context,

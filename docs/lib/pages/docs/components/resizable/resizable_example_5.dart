@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ResizableExample5 extends StatefulWidget {
   const ResizableExample5({super.key});
@@ -8,10 +8,8 @@ class ResizableExample5 extends StatefulWidget {
 }
 
 class _ResizableExample5State extends State<ResizableExample5> {
-  final ResizablePaneController controller =
-      AbsoluteResizablePaneController(120);
-  final ResizablePaneController controller2 =
-      AbsoluteResizablePaneController(120);
+  final ResizablePaneController controller = AbsoluteResizablePaneController(120);
+  final ResizablePaneController controller2 = AbsoluteResizablePaneController(120);
   @override
   Widget build(BuildContext context) {
     return OutlinedContainer(

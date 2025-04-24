@@ -5,10 +5,9 @@ import 'package:flutter/cupertino.dart' as c;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as m;
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-import 'platform_interface.dart'
-    if (dart.library.js_interop) 'platform/platform_implementations_web.dart';
+import 'platform_interface.dart' if (dart.library.js_interop) 'platform/platform_implementations_web.dart';
 
 class VNLookApp extends StatefulWidget {
   const VNLookApp({
@@ -128,8 +127,7 @@ class VNLookApp extends StatefulWidget {
 
   final RouteFactory? onUnknownRoute;
 
-  final NotificationListenerCallback<NavigationNotification>?
-      onNavigationNotification;
+  final NotificationListenerCallback<NavigationNotification>? onNavigationNotification;
 
   final List<NavigatorObserver>? navigatorObservers;
 
@@ -193,8 +191,7 @@ class VNLookScrollBehavior extends ScrollBehavior {
   }
 
   @override
-  Widget buildScrollbar(
-      BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
     // When modifying this function, consider modifying the implementation in
     // the base class ScrollBehavior as well.
     switch (axisDirectionToAxis(details.direction)) {
@@ -218,8 +215,7 @@ class VNLookScrollBehavior extends ScrollBehavior {
   }
 
   @override
-  Widget buildOverscrollIndicator(
-      BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
     // When modifying this function, consider modifying the implementation in
     // the base class ScrollBehavior as well.
     switch (getPlatform(context)) {
@@ -246,16 +242,14 @@ class VNLookScrollBehavior extends ScrollBehavior {
 }
 
 class _VNLookAppState extends State<VNLookApp> {
-  final VNLookPlatformImplementations _platform =
-      VNLookPlatformImplementations();
+  final VNLookPlatformImplementations _platform = VNLookPlatformImplementations();
   late HeroController _heroController;
 
   void _dispatchAppInitialized() {
     _platform.onAppInitialized();
   }
 
-  bool get _usesRouter =>
-      widget.routerDelegate != null || widget.routerConfig != null;
+  bool get _usesRouter => widget.routerDelegate != null || widget.routerConfig != null;
 
   @override
   void initState() {
@@ -283,9 +277,7 @@ class _VNLookAppState extends State<VNLookApp> {
   @override
   void didUpdateWidget(covariant VNLookApp oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (kIsWeb &&
-        widget.disableBrowserContextMenu !=
-            oldWidget.disableBrowserContextMenu) {
+    if (kIsWeb && widget.disableBrowserContextMenu != oldWidget.disableBrowserContextMenu) {
       if (widget.disableBrowserContextMenu) {
         BrowserContextMenu.disableContextMenu();
       } else {
@@ -305,8 +297,7 @@ class _VNLookAppState extends State<VNLookApp> {
 
   Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates {
     return <LocalizationsDelegate<dynamic>>[
-      if (widget.localizationsDelegates != null)
-        ...widget.localizationsDelegates!,
+      if (widget.localizationsDelegates != null) ...widget.localizationsDelegates!,
       m.DefaultMaterialLocalizations.delegate,
       c.DefaultCupertinoLocalizations.delegate,
       DefaultWidgetsLocalizations.delegate,
@@ -435,8 +426,7 @@ class _VNLookAppState extends State<VNLookApp> {
               barBackgroundColor: widget.theme.colorScheme.accent,
               scaffoldBackgroundColor: widget.theme.colorScheme.background,
               applyThemeToAll: true,
-              primaryContrastingColor:
-                  widget.theme.colorScheme.primaryForeground,
+              primaryContrastingColor: widget.theme.colorScheme.primaryForeground,
             ),
         child: m.Material(
           color: m.Colors.transparent,
@@ -494,24 +484,15 @@ class VNLookLayer extends StatelessWidget {
     var appScaling = scaling ?? AdaptiveScaler.defaultScaling(theme);
     var platformBrightness = MediaQuery.platformBrightnessOf(context);
     var mobileMode = isMobile(theme.platform);
-    final scaledTheme = themeMode == ThemeMode.dark ||
-            (themeMode == ThemeMode.system &&
-                platformBrightness == Brightness.dark)
-        ? appScaling.scale(darkTheme ?? theme)
-        : appScaling.scale(theme);
+    final scaledTheme =
+        themeMode == ThemeMode.dark || (themeMode == ThemeMode.system && platformBrightness == Brightness.dark)
+            ? appScaling.scale(darkTheme ?? theme)
+            : appScaling.scale(theme);
     return OverlayManagerLayer(
-      menuHandler: menuHandler ??
-          (mobileMode
-              ? const SheetOverlayHandler()
-              : const PopoverOverlayHandler()),
-      popoverHandler: popoverHandler ??
-          (mobileMode
-              ? const SheetOverlayHandler()
-              : const PopoverOverlayHandler()),
-      tooltipHandler: tooltipHandler ??
-          (mobileMode
-              ? const FixedTooltipOverlayHandler()
-              : const PopoverOverlayHandler()),
+      menuHandler: menuHandler ?? (mobileMode ? const SheetOverlayHandler() : const PopoverOverlayHandler()),
+      popoverHandler: popoverHandler ?? (mobileMode ? const SheetOverlayHandler() : const PopoverOverlayHandler()),
+      tooltipHandler:
+          tooltipHandler ?? (mobileMode ? const FixedTooltipOverlayHandler() : const PopoverOverlayHandler()),
       child: VNLookAnimatedTheme(
         duration: kDefaultDuration,
         data: scaledTheme,
@@ -604,9 +585,8 @@ class VNLookRectArcTween extends RectTween {
     assert(begin != null);
     assert(end != null);
     final Offset centersVector = end!.center - begin!.center;
-    final _BorderRadiusCorner diagonal = _findMax<_BorderRadiusCorner>(
-        _allDiagonals,
-        (_BorderRadiusCorner d) => _diagonalSupport(centersVector, d));
+    final _BorderRadiusCorner diagonal =
+        _findMax<_BorderRadiusCorner>(_allDiagonals, (_BorderRadiusCorner d) => _diagonalSupport(centersVector, d));
     _beginArc = VNLookPointArcTween(
       begin: _cornerFor(begin!, diagonal.beginId),
       end: _cornerFor(end!, diagonal.beginId),
@@ -619,11 +599,9 @@ class VNLookRectArcTween extends RectTween {
   }
 
   double _diagonalSupport(Offset centersVector, _BorderRadiusCorner diagonal) {
-    final Offset delta = _cornerFor(begin!, diagonal.endId) -
-        _cornerFor(begin!, diagonal.beginId);
+    final Offset delta = _cornerFor(begin!, diagonal.endId) - _cornerFor(begin!, diagonal.beginId);
     final double length = delta.distance;
-    return centersVector.dx * delta.dx / length +
-        centersVector.dy * delta.dy / length;
+    return centersVector.dx * delta.dx / length + centersVector.dy * delta.dy / length;
   }
 
   Offset _cornerFor(Rect rect, _CornerType id) {
@@ -747,8 +725,7 @@ class VNLookPointArcTween extends Tween<Offset> {
 
     if (deltaX > _kOnAxisDelta && deltaY > _kOnAxisDelta) {
       if (deltaX < deltaY) {
-        _radius =
-            distanceFromAtoB * distanceFromAtoB / (c - begin).distance / 2.0;
+        _radius = distanceFromAtoB * distanceFromAtoB / (c - begin).distance / 2.0;
         _center = Offset(end.dx + _radius! * (begin.dx - end.dx).sign, end.dy);
         if (begin.dx < end.dx) {
           _beginAngle = sweepAngle() * (begin.dy - end.dy).sign;
@@ -758,10 +735,8 @@ class VNLookPointArcTween extends Tween<Offset> {
           _endAngle = pi;
         }
       } else {
-        _radius =
-            distanceFromAtoB * distanceFromAtoB / (c - end).distance / 2.0;
-        _center =
-            Offset(begin.dx, begin.dy + (end.dy - begin.dy).sign * _radius!);
+        _radius = distanceFromAtoB * distanceFromAtoB / (c - end).distance / 2.0;
+        _center = Offset(begin.dx, begin.dy + (end.dy - begin.dy).sign * _radius!);
         if (begin.dy < end.dy) {
           _beginAngle = -pi / 2.0;
           _endAngle = _beginAngle! + sweepAngle() * (end.dx - begin.dx).sign;
@@ -898,8 +873,7 @@ class _GlobalPointerListener extends c.StatefulWidget {
   });
 
   @override
-  c.State<_GlobalPointerListener> createState() =>
-      _GlobalPointerListenerState();
+  c.State<_GlobalPointerListener> createState() => _GlobalPointerListenerState();
 }
 
 class PointerData {

@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class FormExample2 extends StatefulWidget {
   const FormExample2({super.key});
@@ -47,20 +47,14 @@ class _FormExample2State extends State<FormExample2> {
                   label: const Text('Username'),
                   hint: const Text('This is your public display name'),
                   validator: const LengthValidator(min: 4),
-                  showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted
-                  },
+                  showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
                   child: const VNLTextField(),
                 ),
                 FormField(
                   key: _passwordKey,
                   label: const Text('Password'),
                   validator: const LengthValidator(min: 8),
-                  showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted
-                  },
+                  showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
                   child: const VNLTextField(
                     obscureText: true,
                   ),
@@ -68,12 +62,8 @@ class _FormExample2State extends State<FormExample2> {
                 FormField(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
-                  validator: CompareWith.equal(_passwordKey,
-                      message: 'Passwords do not match'),
-                  showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted
-                  },
+                  validator: CompareWith.equal(_passwordKey, message: 'Passwords do not match'),
+                  showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
                   child: const VNLTextField(
                     obscureText: true,
                   ),
@@ -83,10 +73,7 @@ class _FormExample2State extends State<FormExample2> {
                   label: const Text('I agree to the terms and conditions'),
                   validator: const CompareTo.equal(CheckboxState.checked,
                       message: 'You must agree to the terms and conditions'),
-                  showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted
-                  },
+                  showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: VNLCheckbox(

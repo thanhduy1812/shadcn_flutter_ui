@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class RefreshTriggerExample1 extends StatefulWidget {
   const RefreshTriggerExample1({super.key});
@@ -8,8 +8,7 @@ class RefreshTriggerExample1 extends StatefulWidget {
 }
 
 class _RefreshTriggerExample1State extends State<RefreshTriggerExample1> {
-  final GlobalKey<RefreshTriggerState> _refreshTriggerKey =
-      GlobalKey<RefreshTriggerState>();
+  final GlobalKey<RefreshTriggerState> _refreshTriggerKey = GlobalKey<RefreshTriggerState>();
   @override
   Widget build(BuildContext context) {
     return VNLRefreshTrigger(

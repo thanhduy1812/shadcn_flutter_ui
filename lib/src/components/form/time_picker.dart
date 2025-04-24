@@ -1,13 +1,11 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-class TimePickerController extends ValueNotifier<TimeOfDay?>
-    with ComponentController<TimeOfDay?> {
+class TimePickerController extends ValueNotifier<TimeOfDay?> with ComponentController<TimeOfDay?> {
   TimePickerController([super.value]);
 }
 
-class ControlledTimePicker extends StatelessWidget
-    with ControlledComponent<TimeOfDay?> {
+class ControlledTimePicker extends StatelessWidget with ControlledComponent<TimeOfDay?> {
   @override
   final TimeOfDay? initialValue;
   @override
@@ -99,15 +97,13 @@ class VNLTimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     VNLookLocalizations localizations = VNLookLocalizations.of(context);
-    bool use24HourFormat =
-        this.use24HourFormat ?? MediaQuery.of(context).alwaysUse24HourFormat;
+    bool use24HourFormat = this.use24HourFormat ?? MediaQuery.of(context).alwaysUse24HourFormat;
     return ObjectFormField(
       value: value,
       placeholder: placeholder ?? Text(localizations.placeholderTimePicker),
       onChanged: onChanged,
       builder: (context, value) {
-        return Text(localizations.formatTimeOfDay(value,
-            use24HourFormat: use24HourFormat, showSeconds: showSeconds));
+        return Text(localizations.formatTimeOfDay(value, use24HourFormat: use24HourFormat, showSeconds: showSeconds));
       },
       enabled: enabled,
       mode: mode,
@@ -154,12 +150,10 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
     return value.toString().padLeft(2, '0');
   }
 
-  Widget _buildInput(
-      BuildContext context, TextEditingController controller, String label) {
+  Widget _buildInput(BuildContext context, TextEditingController controller, String label) {
     final theme = Theme.of(context);
     return ConstrainedBox(
-      constraints: BoxConstraints(
-          minWidth: 72 * theme.scaling, minHeight: 72 * theme.scaling),
+      constraints: BoxConstraints(minWidth: 72 * theme.scaling, minHeight: 72 * theme.scaling),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -199,8 +193,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
       minute = minute.clamp(0, 59);
       second = second.clamp(0, 59);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        widget.onChanged
-            ?.call(TimeOfDay(hour: hour, minute: minute, second: second));
+        widget.onChanged?.call(TimeOfDay(hour: hour, minute: minute, second: second));
       });
     } else {
       if (_pm && hour < 12) {
@@ -213,8 +206,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
       second = second.clamp(0, 59);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         if (!mounted) return;
-        widget.onChanged
-            ?.call(TimeOfDay(hour: hour, minute: minute, second: second));
+        widget.onChanged?.call(TimeOfDay(hour: hour, minute: minute, second: second));
       });
     }
   }
@@ -336,8 +328,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
 class _TimeFormatter extends TextInputFormatter {
   const _TimeFormatter();
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     // make sure new value has leading zero
     var newText = newValue.text;
     int substringCount = 0;
@@ -369,8 +360,7 @@ class _TimeFormatter extends TextInputFormatter {
   }
 }
 
-class DurationPickerController extends ValueNotifier<Duration?>
-    with ComponentController<Duration?> {
+class DurationPickerController extends ValueNotifier<Duration?> with ComponentController<Duration?> {
   DurationPickerController(super.value);
 }
 
@@ -461,12 +451,10 @@ class _DurationPickerDialogState extends State<DurationPickerDialog> {
     return value.toString().padLeft(2, '0');
   }
 
-  Widget _buildInput(
-      BuildContext context, TextEditingController controller, String label) {
+  Widget _buildInput(BuildContext context, TextEditingController controller, String label) {
     final theme = Theme.of(context);
     return ConstrainedBox(
-      constraints: BoxConstraints(
-          minWidth: 72 * theme.scaling, minHeight: 72 * theme.scaling),
+      constraints: BoxConstraints(minWidth: 72 * theme.scaling, minHeight: 72 * theme.scaling),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -623,10 +611,7 @@ class TimeRange {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TimeRange &&
-          runtimeType == other.runtimeType &&
-          start == other.start &&
-          end == other.end;
+      other is TimeRange && runtimeType == other.runtimeType && start == other.start && end == other.end;
 
   @override
   int get hashCode => start.hashCode ^ end.hashCode;

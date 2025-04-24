@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-typedef DrawerBuilder = Widget Function(BuildContext context, Size extraSize,
-    Size size, EdgeInsets padding, int stackIndex);
+typedef DrawerBuilder = Widget Function(
+    BuildContext context, Size extraSize, Size size, EdgeInsets padding, int stackIndex);
 
 DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
   required BuildContext context,
@@ -222,21 +222,16 @@ class DrawerWrapper extends StatefulWidget {
   State<DrawerWrapper> createState() => _DrawerWrapperState();
 }
 
-class _DrawerWrapperState extends State<DrawerWrapper>
-    with SingleTickerProviderStateMixin {
+class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late ControlledAnimation _extraOffset;
 
   OverlayPosition get resolvedPosition {
     if (widget.position == OverlayPosition.start) {
-      return Directionality.of(context) == TextDirection.ltr
-          ? OverlayPosition.left
-          : OverlayPosition.right;
+      return Directionality.of(context) == TextDirection.ltr ? OverlayPosition.left : OverlayPosition.right;
     }
     if (widget.position == OverlayPosition.end) {
-      return Directionality.of(context) == TextDirection.ltr
-          ? OverlayPosition.right
-          : OverlayPosition.left;
+      return Directionality.of(context) == TextDirection.ltr ? OverlayPosition.right : OverlayPosition.left;
     }
     return widget.position;
   }
@@ -301,13 +296,10 @@ class _DrawerWrapperState extends State<DrawerWrapper>
 
   Size getSize(BuildContext context) {
     final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
-    return renderBox?.hasSize ?? false
-        ? renderBox?.size ?? widget.size
-        : widget.size;
+    return renderBox?.hasSize ?? false ? renderBox?.size ?? widget.size : widget.size;
   }
 
-  Widget buildDraggable(BuildContext context, ControlledAnimation? controlled,
-      Widget child, ThemeData theme) {
+  Widget buildDraggable(BuildContext context, ControlledAnimation? controlled, Widget child, ThemeData theme) {
     switch (resolvedPosition) {
       case OverlayPosition.left:
         return GestureDetector(
@@ -323,8 +315,7 @@ class _DrawerWrapperState extends State<DrawerWrapper>
               newValue = 0;
             }
             if (newValue > 1) {
-              _extraOffset.value +=
-                  details.primaryDelta! / max(_extraOffset.value, 1);
+              _extraOffset.value += details.primaryDelta! / max(_extraOffset.value, 1);
               newValue = 1;
             }
             controlled.value = newValue;
@@ -348,15 +339,13 @@ class _DrawerWrapperState extends State<DrawerWrapper>
               AnimatedBuilder(
                   animation: _extraOffset,
                   builder: (context, child) {
-                    return Gap(
-                        widget.extraSize.width + _extraOffset.value.max(0));
+                    return Gap(widget.extraSize.width + _extraOffset.value.max(0));
                   }),
               Flexible(
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                        scaleX:
-                            1 + _extraOffset.value / getSize(context).width / 4,
+                        scaleX: 1 + _extraOffset.value / getSize(context).width / 4,
                         alignment: AlignmentDirectional.centerEnd,
                         child: child);
                   },
@@ -386,8 +375,7 @@ class _DrawerWrapperState extends State<DrawerWrapper>
               newValue = 0;
             }
             if (newValue > 1) {
-              _extraOffset.value +=
-                  -details.primaryDelta! / max(_extraOffset.value, 1);
+              _extraOffset.value += -details.primaryDelta! / max(_extraOffset.value, 1);
               newValue = 1;
             }
             controlled.value = newValue;
@@ -417,8 +405,7 @@ class _DrawerWrapperState extends State<DrawerWrapper>
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                        scaleX:
-                            1 + _extraOffset.value / getSize(context).width / 4,
+                        scaleX: 1 + _extraOffset.value / getSize(context).width / 4,
                         alignment: AlignmentDirectional.centerStart,
                         child: child);
                   },
@@ -429,8 +416,7 @@ class _DrawerWrapperState extends State<DrawerWrapper>
               AnimatedBuilder(
                   animation: _extraOffset,
                   builder: (context, child) {
-                    return Gap(
-                        widget.extraSize.width + _extraOffset.value.max(0));
+                    return Gap(widget.extraSize.width + _extraOffset.value.max(0));
                   }),
             ],
           ),
@@ -449,8 +435,7 @@ class _DrawerWrapperState extends State<DrawerWrapper>
               newValue = 0;
             }
             if (newValue > 1) {
-              _extraOffset.value +=
-                  details.primaryDelta! / max(_extraOffset.value, 1);
+              _extraOffset.value += details.primaryDelta! / max(_extraOffset.value, 1);
               newValue = 1;
             }
             controlled.value = newValue;
@@ -474,15 +459,13 @@ class _DrawerWrapperState extends State<DrawerWrapper>
               AnimatedBuilder(
                   animation: _extraOffset,
                   builder: (context, child) {
-                    return Gap(
-                        widget.extraSize.height + _extraOffset.value.max(0));
+                    return Gap(widget.extraSize.height + _extraOffset.value.max(0));
                   }),
               Flexible(
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                        scaleY: 1 +
-                            _extraOffset.value / getSize(context).height / 4,
+                        scaleY: 1 + _extraOffset.value / getSize(context).height / 4,
                         alignment: Alignment.bottomCenter,
                         child: child);
                   },
@@ -512,8 +495,7 @@ class _DrawerWrapperState extends State<DrawerWrapper>
               newValue = 0;
             }
             if (newValue > 1) {
-              _extraOffset.value +=
-                  -details.primaryDelta! / max(_extraOffset.value, 1);
+              _extraOffset.value += -details.primaryDelta! / max(_extraOffset.value, 1);
               newValue = 1;
             }
             controlled.value = newValue;
@@ -543,8 +525,7 @@ class _DrawerWrapperState extends State<DrawerWrapper>
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                        scaleY: 1 +
-                            _extraOffset.value / getSize(context).height / 4,
+                        scaleY: 1 + _extraOffset.value / getSize(context).height / 4,
                         alignment: Alignment.topCenter,
                         child: child);
                   },
@@ -555,8 +536,7 @@ class _DrawerWrapperState extends State<DrawerWrapper>
               AnimatedBuilder(
                   animation: _extraOffset,
                   builder: (context, child) {
-                    return Gap(
-                        widget.extraSize.height + _extraOffset.value.max(0));
+                    return Gap(widget.extraSize.height + _extraOffset.value.max(0));
                   }),
             ],
           ),
@@ -699,9 +679,7 @@ class _DrawerWrapperState extends State<DrawerWrapper>
       decoration: getDecoration(theme),
       padding: buildPadding(context),
       margin: buildMargin(context),
-      child: widget.draggable
-          ? buildDraggable(context, animation, buildChild(context), theme)
-          : buildChild(context),
+      child: widget.draggable ? buildDraggable(context, animation, buildChild(context), theme) : buildChild(context),
     );
 
     if (widget.constraints != null) {
@@ -917,8 +895,7 @@ class _DrawerOverlayWrapper extends StatefulWidget {
   State<_DrawerOverlayWrapper> createState() => _DrawerOverlayWrapperState();
 }
 
-class _DrawerOverlayWrapperState extends State<_DrawerOverlayWrapper>
-    with OverlayHandlerStateMixin {
+class _DrawerOverlayWrapperState extends State<_DrawerOverlayWrapper> with OverlayHandlerStateMixin {
   @override
   Widget build(BuildContext context) {
     return Data<OverlayHandlerStateMixin>.inherit(
@@ -972,17 +949,14 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
   BoxConstraints? constraints,
   AlignmentGeometry? alignment,
 }) {
-  DrawerLayerData? parentLayer =
-      DrawerOverlay.maybeFind(context, useRootDrawerOverlay);
+  DrawerLayerData? parentLayer = DrawerOverlay.maybeFind(context, useRootDrawerOverlay);
   CapturedThemes? themes;
   CapturedData? data;
   if (parentLayer != null) {
-    themes =
-        InheritedTheme.capture(from: context, to: parentLayer.overlay.context);
+    themes = InheritedTheme.capture(from: context, to: parentLayer.overlay.context);
     data = Data.capture(from: context, to: parentLayer.overlay.context);
   } else {
-    parentLayer =
-        DrawerOverlay.maybeFindMessenger(context, useRootDrawerOverlay);
+    parentLayer = DrawerOverlay.maybeFindMessenger(context, useRootDrawerOverlay);
   }
   assert(parentLayer != null, 'No DrawerOverlay found in the widget tree');
   final completer = Completer<T?>();
@@ -1013,26 +987,19 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
                       animation: animation,
                       builder: (context, child) {
                         Size size = constraints.biggest;
-                        double scale =
-                            1 - (1 - kBackdropScaleDown) * animation.value;
+                        double scale = 1 - (1 - kBackdropScaleDown) * animation.value;
                         Size sizeAfterScale = Size(
                           size.width * scale,
                           size.height * scale,
                         );
                         var extraSize = Size(
-                          size.width -
-                              sizeAfterScale.width / kBackdropScaleDown,
-                          size.height -
-                              sizeAfterScale.height / kBackdropScaleDown,
+                          size.width - sizeAfterScale.width / kBackdropScaleDown,
+                          size.height - sizeAfterScale.height / kBackdropScaleDown,
                         );
                         if (existingData != null) {
                           extraSize = Size(
-                            extraSize.width +
-                                existingData.sizeDifference.width /
-                                    kBackdropScaleDown,
-                            extraSize.height +
-                                existingData.sizeDifference.height /
-                                    kBackdropScaleDown,
+                            extraSize.width + existingData.sizeDifference.width / kBackdropScaleDown,
+                            extraSize.height + existingData.sizeDifference.height / kBackdropScaleDown,
                           );
                         }
                         return Data.inherit(
@@ -1040,8 +1007,7 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
                           child: Transform.scale(
                             scale: scale,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                  theme.radiusXxl * animation.value),
+                              borderRadius: BorderRadius.circular(theme.radiusXxl * animation.value),
                               child: child,
                             ),
                           ),
@@ -1053,8 +1019,7 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
                       animation: animation,
                       builder: (context, child) {
                         Size size = constraints.biggest;
-                        double scale =
-                            1 - (1 - kBackdropScaleDown) * animation.value;
+                        double scale = 1 - (1 - kBackdropScaleDown) * animation.value;
                         Size sizeAfterScale = Size(
                           size.width * scale,
                           size.height * scale,
@@ -1065,12 +1030,8 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
                         );
                         if (existingData != null) {
                           extraSize = Size(
-                            extraSize.width +
-                                existingData.sizeDifference.width /
-                                    kBackdropScaleDown,
-                            extraSize.height +
-                                existingData.sizeDifference.height /
-                                    kBackdropScaleDown,
+                            extraSize.width + existingData.sizeDifference.width / kBackdropScaleDown,
+                            extraSize.height + existingData.sizeDifference.height / kBackdropScaleDown,
                           );
                         }
                         return Data.inherit(
@@ -1155,9 +1116,7 @@ class DrawerLayerData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is DrawerLayerData &&
-        other.overlay == overlay &&
-        other.parent == parent;
+    return other is DrawerLayerData && other.overlay == overlay && other.parent == parent;
   }
 
   @override
@@ -1184,8 +1143,7 @@ class DrawerOverlay extends StatefulWidget {
     return data;
   }
 
-  static DrawerLayerData? maybeFindMessenger(BuildContext context,
-      [bool root = false]) {
+  static DrawerLayerData? maybeFindMessenger(BuildContext context, [bool root = false]) {
     var data = Data.maybeFindMessenger<DrawerLayerData>(context);
     if (root) {
       while (data?.parent != null) {
@@ -1309,8 +1267,7 @@ class DrawerEntryWidget<T> extends StatefulWidget {
   State<DrawerEntryWidget<T>> createState() => DrawerEntryWidgetState<T>();
 }
 
-class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
-    with SingleTickerProviderStateMixin {
+class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>> with SingleTickerProviderStateMixin {
   late ValueNotifier<double> additionalOffset = ValueNotifier(0);
   late AnimationController _controller;
   late ControlledAnimation _controlledAnimation;
@@ -1319,9 +1276,8 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
   @override
   void initState() {
     super.initState();
-    _controller = widget.animationController ??
-        AnimationController(
-            vsync: this, duration: const Duration(milliseconds: 350));
+    _controller =
+        widget.animationController ?? AnimationController(vsync: this, duration: const Duration(milliseconds: 350));
 
     _controlledAnimation = ControlledAnimation(_controller);
     if (widget.animationController == null && widget.autoOpen) {
@@ -1365,12 +1321,9 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
     AlignmentGeometry alignment;
     Offset startFractionalOffset;
     bool padTop = widget.useSafeArea && widget.position != OverlayPosition.top;
-    bool padBottom =
-        widget.useSafeArea && widget.position != OverlayPosition.bottom;
-    bool padLeft =
-        widget.useSafeArea && widget.position != OverlayPosition.left;
-    bool padRight =
-        widget.useSafeArea && widget.position != OverlayPosition.right;
+    bool padBottom = widget.useSafeArea && widget.position != OverlayPosition.bottom;
+    bool padLeft = widget.useSafeArea && widget.position != OverlayPosition.left;
+    bool padRight = widget.useSafeArea && widget.position != OverlayPosition.right;
     switch (widget.position) {
       case OverlayPosition.left:
         alignment = AlignmentDirectional.centerStart;
@@ -1400,8 +1353,7 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
           data: _MountedOverlayEntryData(this),
           child: Builder(builder: (context) {
             Widget barrier = (widget.modal
-                    ? widget.barrierBuilder(context, widget.backdrop,
-                        _controlledAnimation, widget.stackIndex)
+                    ? widget.barrierBuilder(context, widget.backdrop, _controlledAnimation, widget.stackIndex)
                     : null) ??
                 Positioned(
                   top: -9999,
@@ -1414,21 +1366,15 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
                     },
                   ),
                 );
-            final extraSize =
-                Data.maybeOf<BackdropTransformData>(context)?.sizeDifference;
+            final extraSize = Data.maybeOf<BackdropTransformData>(context)?.sizeDifference;
             Size additionalSize;
             Offset additionalOffset;
-            bool insetTop =
-                widget.useSafeArea && widget.position == OverlayPosition.top;
-            bool insetBottom =
-                widget.useSafeArea && widget.position == OverlayPosition.bottom;
-            bool insetLeft =
-                widget.useSafeArea && widget.position == OverlayPosition.left;
-            bool insetRight =
-                widget.useSafeArea && widget.position == OverlayPosition.right;
+            bool insetTop = widget.useSafeArea && widget.position == OverlayPosition.top;
+            bool insetBottom = widget.useSafeArea && widget.position == OverlayPosition.bottom;
+            bool insetLeft = widget.useSafeArea && widget.position == OverlayPosition.left;
+            bool insetRight = widget.useSafeArea && widget.position == OverlayPosition.right;
             MediaQueryData mediaQueryData = MediaQuery.of(context);
-            EdgeInsets padding =
-                mediaQueryData.padding + mediaQueryData.viewInsets;
+            EdgeInsets padding = mediaQueryData.padding + mediaQueryData.viewInsets;
             if (extraSize == null) {
               additionalSize = Size.zero;
               additionalOffset = Offset.zero;
@@ -1459,8 +1405,7 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
               fit: StackFit.passthrough,
               children: [
                 IgnorePointer(
-                  child: widget.backdropBuilder(context, widget.backdrop,
-                      _controlledAnimation, widget.stackIndex),
+                  child: widget.backdropBuilder(context, widget.backdrop, _controlledAnimation, widget.stackIndex),
                 ),
                 barrier,
                 Positioned.fill(
@@ -1487,8 +1432,7 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
                             animation: _controlledAnimation,
                             builder: (context, child) {
                               return FractionalTranslation(
-                                translation: startFractionalOffset *
-                                    (1 - _controlledAnimation.value),
+                                translation: startFractionalOffset * (1 - _controlledAnimation.value),
                                 child: child,
                               );
                             },
@@ -1521,11 +1465,11 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
   }
 }
 
-typedef BackdropBuilder = Widget Function(BuildContext context, Widget child,
-    Animation<double> animation, int stackIndex);
+typedef BackdropBuilder = Widget Function(
+    BuildContext context, Widget child, Animation<double> animation, int stackIndex);
 
-typedef BarrierBuilder = Widget? Function(BuildContext context, Widget child,
-    Animation<double> animation, int stackIndex);
+typedef BarrierBuilder = Widget? Function(
+    BuildContext context, Widget child, Animation<double> animation, int stackIndex);
 
 class DrawerOverlayEntry<T> {
   final GlobalKey<DrawerEntryWidgetState<T>> key = GlobalKey();
@@ -1575,8 +1519,7 @@ class DrawerOverlayCompleter<T> extends OverlayCompleter<T> {
     _entry.completer.complete();
   }
 
-  AnimationController? get animationController =>
-      _entry.animationController ?? _entry.key.currentState?._controller;
+  AnimationController? get animationController => _entry.animationController ?? _entry.key.currentState?._controller;
 
   @override
   Future<T> get future => _entry.completer.future;
@@ -1609,9 +1552,7 @@ class SheetOverlayHandler extends OverlayHandler {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is SheetOverlayHandler &&
-        other.position == position &&
-        other.barrierColor == barrierColor;
+    return other is SheetOverlayHandler && other.position == position && other.barrierColor == barrierColor;
   }
 
   @override

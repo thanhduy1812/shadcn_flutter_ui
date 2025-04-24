@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:path/path.dart' as path;
 
 // Special cases that should be handled specifically
 final Map<String, String> specialCaseMapping = {

@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 OverlayCompleter<T?> showDropdown<T>({
   required BuildContext context,
@@ -95,9 +95,7 @@ class _DropdownMenuState extends State<VNLDropdownMenu> {
       child: MenuGroup(
         regionGroupId: Data.maybeOf<DropdownMenuData>(context)?.key,
         subMenuOffset: const Offset(8, -4) * theme.scaling,
-        itemPadding: isSheetOverlay
-            ? const EdgeInsets.symmetric(horizontal: 8) * theme.scaling
-            : EdgeInsets.zero,
+        itemPadding: isSheetOverlay ? const EdgeInsets.symmetric(horizontal: 8) * theme.scaling : EdgeInsets.zero,
         onDismissed: () {
           closeOverlay(context);
         },

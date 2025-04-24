@@ -1,11 +1,9 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-typedef DotBuilder = Widget Function(
-    BuildContext context, int index, bool active);
+typedef DotBuilder = Widget Function(BuildContext context, int index, bool active);
 
 class VNLDotIndicator extends StatelessWidget {
-  static Widget _defaultDotBuilder(
-      BuildContext context, int index, bool active) {
+  static Widget _defaultDotBuilder(BuildContext context, int index, bool active) {
     return active ? const ActiveDotItem() : const InactiveDotItem();
   }
 
@@ -34,9 +32,7 @@ class VNLDotIndicator extends StatelessWidget {
     final directionality = Directionality.of(context);
     final scaling = theme.scaling;
     final spacing = this.spacing ?? (8 * scaling);
-    final padding =
-        (this.padding ?? const EdgeInsets.all(8)).resolve(directionality) *
-            theme.scaling;
+    final padding = (this.padding ?? const EdgeInsets.all(8)).resolve(directionality) * theme.scaling;
     final dotBuilder = this.dotBuilder ?? _defaultDotBuilder;
     List<Widget> children = [];
     for (int i = 0; i < length; i++) {
@@ -97,11 +93,9 @@ class DotItem extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: color,
-        borderRadius:
-            borderRadius != null ? BorderRadius.circular(borderRadius!) : null,
-        border: borderColor != null && borderWidth != null
-            ? Border.all(color: borderColor!, width: borderWidth!)
-            : null,
+        borderRadius: borderRadius != null ? BorderRadius.circular(borderRadius!) : null,
+        border:
+            borderColor != null && borderWidth != null ? Border.all(color: borderColor!, width: borderWidth!) : null,
       ),
     );
   }
@@ -136,9 +130,8 @@ class ActiveDotItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(borderRadius),
-        border: borderColor != null && borderWidth != null
-            ? Border.all(color: borderColor!, width: borderWidth!)
-            : null,
+        border:
+            borderColor != null && borderWidth != null ? Border.all(color: borderColor!, width: borderWidth!) : null,
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ResizableExample2 extends StatefulWidget {
   const ResizableExample2({super.key});

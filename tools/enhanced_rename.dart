@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:path/path.dart' as path;
 
 // Import our generated mapping
 import 'class_mapping.dart';

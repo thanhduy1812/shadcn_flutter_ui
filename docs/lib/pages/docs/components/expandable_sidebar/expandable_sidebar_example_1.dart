@@ -1,11 +1,10 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ExpandableSidebarExample1 extends StatefulWidget {
   const ExpandableSidebarExample1({super.key});
 
   @override
-  State<ExpandableSidebarExample1> createState() =>
-      _ExpandableSidebarExample1State();
+  State<ExpandableSidebarExample1> createState() => _ExpandableSidebarExample1State();
 }
 
 class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {

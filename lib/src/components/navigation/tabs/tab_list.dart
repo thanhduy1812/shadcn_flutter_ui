@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLTabList extends StatelessWidget {
   final List<TabChild> children;
@@ -12,8 +12,7 @@ class VNLTabList extends StatelessWidget {
     required this.onChanged,
   });
 
-  Widget _childBuilder(
-      BuildContext context, TabContainerData data, Widget child) {
+  Widget _childBuilder(BuildContext context, TabContainerData data, Widget child) {
     final theme = Theme.of(context);
     child = TabButton(
       enabled: data.onSelect != null,

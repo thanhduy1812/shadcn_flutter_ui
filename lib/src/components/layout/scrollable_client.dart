@@ -2,10 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-typedef ScrollableBuilder = Widget Function(
-    BuildContext context, Offset offset, Size viewportSize, Widget? child);
+typedef ScrollableBuilder = Widget Function(BuildContext context, Offset offset, Size viewportSize, Widget? child);
 
 class ScrollableClient extends StatelessWidget {
   final bool? primary;
@@ -59,11 +58,8 @@ class ScrollableClient extends StatelessWidget {
               builder: (context, child) {
                 var horizontalPixels = horizontalOffset.pixels;
                 var verticalPixels = verticalOffset.pixels;
-                return builder(
-                    context,
-                    Offset(horizontalPixels, verticalPixels),
-                    (vicinity as _ScrollableClientChildVicinity).viewportSize,
-                    child);
+                return builder(context, Offset(horizontalPixels, verticalPixels),
+                    (vicinity as _ScrollableClientChildVicinity).viewportSize, child);
               },
               child: child,
             );
@@ -128,9 +124,7 @@ class ScrollableClient extends StatelessWidget {
         child: scrollableResult,
         onNotification: (ScrollUpdateNotification notification) {
           final FocusScopeNode currentScope = FocusScope.of(context);
-          if (notification.dragDetails != null &&
-              !currentScope.hasPrimaryFocus &&
-              currentScope.hasFocus) {
+          if (notification.dragDetails != null && !currentScope.hasPrimaryFocus && currentScope.hasFocus) {
             FocusManager.instance.primaryFocus?.unfocus();
           }
           return false;
@@ -213,16 +207,11 @@ class RenderScrollableClientViewport extends RenderTwoDimensionalViewport {
       horizontalPixels = min(horizontalPixels, maxHorizontalPixels);
       verticalPixels = min(verticalPixels, maxVerticalPixels);
     }
-    parentDataOf(child).layoutOffset =
-        Offset(-horizontalPixels, -verticalPixels);
+    parentDataOf(child).layoutOffset = Offset(-horizontalPixels, -verticalPixels);
     horizontalOffset.applyContentDimensions(
-        0,
-        (child.size.width - viewportDimension.width)
-            .clamp(0.0, double.infinity));
+        0, (child.size.width - viewportDimension.width).clamp(0.0, double.infinity));
     verticalOffset.applyContentDimensions(
-        0,
-        (child.size.height - viewportDimension.height)
-            .clamp(0.0, double.infinity));
+        0, (child.size.height - viewportDimension.height).clamp(0.0, double.infinity));
     horizontalOffset.applyViewportDimension(viewportDimension.width);
     verticalOffset.applyViewportDimension(viewportDimension.height);
   }

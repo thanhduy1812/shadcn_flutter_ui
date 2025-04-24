@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class SelectExample3 extends StatefulWidget {
   const SelectExample3({super.key});
@@ -16,12 +16,9 @@ class _SelectExample3State extends State<SelectExample3> {
   };
   String? selectedValue;
 
-  Iterable<MapEntry<String, List<String>>> _filteredFruits(
-      String searchQuery) sync* {
+  Iterable<MapEntry<String, List<String>>> _filteredFruits(String searchQuery) sync* {
     for (final entry in fruits.entries) {
-      final filteredValues = entry.value
-          .where((value) => _filterName(value, searchQuery))
-          .toList();
+      final filteredValues = entry.value.where((value) => _filterName(value, searchQuery)).toList();
       if (filteredValues.isNotEmpty) {
         yield MapEntry(entry.key, filteredValues);
       } else if (_filterName(entry.key, searchQuery)) {
@@ -53,9 +50,7 @@ class _SelectExample3State extends State<SelectExample3> {
           );
         },
         builder: (context, searchQuery) async {
-          final filteredFruits = searchQuery == null
-              ? fruits.entries.toList()
-              : _filteredFruits(searchQuery).toList();
+          final filteredFruits = searchQuery == null ? fruits.entries.toList() : _filteredFruits(searchQuery).toList();
           await Future.delayed(const Duration(milliseconds: 500));
           return SelectItemBuilder(
             childCount: filteredFruits.isEmpty ? 0 : null,

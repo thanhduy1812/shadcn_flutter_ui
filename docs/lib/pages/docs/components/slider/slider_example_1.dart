@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class SliderExample1 extends StatefulWidget {
   const SliderExample1({super.key});

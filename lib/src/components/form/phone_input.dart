@@ -1,7 +1,7 @@
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/services.dart';
 
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class PhoneNumber {
   final Country country;
@@ -22,9 +22,7 @@ class PhoneNumber {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is PhoneNumber &&
-        other.country == country &&
-        other.number == number;
+    return other is PhoneNumber && other.country == country && other.number == number;
   }
 
   @override
@@ -90,8 +88,7 @@ class VNLPhoneInputTheme {
     return VNLPhoneInputTheme(
       padding: padding != null ? padding() : this.padding,
       borderRadius: borderRadius != null ? borderRadius() : this.borderRadius,
-      popupConstraints:
-          popupConstraints != null ? popupConstraints() : this.popupConstraints,
+      popupConstraints: popupConstraints != null ? popupConstraints() : this.popupConstraints,
       maxWidth: maxWidth != null ? maxWidth() : this.maxWidth,
       flagHeight: flagHeight != null ? flagHeight() : this.flagHeight,
       flagWidth: flagWidth != null ? flagWidth() : this.flagWidth,
@@ -166,17 +163,14 @@ class VNLPhoneInput extends StatefulWidget {
   State<VNLPhoneInput> createState() => _PhoneInputState();
 }
 
-class _PhoneInputState extends State<VNLPhoneInput>
-    with FormValueSupplier<PhoneNumber, VNLPhoneInput> {
+class _PhoneInputState extends State<VNLPhoneInput> with FormValueSupplier<PhoneNumber, VNLPhoneInput> {
   late Country _country;
   late TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
-    _country = widget.initialCountry ??
-        widget.initialValue?.country ??
-        Country.unitedStates;
+    _country = widget.initialCountry ?? widget.initialValue?.country ?? Country.unitedStates;
     _controller = widget.controller ?? TextEditingController();
     formValue = value;
     _controller.addListener(_dispatchChanged);
@@ -205,8 +199,7 @@ class _PhoneInputState extends State<VNLPhoneInput>
       text = text.substring(1);
     } else if (widget.filterZeroCode && text.startsWith('0')) {
       text = text.substring(1);
-    } else if (widget.filterCountryCode &&
-        text.startsWith(_country.dialCode.substring(1))) {
+    } else if (widget.filterCountryCode && text.startsWith(_country.dialCode.substring(1))) {
       // e.g. 628123456788 (indonesia) would be 8123456788
       text = text.substring(_country.dialCode.length - 1);
     }
@@ -231,10 +224,7 @@ class _PhoneInputState extends State<VNLPhoneInput>
           VNLSelect<Country>(
             padding: styleValue(
               defaultValue: EdgeInsets.only(
-                  top: theme.scaling * 8,
-                  left: theme.scaling * 8,
-                  bottom: theme.scaling * 8,
-                  right: theme.scaling * 4),
+                  top: theme.scaling * 8, left: theme.scaling * 8, bottom: theme.scaling * 8, right: theme.scaling * 4),
               themeValue: componentTheme?.padding,
             ),
             // searchPlaceholder: widget.searchPlaceholder ??
@@ -317,8 +307,7 @@ class _PhoneInputState extends State<VNLPhoneInput>
               builder: (context, searchQuery) {
                 return SelectItemList(children: [
                   for (final country in widget.countries ?? Country.values)
-                    if (searchQuery == null ||
-                        _filterCountryCode(country, searchQuery))
+                    if (searchQuery == null || _filterCountryCode(country, searchQuery))
                       SelectItemButton(
                         value: country,
                         child: Row(

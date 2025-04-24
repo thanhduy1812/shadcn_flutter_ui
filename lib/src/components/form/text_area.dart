@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLTextArea extends StatefulWidget {
   final TextEditingController? controller;
@@ -186,8 +186,7 @@ class _TextAreaState extends State<VNLTextArea> {
                     if (widget.expandableHeight && _height.isFinite) {
                       setState(() {
                         _height += details.delta.dy;
-                        _height =
-                            _height.clamp(widget.minHeight, widget.maxHeight);
+                        _height = _height.clamp(widget.minHeight, widget.maxHeight);
                         widget.onHeightChanged?.call(_height);
                       });
                     }
@@ -202,8 +201,7 @@ class _TextAreaState extends State<VNLTextArea> {
                   child: Padding(
                     padding: EdgeInsets.all(4.0 * scaling),
                     child: CustomPaint(
-                      painter: _TextAreaDragHandlePainter(
-                          theme.colorScheme.foreground),
+                      painter: _TextAreaDragHandlePainter(theme.colorScheme.foreground),
                     ),
                   ),
                 ),

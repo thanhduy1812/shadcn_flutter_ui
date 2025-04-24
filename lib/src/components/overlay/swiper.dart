@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 abstract class SwiperHandler {
   static const SwiperHandler drawer = DrawerSwiperHandler();
@@ -158,15 +158,11 @@ class _SwiperState extends State<VNLSwiper> {
   OverlayPosition get resolvedPosition {
     if (widget.position == OverlayPosition.start) {
       var textDirection = Directionality.of(context);
-      return textDirection == TextDirection.ltr
-          ? OverlayPosition.left
-          : OverlayPosition.right;
+      return textDirection == TextDirection.ltr ? OverlayPosition.left : OverlayPosition.right;
     }
     if (widget.position == OverlayPosition.end) {
       var textDirection = Directionality.of(context);
-      return textDirection == TextDirection.ltr
-          ? OverlayPosition.right
-          : OverlayPosition.left;
+      return textDirection == TextDirection.ltr ? OverlayPosition.right : OverlayPosition.left;
     }
     return widget.position;
   }
@@ -194,8 +190,7 @@ class _SwiperState extends State<VNLSwiper> {
         return;
       }
       double axisSize;
-      if (resolvedPosition == OverlayPosition.top ||
-          resolvedPosition == OverlayPosition.bottom) {
+      if (resolvedPosition == OverlayPosition.top || resolvedPosition == OverlayPosition.bottom) {
         axisSize = size.height;
       } else {
         axisSize = size.width;
@@ -267,8 +262,7 @@ class _SwiperState extends State<VNLSwiper> {
     required Widget child,
     required bool draggable,
   }) {
-    if (widget.position == OverlayPosition.top ||
-        widget.position == OverlayPosition.bottom) {
+    if (widget.position == OverlayPosition.top || widget.position == OverlayPosition.bottom) {
       return GestureDetector(
         behavior: widget.behavior ?? HitTestBehavior.translucent,
         onVerticalDragUpdate: draggable ? _onDrag : null,

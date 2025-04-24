@@ -1,6 +1,6 @@
 import 'dart:js_interop';
 
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 @JS("Window")
 extension type _Window(JSObject _) implements JSObject {
@@ -40,8 +40,7 @@ extension type _VNLookAppThemeChangedEvent._(JSObject _) implements JSObject {
 
 @JS("VNLookAppTheme")
 extension type _VNLookAppTheme._(JSObject _) implements JSObject {
-  external _VNLookAppTheme(
-      String background, String foreground, String primary);
+  external _VNLookAppTheme(String background, String foreground, String primary);
 }
 
 class VNLookPlatformImplementations {

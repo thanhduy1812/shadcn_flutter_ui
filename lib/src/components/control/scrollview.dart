@@ -2,15 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // This helps to simulate middle hold scroll on web and desktop platforms
 class ScrollViewInterceptor extends StatefulWidget {
   final Widget child;
   final bool enabled;
 
-  const ScrollViewInterceptor(
-      {super.key, required this.child, this.enabled = true});
+  const ScrollViewInterceptor({super.key, required this.child, this.enabled = true});
 
   @override
   State<ScrollViewInterceptor> createState() => _ScrollViewInterceptorState();
@@ -31,8 +30,7 @@ class DesktopPointerScrollEvent extends PointerScrollEvent {
   });
 }
 
-class _ScrollViewInterceptorState extends State<ScrollViewInterceptor>
-    with SingleTickerProviderStateMixin {
+class _ScrollViewInterceptorState extends State<ScrollViewInterceptor> with SingleTickerProviderStateMixin {
   late Ticker _ticker;
 
   Duration? _lastTime;
@@ -58,10 +56,8 @@ class _ScrollViewInterceptorState extends State<ScrollViewInterceptor>
     _lastTime = elapsed;
     if (delta.inMilliseconds == 0) return;
     Offset positionDelta = _event!.position - _lastOffset!;
-    double incX =
-        pow(-positionDelta.dx * kScrollDragSpeed, 3) / delta.inMilliseconds;
-    double incY =
-        pow(-positionDelta.dy * kScrollDragSpeed, 3) / delta.inMilliseconds;
+    double incX = pow(-positionDelta.dx * kScrollDragSpeed, 3) / delta.inMilliseconds;
+    double incY = pow(-positionDelta.dy * kScrollDragSpeed, 3) / delta.inMilliseconds;
     incX = incX.clamp(-kMaxScrollSpeed, kMaxScrollSpeed);
     incY = incY.clamp(-kMaxScrollSpeed, kMaxScrollSpeed);
     var instance = GestureBinding.instance;

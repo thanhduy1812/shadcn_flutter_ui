@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/component_page.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import 'avatar_group/avatar_group_example_1.dart';
@@ -16,8 +16,7 @@ class AvatarGroupExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Avatar Group Example 1',
-          path:
-              'lib/pages/docs/components/avatar_group/avatar_group_example_1.dart',
+          path: 'lib/pages/docs/components/avatar_group/avatar_group_example_1.dart',
           child: AvatarGroupExample1(),
         ),
       ],

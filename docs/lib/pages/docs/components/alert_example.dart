@@ -1,6 +1,6 @@
 import 'package:docs/pages/docs/components/alert/alert_example_1.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../component_page.dart';
 
@@ -12,8 +12,7 @@ class AlertExample extends StatelessWidget {
     return const ComponentPage(
       name: 'alert',
       displayName: 'Alert',
-      description:
-          'Alerts are used to communicate a state that affects the system.',
+      description: 'Alerts are used to communicate a state that affects the system.',
       children: [
         WidgetUsageExample(
           title: 'Alert Example',

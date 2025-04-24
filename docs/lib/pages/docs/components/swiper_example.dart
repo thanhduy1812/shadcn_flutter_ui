@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/swiper/swiper_example_1.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -16,10 +16,10 @@ class SwiperExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example 1',
-        path: 'lib/pages/docs/components/swiper/swiper_example_1.dart',
+          path: 'lib/pages/docs/components/swiper/swiper_example_1.dart',
           child: SwiperExample1(),
         ),
-    ],
+      ],
     );
   }
 }

@@ -1,9 +1,10 @@
 import 'dart:collection';
 import 'dart:ui';
 
-import 'package:vnl_ui/vnl_ui.dart';
-import 'package:vnl_ui/src/components/layout/group.dart';
-import 'package:vnl_ui/src/components/patch.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
+
+import '../patch.dart';
+import 'group.dart';
 
 class WindowSnapStrategy {
   final Rect relativeBounds;
@@ -60,18 +61,8 @@ class WindowState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      bounds,
-      maximized,
-      minimized,
-      alwaysOnTop,
-      closable,
-      resizable,
-      draggable,
-      maximizable,
-      minimizable,
-      enableSnapping,
-      constraints);
+  int get hashCode => Object.hash(bounds, maximized, minimized, alwaysOnTop, closable, resizable, draggable,
+      maximizable, minimizable, enableSnapping, constraints);
 
   @override
   String toString() {
@@ -254,7 +245,7 @@ class WindowWidget extends StatefulWidget {
     this.maximized,
     bool this.minimized = false,
     BoxConstraints this.constraints = kDefaultWindowConstraints,
-  })  : controller = null;
+  }) : controller = null;
 
   const WindowWidget.controlled({
     super.key,
@@ -417,8 +408,7 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
           deltaXAdjustment *= adjustmentX;
           deltaYAdjustment *= adjustmentY;
           if (deltaXAdjustment != 0 || deltaYAdjustment != 0) {
-            newBounds =
-                onResize(newBounds, Offset(deltaXAdjustment, deltaYAdjustment));
+            newBounds = onResize(newBounds, Offset(deltaXAdjustment, deltaYAdjustment));
           }
           bounds = newBounds;
         },
@@ -439,9 +429,7 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
           Widget windowClient = VNLCard(
             clipBehavior: Clip.antiAlias,
             padding: EdgeInsets.zero,
-            borderRadius: state.maximized != null
-                ? BorderRadius.zero
-                : theme.borderRadiusMd,
+            borderRadius: state.maximized != null ? BorderRadius.zero : theme.borderRadiusMd,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -466,16 +454,11 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
                         var max = maximized;
                         var size = _viewport?.size;
                         if (max != null && size != null) {
-                          bounds = Rect.fromLTWH(
-                              max.left * size.width,
-                              max.top * size.height,
-                              max.width * size.width,
+                          bounds = Rect.fromLTWH(max.left * size.width, max.top * size.height, max.width * size.width,
                               max.height * size.height);
                         }
-                        var alignX = lerpDouble(
-                            -1, 1, (localPosition.dx / bounds.width))!;
-                        var alignY = lerpDouble(
-                            -1, 1, (localPosition.dy / bounds.height))!;
+                        var alignX = lerpDouble(-1, 1, (localPosition.dx / bounds.width))!;
+                        var alignY = lerpDouble(-1, 1, (localPosition.dy / bounds.height))!;
                         _dragAlignment = Alignment(
                           alignX,
                           alignY,
@@ -488,12 +471,10 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
                         }
                         if (state.maximized != null) {
                           maximized = null;
-                          RenderBox? layerRenderBox = _viewport
-                              ?.navigator._state.context
-                              .findRenderObject() as RenderBox?;
+                          RenderBox? layerRenderBox =
+                              _viewport?.navigator._state.context.findRenderObject() as RenderBox?;
                           if (layerRenderBox != null) {
-                            Offset layerLocal = layerRenderBox
-                                .globalToLocal(details.globalPosition);
+                            Offset layerLocal = layerRenderBox.globalToLocal(details.globalPosition);
                             Size titleSize = Size(
                               this.bounds.width,
                               32 * theme.scaling,
@@ -549,8 +530,7 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
                                 ),
                                 child: (_viewport?.focused ?? true)
                                     ? (widget.title ?? const SizedBox())
-                                    : (widget.title ?? const SizedBox())
-                                        .muted(),
+                                    : (widget.title ?? const SizedBox()).muted(),
                               ),
                             ),
                             if (widget.actions != null) widget.actions!,
@@ -578,9 +558,7 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
               },
               builder: (context, value, child) {
                 return Transform.scale(
-                  scale: (_viewport?.closed ?? false)
-                      ? lerpDouble(0.8, 1.0, value)!
-                      : lerpDouble(0.9, 1.0, value)!,
+                  scale: (_viewport?.closed ?? false) ? lerpDouble(0.8, 1.0, value)! : lerpDouble(0.9, 1.0, value)!,
                   child: Opacity(
                     opacity: value,
                     child: child,
@@ -610,9 +588,7 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
               children: [
                 windowClient,
                 // Resize regions
-                if (resizable &&
-                    maximized == null &&
-                    _dragAlignment == null) ...[
+                if (resizable && maximized == null && _dragAlignment == null) ...[
                   // top left
                   GroupPositioned(
                     top: 0,
@@ -770,19 +746,13 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
               var rect = bounds;
               if (newValue != null) {
                 var size = _viewport?.size ?? Size.zero;
-                var value = Rect.fromLTWH(
-                    newValue.left * size.width,
-                    newValue.top * size.height,
-                    newValue.width * size.width,
-                    newValue.height * size.height);
+                var value = Rect.fromLTWH(newValue.left * size.width, newValue.top * size.height,
+                    newValue.width * size.width, newValue.height * size.height);
                 rect = Rect.lerp(bounds, value, t)!;
               } else if (oldValue != null) {
                 var size = _viewport?.size ?? Size.zero;
-                var value = Rect.fromLTWH(
-                    oldValue.left * size.width,
-                    oldValue.top * size.height,
-                    oldValue.width * size.width,
-                    oldValue.height * size.height);
+                var value = Rect.fromLTWH(oldValue.left * size.width, oldValue.top * size.height,
+                    oldValue.width * size.width, oldValue.height * size.height);
                 rect = Rect.lerp(value, bounds, t)!;
               }
               return GroupPositioned.fromRect(rect: rect, child: child!);
@@ -1071,10 +1041,7 @@ class _WindowLayerGroup extends StatelessWidget {
   final bool alwaysOnTop;
 
   const _WindowLayerGroup(
-      {required this.constraints,
-      required this.windows,
-      required this.handle,
-      required this.alwaysOnTop});
+      {required this.constraints, required this.windows, required this.handle, required this.alwaysOnTop});
 
   @override
   Widget build(BuildContext context) {
@@ -1099,14 +1066,10 @@ class _WindowLayerGroup extends StatelessWidget {
             handle._draggingWindow.value!.window.alwaysOnTop == alwaysOnTop)
           GroupPositioned.fromRect(
             rect: Rect.fromLTWH(
-              handle._snappingStrategy.value!.relativeBounds.left *
-                  constraints.biggest.width,
-              handle._snappingStrategy.value!.relativeBounds.top *
-                  constraints.biggest.height,
-              handle._snappingStrategy.value!.relativeBounds.width *
-                  constraints.biggest.width,
-              handle._snappingStrategy.value!.relativeBounds.height *
-                  constraints.biggest.height,
+              handle._snappingStrategy.value!.relativeBounds.left * constraints.biggest.width,
+              handle._snappingStrategy.value!.relativeBounds.top * constraints.biggest.height,
+              handle._snappingStrategy.value!.relativeBounds.width * constraints.biggest.width,
+              handle._snappingStrategy.value!.relativeBounds.height * constraints.biggest.height,
             ),
             child: _BlurContainer(
               key: ValueKey(handle._snappingStrategy.value),
@@ -1132,42 +1095,32 @@ class _WindowLayerGroup extends StatelessWidget {
                     hitTestBehavior: HitTestBehavior.translucent,
                     child: AnimatedValueBuilder(
                       value: handle._draggingWindow.value == null ||
-                              handle._draggingWindow.value!.window
-                                      .alwaysOnTop !=
-                                  alwaysOnTop
+                              handle._draggingWindow.value!.window.alwaysOnTop != alwaysOnTop
                           ? -1.0
                           : handle._hoveringTopSnapper.value
                               ? 0.0
                               : -0.85,
-                      duration: handle._hoveringTopSnapper.value
-                          ? const Duration(milliseconds: 300)
-                          : kDefaultDuration,
+                      duration: handle._hoveringTopSnapper.value ? const Duration(milliseconds: 300) : kDefaultDuration,
                       curve: Curves.easeInOut,
                       builder: (context, value, child) {
                         return Transform.translate(
-                          offset: Offset(0,
-                              unlerpDouble(value, -1.0, 0.0).clamp(0, 1) * 24),
+                          offset: Offset(0, unlerpDouble(value, -1.0, 0.0).clamp(0, 1) * 24),
                           child: FractionalTranslation(
                               translation: Offset(0, value),
                               child: OutlinedContainer(
                                 height: 100,
-                                padding:
-                                    const EdgeInsets.all(8) * theme.scaling,
+                                padding: const EdgeInsets.all(8) * theme.scaling,
                                 child: Opacity(
-                                  opacity: unlerpDouble(value, -0.85, 0.0)
-                                      .clamp(0, 1),
+                                  opacity: unlerpDouble(value, -0.85, 0.0).clamp(0, 1),
                                   child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
                                     mainAxisSize: MainAxisSize.min,
                                     spacing: 8 * theme.scaling,
                                     children: [
                                       // 0.5 | 0.5
                                       AspectRatio(
-                                        aspectRatio: constraints.biggest.width /
-                                            constraints.biggest.height,
-                                        child: LayoutBuilder(
-                                            builder: (context, constraints) {
+                                        aspectRatio: constraints.biggest.width / constraints.biggest.height,
+                                        child: LayoutBuilder(builder: (context, constraints) {
                                           final size = constraints.biggest;
                                           return GroupWidget(
                                             children: [
@@ -1175,8 +1128,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0, 0, 0.5, 1),
+                                                  relativeBounds: Rect.fromLTWH(0, 0, 0.5, 1),
                                                 ),
                                                 topRight: true,
                                                 bottomRight: true,
@@ -1185,8 +1137,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0.5, 0, 0.5, 1),
+                                                  relativeBounds: Rect.fromLTWH(0.5, 0, 0.5, 1),
                                                 ),
                                                 topLeft: true,
                                                 bottomLeft: true,
@@ -1197,10 +1148,8 @@ class _WindowLayerGroup extends StatelessWidget {
                                       ),
                                       // 0.7 | 0.3
                                       AspectRatio(
-                                        aspectRatio: constraints.biggest.width /
-                                            constraints.biggest.height,
-                                        child: LayoutBuilder(
-                                            builder: (context, constraints) {
+                                        aspectRatio: constraints.biggest.width / constraints.biggest.height,
+                                        child: LayoutBuilder(builder: (context, constraints) {
                                           final size = constraints.biggest;
                                           return GroupWidget(
                                             children: [
@@ -1208,8 +1157,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0, 0, 0.7, 1),
+                                                  relativeBounds: Rect.fromLTWH(0, 0, 0.7, 1),
                                                 ),
                                                 topRight: true,
                                                 bottomRight: true,
@@ -1218,8 +1166,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0.7, 0, 0.3, 1),
+                                                  relativeBounds: Rect.fromLTWH(0.7, 0, 0.3, 1),
                                                 ),
                                                 topLeft: true,
                                                 bottomLeft: true,
@@ -1231,10 +1178,8 @@ class _WindowLayerGroup extends StatelessWidget {
                                       // (0.5, 1) | (0.5, 0.5)
                                       //          | (0.5, 0.5)
                                       AspectRatio(
-                                        aspectRatio: constraints.biggest.width /
-                                            constraints.biggest.height,
-                                        child: LayoutBuilder(
-                                            builder: (context, constraints) {
+                                        aspectRatio: constraints.biggest.width / constraints.biggest.height,
+                                        child: LayoutBuilder(builder: (context, constraints) {
                                           final size = constraints.biggest;
                                           return GroupWidget(
                                             children: [
@@ -1242,8 +1187,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0, 0.0, 0.5, 1.0),
+                                                  relativeBounds: Rect.fromLTWH(0, 0.0, 0.5, 1.0),
                                                 ),
                                                 topRight: true,
                                                 bottomRight: true,
@@ -1252,8 +1196,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0.5, 0, 0.5, 0.5),
+                                                  relativeBounds: Rect.fromLTWH(0.5, 0, 0.5, 0.5),
                                                 ),
                                                 bottomLeft: true,
                                                 bottomRight: true,
@@ -1263,8 +1206,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0.5, 0.5, 0.5, 0.5),
+                                                  relativeBounds: Rect.fromLTWH(0.5, 0.5, 0.5, 0.5),
                                                 ),
                                                 topLeft: true,
                                                 topRight: true,
@@ -1277,10 +1219,8 @@ class _WindowLayerGroup extends StatelessWidget {
                                       // (0.5, 0.5) | (0.5, 0.5)
                                       // (0.5, 0.5) | (0.5, 0.5)
                                       AspectRatio(
-                                        aspectRatio: constraints.biggest.width /
-                                            constraints.biggest.height,
-                                        child: LayoutBuilder(
-                                            builder: (context, constraints) {
+                                        aspectRatio: constraints.biggest.width / constraints.biggest.height,
+                                        child: LayoutBuilder(builder: (context, constraints) {
                                           final size = constraints.biggest;
                                           return GroupWidget(
                                             children: [
@@ -1288,8 +1228,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0, 0, 0.5, 0.5),
+                                                  relativeBounds: Rect.fromLTWH(0, 0, 0.5, 0.5),
                                                 ),
                                                 bottomRight: true,
                                                 topRight: true,
@@ -1299,8 +1238,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0.5, 0, 0.5, 0.5),
+                                                  relativeBounds: Rect.fromLTWH(0.5, 0, 0.5, 0.5),
                                                 ),
                                                 bottomLeft: true,
                                                 topLeft: true,
@@ -1310,8 +1248,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0, 0.5, 0.5, 0.5),
+                                                  relativeBounds: Rect.fromLTWH(0, 0.5, 0.5, 0.5),
                                                 ),
                                                 topLeft: true,
                                                 topRight: true,
@@ -1321,8 +1258,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0.5, 0.5, 0.5, 0.5),
+                                                  relativeBounds: Rect.fromLTWH(0.5, 0.5, 0.5, 0.5),
                                                 ),
                                                 topLeft: true,
                                                 topRight: true,
@@ -1334,10 +1270,8 @@ class _WindowLayerGroup extends StatelessWidget {
                                       ),
                                       // 1/3 | 1/3 | 1/3
                                       AspectRatio(
-                                        aspectRatio: constraints.biggest.width /
-                                            constraints.biggest.height,
-                                        child: LayoutBuilder(
-                                            builder: (context, constraints) {
+                                        aspectRatio: constraints.biggest.width / constraints.biggest.height,
+                                        child: LayoutBuilder(builder: (context, constraints) {
                                           final size = constraints.biggest;
                                           return GroupWidget(
                                             children: [
@@ -1345,8 +1279,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0, 0, 1 / 3, 1),
+                                                  relativeBounds: Rect.fromLTWH(0, 0, 1 / 3, 1),
                                                 ),
                                                 topRight: true,
                                                 bottomRight: true,
@@ -1355,8 +1288,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      1 / 3, 0, 1 / 3, 1),
+                                                  relativeBounds: Rect.fromLTWH(1 / 3, 0, 1 / 3, 1),
                                                 ),
                                                 allLeft: true,
                                                 allRight: true,
@@ -1365,8 +1297,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      2 / 3, 0, 1 / 3, 1),
+                                                  relativeBounds: Rect.fromLTWH(2 / 3, 0, 1 / 3, 1),
                                                 ),
                                                 topLeft: true,
                                                 bottomLeft: true,
@@ -1377,10 +1308,8 @@ class _WindowLayerGroup extends StatelessWidget {
                                       ),
                                       // 2/7 | 3/7 | 2/7
                                       AspectRatio(
-                                        aspectRatio: constraints.biggest.width /
-                                            constraints.biggest.height,
-                                        child: LayoutBuilder(
-                                            builder: (context, constraints) {
+                                        aspectRatio: constraints.biggest.width / constraints.biggest.height,
+                                        child: LayoutBuilder(builder: (context, constraints) {
                                           final size = constraints.biggest;
                                           return GroupWidget(
                                             children: [
@@ -1388,8 +1317,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      0, 0, 2 / 7, 1),
+                                                  relativeBounds: Rect.fromLTWH(0, 0, 2 / 7, 1),
                                                 ),
                                                 topRight: true,
                                                 bottomRight: true,
@@ -1398,8 +1326,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      2 / 7, 0, 3 / 7, 1),
+                                                  relativeBounds: Rect.fromLTWH(2 / 7, 0, 3 / 7, 1),
                                                 ),
                                                 allLeft: true,
                                                 allRight: true,
@@ -1408,8 +1335,7 @@ class _WindowLayerGroup extends StatelessWidget {
                                                 size,
                                                 theme,
                                                 const WindowSnapStrategy(
-                                                  relativeBounds: Rect.fromLTWH(
-                                                      5 / 7, 0, 2 / 7, 1),
+                                                  relativeBounds: Rect.fromLTWH(5 / 7, 0, 2 / 7, 1),
                                                 ),
                                                 topLeft: true,
                                                 bottomLeft: true,
@@ -1429,18 +1355,16 @@ class _WindowLayerGroup extends StatelessWidget {
                 ),
               );
             }),
-        if (handle._draggingWindow.value != null &&
-            handle._draggingWindow.value!.window.alwaysOnTop == alwaysOnTop)
+        if (handle._draggingWindow.value != null && handle._draggingWindow.value!.window.alwaysOnTop == alwaysOnTop)
           handle._draggingWindow.value!.window._build(
             size: constraints.biggest,
             navigator: handle,
             focused: true,
             alwaysOnTop: handle._draggingWindow.value!.window.alwaysOnTop ??
-                handle._draggingWindow.value!.window.controller?.value
-                    .alwaysOnTop ??
+                handle._draggingWindow.value!.window.controller?.value.alwaysOnTop ??
                 false,
-            minifyDragging: handle._snappingStrategy.value != null &&
-                handle._snappingStrategy.value!.shouldMinifyWindow,
+            minifyDragging:
+                handle._snappingStrategy.value != null && handle._snappingStrategy.value!.shouldMinifyWindow,
             ignorePointer: true,
           ),
       ],
@@ -1448,17 +1372,14 @@ class _WindowLayerGroup extends StatelessWidget {
   }
 }
 
-class _WindowNavigatorState extends State<WindowNavigator>
-    with WindowNavigatorHandle {
+class _WindowNavigatorState extends State<WindowNavigator> with WindowNavigatorHandle {
   late List<Window> _windows;
   late List<Window> _topWindows;
   int _focusLayer = 0; // 0: background, 1: foreground, 2: foremost
 
-  final ValueNotifier<_DraggingWindow?> _draggingWindow =
-      ValueNotifier<_DraggingWindow?>(null);
+  final ValueNotifier<_DraggingWindow?> _draggingWindow = ValueNotifier<_DraggingWindow?>(null);
   final ValueNotifier<bool> _hoveringTopSnapper = ValueNotifier(false);
-  final ValueNotifier<WindowSnapStrategy?> _snappingStrategy =
-      ValueNotifier(null);
+  final ValueNotifier<WindowSnapStrategy?> _snappingStrategy = ValueNotifier(null);
 
   void _startDraggingWindow(Window draggingWindow, Offset cursorPosition) {
     if (_draggingWindow.value != null) return;
@@ -1466,17 +1387,14 @@ class _WindowNavigatorState extends State<WindowNavigator>
   }
 
   void _updateDraggingWindow(Window handle, Offset cursorPosition) {
-    if (_draggingWindow.value == null ||
-        _draggingWindow.value!.window != handle) {
+    if (_draggingWindow.value == null || _draggingWindow.value!.window != handle) {
       return;
     }
-    _draggingWindow.value =
-        _DraggingWindow(_draggingWindow.value!.window, cursorPosition);
+    _draggingWindow.value = _DraggingWindow(_draggingWindow.value!.window, cursorPosition);
   }
 
   void _stopDraggingWindow(Window handle) {
-    if (_draggingWindow.value == null ||
-        _draggingWindow.value!.window != handle) {
+    if (_draggingWindow.value == null || _draggingWindow.value!.window != handle) {
       return;
     }
     var snapping = _snappingStrategy.value;
@@ -1605,8 +1523,7 @@ class _WindowNavigatorState extends State<WindowNavigator>
     );
   }
 
-  Widget _createPaneSnapStrategy(
-      Size size, ThemeData theme, WindowSnapStrategy snapStrategy,
+  Widget _createPaneSnapStrategy(Size size, ThemeData theme, WindowSnapStrategy snapStrategy,
       {bool topLeft = false,
       bool topRight = false,
       bool bottomLeft = false,
@@ -1789,21 +1706,15 @@ class _SnapHoverState extends State<_SnapHover> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color:
-              _hovering ? theme.colorScheme.secondary : theme.colorScheme.card,
+          color: _hovering ? theme.colorScheme.secondary : theme.colorScheme.card,
           border: Border.all(
             color: theme.colorScheme.border,
           ),
           borderRadius: BorderRadius.only(
-            topLeft:
-                widget.topLeft ? theme.radiusSmRadius : theme.radiusLgRadius,
-            topRight:
-                widget.topRight ? theme.radiusSmRadius : theme.radiusLgRadius,
-            bottomLeft:
-                widget.bottomLeft ? theme.radiusSmRadius : theme.radiusLgRadius,
-            bottomRight: widget.bottomRight
-                ? theme.radiusSmRadius
-                : theme.radiusLgRadius,
+            topLeft: widget.topLeft ? theme.radiusSmRadius : theme.radiusLgRadius,
+            topRight: widget.topRight ? theme.radiusSmRadius : theme.radiusLgRadius,
+            bottomLeft: widget.bottomLeft ? theme.radiusSmRadius : theme.radiusLgRadius,
+            bottomRight: widget.bottomRight ? theme.radiusSmRadius : theme.radiusLgRadius,
           ),
         ),
       ),
@@ -1843,8 +1754,7 @@ class WindowViewport {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(size, navigator, focused, alwaysOnTop, closed, minify);
+  int get hashCode => Object.hash(size, navigator, focused, alwaysOnTop, closed, minify);
 }
 
 class WindowActions extends StatelessWidget {
@@ -1873,8 +1783,7 @@ class WindowActions extends StatelessWidget {
                 if (handle.maximized != null) {
                   handle.maximized = null;
                 } else {
-                  handle.maximized = viewport?.navigator._state
-                          ._snappingStrategy.value?.relativeBounds ??
+                  handle.maximized = viewport?.navigator._state._snappingStrategy.value?.relativeBounds ??
                       const Rect.fromLTWH(0, 0, 1, 1);
                 }
               }

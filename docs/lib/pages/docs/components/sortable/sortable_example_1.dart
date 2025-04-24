@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class SortableExample1 extends StatefulWidget {
   const SortableExample1({super.key});
@@ -41,8 +41,7 @@ class _SortableExample1State extends State<SortableExample1> {
                 child: SortableDropFallback<String>(
                   onAccept: (value) {
                     setState(() {
-                      swapItemInLists(
-                          [invited, reserved], value, invited, invited.length);
+                      swapItemInLists([invited, reserved], value, invited, invited.length);
                     });
                   },
                   child: Column(
@@ -53,14 +52,12 @@ class _SortableExample1State extends State<SortableExample1> {
                           data: invited[i],
                           onAcceptTop: (value) {
                             setState(() {
-                              swapItemInLists(
-                                  [invited, reserved], value, invited, i);
+                              swapItemInLists([invited, reserved], value, invited, i);
                             });
                           },
                           onAcceptBottom: (value) {
                             setState(() {
-                              swapItemInLists(
-                                  [invited, reserved], value, invited, i + 1);
+                              swapItemInLists([invited, reserved], value, invited, i + 1);
                             });
                           },
                           child: OutlinedContainer(
@@ -79,8 +76,7 @@ class _SortableExample1State extends State<SortableExample1> {
                 child: SortableDropFallback<String>(
                   onAccept: (value) {
                     setState(() {
-                      swapItemInLists([invited, reserved], value, reserved,
-                          reserved.length);
+                      swapItemInLists([invited, reserved], value, reserved, reserved.length);
                     });
                   },
                   child: Column(
@@ -91,14 +87,12 @@ class _SortableExample1State extends State<SortableExample1> {
                           data: reserved[i],
                           onAcceptTop: (value) {
                             setState(() {
-                              swapItemInLists(
-                                  [invited, reserved], value, reserved, i);
+                              swapItemInLists([invited, reserved], value, reserved, i);
                             });
                           },
                           onAcceptBottom: (value) {
                             setState(() {
-                              swapItemInLists(
-                                  [invited, reserved], value, reserved, i + 1);
+                              swapItemInLists([invited, reserved], value, reserved, i + 1);
                             });
                           },
                           child: OutlinedContainer(

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 main() {
-  String result = "import 'package:vnl_ui/vnl_ui.dart';\n"
+  String result = "import 'package:vnl_common_ui/vnl_ui.dart';\n"
       "\n"
       "class Colors {\n";
   List<String> primaryNames = [];

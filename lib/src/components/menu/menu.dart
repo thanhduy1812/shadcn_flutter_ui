@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class MenuShortcut extends StatelessWidget {
   final ShortcutActivator activator;
@@ -57,8 +57,7 @@ class MenuRadioGroup<T> extends StatelessWidget implements MenuItem {
   @override
   Widget build(BuildContext context) {
     final menuGroupData = Data.maybeOf<MenuGroupData>(context);
-    assert(
-        menuGroupData != null, 'MenuRadioGroup must be a child of MenuGroup');
+    assert(menuGroupData != null, 'MenuRadioGroup must be a child of MenuGroup');
     return Data<MenuRadioGroup<T>>.inherit(
       data: this,
       child: Flex(
@@ -128,11 +127,10 @@ class MenuDivider extends StatelessWidget implements MenuItem {
     final scaling = theme.scaling;
     return AnimatedPadding(
       duration: kDefaultDuration,
-      padding:
-          (menuGroupData == null || menuGroupData.direction == Axis.vertical
-                  ? const EdgeInsets.symmetric(vertical: 4)
-                  : const EdgeInsets.symmetric(horizontal: 4)) *
-              scaling,
+      padding: (menuGroupData == null || menuGroupData.direction == Axis.vertical
+              ? const EdgeInsets.symmetric(vertical: 4)
+              : const EdgeInsets.symmetric(horizontal: 4)) *
+          scaling,
       child: menuGroupData == null || menuGroupData.direction == Axis.vertical
           ? VNLDivider(
               height: 1 * scaling,
@@ -231,9 +229,7 @@ class MenuLabel extends StatelessWidget implements MenuItem {
     final menuGroupData = Data.maybeOf<MenuGroupData>(context);
     assert(menuGroupData != null, 'MenuLabel must be a child of MenuGroup');
     return Padding(
-      padding: const EdgeInsets.only(left: 8, top: 6, right: 6, bottom: 6) *
-              scaling +
-          menuGroupData!.itemPadding,
+      padding: const EdgeInsets.only(left: 8, top: 6, right: 6, bottom: 6) * scaling + menuGroupData!.itemPadding,
       child: Basic(
         contentSpacing: 8 * scaling,
         leading: leading == null && menuGroupData.hasLeading
@@ -249,9 +245,8 @@ class MenuLabel extends StatelessWidget implements MenuItem {
         content: child.semiBold(),
         trailingAlignment: Alignment.center,
         leadingAlignment: Alignment.center,
-        contentAlignment: menuGroupData.direction == Axis.vertical
-            ? AlignmentDirectional.centerStart
-            : Alignment.center,
+        contentAlignment:
+            menuGroupData.direction == Axis.vertical ? AlignmentDirectional.centerStart : Alignment.center,
       ),
     );
   }
@@ -392,8 +387,7 @@ class _MenuButtonState extends State<MenuButton> {
           );
         },
         alignment: Alignment.topLeft,
-        anchorAlignment:
-            menuBarData != null ? Alignment.bottomLeft : Alignment.topRight,
+        anchorAlignment: menuBarData != null ? Alignment.bottomLeft : Alignment.topRight,
         offset: menuGroupData.subMenuOffset,
       );
     }
@@ -407,45 +401,34 @@ class _MenuButtonState extends State<MenuButton> {
               builder: (context, child) {
                 return VNLButton(
                   disableFocusOutline: true,
-                  alignment: menuGroupData.direction == Axis.vertical
-                      ? AlignmentDirectional.centerStart
-                      : Alignment.center,
-                  style: (menuBarData == null
-                          ? ButtonVariance.menu
-                          : ButtonVariance.menubar)
-                      .copyWith(
+                  alignment:
+                      menuGroupData.direction == Axis.vertical ? AlignmentDirectional.centerStart : Alignment.center,
+                  style: (menuBarData == null ? ButtonVariance.menu : ButtonVariance.menubar).copyWith(
                     padding: (context, states, value) {
-                      return value.optionallyResolve(context) +
-                          menuGroupData.itemPadding;
+                      return value.optionallyResolve(context) + menuGroupData.itemPadding;
                     },
                     decoration: (context, states, value) {
                       final theme = Theme.of(context);
                       return (value as BoxDecoration).copyWith(
-                        color: menuData.popoverController.hasOpenPopover
-                            ? theme.colorScheme.accent
-                            : null,
+                        color: menuData.popoverController.hasOpenPopover ? theme.colorScheme.accent : null,
                         borderRadius: BorderRadius.circular(theme.radiusMd),
                       );
                     },
                   ),
                   trailing: menuBarData != null
                       ? widget.trailing
-                      : widget.trailing != null ||
-                              (widget.subMenu != null && menuBarData == null)
+                      : widget.trailing != null || (widget.subMenu != null && menuBarData == null)
                           ? Row(
                               children: [
                                 if (widget.trailing != null) widget.trailing!,
-                                if (widget.subMenu != null &&
-                                    menuBarData == null)
+                                if (widget.subMenu != null && menuBarData == null)
                                   const Icon(
                                     RadixIcons.chevronRight,
                                   ).iconSmall(),
                               ],
                             ).gap(8 * scaling)
                           : null,
-                  leading: widget.leading == null &&
-                          menuGroupData.hasLeading &&
-                          menuBarData == null
+                  leading: widget.leading == null && menuGroupData.hasLeading && menuBarData == null
                       ? SizedBox(width: 16 * scaling)
                       : widget.leading == null
                           ? null
@@ -459,12 +442,10 @@ class _MenuButtonState extends State<MenuButton> {
                   focusNode: _focusNode,
                   onHover: (value) {
                     if (value) {
-                      if ((menuBarData == null ||
-                              menuGroupData.hasOpenPopovers) &&
+                      if ((menuBarData == null || menuGroupData.hasOpenPopovers) &&
                           widget.subMenu != null &&
                           widget.subMenu!.isNotEmpty) {
-                        if (!menuData.popoverController.hasOpenPopover &&
-                            !isIndependentOverlay) {
+                        if (!menuData.popoverController.hasOpenPopover && !isIndependentOverlay) {
                           openSubMenu(context);
                         }
                       } else {
@@ -474,10 +455,8 @@ class _MenuButtonState extends State<MenuButton> {
                   },
                   onFocus: (value) {
                     if (value) {
-                      if (widget.subMenu != null &&
-                          widget.subMenu!.isNotEmpty) {
-                        if (!menuData.popoverController.hasOpenPopover &&
-                            !isIndependentOverlay) {
+                      if (widget.subMenu != null && widget.subMenu!.isNotEmpty) {
+                        if (!menuData.popoverController.hasOpenPopover && !isIndependentOverlay) {
                           openSubMenu(context);
                         }
                       } else {
@@ -516,8 +495,8 @@ class MenuGroupData {
   final Axis direction;
   final EdgeInsets itemPadding;
 
-  MenuGroupData(this.parent, this.children, this.hasLeading, this.subMenuOffset,
-      this.onDismissed, this.regionGroupId, this.direction, this.itemPadding);
+  MenuGroupData(this.parent, this.children, this.hasLeading, this.subMenuOffset, this.onDismissed, this.regionGroupId,
+      this.direction, this.itemPadding);
 
   bool get hasOpenPopovers {
     for (final child in children) {
@@ -583,8 +562,7 @@ class MenuGroupData {
 class MenuData {
   final PopoverController popoverController;
 
-  MenuData({PopoverController? popoverController})
-      : popoverController = popoverController ?? PopoverController();
+  MenuData({PopoverController? popoverController}) : popoverController = popoverController ?? PopoverController();
 }
 
 class MenuGroup extends StatefulWidget {
@@ -640,8 +618,7 @@ class _MenuGroupState extends State<MenuGroup> {
         var key = child.key ?? ValueKey(i);
         var oldData = oldKeyedData[key];
         if (oldData != null) {
-          if (child.popoverController != null &&
-              oldData.popoverController != child.popoverController) {
+          if (child.popoverController != null && oldData.popoverController != child.popoverController) {
             oldData.popoverController.dispose();
             oldData = MenuData(popoverController: child.popoverController);
           }
@@ -697,31 +674,22 @@ class _MenuGroupState extends State<MenuGroup> {
     return Shortcuts(
       shortcuts: {
         if (widget.direction == Axis.vertical)
-          const SingleActivator(LogicalKeyboardKey.arrowUp):
-              const PreviousFocusIntent(),
+          const SingleActivator(LogicalKeyboardKey.arrowUp): const PreviousFocusIntent(),
         if (widget.direction == Axis.vertical)
-          const SingleActivator(LogicalKeyboardKey.arrowDown):
-              const NextFocusIntent(),
+          const SingleActivator(LogicalKeyboardKey.arrowDown): const NextFocusIntent(),
         if (widget.direction == Axis.vertical)
-          const SingleActivator(LogicalKeyboardKey.arrowLeft):
-              const PreviousSiblingFocusIntent(),
+          const SingleActivator(LogicalKeyboardKey.arrowLeft): const PreviousSiblingFocusIntent(),
         if (widget.direction == Axis.vertical)
-          const SingleActivator(LogicalKeyboardKey.arrowRight):
-              const NextSiblingFocusIntent(),
+          const SingleActivator(LogicalKeyboardKey.arrowRight): const NextSiblingFocusIntent(),
         if (widget.direction == Axis.horizontal)
-          const SingleActivator(LogicalKeyboardKey.arrowLeft):
-              const PreviousFocusIntent(),
+          const SingleActivator(LogicalKeyboardKey.arrowLeft): const PreviousFocusIntent(),
         if (widget.direction == Axis.horizontal)
-          const SingleActivator(LogicalKeyboardKey.arrowRight):
-              const NextFocusIntent(),
+          const SingleActivator(LogicalKeyboardKey.arrowRight): const NextFocusIntent(),
         if (widget.direction == Axis.horizontal)
-          const SingleActivator(LogicalKeyboardKey.arrowUp):
-              const PreviousSiblingFocusIntent(),
+          const SingleActivator(LogicalKeyboardKey.arrowUp): const PreviousSiblingFocusIntent(),
         if (widget.direction == Axis.horizontal)
-          const SingleActivator(LogicalKeyboardKey.arrowDown):
-              const NextSiblingFocusIntent(),
-        const SingleActivator(LogicalKeyboardKey.escape):
-            const CloseMenuIntent(),
+          const SingleActivator(LogicalKeyboardKey.arrowDown): const NextSiblingFocusIntent(),
+        const SingleActivator(LogicalKeyboardKey.escape): const CloseMenuIntent(),
       },
       child: Actions(
         actions: {
@@ -793,34 +761,34 @@ class MenuOverlayHandler extends OverlayHandler {
   const MenuOverlayHandler(this.manager);
 
   @override
-  OverlayCompleter<T?> show<T>(
-      {required BuildContext context,
-      required AlignmentGeometry alignment,
-      required WidgetBuilder builder,
-      Offset? position,
-      AlignmentGeometry? anchorAlignment,
-      PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-      PopoverConstraint heightConstraint = PopoverConstraint.flexible,
-      Key? key,
-      bool rootOverlay = true,
-      bool modal = true,
-      bool barrierDismissable = true,
-      Clip clipBehavior = Clip.none,
-      Object? regionGroupId,
-      Offset? offset,
-      AlignmentGeometry? transitionAlignment,
-      EdgeInsetsGeometry? margin,
-      bool follow = true,
-      bool consumeOutsideTaps = true,
-      ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
-      bool allowInvertHorizontal = true,
-      bool allowInvertVertical = true,
-      bool dismissBackdropFocus = true,
-      Duration? showDuration,
-      Duration? dismissDuration,
-      OverlayBarrier? overlayBarrier,
-        LayerLink? layerLink,
-      }) {
+  OverlayCompleter<T?> show<T>({
+    required BuildContext context,
+    required AlignmentGeometry alignment,
+    required WidgetBuilder builder,
+    Offset? position,
+    AlignmentGeometry? anchorAlignment,
+    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
+    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    Key? key,
+    bool rootOverlay = true,
+    bool modal = true,
+    bool barrierDismissable = true,
+    Clip clipBehavior = Clip.none,
+    Object? regionGroupId,
+    Offset? offset,
+    AlignmentGeometry? transitionAlignment,
+    EdgeInsetsGeometry? margin,
+    bool follow = true,
+    bool consumeOutsideTaps = true,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
+    bool allowInvertHorizontal = true,
+    bool allowInvertVertical = true,
+    bool dismissBackdropFocus = true,
+    Duration? showDuration,
+    Duration? dismissDuration,
+    OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
+  }) {
     return manager.showMenu(
       context: context,
       alignment: alignment,

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class FormExample1 extends StatefulWidget {
   const FormExample1({super.key});
@@ -65,8 +65,7 @@ class _FormExample1State extends State<FormExample1> {
                 FormField(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
-                  validator: CompareWith.equal(_passwordKey,
-                      message: 'Passwords do not match'),
+                  validator: CompareWith.equal(_passwordKey, message: 'Passwords do not match'),
                   child: const VNLTextField(
                     obscureText: true,
                   ),

@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class DrawerExample1 extends StatefulWidget {
   const DrawerExample1({super.key});
@@ -30,8 +30,7 @@ class _DrawerExample1State extends State<DrawerExample1> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                    'Drawer ${count + 1} at ${positions[count % positions.length].name}'),
+                Text('Drawer ${count + 1} at ${positions[count % positions.length].name}'),
                 const Gap(16),
                 PrimaryButton(
                   onPressed: () {

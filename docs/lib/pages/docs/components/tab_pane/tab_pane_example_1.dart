@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class TabPaneExample1 extends StatefulWidget {
   const TabPaneExample1({super.key});
@@ -27,8 +27,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     tabs = [
-      for (int i = 0; i < 3; i++)
-        TabPaneData(MyTab('Tab ${i + 1}', i + 1, 'Content ${i + 1}')),
+      for (int i = 0; i < 3; i++) TabPaneData(MyTab('Tab ${i + 1}', i + 1, 'Content ${i + 1}')),
     ];
   }
 
@@ -100,12 +99,9 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
           onPressed: () {
             setState(() {
               int max = tabs.fold<int>(0, (previousValue, element) {
-                return element.data.count > previousValue
-                    ? element.data.count
-                    : previousValue;
+                return element.data.count > previousValue ? element.data.count : previousValue;
               });
-              tabs.add(TabPaneData(
-                  MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}')));
+              tabs.add(TabPaneData(MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}')));
             });
           },
         )

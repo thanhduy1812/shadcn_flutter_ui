@@ -15,7 +15,7 @@ import 'package:docs/pages/docs/state/data_example_8.dart';
 import 'package:docs/pages/docs/state/data_example_9.dart';
 import 'package:docs/pages/docs_page.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class StateManagementPage extends StatefulWidget {
   const StateManagementPage({super.key});
@@ -55,22 +55,14 @@ class _StateManagementPageState extends State<StateManagementPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const VNLSelectableText('State Management').h1(),
-          const VNLSelectableText(
-                  'A comprehensive guide to managing state in vnl_ui.')
-              .lead(),
-          const VNLSelectableText(
-                  'In Flutter, everything is a widget, including where your data is stored.')
-              .p(),
-          const VNLSelectableText(
-                  'Internally, vnl_ui has its own state management system. '
+          const VNLSelectableText('A comprehensive guide to managing state in vnl_ui.').lead(),
+          const VNLSelectableText('In Flutter, everything is a widget, including where your data is stored.').p(),
+          const VNLSelectableText('Internally, vnl_ui has its own state management system. '
                   'Although if you are already using a state management system, '
                   'you can continue to use it with vnl_ui.')
               .p(),
-          const VNLSelectableText('Passing Data to the Children')
-              .h2()
-              .anchored(keyPassingDataToChildren),
-          const VNLSelectableText(
-                  'You can pass data to children using the Data widget. '
+          const VNLSelectableText('Passing Data to the Children').h2().anchored(keyPassingDataToChildren),
+          const VNLSelectableText('You can pass data to children using the Data widget. '
                   'Any changes that occur in the data will cause the child to rebuild.')
               .p(),
           const WidgetUsageExample(
@@ -80,36 +72,28 @@ class _StateManagementPageState extends State<StateManagementPage> {
           ).p(),
           const VNLAlert(
             leading: Icon(Icons.info_outline),
-            title: VNLSelectableText(
-                'Did you notice the difference in the rebuild count?'),
-            content: VNLSelectableText(
-                'The MostInnerWidget rebuilds when the data changes while the InnerWidget does not. '
-                'This is because the InnerWidget is not listening to the data.'),
+            title: VNLSelectableText('Did you notice the difference in the rebuild count?'),
+            content:
+                VNLSelectableText('The MostInnerWidget rebuilds when the data changes while the InnerWidget does not. '
+                    'This is because the InnerWidget is not listening to the data.'),
           ).p(),
           const VNLSelectableText('Setting Data Boundary').h3().p(),
-          const VNLSelectableText(
-                  'You can set a boundary so that the child cannot access the data.')
-              .p(),
+          const VNLSelectableText('You can set a boundary so that the child cannot access the data.').p(),
           const WidgetUsageExample(
             path: 'lib/pages/docs/state/data_example_4.dart',
             summarize: false,
             child: DataExample4(),
           ).p(),
-          const VNLSelectableText(
-                  'Data.maybeOf/Data.of vs Data.maybeFind/Data.find')
-              .h3()
-              .p(),
+          const VNLSelectableText('Data.maybeOf/Data.of vs Data.maybeFind/Data.find').h3().p(),
           const VNLSelectableText('')
               .thenInlineCode('Data.maybeOf(context)')
               .thenText(' and ')
               .thenInlineCode('Data.of(context)')
-              .thenText(
-                  ' listens to the data and rebuilds the widget when the data changes. Meanwhile ')
+              .thenText(' listens to the data and rebuilds the widget when the data changes. Meanwhile ')
               .thenInlineCode('Data.maybeFind(context)')
               .thenText(' and ')
               .thenInlineCode('Data.find(context)')
-              .thenText(
-                  ' does not listen to the data and only returns the data.')
+              .thenText(' does not listen to the data and only returns the data.')
               .p(),
           const WidgetUsageExample(
             path: 'lib/pages/docs/state/data_example_5.dart',
@@ -122,8 +106,7 @@ class _StateManagementPageState extends State<StateManagementPage> {
               .thenInlineCode('Data.find(context)')
               .thenText(' and ')
               .thenInlineCode('Data.maybeFind(context)')
-              .thenText(
-                  ' are great to use inside onPressed, onLongPressed, etc where the method is called once. ')
+              .thenText(' are great to use inside onPressed, onLongPressed, etc where the method is called once. ')
               .p(),
           const VNLSelectableText('')
               .thenInlineCode('Data.of(context)')
@@ -132,16 +115,12 @@ class _StateManagementPageState extends State<StateManagementPage> {
               .thenText(
                   ' are great to use inside build method where the widget needs to rebuild when the data changes.')
               .p(),
-          const VNLSelectableText('Getting Data from the Child')
-              .h2()
-              .anchored(keyGettingDataFromTheChild),
+          const VNLSelectableText('Getting Data from the Child').h2().anchored(keyGettingDataFromTheChild),
           const VNLSelectableText('You can get data from the child using the ')
               .thenInlineCode('Data.maybeFindMessenger(context)')
-              .thenText(
-                  ' method. This method does not listen to any changes that occur in the data. ')
+              .thenText(' method. This method does not listen to any changes that occur in the data. ')
               .p(),
-          const VNLSelectableText(
-                  'Listening to child data might cause infinite rebuild loops. '
+          const VNLSelectableText('Listening to child data might cause infinite rebuild loops. '
                   'Move the data to the parent widget if you need to listen to it.')
               .p(),
           const WidgetUsageExample(
@@ -156,17 +135,14 @@ class _StateManagementPageState extends State<StateManagementPage> {
                 'It uses the data from the left most inner data, because parent can only take data from the first attached child.'),
           ).p(),
           const VNLSelectableText('Setting DataMessenger Boundary').h3().p(),
-          const VNLSelectableText(
-                  'You can set a boundary so that child data cannot be obtained from specific parent.')
+          const VNLSelectableText('You can set a boundary so that child data cannot be obtained from specific parent.')
               .p(),
           const WidgetUsageExample(
             path: 'lib/pages/docs/state/data_example_3.dart',
             summarize: false,
             child: DataExample3(),
           ).p(),
-          const VNLSelectableText('MultiData Widget')
-              .h2()
-              .anchored(keyMultiDataWidget),
+          const VNLSelectableText('MultiData Widget').h2().anchored(keyMultiDataWidget),
           const VNLSelectableText(
                   'The MultiData widget allows you to pass multiple data to the children. Take a look at the following example:')
               .p(),
@@ -182,9 +158,7 @@ class _StateManagementPageState extends State<StateManagementPage> {
                 ')',
             mode: 'dart',
           ).p(),
-          const VNLSelectableText(
-                  'You can avoid nesting by using the MultiData widget.')
-              .p(),
+          const VNLSelectableText('You can avoid nesting by using the MultiData widget.').p(),
           const CodeSnippet(
             code: 'MultiData(\n'
                 '\tdataList: [\n'
@@ -202,9 +176,7 @@ class _StateManagementPageState extends State<StateManagementPage> {
             summarize: false,
             child: DataExample6(),
           ).p(),
-          const VNLSelectableText('Passing State as a Controller')
-              .h2()
-              .anchored(keyPassingStateAsAController),
+          const VNLSelectableText('Passing State as a Controller').h2().anchored(keyPassingStateAsAController),
           const VNLSelectableText(
                   'You can pass state as a controller to the children. This way you can call method in parent widget from child widgets.')
               .p(),
@@ -214,8 +186,7 @@ class _StateManagementPageState extends State<StateManagementPage> {
             child: DataExample7(),
           ).p(),
           const VNLSelectableText('DataBuilder').h2().anchored(keyDataBuilder),
-          const VNLSelectableText(
-                  'You can use the DataBuilder widget to rebuild the widget when the data changes. '
+          const VNLSelectableText('You can use the DataBuilder widget to rebuild the widget when the data changes. '
                   'This also avoids rebuilding the entire widget.')
               .p(),
           // example 8
@@ -225,9 +196,7 @@ class _StateManagementPageState extends State<StateManagementPage> {
             child: DataExample8(),
           ).p(),
           const VNLSelectableText('DataNotifier').h2().anchored(keyDataNotifier),
-          const VNLSelectableText(
-                  'Data notifier allows you to pass value to children from a ValueListenable.')
-              .p(),
+          const VNLSelectableText('Data notifier allows you to pass value to children from a ValueListenable.').p(),
           const WidgetUsageExample(
             path: 'lib/pages/docs/state/data_example_9.dart',
             summarize: false,
@@ -240,12 +209,9 @@ class _StateManagementPageState extends State<StateManagementPage> {
             child: DataExample10(),
           ).p(),
           const VNLSelectableText('Passing Object as Data').h3().p(),
-          const VNLSelectableText(
-                  'There are several things you need to consider when passing an object as data:')
-              .p(),
+          const VNLSelectableText('There are several things you need to consider when passing an object as data:').p(),
           const VNLSelectableText('1. Override == and hashCode').h4().p(),
-          const VNLSelectableText(
-                  'Children will be notified when the old object is not equal to the new object. '
+          const VNLSelectableText('Children will be notified when the old object is not equal to the new object. '
                   'If you do not override == and hashCode, the object will always be considered '
                   'different every time the object is instantiated even if the object has the same '
                   'field values.')
@@ -262,17 +228,12 @@ class _StateManagementPageState extends State<StateManagementPage> {
             path: 'lib/pages/docs/state/data_example_17.dart',
             summarize: false,
           ).p(),
-          const VNLSelectableText('3. Passing Mutable Object to Children')
-              .h4()
-              .p(),
-          const VNLSelectableText(
-                  'It is recommended to pass an immutable object to the children. Mutable '
+          const VNLSelectableText('3. Passing Mutable Object to Children').h4().p(),
+          const VNLSelectableText('It is recommended to pass an immutable object to the children. Mutable '
                   'object (e.g. List, Map, Set, Widget State) will not notify the children when the object is mutated '
                   'because the object reference does not change. ')
               .p(),
-          const VNLSelectableText('Passing Variable to Children')
-              .h2()
-              .anchored(keyModel),
+          const VNLSelectableText('Passing Variable to Children').h2().anchored(keyModel),
           const VNLSelectableText(
                   'To pass a variable to children, you can use the Model widget. It is similar to Data widget, but it is type-strict and also labeled.')
               .p(),
@@ -283,9 +244,7 @@ class _StateManagementPageState extends State<StateManagementPage> {
           ).p(),
 
           const VNLSelectableText('Change Variable from Children').h3().p(),
-          const VNLSelectableText(
-                  'There are 2 ways to change model value from children:')
-              .p(),
+          const VNLSelectableText('There are 2 ways to change model value from children:').p(),
           const WidgetUsageExample(
             path: 'lib/pages/docs/state/data_example_12.dart',
             summarize: false,
@@ -300,9 +259,7 @@ class _StateManagementPageState extends State<StateManagementPage> {
             summarize: false,
             child: DataExample13(),
           ).p(),
-          const VNLSelectableText('ModelListenable')
-              .h2()
-              .anchored(keyModelListenable),
+          const VNLSelectableText('ModelListenable').h2().anchored(keyModelListenable),
           const VNLSelectableText(
                   'ModelListenable is a read-only ModelNotifier. Children can only listen to the value. Attempting to change the value will throw an error.')
               .p(),

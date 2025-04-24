@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class FormattedInputExample1 extends StatelessWidget {
   const FormattedInputExample1({super.key});
@@ -14,14 +14,11 @@ class FormattedInputExample1 extends StatelessWidget {
         print(parts.join('/'));
       },
       initialValue: FormattedValue([
-        const InputPart.editable(length: 2, width: 40, placeholder: Text('MM'))
-            .withValue('01'),
+        const InputPart.editable(length: 2, width: 40, placeholder: Text('MM')).withValue('01'),
         const InputPart.static('/'),
-        const InputPart.editable(length: 2, width: 40, placeholder: Text('DD'))
-            .withValue('02'),
+        const InputPart.editable(length: 2, width: 40, placeholder: Text('DD')).withValue('02'),
         const InputPart.static('/'),
-        const InputPart.editable(length: 4, width: 60, placeholder: Text('YYYY'))
-            .withValue('2021'),
+        const InputPart.editable(length: 4, width: 60, placeholder: Text('YYYY')).withValue('2021'),
       ]),
     );
   }

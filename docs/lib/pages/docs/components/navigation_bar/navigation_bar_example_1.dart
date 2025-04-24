@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class NavigationBarExample1 extends StatefulWidget {
   const NavigationBarExample1({super.key});
@@ -18,12 +18,8 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
 
   NavigationItem buildButton(String label, IconData icon) {
     return NavigationItem(
-      style: customButtonStyle
-          ? const ButtonStyle.muted(density: ButtonDensity.icon)
-          : null,
-      selectedStyle: customButtonStyle
-          ? const ButtonStyle.fixed(density: ButtonDensity.icon)
-          : null,
+      style: customButtonStyle ? const ButtonStyle.muted(density: ButtonDensity.icon) : null,
+      selectedStyle: customButtonStyle ? const ButtonStyle.fixed(density: ButtonDensity.icon) : null,
       label: Text(label),
       child: Icon(icon),
     );
@@ -70,8 +66,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
               children: [
                 VNLSelect<NavigationBarAlignment>(
                   value: alignment,
-                  itemBuilder:
-                      (BuildContext context, NavigationBarAlignment item) {
+                  itemBuilder: (BuildContext context, NavigationBarAlignment item) {
                     return Text(item.name);
                   },
                   popupWidthConstraint: PopoverConstraint.anchorFixedSize,
@@ -93,8 +88,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                 ),
                 VNLSelect<NavigationLabelType>(
                   value: labelType,
-                  itemBuilder:
-                      (BuildContext context, NavigationLabelType item) {
+                  itemBuilder: (BuildContext context, NavigationLabelType item) {
                     return Text(item.name);
                   },
                   popupWidthConstraint: PopoverConstraint.anchorFixedSize,
@@ -115,8 +109,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                   ])),
                 ),
                 VNLCheckbox(
-                  state:
-                      expands ? CheckboxState.checked : CheckboxState.unchecked,
+                  state: expands ? CheckboxState.checked : CheckboxState.unchecked,
                   onChanged: (value) {
                     setState(() {
                       expands = value == CheckboxState.checked;
@@ -125,9 +118,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                   trailing: const Text('Expands'),
                 ),
                 VNLCheckbox(
-                  state: customButtonStyle
-                      ? CheckboxState.checked
-                      : CheckboxState.unchecked,
+                  state: customButtonStyle ? CheckboxState.checked : CheckboxState.unchecked,
                   onChanged: (value) {
                     setState(() {
                       customButtonStyle = value == CheckboxState.checked;
@@ -136,9 +127,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                   trailing: const Text('Custom Button Style'),
                 ),
                 VNLCheckbox(
-                  state: expanded
-                      ? CheckboxState.checked
-                      : CheckboxState.unchecked,
+                  state: expanded ? CheckboxState.checked : CheckboxState.unchecked,
                   onChanged: (value) {
                     setState(() {
                       expanded = value == CheckboxState.checked;

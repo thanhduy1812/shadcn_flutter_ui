@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/tab_list/tab_list_example_1.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';

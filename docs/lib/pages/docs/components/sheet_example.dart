@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/sheet/sheet_example_1.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -11,8 +11,7 @@ class SheetExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'sheet',
-      description:
-          'A sheet is a panel that slides in from the edge of a screen.',
+      description: 'A sheet is a panel that slides in from the edge of a screen.',
       displayName: 'Sheet',
       children: [
         WidgetUsageExample(

@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class BreadcrumbExample1 extends StatelessWidget {
   const BreadcrumbExample1({super.key});

@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/carousel/carousel_example_1.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -14,8 +14,7 @@ class CarouselExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'carousel',
-      description:
-          'A carousel slider widget, support infinite scroll and custom child widget.',
+      description: 'A carousel slider widget, support infinite scroll and custom child widget.',
       displayName: 'Carousel',
       children: [
         WidgetUsageExample(
@@ -63,10 +62,7 @@ class NumberedContainer extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: fill
-            ? Colors.primaries[
-                (Colors.primaries.length - 1 - index) % Colors.primaries.length]
-            : null,
+        color: fill ? Colors.primaries[(Colors.primaries.length - 1 - index) % Colors.primaries.length] : null,
         borderRadius: theme.borderRadiusMd,
       ),
       child: Center(

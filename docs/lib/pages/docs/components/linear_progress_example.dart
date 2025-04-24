@@ -1,7 +1,7 @@
 import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/docs/components/linear_progress/linear_progress_example_1.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import 'linear_progress/linear_progress_example_2.dart';
 
@@ -17,14 +17,12 @@ class LinearProgressExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Indeterminate Example',
-          path:
-              'lib/pages/docs/components/linear_progress/linear_progress_example_1.dart',
+          path: 'lib/pages/docs/components/linear_progress/linear_progress_example_1.dart',
           child: LinearProgressExample1(),
         ),
         WidgetUsageExample(
           title: 'Determinate Example',
-          path:
-              'lib/pages/docs/components/linear_progress/linear_progress_example_2.dart',
+          path: 'lib/pages/docs/components/linear_progress/linear_progress_example_2.dart',
           child: LinearProgressExample2(),
         ),
       ],

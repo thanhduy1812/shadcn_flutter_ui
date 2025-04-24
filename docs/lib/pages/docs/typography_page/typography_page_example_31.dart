@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class TypographyPageExample31 extends StatelessWidget {
   const TypographyPageExample31({super.key});

@@ -5,7 +5,7 @@ import 'package:docs/pages/docs/components/sortable/sortable_example_3.dart';
 import 'package:docs/pages/docs/components/sortable/sortable_example_4.dart';
 import 'package:docs/pages/docs/components/sortable/sortable_example_5.dart';
 import 'package:docs/pages/docs/components/sortable/sortable_example_6.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 

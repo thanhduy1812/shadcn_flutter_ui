@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs_page.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class WebPreloaderPage extends StatelessWidget {
@@ -13,17 +13,14 @@ class WebPreloaderPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text('Web Preloader').h1(),
-            const Text('Customize how flutter load your web application')
-                .lead(),
+            const Text('Customize how flutter load your web application').lead(),
             const Gap(32),
             VNLSteps(
               children: [
                 StepItem(
                   title: const Text('Creating a web directory'),
                   content: [
-                    const Text(
-                            'If you don\'t have a web directory, create one.')
-                        .p(),
+                    const Text('If you don\'t have a web directory, create one.').p(),
                     const CodeSnippet(
                       code: 'flutter create . --platforms=web',
                       mode: 'shell',
@@ -35,8 +32,7 @@ class WebPreloaderPage extends StatelessWidget {
                               openInNewTab(
                                   'https://docs.flutter.dev/platform-integration/web/initialization#upgrade-an-older-project');
                             },
-                            child:
-                                const Text('Click here for more information.'))
+                            child: const Text('Click here for more information.'))
                         .italic()
                         .muted()
                         .withPadding(top: 8),
@@ -45,20 +41,16 @@ class WebPreloaderPage extends StatelessWidget {
                 StepItem(
                   title: const Text('Adding a script'),
                   content: [
-                    const Text(
-                            'Next, select and copy one of these pre-made preloaders:')
-                        .p(),
-                    const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Standard Preloader'),
-                          Gap(8),
-                          CodeSnippet(
-                            code:
-                                '<script src="https://cdn.jsdelivr.net/gh/sunarya-thito/vnl_ui@latest/web_loaders/standard.js"></script>',
-                            mode: 'javascript',
-                          ),
-                        ]).li().p(),
+                    const Text('Next, select and copy one of these pre-made preloaders:').p(),
+                    const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Text('Standard Preloader'),
+                      Gap(8),
+                      CodeSnippet(
+                        code:
+                            '<script src="https://cdn.jsdelivr.net/gh/sunarya-thito/vnl_ui@latest/web_loaders/standard.js"></script>',
+                        mode: 'javascript',
+                      ),
+                    ]).li().p(),
                   ],
                 ),
                 StepItem(
@@ -103,16 +95,15 @@ class WebPreloaderPage extends StatelessWidget {
             VNLAlert(
               title: const Text('Contributing'),
               leading: const Icon(Icons.info_outlined),
-              content: const Text(
-                      'If you have a preloader that you want to share, please create a pull request under the ')
-                  .thenButton(
-                      onPressed: () {
-                        launchUrlString(
-                            'https://github.com/sunarya-thito/vnl_ui/tree/master/web_loaders');
-                      },
-                      child: const Text('web_loaders'))
-                  .thenText(' directory.')
-                  .p(),
+              content:
+                  const Text('If you have a preloader that you want to share, please create a pull request under the ')
+                      .thenButton(
+                          onPressed: () {
+                            launchUrlString('https://github.com/sunarya-thito/vnl_ui/tree/master/web_loaders');
+                          },
+                          child: const Text('web_loaders'))
+                      .thenText(' directory.')
+                      .p(),
             ),
           ],
         ));

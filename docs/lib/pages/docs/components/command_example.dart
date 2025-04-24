@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -11,8 +11,7 @@ class CommandExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'command',
-      description:
-          'A command is a component that allows you to search for items.',
+      description: 'A command is a component that allows you to search for items.',
       displayName: 'Command',
       children: [
         WidgetUsageExample(

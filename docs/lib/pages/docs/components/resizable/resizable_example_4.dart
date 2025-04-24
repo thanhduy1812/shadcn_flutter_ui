@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ResizableExample4 extends StatefulWidget {
   const ResizableExample4({super.key});
@@ -9,16 +9,11 @@ class ResizableExample4 extends StatefulWidget {
 }
 
 class _ResizableExample4State extends State<ResizableExample4> {
-  final AbsoluteResizablePaneController controller1 =
-      AbsoluteResizablePaneController(80);
-  final AbsoluteResizablePaneController controller2 =
-      AbsoluteResizablePaneController(80);
-  final AbsoluteResizablePaneController controller3 =
-      AbsoluteResizablePaneController(120);
-  final AbsoluteResizablePaneController controller4 =
-      AbsoluteResizablePaneController(80);
-  final AbsoluteResizablePaneController controller5 =
-      AbsoluteResizablePaneController(80);
+  final AbsoluteResizablePaneController controller1 = AbsoluteResizablePaneController(80);
+  final AbsoluteResizablePaneController controller2 = AbsoluteResizablePaneController(80);
+  final AbsoluteResizablePaneController controller3 = AbsoluteResizablePaneController(120);
+  final AbsoluteResizablePaneController controller4 = AbsoluteResizablePaneController(80);
+  final AbsoluteResizablePaneController controller5 = AbsoluteResizablePaneController(80);
   @override
   Widget build(BuildContext context) {
     return Column(

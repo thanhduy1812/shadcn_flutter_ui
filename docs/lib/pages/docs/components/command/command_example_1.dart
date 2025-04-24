@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class CommandExample1 extends StatelessWidget {
   const CommandExample1({super.key});
@@ -22,8 +22,7 @@ class CommandExample1 extends StatelessWidget {
         for (final values in items.entries) {
           List<Widget> resultItems = [];
           for (final item in values.value) {
-            if (query == null ||
-                item.toLowerCase().contains(query.toLowerCase())) {
+            if (query == null || item.toLowerCase().contains(query.toLowerCase())) {
               resultItems.add(CommandItem(
                 title: Text(item),
                 leading: icons[item],

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class DesktopEditableTextContextMenu extends StatelessWidget {
   final BuildContext anchorContext;
@@ -20,13 +20,10 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
     final scaling = theme.scaling;
     final localizations = VNLookLocalizations.of(context);
     var undoHistoryController = this.undoHistoryController;
-    var contextMenuButtonItems =
-        List.of(editableTextState.contextMenuButtonItems);
+    var contextMenuButtonItems = List.of(editableTextState.contextMenuButtonItems);
 
     ContextMenuButtonItem? take(ContextMenuButtonType type) {
-      var item = contextMenuButtonItems
-          .where((element) => element.type == type)
-          .firstOrNull;
+      var item = contextMenuButtonItems.where((element) => element.type == type).firstOrNull;
       if (item != null) {
         contextMenuButtonItems.remove(item);
       }
@@ -126,8 +123,7 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
           child: ContextMenuPopup(
             anchorSize: Size.zero,
             anchorContext: anchorContext,
-            position: editableTextState.contextMenuAnchors.primaryAnchor +
-                const Offset(8, -8) * scaling,
+            position: editableTextState.contextMenuAnchors.primaryAnchor + const Offset(8, -8) * scaling,
             children: [
               cutButtonWidget,
               copyButtonWidget,
@@ -147,8 +143,7 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
             builder: (context, child) {
               return ContextMenuPopup(
                 anchorContext: anchorContext,
-                position: editableTextState.contextMenuAnchors.primaryAnchor +
-                    const Offset(8, -8) * scaling,
+                position: editableTextState.contextMenuAnchors.primaryAnchor + const Offset(8, -8) * scaling,
                 children: [
                   MenuButton(
                     enabled: undoHistoryController.value.canUndo,
@@ -211,13 +206,10 @@ class MobileEditableTextContextMenu extends StatelessWidget {
     final scaling = theme.scaling;
     final localizations = VNLookLocalizations.of(context);
     var undoHistoryController = this.undoHistoryController;
-    var contextMenuButtonItems =
-        List.of(editableTextState.contextMenuButtonItems);
+    var contextMenuButtonItems = List.of(editableTextState.contextMenuButtonItems);
 
     ContextMenuButtonItem? take(ContextMenuButtonType type) {
-      var item = contextMenuButtonItems
-          .where((element) => element.type == type)
-          .firstOrNull;
+      var item = contextMenuButtonItems.where((element) => element.type == type).firstOrNull;
       if (item != null) {
         contextMenuButtonItems.remove(item);
       }
@@ -304,9 +296,9 @@ class MobileEditableTextContextMenu extends StatelessWidget {
       ));
     }
 
-    var primaryAnchor = (editableTextState.contextMenuAnchors.secondaryAnchor ??
-            editableTextState.contextMenuAnchors.primaryAnchor) +
-        const Offset(-8, 8) * scaling;
+    var primaryAnchor =
+        (editableTextState.contextMenuAnchors.secondaryAnchor ?? editableTextState.contextMenuAnchors.primaryAnchor) +
+            const Offset(-8, 8) * scaling;
     if (undoHistoryController == null) {
       List<List<MenuItem>> categories = [
         if (modificationCategory.isNotEmpty) modificationCategory,
@@ -378,8 +370,7 @@ class MobileEditableTextContextMenu extends StatelessWidget {
   }
 }
 
-Widget buildEditableTextContextMenu(
-    BuildContext innerContext, EditableTextState editableTextState,
+Widget buildEditableTextContextMenu(BuildContext innerContext, EditableTextState editableTextState,
     [UndoHistoryController? undoHistoryController]) {
   TargetPlatform platform = Theme.of(innerContext).platform;
 
@@ -436,7 +427,7 @@ class _ContextMenuState extends State<VNLContextMenu> {
     super.didUpdateWidget(oldWidget);
     if (!listEquals(widget.items, oldWidget.items)) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        if(mounted) _children.value = widget.items;
+        if (mounted) _children.value = widget.items;
       });
     }
   }
@@ -450,21 +441,18 @@ class _ContextMenuState extends State<VNLContextMenu> {
   @override
   Widget build(BuildContext context) {
     final platform = Theme.of(context).platform;
-    final bool enableLongPress = platform == TargetPlatform.iOS ||
-        platform == TargetPlatform.android ||
-        platform == TargetPlatform.fuchsia;
+    final bool enableLongPress =
+        platform == TargetPlatform.iOS || platform == TargetPlatform.android || platform == TargetPlatform.fuchsia;
     return GestureDetector(
       behavior: widget.behavior,
       onSecondaryTapDown: !widget.enabled
           ? null
           : (details) {
-              _showContextMenu(
-                  context, details.globalPosition, _children, widget.direction);
+              _showContextMenu(context, details.globalPosition, _children, widget.direction);
             },
       onLongPressStart: enableLongPress && widget.enabled
           ? (details) {
-              _showContextMenu(
-                  context, details.globalPosition, _children, widget.direction);
+              _showContextMenu(context, details.globalPosition, _children, widget.direction);
             }
           : null,
       child: widget.child,
@@ -501,17 +489,14 @@ Future<void> _showContextMenu(
           return AnimatedBuilder(
               animation: children,
               builder: (context, child) {
-                bool isSheetOverlay =
-                    SheetOverlayHandler.isSheetOverlay(context);
+                bool isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
                 return ConstrainedBox(
                   constraints: const BoxConstraints(
                     minWidth: 192,
                   ),
                   child: MenuGroup(
-                    itemPadding: isSheetOverlay
-                        ? const EdgeInsets.symmetric(horizontal: 8) *
-                            theme.scaling
-                        : EdgeInsets.zero,
+                    itemPadding:
+                        isSheetOverlay ? const EdgeInsets.symmetric(horizontal: 8) * theme.scaling : EdgeInsets.zero,
                     direction: direction,
                     regionGroupId: key,
                     subMenuOffset: const Offset(8, -4),
@@ -573,9 +558,8 @@ class ContextMenuPopup extends StatelessWidget {
               maxWidth: 192 * theme.scaling,
               child: MenuGroup(
                 direction: direction,
-                itemPadding: isSheetOverlay
-                    ? const EdgeInsets.symmetric(horizontal: 8) * theme.scaling
-                    : EdgeInsets.zero,
+                itemPadding:
+                    isSheetOverlay ? const EdgeInsets.symmetric(horizontal: 8) * theme.scaling : EdgeInsets.zero,
                 builder: (context, children) {
                   return MenuPopup(
                     children: children,

@@ -1,12 +1,11 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class NavigationMenuItem extends StatefulWidget {
   final VoidCallback? onPressed;
   final Widget? content;
   final Widget child;
 
-  const NavigationMenuItem(
-      {super.key, this.onPressed, this.content, required this.child});
+  const NavigationMenuItem({super.key, this.onPressed, this.content, required this.child});
 
   @override
   State<NavigationMenuItem> createState() => NavigationMenuItemState();
@@ -19,8 +18,7 @@ class NavigationMenuItemState extends State<NavigationMenuItem> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     var newMenuState = Data.maybeOf<NavigationMenuState>(context);
-    assert(newMenuState != null,
-        'NavigationItem must be a descendant of NavigationMenu');
+    assert(newMenuState != null, 'NavigationItem must be a descendant of NavigationMenu');
     if (_menuState != newMenuState) {
       _menuState = newMenuState;
       if (widget.content != null) {
@@ -63,8 +61,7 @@ class NavigationMenuItemState extends State<NavigationMenuItem> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AnimatedBuilder(
-        animation: Listenable.merge(
-            [_menuState!._activeIndex, _menuState!._popoverController]),
+        animation: Listenable.merge([_menuState!._activeIndex, _menuState!._popoverController]),
         builder: (context, child) {
           return VNLButton(
             style: const ButtonStyle.ghost().copyWith(
@@ -198,8 +195,7 @@ class NavigationMenuContentList extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: (reverse ? rows.reversed.toList() : rows)
-              .joinSeparator(SizedBox(width: spacing)),
+          children: (reverse ? rows.reversed.toList() : rows).joinSeparator(SizedBox(width: spacing)),
         ),
       ),
     );
@@ -232,14 +228,12 @@ class NavigationMenuState extends State<VNLNavigationMenu> {
 
   int _hoverCount = 0;
 
-  void _attachContentBuilder(
-      NavigationMenuItemState key, WidgetBuilder builder) {
+  void _attachContentBuilder(NavigationMenuItemState key, WidgetBuilder builder) {
     _contentBuilders[key] = builder;
   }
 
   bool isActive(NavigationMenuItemState item) {
-    return _popoverController.hasOpenPopover &&
-        widget.children[_activeIndex.value] == item.widget;
+    return _popoverController.hasOpenPopover && widget.children[_activeIndex.value] == item.widget;
   }
 
   @override
@@ -283,9 +277,7 @@ class NavigationMenuState extends State<VNLNavigationMenu> {
   }
 
   NavigationMenuItemState? findByWidget(Widget widget) {
-    return _contentBuilders.keys
-        .where((key) => key.widget == widget)
-        .firstOrNull;
+    return _contentBuilders.keys.where((key) => key.widget == widget).firstOrNull;
   }
 
   Widget buildContent(int index) {
@@ -390,11 +382,7 @@ class NavigationMenuState extends State<VNLNavigationMenu> {
     if (box != null) {
       Offset globalPosition = box.localToGlobal(Offset.zero);
       Size size = box.size;
-      return EdgeInsets.only(
-          left: globalPosition.dx,
-          top: globalPosition.dy + size.height,
-          right: 8,
-          bottom: 8);
+      return EdgeInsets.only(left: globalPosition.dx, top: globalPosition.dy + size.height, right: 8, bottom: 8);
     }
     return null;
   }

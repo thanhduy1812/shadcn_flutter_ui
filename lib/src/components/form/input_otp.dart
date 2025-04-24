@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class _InputOTPSpacing extends StatelessWidget {
   const _InputOTPSpacing();
@@ -13,10 +13,8 @@ class _InputOTPSpacing extends StatelessWidget {
 }
 
 abstract class InputOTPChild {
-  static InputOTPChild get separator =>
-      const WidgetInputOTPChild(OTPSeparator());
-  static InputOTPChild get space =>
-      const WidgetInputOTPChild(_InputOTPSpacing());
+  static InputOTPChild get separator => const WidgetInputOTPChild(OTPSeparator());
+  static InputOTPChild get space => const WidgetInputOTPChild(_InputOTPSpacing());
   static InputOTPChild get empty => const WidgetInputOTPChild(SizedBox());
   factory InputOTPChild.input({
     CodepointPredicate? predicate,
@@ -53,12 +51,10 @@ abstract class InputOTPChild {
         : TextInputType.text;
     return CharacterInputOTPChild(
       predicate: (codepoint) {
-        if (allowLowercaseAlphabet &&
-            CharacterInputOTPChild.isAlphabetLower(codepoint)) {
+        if (allowLowercaseAlphabet && CharacterInputOTPChild.isAlphabetLower(codepoint)) {
           return true;
         }
-        if (allowUppercaseAlphabet &&
-            CharacterInputOTPChild.isAlphabetUpper(codepoint)) {
+        if (allowUppercaseAlphabet && CharacterInputOTPChild.isAlphabetUpper(codepoint)) {
           return true;
         }
         if (allowDigit && CharacterInputOTPChild.isDigit(codepoint)) {
@@ -96,16 +92,11 @@ class CharacterInputOTPChild extends InputOTPChild {
   static const int _startDigit = 48; // '0'
   static const int _endDigit = 57; // '9'
 
-  static bool isAlphabetLower(int codepoint) =>
-      codepoint >= _startAlphabetLower && codepoint <= _endAlphabetLower;
-  static bool isAlphabetUpper(int codepoint) =>
-      codepoint >= _startAlphabetUpper && codepoint <= _endAlphabetUpper;
-  static int lowerToUpper(int codepoint) =>
-      isAlphabetLower(codepoint) ? codepoint - 32 : codepoint;
-  static int upperToLower(int codepoint) =>
-      isAlphabetUpper(codepoint) ? codepoint + 32 : codepoint;
-  static bool isDigit(int codepoint) =>
-      codepoint >= _startDigit && codepoint <= _endDigit;
+  static bool isAlphabetLower(int codepoint) => codepoint >= _startAlphabetLower && codepoint <= _endAlphabetLower;
+  static bool isAlphabetUpper(int codepoint) => codepoint >= _startAlphabetUpper && codepoint <= _endAlphabetUpper;
+  static int lowerToUpper(int codepoint) => isAlphabetLower(codepoint) ? codepoint - 32 : codepoint;
+  static int upperToLower(int codepoint) => isAlphabetUpper(codepoint) ? codepoint + 32 : codepoint;
+  static bool isDigit(int codepoint) => codepoint >= _startDigit && codepoint <= _endDigit;
 
   final CodepointPredicate? predicate;
   final CodepointUnaryOperator? transform;
@@ -213,8 +204,7 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
     }
   }
 
-  BorderRadius getBorderRadiusByRelativeIndex(
-      ThemeData theme, int relativeIndex, int groupLength) {
+  BorderRadius getBorderRadiusByRelativeIndex(ThemeData theme, int relativeIndex, int groupLength) {
     if (relativeIndex == 0) {
       return BorderRadius.only(
         topLeft: Radius.circular(theme.radiusMd),
@@ -306,9 +296,7 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
                   if (widget.data.focusNode!.hasFocus) {
                     return Container(
                       decoration: BoxDecoration(
-                        border: Border.all(
-                            color: theme.colorScheme.ring,
-                            strokeAlign: BorderSide.strokeAlignOutside),
+                        border: Border.all(color: theme.colorScheme.ring, strokeAlign: BorderSide.strokeAlignOutside),
                         borderRadius: getBorderRadiusByRelativeIndex(
                           theme,
                           widget.data.relativeIndex,
@@ -319,9 +307,7 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
                   } else {
                     return Container(
                       decoration: BoxDecoration(
-                        border: Border.all(
-                            color: theme.colorScheme.border,
-                            strokeAlign: BorderSide.strokeAlignOutside),
+                        border: Border.all(color: theme.colorScheme.border, strokeAlign: BorderSide.strokeAlignOutside),
                         borderRadius: getBorderRadiusByRelativeIndex(
                           theme,
                           widget.data.relativeIndex,
@@ -395,11 +381,7 @@ class OTPSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return const Text('-')
-        .bold()
-        .withPadding(horizontal: theme.scaling * 4)
-        .base()
-        .foreground();
+    return const Text('-').bold().withPadding(horizontal: theme.scaling * 4).base().foreground();
   }
 }
 
@@ -486,8 +468,7 @@ class VNLInputOTP extends StatefulWidget {
   State<VNLInputOTP> createState() => _InputOTPState();
 }
 
-class _InputOTPState extends State<VNLInputOTP>
-    with FormValueSupplier<OTPCodepointList, VNLInputOTP> {
+class _InputOTPState extends State<VNLInputOTP> with FormValueSupplier<OTPCodepointList, VNLInputOTP> {
   final List<_InputOTPChild> _children = [];
 
   OTPCodepointList get value {
@@ -550,8 +531,7 @@ class _InputOTPState extends State<VNLInputOTP>
   @override
   void didUpdateWidget(covariant VNLInputOTP oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!listEquals(oldWidget.initialValue, widget.initialValue) ||
-        !listEquals(oldWidget.children, widget.children)) {
+    if (!listEquals(oldWidget.initialValue, widget.initialValue) || !listEquals(oldWidget.children, widget.children)) {
       int index = 0;
       int groupIndex = 0;
       int relativeIndex = 0;
@@ -606,8 +586,7 @@ class _InputOTPState extends State<VNLInputOTP>
             groupIndex: _children[i].groupIndex,
             relativeIndex: _children[i].relativeIndex,
             previousFocusNode: i == 0 ? null : _children[i - 1].focusNode,
-            nextFocusNode:
-                i == _children.length - 1 ? null : _children[i + 1].focusNode,
+            nextFocusNode: i == _children.length - 1 ? null : _children[i + 1].focusNode,
             value: _children[i].value,
             groupLength: _children[i].groupLength,
           ),

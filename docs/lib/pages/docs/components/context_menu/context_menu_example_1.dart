@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ContextMenuExample1 extends StatefulWidget {
   const ContextMenuExample1({super.key});

@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -16,8 +16,7 @@ class CollapsibleExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Collapsible Example',
-          path:
-              'lib/pages/docs/components/collapsible/collapsible_example_1.dart',
+          path: 'lib/pages/docs/components/collapsible/collapsible_example_1.dart',
           child: CollapsibleExample1(),
         ),
       ],

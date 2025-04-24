@@ -1,7 +1,6 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-typedef NumberTickerBuilder = Widget Function(
-    BuildContext context, num number, Widget? child);
+typedef NumberTickerBuilder = Widget Function(BuildContext context, num number, Widget? child);
 typedef NumberTickerFormatted = String Function(num number);
 
 class NumberTicker extends StatelessWidget {

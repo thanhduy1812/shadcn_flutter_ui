@@ -12,9 +12,9 @@ import 'package:flutter/foundation.dart'
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/src/components/layout/hidden.dart';
 
 import '../../../vnl_ui.dart';
+import '../layout/hidden.dart';
 
 export 'package:flutter/services.dart'
     show

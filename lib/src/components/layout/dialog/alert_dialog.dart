@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLAlertDialog extends StatefulWidget {
   final Widget? leading;
@@ -36,8 +36,7 @@ class _AlertDialogState extends State<VNLAlertDialog> {
     return ModalBackdrop(
       borderRadius: themeData.borderRadiusXxl,
       barrierColor: widget.barrierColor ?? Colors.black.withValues(alpha: 0.8),
-      surfaceClip: ModalBackdrop.shouldClipSurface(
-          widget.surfaceOpacity ?? themeData.surfaceOpacity),
+      surfaceClip: ModalBackdrop.shouldClipSurface(widget.surfaceOpacity ?? themeData.surfaceOpacity),
       child: ModalContainer(
         fillColor: themeData.colorScheme.popover,
         filled: true,
@@ -56,23 +55,19 @@ class _AlertDialogState extends State<VNLAlertDialog> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (widget.leading != null)
-                    widget.leading!.iconXLarge().iconMutedForeground(),
+                  if (widget.leading != null) widget.leading!.iconXLarge().iconMutedForeground(),
                   if (widget.title != null || widget.content != null)
                     Flexible(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (widget.title != null)
-                            widget.title!.large().semiBold(),
-                          if (widget.content != null)
-                            widget.content!.small().muted(),
+                          if (widget.title != null) widget.title!.large().semiBold(),
+                          if (widget.content != null) widget.content!.small().muted(),
                         ],
                       ).gap(8 * scaling),
                     ),
-                  if (widget.trailing != null)
-                    widget.trailing!.iconXLarge().iconMutedForeground(),
+                  if (widget.trailing != null) widget.trailing!.iconXLarge().iconMutedForeground(),
                 ],
               ).gap(16 * scaling),
             ),
@@ -81,8 +76,7 @@ class _AlertDialogState extends State<VNLAlertDialog> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
                 // children: widget.actions!,
-                children: join(widget.actions!, SizedBox(width: 8 * scaling))
-                    .toList(),
+                children: join(widget.actions!, SizedBox(width: 8 * scaling)).toList(),
               ),
           ],
         ).gap(16 * scaling),

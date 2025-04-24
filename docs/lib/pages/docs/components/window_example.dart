@@ -1,7 +1,7 @@
 import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/docs/components/window/window_example_1.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class WindowExample extends StatelessWidget {
   const WindowExample({super.key});
@@ -10,8 +10,7 @@ class WindowExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'window',
-      description:
-          'A window manager that allows you to create and manage windows.',
+      description: 'A window manager that allows you to create and manage windows.',
       displayName: 'Window',
       children: [
         WidgetUsageExample(

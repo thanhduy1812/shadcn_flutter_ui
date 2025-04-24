@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
-import 'package:vnl_ui/src/components/layout/focus_outline.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
+
+import '../layout/focus_outline.dart';
+
 
 extension WidgetStateExtension on Set<WidgetState> {
   bool get disabled => contains(WidgetState.disabled);
@@ -41,8 +43,7 @@ abstract class StatedWidget extends StatelessWidget {
   }) = _MapStatedWidget;
   const factory StatedWidget.builder({
     Key? key,
-    required Widget Function(BuildContext context, Set<WidgetState> states)
-        builder,
+    required Widget Function(BuildContext context, Set<WidgetState> states) builder,
   }) = _BuilderStatedWidget;
 }
 
@@ -179,8 +180,7 @@ class WidgetStatesData {
 }
 
 class _MapStatedWidget extends StatedWidget {
-  static final Map<String, WidgetState> _mappedNames =
-      WidgetState.values.asNameMap();
+  static final Map<String, WidgetState> _mappedNames = WidgetState.values.asNameMap();
   final Map<Object, Widget> states;
   final Widget? child;
 
@@ -368,8 +368,7 @@ class _ClickableState extends State<Clickable> {
 
   void _onPressed() {
     if (!widget.enabled) return;
-    Duration? deltaTap =
-        _lastTap == null ? null : DateTime.now().difference(_lastTap!);
+    Duration? deltaTap = _lastTap == null ? null : DateTime.now().difference(_lastTap!);
     _lastTap = DateTime.now();
     if (deltaTap != null && deltaTap < kDoubleTapMinTime) {
       _tapCount++;
@@ -424,9 +423,7 @@ class _ClickableState extends State<Clickable> {
     }
     var buttonContainer = _buildContainer(context, decoration, widgetStates);
     return FocusOutline(
-      focused: widget.focusOutline &&
-          widgetStates.contains(WidgetState.focused) &&
-          !widget.disableFocusOutline,
+      focused: widget.focusOutline && widgetStates.contains(WidgetState.focused) && !widget.disableFocusOutline,
       borderRadius: borderRadius,
       child: GestureDetector(
         behavior: widget.behavior,
@@ -481,14 +478,10 @@ class _ClickableState extends State<Clickable> {
           shortcuts: {
             LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
             LogicalKeySet(LogicalKeyboardKey.space): const ActivateIntent(),
-            LogicalKeySet(LogicalKeyboardKey.arrowUp):
-                const DirectionalFocusIntent(TraversalDirection.up),
-            LogicalKeySet(LogicalKeyboardKey.arrowDown):
-                const DirectionalFocusIntent(TraversalDirection.down),
-            LogicalKeySet(LogicalKeyboardKey.arrowLeft):
-                const DirectionalFocusIntent(TraversalDirection.left),
-            LogicalKeySet(LogicalKeyboardKey.arrowRight):
-                const DirectionalFocusIntent(TraversalDirection.right),
+            LogicalKeySet(LogicalKeyboardKey.arrowUp): const DirectionalFocusIntent(TraversalDirection.up),
+            LogicalKeySet(LogicalKeyboardKey.arrowDown): const DirectionalFocusIntent(TraversalDirection.down),
+            LogicalKeySet(LogicalKeyboardKey.arrowLeft): const DirectionalFocusIntent(TraversalDirection.left),
+            LogicalKeySet(LogicalKeyboardKey.arrowRight): const DirectionalFocusIntent(TraversalDirection.right),
             ...?widget.shortcuts,
           },
           actions: {
@@ -522,21 +515,18 @@ class _ClickableState extends State<Clickable> {
             ...?widget.actions,
           },
           onShowHoverHighlight: (value) {
-            _controller.update(
-                WidgetState.hovered, value && !widget.disableHoverEffect);
+            _controller.update(WidgetState.hovered, value && !widget.disableHoverEffect);
             widget.onHover?.call(value);
           },
           onShowFocusHighlight: (value) {
             _controller.update(WidgetState.focused, value);
             widget.onFocus?.call(value);
           },
-          mouseCursor:
-              widget.mouseCursor?.resolve(widgetStates) ?? MouseCursor.defer,
+          mouseCursor: widget.mouseCursor?.resolve(widgetStates) ?? MouseCursor.defer,
           child: DefaultTextStyle.merge(
             style: widget.textStyle?.resolve(widgetStates),
             child: IconTheme.merge(
-              data: widget.iconTheme?.resolve(widgetStates) ??
-                  const IconThemeData(),
+              data: widget.iconTheme?.resolve(widgetStates) ?? const IconThemeData(),
               child: AnimatedBuilder(
                 animation: _controller,
                 builder: (context, child) {
@@ -574,8 +564,7 @@ class _ClickableState extends State<Clickable> {
     return tween.transform(t);
   }
 
-  Widget _buildContainer(BuildContext context, Decoration? decoration,
-      Set<WidgetState> widgetStates) {
+  Widget _buildContainer(BuildContext context, Decoration? decoration, Set<WidgetState> widgetStates) {
     var resolvedMargin = widget.margin?.resolve(widgetStates);
     var resolvedPadding = widget.padding?.resolve(widgetStates);
     if (widget.disableTransition) {

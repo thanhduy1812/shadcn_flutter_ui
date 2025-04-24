@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/timeline_animation/timeline_animation_example_1.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -18,8 +18,7 @@ class TimelineAnimationExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Timeline Animation Example',
-          path:
-              'lib/pages/docs/components/timeline_animation/timeline_animation_example_1.dart',
+          path: 'lib/pages/docs/components/timeline_animation/timeline_animation_example_1.dart',
           child: TimelineAnimationExample1(),
         ),
       ],

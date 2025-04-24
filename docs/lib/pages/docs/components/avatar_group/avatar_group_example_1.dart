@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class AvatarGroupExample1 extends StatefulWidget {
   const AvatarGroupExample1({super.key});

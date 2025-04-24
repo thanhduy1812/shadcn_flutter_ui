@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class CalendarExample3 extends StatefulWidget {
   const CalendarExample3({super.key});
@@ -30,11 +30,7 @@ class _CalendarExample3State extends State<CalendarExample3> {
                   },
                   child: const Icon(Icons.arrow_back).iconXSmall(),
                 ),
-                Text('${localizations.getMonth(_view.month)} ${_view.year}')
-                    .small()
-                    .medium()
-                    .center()
-                    .expanded(),
+                Text('${localizations.getMonth(_view.month)} ${_view.year}').small().medium().center().expanded(),
                 OutlineButton(
                   density: ButtonDensity.icon,
                   onPressed: () {

@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class AvatarExample1 extends StatelessWidget {
   const AvatarExample1({super.key});
@@ -8,8 +8,7 @@ class AvatarExample1 extends StatelessWidget {
     return Avatar(
       backgroundColor: Colors.red,
       initials: Avatar.getInitials('sunarya-thito'),
-      provider: const NetworkImage(
-          'https://avatars.githubusercontent.com/u/64018564?v=4'),
+      provider: const NetworkImage('https://avatars.githubusercontent.com/u/64018564?v=4'),
     );
   }
 }

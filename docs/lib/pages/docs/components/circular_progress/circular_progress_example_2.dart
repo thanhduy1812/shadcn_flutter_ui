@@ -1,11 +1,10 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class CircularProgressExample2 extends StatefulWidget {
   const CircularProgressExample2({super.key});
 
   @override
-  State<CircularProgressExample2> createState() =>
-      _CircularProgressExample2State();
+  State<CircularProgressExample2> createState() => _CircularProgressExample2State();
 }
 
 class _CircularProgressExample2State extends State<CircularProgressExample2> {

@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class SwiperExample1 extends StatefulWidget {
   const SwiperExample1({super.key});
@@ -44,19 +44,22 @@ class _SwiperExample1State extends State<SwiperExample1> {
               const Gap(24),
               PrimaryButton(
                 onPressed: () {
-                  openDrawer(context: context, builder: (context) {
-                    return ListView.separated(
-                      itemCount: 1000,
-                      itemBuilder: (context, index) {
-                        return VNLCard(
-                          child: Text('Item $index'),
+                  openDrawer(
+                      context: context,
+                      builder: (context) {
+                        return ListView.separated(
+                          itemCount: 1000,
+                          itemBuilder: (context, index) {
+                            return VNLCard(
+                              child: Text('Item $index'),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const Gap(8);
+                          },
                         );
                       },
-                      separatorBuilder: (context, index) {
-                        return const Gap(8);
-                      },
-                    );
-                  }, position: OverlayPosition.bottom);
+                      position: OverlayPosition.bottom);
                 },
                 child: const Text('Close'),
               ),

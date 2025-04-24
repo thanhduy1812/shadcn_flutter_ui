@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// {@template collapsible_theme}
 /// Styling options for [Collapsible], [CollapsibleTrigger].
@@ -128,14 +128,11 @@ class CollapsibleState extends State<Collapsible> {
     final compTheme = ComponentTheme.maybeOf<CollapsibleTheme>(context);
 
     return Data.inherit(
-      data:
-          CollapsibleStateData(isExpanded: _isExpanded, handleTap: _handleTap),
+      data: CollapsibleStateData(isExpanded: _isExpanded, handleTap: _handleTap),
       child: IntrinsicWidth(
         child: Column(
-          crossAxisAlignment:
-              compTheme?.crossAxisAlignment ?? CrossAxisAlignment.stretch,
-          mainAxisAlignment:
-              compTheme?.mainAxisAlignment ?? MainAxisAlignment.start,
+          crossAxisAlignment: compTheme?.crossAxisAlignment ?? CrossAxisAlignment.stretch,
+          mainAxisAlignment: compTheme?.mainAxisAlignment ?? MainAxisAlignment.start,
           children: widget.children,
         ),
       ),

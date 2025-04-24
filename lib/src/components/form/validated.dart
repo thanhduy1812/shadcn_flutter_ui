@@ -1,7 +1,6 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-typedef ValidatedBuilder = Widget Function(
-    BuildContext context, ValidationResult? error, Widget? child);
+typedef ValidatedBuilder = Widget Function(BuildContext context, ValidationResult? error, Widget? child);
 
 class Validated<T> extends StatefulWidget {
   final ValidatedBuilder builder;

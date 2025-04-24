@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -13,8 +13,7 @@ class DividerExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'divider',
-      description:
-          'A divider is a thin line that groups content in lists and layouts.',
+      description: 'A divider is a thin line that groups content in lists and layouts.',
       displayName: 'Divider',
       children: [
         WidgetUsageExample(

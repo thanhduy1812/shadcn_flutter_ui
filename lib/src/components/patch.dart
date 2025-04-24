@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ClickDetails {
   final int clickCount;
@@ -37,8 +37,7 @@ class _ClickDetectorState extends State<ClickDetector> {
           ? null
           : () {
               var now = DateTime.now();
-              if (lastClick == null ||
-                  (now.difference(lastClick!) > widget.threshold)) {
+              if (lastClick == null || (now.difference(lastClick!) > widget.threshold)) {
                 count = 1;
               } else {
                 count++;

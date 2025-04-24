@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class DataExample15 extends StatefulWidget {
   const DataExample15({super.key});
@@ -67,8 +67,7 @@ class _InnerWidgetState extends State<InnerWidget> {
           ModelBuilder<int>(
             #firstCounter,
             builder: (context, model, child) {
-              return Text(
-                  'First Counter: ${model.value} (Rebuild Count: $rebuildCount)');
+              return Text('First Counter: ${model.value} (Rebuild Count: $rebuildCount)');
             },
           ),
           const Gap(8),
@@ -98,8 +97,7 @@ class _LeafWidgetState extends State<LeafWidget> {
           return Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                  'Second Counter: ${model.value} (Rebuild Count: $rebuildCount)'),
+              Text('Second Counter: ${model.value} (Rebuild Count: $rebuildCount)'),
               const Gap(24),
               PrimaryButton(
                 onPressed: () {

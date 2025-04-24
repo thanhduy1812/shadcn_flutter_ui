@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class LinearProgressExample2 extends StatefulWidget {
   const LinearProgressExample2({super.key});

@@ -1,5 +1,5 @@
 import 'package:docs/main.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../docs_page.dart';
 
@@ -38,9 +38,7 @@ final Map<String, ColorScheme> colorSchemes = {
 };
 
 String? nameFromColorScheme(ColorScheme scheme) {
-  return colorSchemes.keys
-      .where((key) => colorSchemes[key] == scheme)
-      .firstOrNull;
+  return colorSchemes.keys.where((key) => colorSchemes[key] == scheme).firstOrNull;
 }
 
 class _ThemePageState extends State<ThemePage> {
@@ -104,9 +102,7 @@ class _ThemePageState extends State<ThemePage> {
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                  child: Text(
-                      'You can use your own color scheme to customize the look and feel of your app.')),
+              Expanded(child: Text('You can use your own color scheme to customize the look and feel of your app.')),
             ],
           ).p(),
           GridView.count(
@@ -114,31 +110,25 @@ class _ThemePageState extends State<ThemePage> {
             shrinkWrap: true,
             children: colors.keys.map(buildGridTile).toList(),
           ).p(),
-          const Text('Premade color schemes')
-              .h2()
-              .anchored(premadeColorSchemeKey),
+          const Text('Premade color schemes').h2().anchored(premadeColorSchemeKey),
           // Text('You can also use premade color schemes.').p(),
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                  child: Text(
-                      'You can also use premade color schemes to customize the look and feel of your app.')),
+                  child: Text('You can also use premade color schemes to customize the look and feel of your app.')),
             ],
           ).p(),
           Wrap(
             runSpacing: 8,
             spacing: 8,
-            children:
-                colorSchemes.keys.map(buildPremadeColorSchemeButton).toList(),
+            children: colorSchemes.keys.map(buildPremadeColorSchemeButton).toList(),
           ).p(),
           const Text('Radius').h2().anchored(radiusKey),
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                  child: Text(
-                      'You can customize how rounded your app looks by changing the radius.')),
+              Expanded(child: Text('You can customize how rounded your app looks by changing the radius.')),
             ],
           ).p(),
           VNLSlider(
@@ -159,9 +149,7 @@ class _ThemePageState extends State<ThemePage> {
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                  child: Text(
-                      'You can customize the scale of vnl_ui components by changing the scaling.')),
+              Expanded(child: Text('You can customize the scale of vnl_ui components by changing the scaling.')),
             ],
           ).p(),
           VNLSlider(
@@ -181,16 +169,13 @@ class _ThemePageState extends State<ThemePage> {
           const Gap(16),
           const VNLAlert(
             leading: Icon(RadixIcons.infoCircled),
-            content: Text(
-                'This does not scale the entire app. Only vnl_ui components are affected.'),
+            content: Text('This does not scale the entire app. Only vnl_ui components are affected.'),
           ),
           const Text('Surface opacity').h2().anchored(surfaceOpacityKey),
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                  child: Text(
-                      'You can customize the opacity of the surface by changing the surface opacity.')),
+              Expanded(child: Text('You can customize the opacity of the surface by changing the surface opacity.')),
             ],
           ).p(),
           VNLSlider(
@@ -211,9 +196,7 @@ class _ThemePageState extends State<ThemePage> {
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                  child: Text(
-                      'You can customize the blur of the surface by changing the surface blur.')),
+              Expanded(child: Text('You can customize the blur of the surface by changing the surface blur.')),
             ],
           ).p(),
           VNLSlider(
@@ -248,8 +231,7 @@ class _ThemePageState extends State<ThemePage> {
     buffer += '\n...';
     buffer += '\n\ttheme: ThemeData(';
     buffer += '\n\t\tcolorScheme: ColorScheme(';
-    buffer +=
-        '\n\t\t\tbrightness: ${isDark ? 'Brightness.dark' : 'Brightness.light'},';
+    buffer += '\n\t\t\tbrightness: ${isDark ? 'Brightness.dark' : 'Brightness.light'},';
     for (var key in colors.keys) {
       String hex = colors[key]!.value.toRadixString(16);
       buffer += '\n\t\t\t$key: Color(0x$hex),';
@@ -389,8 +371,7 @@ class _ThemePageState extends State<ThemePage> {
                   customColorScheme = true;
                   if (applyDirectly) {
                     MyAppState state = Data.of(context);
-                    state.changeColorScheme(ColorScheme.fromColors(
-                        colors: colors, brightness: colorScheme.brightness));
+                    state.changeColorScheme(ColorScheme.fromColors(colors: colors, brightness: colorScheme.brightness));
                   }
                 });
               },
@@ -409,9 +390,7 @@ class _ThemePageState extends State<ThemePage> {
                 ),
                 child: Stack(
                   children: [
-                    Text(name,
-                        style:
-                            TextStyle(color: getInvertedColor(colors[name]!))),
+                    Text(name, style: TextStyle(color: getInvertedColor(colors[name]!))),
                     Positioned(
                       right: 0,
                       bottom: 0,

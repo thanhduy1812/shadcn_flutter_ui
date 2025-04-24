@@ -2,7 +2,7 @@ import 'package:docs/pages/docs/components/select/select_example_1.dart';
 import 'package:docs/pages/docs/components/select/select_example_2.dart';
 import 'package:docs/pages/docs/components/select/select_example_3.dart';
 import 'package:docs/pages/docs/components/select/select_example_4.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -14,8 +14,7 @@ class SelectExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'select',
-      description:
-          'A select component that allows you to select an item from a list of items.',
+      description: 'A select component that allows you to select an item from a list of items.',
       displayName: 'Select',
       children: [
         WidgetUsageExample(

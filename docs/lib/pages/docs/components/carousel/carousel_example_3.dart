@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../carousel_example.dart';
 
@@ -41,8 +41,7 @@ class _CarouselExample3State extends State<CarouselExample3> {
               OutlineButton(
                   shape: ButtonShape.circle,
                   onPressed: () {
-                    controller
-                        .animatePrevious(const Duration(milliseconds: 500));
+                    controller.animatePrevious(const Duration(milliseconds: 500));
                   },
                   child: const Icon(Icons.arrow_back)),
               const Gap(8),

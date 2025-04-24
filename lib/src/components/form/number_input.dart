@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 @Deprecated('Use TextField with InputFeature.spinner() instead.')
 class VNLNumberInput extends StatefulWidget {
@@ -48,8 +48,7 @@ class VNLNumberInput extends StatefulWidget {
   State<VNLNumberInput> createState() => _NumberInputState();
 }
 
-class _NumberInputState extends State<VNLNumberInput>
-    with FormValueSupplier<num, VNLNumberInput> {
+class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num, VNLNumberInput> {
   late TextEditingController _controller;
   late double _lastValidValue;
 
@@ -116,18 +115,14 @@ class _NumberInputState extends State<VNLNumberInput>
             if (widget.max == null || _lastValidValue < widget.max!) {
               double oldValue = _value.toDouble();
               _lastValidValue = oldValue - widget.step;
-              _controller.text = widget.allowDecimals
-                  ? _lastValidValue.toString()
-                  : _lastValidValue.toInt().toString();
+              _controller.text = widget.allowDecimals ? _lastValidValue.toString() : _lastValidValue.toInt().toString();
               widget.onChanged?.call(_lastValidValue);
             }
           } else if (details.delta.dy < 0) {
             if (widget.min == null || _lastValidValue > widget.min!) {
               double oldValue = _value.toDouble();
               _lastValidValue = oldValue + widget.step;
-              _controller.text = widget.allowDecimals
-                  ? _lastValidValue.toString()
-                  : _lastValidValue.toInt().toString();
+              _controller.text = widget.allowDecimals ? _lastValidValue.toString() : _lastValidValue.toInt().toString();
               widget.onChanged?.call(_lastValidValue);
             }
           }
@@ -139,18 +134,16 @@ class _NumberInputState extends State<VNLNumberInput>
                 if (widget.max == null || _lastValidValue < widget.max!) {
                   double oldValue = _value.toDouble();
                   _lastValidValue = oldValue - widget.step;
-                  _controller.text = widget.allowDecimals
-                      ? _lastValidValue.toString()
-                      : _lastValidValue.toInt().toString();
+                  _controller.text =
+                      widget.allowDecimals ? _lastValidValue.toString() : _lastValidValue.toInt().toString();
                   widget.onChanged?.call(_lastValidValue);
                 }
               } else {
                 if (widget.min == null || _lastValidValue > widget.min!) {
                   double oldValue = _value.toDouble();
                   _lastValidValue = oldValue + widget.step;
-                  _controller.text = widget.allowDecimals
-                      ? _lastValidValue.toString()
-                      : _lastValidValue.toInt().toString();
+                  _controller.text =
+                      widget.allowDecimals ? _lastValidValue.toString() : _lastValidValue.toInt().toString();
                   widget.onChanged?.call(_lastValidValue);
                 }
               }
@@ -166,16 +159,13 @@ class _NumberInputState extends State<VNLNumberInput>
                   Flexible(
                     child: VNLButton(
                       style: _buttonStyle,
-                      enabled: widget.enabled ??
-                          (widget.max == null || _lastValidValue < widget.max!),
+                      enabled: widget.enabled ?? (widget.max == null || _lastValidValue < widget.max!),
                       onPressed: () {
-                        if (widget.max == null ||
-                            _lastValidValue < widget.max!) {
+                        if (widget.max == null || _lastValidValue < widget.max!) {
                           double oldValue = _value.toDouble();
                           _lastValidValue = oldValue + widget.step;
-                          _controller.text = widget.allowDecimals
-                              ? _lastValidValue.toString()
-                              : _lastValidValue.toInt().toString();
+                          _controller.text =
+                              widget.allowDecimals ? _lastValidValue.toString() : _lastValidValue.toInt().toString();
                           widget.onChanged?.call(_lastValidValue);
                           setState(() {});
                         }
@@ -188,16 +178,13 @@ class _NumberInputState extends State<VNLNumberInput>
                   Flexible(
                     child: VNLButton(
                       style: _buttonStyle,
-                      enabled: widget.enabled ??
-                          (widget.min == null || _lastValidValue > widget.min!),
+                      enabled: widget.enabled ?? (widget.min == null || _lastValidValue > widget.min!),
                       onPressed: () {
-                        if (widget.min == null ||
-                            _lastValidValue > widget.min!) {
+                        if (widget.min == null || _lastValidValue > widget.min!) {
                           double oldValue = _value.toDouble();
                           _lastValidValue = oldValue - widget.step;
-                          _controller.text = widget.allowDecimals
-                              ? _lastValidValue.toString()
-                              : _lastValidValue.toInt().toString();
+                          _controller.text =
+                              widget.allowDecimals ? _lastValidValue.toString() : _lastValidValue.toInt().toString();
                           widget.onChanged?.call(_lastValidValue);
                           setState(() {});
                         }
@@ -310,8 +297,7 @@ class _NumberInputState extends State<VNLNumberInput>
             : BorderRadius.circular(4 * scaling),
         enabled: widget.enabled ?? true,
         initialValue: _valueAsString,
-        keyboardType:
-            TextInputType.numberWithOptions(decimal: widget.allowDecimals),
+        keyboardType: TextInputType.numberWithOptions(decimal: widget.allowDecimals),
         textAlignVertical: TextAlignVertical.center,
       ),
     );

@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  vnl_ui:
+  vnl_common_ui:
     path: ../
 
   # The following adds the Cupertino Icons font to your application.

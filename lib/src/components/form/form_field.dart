@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 enum PromptMode {
   dialog,
@@ -13,8 +13,7 @@ class ObjectFormField<T> extends StatefulWidget {
   final Widget? leading;
   final Widget? trailing;
   final PromptMode mode;
-  final Widget Function(BuildContext context, ObjectFormHandler<T> handler)
-      editorBuilder;
+  final Widget Function(BuildContext context, ObjectFormHandler<T> handler) editorBuilder;
   final AlignmentGeometry? popoverAlignment;
   final AlignmentGeometry? popoverAnchorAlignment;
   final EdgeInsetsGeometry? popoverPadding;
@@ -22,8 +21,7 @@ class ObjectFormField<T> extends StatefulWidget {
   final ButtonSize size;
   final ButtonDensity density;
   final ButtonShape shape;
-  final List<Widget> Function(
-      BuildContext context, ObjectFormHandler<T> handler)? dialogActions;
+  final List<Widget> Function(BuildContext context, ObjectFormHandler<T> handler)? dialogActions;
   final bool? enabled;
   final bool decorate;
 
@@ -68,8 +66,7 @@ abstract class ObjectFormHandler<T> {
   }
 }
 
-class ObjectFormFieldState<T> extends State<ObjectFormField<T>>
-    with FormValueSupplier<T, ObjectFormField<T>> {
+class ObjectFormFieldState<T> extends State<ObjectFormField<T>> with FormValueSupplier<T, ObjectFormField<T>> {
   final PopoverController _popoverController = PopoverController();
 
   @override
@@ -175,20 +172,16 @@ class ObjectFormFieldState<T> extends State<ObjectFormField<T>>
       shape: widget.shape,
       onPressed: widget.onChanged == null ? null : prompt,
       enabled: enabled,
-      child: this.value == null
-          ? widget.placeholder.muted()
-          : widget.builder(context, this.value as T),
+      child: this.value == null ? widget.placeholder.muted() : widget.builder(context, this.value as T),
     );
   }
 }
 
 class _ObjectFormFieldDialog<T> extends StatefulWidget {
   final T? value;
-  final Widget Function(BuildContext context, ObjectFormHandler<T> handler)
-      editorBuilder;
+  final Widget Function(BuildContext context, ObjectFormHandler<T> handler) editorBuilder;
   final Widget? dialogTitle;
-  final List<Widget> Function(
-      BuildContext context, ObjectFormHandler<T> handler)? dialogActions;
+  final List<Widget> Function(BuildContext context, ObjectFormHandler<T> handler)? dialogActions;
   final ValueChanged<T?> prompt;
   final bool decorate;
 
@@ -203,8 +196,7 @@ class _ObjectFormFieldDialog<T> extends StatefulWidget {
   });
 
   @override
-  State<_ObjectFormFieldDialog<T>> createState() =>
-      _ObjectFormFieldDialogState<T>();
+  State<_ObjectFormFieldDialog<T>> createState() => _ObjectFormFieldDialogState<T>();
 }
 
 class ObjectFormFieldDialogResult<T> {
@@ -213,8 +205,7 @@ class ObjectFormFieldDialogResult<T> {
   ObjectFormFieldDialogResult(this.value);
 }
 
-class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>>
-    implements ObjectFormHandler<T> {
+class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>> implements ObjectFormHandler<T> {
   late T? _value;
 
   @override
@@ -268,8 +259,7 @@ class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>>
           ),
         ),
         actions: [
-          if (widget.dialogActions != null)
-            ...widget.dialogActions!(context, this),
+          if (widget.dialogActions != null) ...widget.dialogActions!(context, this),
           SecondaryButton(
               child: Text(localizations.buttonCancel),
               onPressed: () {
@@ -288,8 +278,7 @@ class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>>
 
 class _ObjectFormFieldPopup<T> extends StatefulWidget {
   final T? value;
-  final Widget Function(BuildContext context, ObjectFormHandler<T> handler)
-      editorBuilder;
+  final Widget Function(BuildContext context, ObjectFormHandler<T> handler) editorBuilder;
   final EdgeInsetsGeometry? popoverPadding;
   final ValueChanged<T?>? onChanged;
   final ValueChanged<T?> prompt;
@@ -306,12 +295,10 @@ class _ObjectFormFieldPopup<T> extends StatefulWidget {
   });
 
   @override
-  State<_ObjectFormFieldPopup<T>> createState() =>
-      _ObjectFormFieldPopupState<T>();
+  State<_ObjectFormFieldPopup<T>> createState() => _ObjectFormFieldPopupState<T>();
 }
 
-class _ObjectFormFieldPopupState<T> extends State<_ObjectFormFieldPopup<T>>
-    implements ObjectFormHandler<T> {
+class _ObjectFormFieldPopupState<T> extends State<_ObjectFormFieldPopup<T>> implements ObjectFormHandler<T> {
   late T? _value;
 
   @override
@@ -354,9 +341,7 @@ class _ObjectFormFieldPopupState<T> extends State<_ObjectFormFieldPopup<T>>
     return Data<ObjectFormHandler<T>>.inherit(
       data: this,
       child: SurfaceCard(
-        padding: widget.popoverPadding ??
-            (const EdgeInsets.symmetric(vertical: 16, horizontal: 16) *
-                theme.scaling),
+        padding: widget.popoverPadding ?? (const EdgeInsets.symmetric(vertical: 16, horizontal: 16) * theme.scaling),
         child: widget.editorBuilder(
           context,
           this,

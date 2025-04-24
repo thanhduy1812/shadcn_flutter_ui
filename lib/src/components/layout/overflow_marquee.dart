@@ -1,6 +1,6 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLOverflowMarquee extends StatefulWidget {
   final Widget child;
@@ -27,8 +27,7 @@ class VNLOverflowMarquee extends StatefulWidget {
   State<VNLOverflowMarquee> createState() => _OverflowMarqueeState();
 }
 
-class _OverflowMarqueeState extends State<VNLOverflowMarquee>
-    with SingleTickerProviderStateMixin {
+class _OverflowMarqueeState extends State<VNLOverflowMarquee> with SingleTickerProviderStateMixin {
   late Ticker _ticker;
   Duration elapsed = Duration.zero;
 
@@ -107,8 +106,7 @@ class _OverflowMarqueeLayout extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, _RenderOverflowMarqueeLayout renderObject) {
+  void updateRenderObject(BuildContext context, _RenderOverflowMarqueeLayout renderObject) {
     bool hasChanged = false;
     if (renderObject.direction != direction) {
       renderObject.direction = direction;
@@ -239,25 +237,18 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
   bool get alwaysNeedsCompositing => child != null;
 
   double get offsetProgress {
-    double durationInMicros =
-        duration.inMicroseconds * ((sizeDiff ?? 0) / step);
+    double durationInMicros = duration.inMicroseconds * ((sizeDiff ?? 0) / step);
     int delayDurationInMicros = delayDuration.inMicroseconds;
     double elapsedInMicros = elapsed.inMicroseconds.toDouble();
     // includes the reverse
-    double overalCycleDuration = delayDurationInMicros +
-        durationInMicros +
-        delayDurationInMicros +
-        durationInMicros;
+    double overalCycleDuration = delayDurationInMicros + durationInMicros + delayDurationInMicros + durationInMicros;
     elapsedInMicros = elapsedInMicros % overalCycleDuration;
     bool reverse = elapsedInMicros > delayDurationInMicros + durationInMicros;
-    double cycleElapsedInMicros =
-        elapsedInMicros % (delayDurationInMicros + durationInMicros);
+    double cycleElapsedInMicros = elapsedInMicros % (delayDurationInMicros + durationInMicros);
     if (cycleElapsedInMicros < delayDurationInMicros) {
       return reverse ? 1 : 0;
-    } else if (cycleElapsedInMicros <
-        delayDurationInMicros + durationInMicros) {
-      double progress =
-          (cycleElapsedInMicros - delayDurationInMicros) / durationInMicros;
+    } else if (cycleElapsedInMicros < delayDurationInMicros + durationInMicros) {
+      double progress = (cycleElapsedInMicros - delayDurationInMicros) / durationInMicros;
       return reverse ? 1 - progress : progress;
     } else {
       return reverse ? 0 : 1;
@@ -289,8 +280,7 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
     return 0;
   }
 
-  Shader _createAlphaShader(
-      bool fadeStart, bool fadeEnd, Rect bounds, double fadePortion) {
+  Shader _createAlphaShader(bool fadeStart, bool fadeEnd, Rect bounds, double fadePortion) {
     double portionSize;
     if (direction == Axis.horizontal) {
       portionSize = fadePortion / bounds.width;
@@ -398,9 +388,7 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
         }
       }
       var progress = offsetProgress;
-      final offset = direction == Axis.horizontal
-          ? Offset(-sizeDiff * progress, 0)
-          : Offset(0, -sizeDiff * progress);
+      final offset = direction == Axis.horizontal ? Offset(-sizeDiff * progress, 0) : Offset(0, -sizeDiff * progress);
       final parentData = child.parentData as _OverflowMarqueeParentData;
       parentData.sizeDiff = sizeDiff;
       parentData.offset = offset;

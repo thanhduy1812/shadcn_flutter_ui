@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class MenubarExample1 extends StatefulWidget {
   const MenubarExample1({super.key});

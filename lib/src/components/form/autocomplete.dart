@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 typedef AutoCompleteCompleter = String Function(String suggestion);
 
@@ -99,11 +99,9 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
   }
 
   void _onSuggestionsChanged() {
-    if ((_suggestions.value.isEmpty && _popoverController.hasOpenPopover) ||
-        !_isFocused) {
+    if ((_suggestions.value.isEmpty && _popoverController.hasOpenPopover) || !_isFocused) {
       _popoverController.close();
-    } else if (!_popoverController.hasOpenPopover &&
-        _suggestions.value.isNotEmpty) {
+    } else if (!_popoverController.hasOpenPopover && _suggestions.value.isNotEmpty) {
       _selectedIndex.value = -1;
       _popoverController.show(
         context: context,
@@ -140,10 +138,8 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
             ),
           );
         },
-        widthConstraint:
-            widget.popoverWidthConstraint ?? PopoverConstraint.anchorFixedSize,
-        anchorAlignment:
-            widget.popoverAnchorAlignment ?? AlignmentDirectional.bottomStart,
+        widthConstraint: widget.popoverWidthConstraint ?? PopoverConstraint.anchorFixedSize,
+        anchorAlignment: widget.popoverAnchorAlignment ?? AlignmentDirectional.bottomStart,
         alignment: widget.popoverAlignment ?? AlignmentDirectional.topStart,
       );
     }
@@ -161,18 +157,15 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
     );
     switch (widget.mode) {
       case AutoCompleteMode.append:
-        TextFieldAppendTextIntent intent =
-            TextFieldAppendTextIntent(text: suggestion);
+        TextFieldAppendTextIntent intent = TextFieldAppendTextIntent(text: suggestion);
         invokeActionOnFocusedWidget(intent);
         break;
       case AutoCompleteMode.replaceWord:
-        TextFieldReplaceCurrentWordIntent intent =
-            TextFieldReplaceCurrentWordIntent(text: suggestion);
+        TextFieldReplaceCurrentWordIntent intent = TextFieldReplaceCurrentWordIntent(text: suggestion);
         invokeActionOnFocusedWidget(intent);
         break;
       case AutoCompleteMode.replaceAll:
-        TextFieldSetTextIntent intent =
-            TextFieldSetTextIntent(text: suggestion);
+        TextFieldSetTextIntent intent = TextFieldSetTextIntent(text: suggestion);
         invokeActionOnFocusedWidget(intent);
         break;
     }
@@ -208,20 +201,15 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
             onFocusChange: _onFocusChanged,
             shortcuts: _popoverController.hasOpenPopover
                 ? {
-                    LogicalKeySet(LogicalKeyboardKey.arrowDown):
-                        const NavigateSuggestionIntent(1),
-                    LogicalKeySet(LogicalKeyboardKey.arrowUp):
-                        const NavigateSuggestionIntent(-1),
-                    if (widget.suggestions.isNotEmpty &&
-                        _selectedIndex.value != -1)
-                      LogicalKeySet(LogicalKeyboardKey.tab):
-                          const AcceptSuggestionIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.arrowDown): const NavigateSuggestionIntent(1),
+                    LogicalKeySet(LogicalKeyboardKey.arrowUp): const NavigateSuggestionIntent(-1),
+                    if (widget.suggestions.isNotEmpty && _selectedIndex.value != -1)
+                      LogicalKeySet(LogicalKeyboardKey.tab): const AcceptSuggestionIntent(),
                   }
                 : null,
             actions: _popoverController.hasOpenPopover
                 ? {
-                    NavigateSuggestionIntent:
-                        CallbackAction<NavigateSuggestionIntent>(
+                    NavigateSuggestionIntent: CallbackAction<NavigateSuggestionIntent>(
                       onInvoke: (intent) {
                         final direction = intent.direction;
                         final selectedIndex = _selectedIndex.value;
@@ -229,16 +217,12 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
                         if (suggestions.isEmpty) {
                           return;
                         }
-                        final newSelectedIndex =
-                            (selectedIndex + direction) % suggestions.length;
-                        _selectedIndex.value = newSelectedIndex < 0
-                            ? suggestions.length - 1
-                            : newSelectedIndex;
+                        final newSelectedIndex = (selectedIndex + direction) % suggestions.length;
+                        _selectedIndex.value = newSelectedIndex < 0 ? suggestions.length - 1 : newSelectedIndex;
                         return;
                       },
                     ),
-                    AcceptSuggestionIntent:
-                        CallbackAction<AcceptSuggestionIntent>(
+                    AcceptSuggestionIntent: CallbackAction<AcceptSuggestionIntent>(
                       onInvoke: (intent) {
                         _handleProceed();
                         return;

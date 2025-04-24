@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class PopoverOverlayHandler extends OverlayHandler {
   const PopoverOverlayHandler();
@@ -51,12 +51,8 @@ class PopoverOverlayHandler extends OverlayHandler {
       Offset pos = renderBox.localToGlobal(Offset.zero);
       anchorSize ??= renderBox.size;
       position = Offset(
-        pos.dx +
-            anchorSize.width / 2 +
-            anchorSize.width / 2 * resolvedAnchorAlignment.x,
-        pos.dy +
-            anchorSize.height / 2 +
-            anchorSize.height / 2 * resolvedAnchorAlignment.y,
+        pos.dx + anchorSize.width / 2 + anchorSize.width / 2 * resolvedAnchorAlignment.x,
+        pos.dy + anchorSize.height / 2 + anchorSize.height / 2 * resolvedAnchorAlignment.y,
       );
     }
     final OverlayPopoverEntry<T> popoverEntry = OverlayPopoverEntry();
@@ -106,13 +102,10 @@ class PopoverOverlayHandler extends OverlayHandler {
                   child: AnimatedValueBuilder.animation(
                       value: isClosed.value ? 0.0 : 1.0,
                       initialValue: 0.0,
-                      curve: isClosed.value
-                          ? const Interval(0, 2 / 3)
-                          : Curves.linear,
+                      curve: isClosed.value ? const Interval(0, 2 / 3) : Curves.linear,
                       duration: isClosed.value
                           ? (showDuration ?? kDefaultDuration)
-                          : (dismissDuration ??
-                              const Duration(milliseconds: 100)),
+                          : (dismissDuration ?? const Duration(milliseconds: 100)),
                       onEnd: (value) {
                         if (value == 0.0 && isClosed.value) {
                           popoverEntry.remove();
@@ -564,11 +557,9 @@ class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
                 widthConstraint: _widthConstraint,
                 heightConstraint: _heightConstraint,
                 offset: _offset,
-                margin: _margin?.optionallyResolve(context) ??
-                    (const EdgeInsets.all(8) * scaling),
+                margin: _margin?.optionallyResolve(context) ?? (const EdgeInsets.all(8) * scaling),
                 scale: tweenValue(0.9, 1.0, widget.animation.value),
-                scaleAlignment: (widget.transitionAlignment ?? _alignment)
-                    .optionallyResolve(context),
+                scaleAlignment: (widget.transitionAlignment ?? _alignment).optionallyResolve(context),
                 allowInvertVertical: _allowInvertVertical,
                 allowInvertHorizontal: _allowInvertHorizontal,
                 child: child!,
@@ -741,13 +732,10 @@ class PopoverController extends ChangeNotifier {
   bool _disposed = false;
   final List<VNLPopover> _openPopovers = [];
 
-  bool get hasOpenPopover =>
-      _openPopovers.isNotEmpty &&
-      _openPopovers.any((element) => !element.entry.isCompleted);
+  bool get hasOpenPopover => _openPopovers.isNotEmpty && _openPopovers.any((element) => !element.entry.isCompleted);
 
   bool get hasMountedPopover =>
-      _openPopovers.isNotEmpty &&
-      _openPopovers.any((element) => !element.entry.isAnimationCompleted);
+      _openPopovers.isNotEmpty && _openPopovers.any((element) => !element.entry.isAnimationCompleted);
 
   Iterable<VNLPopover> get openPopovers => List.unmodifiable(_openPopovers);
 
@@ -779,8 +767,7 @@ class PopoverController extends ChangeNotifier {
     if (closeOthers) {
       close();
     }
-    key ??= GlobalKey<OverlayHandlerStateMixin>(
-        debugLabel: 'PopoverAnchor$hashCode');
+    key ??= GlobalKey<OverlayHandlerStateMixin>(debugLabel: 'PopoverAnchor$hashCode');
 
     OverlayCompleter<T?> res = showPopover<T>(
       context: context,
@@ -963,8 +950,7 @@ class PopoverLayout extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, covariant PopoverLayoutRender renderObject) {
+  void updateRenderObject(BuildContext context, covariant PopoverLayoutRender renderObject) {
     bool hasChanged = false;
     if (renderObject._alignment != alignment) {
       renderObject._alignment = alignment;
@@ -1147,10 +1133,9 @@ class PopoverLayoutRender extends RenderShiftedBox {
           layer = null;
         }
       } else {
-        final Matrix4 effectiveTransform =
-            Matrix4.translationValues(offset.dx, offset.dy, 0.0)
-              ..multiply(transform)
-              ..translate(-offset.dx, -offset.dy);
+        final Matrix4 effectiveTransform = Matrix4.translationValues(offset.dx, offset.dy, 0.0)
+          ..multiply(transform)
+          ..translate(-offset.dx, -offset.dy);
         final ui.ImageFilter filter = ui.ImageFilter.matrix(
           effectiveTransform.storage,
           filterQuality: _filterQuality!,
@@ -1227,20 +1212,14 @@ class PopoverLayoutRender extends RenderShiftedBox {
       size.width / 2 + size.width / 2 * _anchorAlignment.x,
       size.height / 2 + size.height / 2 * _anchorAlignment.y,
     );
-    double x = position.dx -
-        childSize.width / 2 -
-        (childSize.width / 2 * _alignment.x);
-    double y = position.dy -
-        childSize.height / 2 -
-        (childSize.height / 2 * _alignment.y);
+    double x = position.dx - childSize.width / 2 - (childSize.width / 2 * _alignment.x);
+    double y = position.dy - childSize.height / 2 - (childSize.height / 2 * _alignment.y);
     double left = x - _margin.left;
     double top = y - _margin.top;
     double right = x + childSize.width + _margin.right;
     double bottom = y + childSize.height + _margin.bottom;
     if ((left < 0 || right > size.width) && _allowInvertHorizontal) {
-      x = position.dx -
-          childSize.width / 2 -
-          (childSize.width / 2 * -_alignment.x);
+      x = position.dx - childSize.width / 2 - (childSize.width / 2 * -_alignment.x);
       if (_anchorSize != null) {
         x -= _anchorSize!.width * _anchorAlignment.x;
       }
@@ -1252,9 +1231,7 @@ class PopoverLayoutRender extends RenderShiftedBox {
       _invertX = false;
     }
     if ((top < 0 || bottom > size.height) && _allowInvertVertical) {
-      y = position.dy -
-          childSize.height / 2 -
-          (childSize.height / 2 * -_alignment.y);
+      y = position.dy - childSize.height / 2 - (childSize.height / 2 * -_alignment.y);
       if (_anchorSize != null) {
         y -= _anchorSize!.height * _anchorAlignment.y;
       }

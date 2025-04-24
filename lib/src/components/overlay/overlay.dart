@@ -1,9 +1,7 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 Future<void> closeOverlay<T>(BuildContext context, [T? value]) {
-  return Data.maybeFind<OverlayHandlerStateMixin>(context)
-          ?.closeWithResult(value) ??
-      Future.value();
+  return Data.maybeFind<OverlayHandlerStateMixin>(context)?.closeWithResult(value) ?? Future.value();
 }
 
 mixin OverlayHandlerStateMixin<T extends StatefulWidget> on State<T> {
@@ -189,8 +187,7 @@ class OverlayManagerLayer extends StatefulWidget {
   State<OverlayManagerLayer> createState() => _OverlayManagerLayerState();
 }
 
-class _OverlayManagerLayerState extends State<OverlayManagerLayer>
-    implements OverlayManager {
+class _OverlayManagerLayerState extends State<OverlayManagerLayer> implements OverlayManager {
   @override
   Widget build(BuildContext context) {
     return Data<OverlayManager>.inherit(

@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 Widget _buildFileIcon(String extension) {
   switch (extension) {
@@ -44,13 +44,13 @@ class FileIconProvider extends StatelessWidget {
     super.key,
     FileIconBuilder this.builder = _buildFileIcon,
     required this.child,
-  })  : icons = null;
+  }) : icons = null;
 
   const FileIconProvider({
     super.key,
     required this.icons,
     required this.child,
-  })  : builder = null;
+  }) : builder = null;
 
   @override
   Widget build(BuildContext context) {

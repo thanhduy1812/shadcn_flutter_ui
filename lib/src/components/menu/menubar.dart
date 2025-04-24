@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLMenubar extends StatefulWidget {
   final List<MenuItem> children;
@@ -42,9 +42,7 @@ class MenubarState extends State<VNLMenubar> {
         regionGroupId: this,
         direction: Axis.vertical,
         itemPadding: EdgeInsets.zero,
-        subMenuOffset:
-            (widget.border ? const Offset(-4, 8) : const Offset(0, 4)) *
-                theme.scaling,
+        subMenuOffset: (widget.border ? const Offset(-4, 8) : const Offset(0, 4)) * theme.scaling,
         builder: (context, children) {
           return IntrinsicHeight(
             child: Row(

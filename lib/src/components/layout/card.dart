@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLCard extends StatelessWidget {
   final Widget child;
@@ -39,9 +39,7 @@ class VNLCard extends StatelessWidget {
       borderRadius: borderRadius,
       borderWidth: borderWidth,
       borderColor: borderColor,
-      backgroundColor: filled
-          ? fillColor ?? theme.colorScheme.border
-          : theme.colorScheme.card,
+      backgroundColor: filled ? fillColor ?? theme.colorScheme.border : theme.colorScheme.card,
       boxShadow: boxShadow,
       padding: padding ?? (EdgeInsets.all(16 * scaling)),
       surfaceOpacity: surfaceOpacity,
@@ -115,4 +113,3 @@ class SurfaceCard extends StatelessWidget {
     );
   }
 }
-

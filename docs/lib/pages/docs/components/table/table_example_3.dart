@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class TableExample3 extends StatefulWidget {
   const TableExample3({super.key});

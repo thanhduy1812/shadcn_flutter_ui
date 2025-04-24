@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs_page.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ColorsPage extends StatefulWidget {
   const ColorsPage({super.key});
@@ -75,9 +75,7 @@ class _ColorsPageState extends State<ColorsPage> {
                 const Text('Use this code to display this color:'),
                 const Gap(8),
                 CodeSnippet(
-                  code: shade == 500
-                      ? 'Colors.${name.toLowerCase()}'
-                      : 'Colors.${name.toLowerCase()}[$shade]',
+                  code: shade == 500 ? 'Colors.${name.toLowerCase()}' : 'Colors.${name.toLowerCase()}[$shade]',
                   mode: 'dart',
                 ),
               ],
@@ -96,8 +94,7 @@ class _ColorsPageState extends State<ColorsPage> {
     );
   }
 
-  Widget buildColorRow(BuildContext context, String name, ColorShades swatch,
-      [bool clickable = true]) {
+  Widget buildColorRow(BuildContext context, String name, ColorShades swatch, [bool clickable = true]) {
     final theme = Theme.of(context);
     List<Widget> children = [];
     for (int shade in ColorShades.shadeValues) {
@@ -110,8 +107,7 @@ class _ColorsPageState extends State<ColorsPage> {
                 aspectRatio: 16 / 19,
                 child: Clickable(
                   enabled: clickable,
-                  mouseCursor:
-                      const WidgetStatePropertyAll(SystemMouseCursors.click),
+                  mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
                   onPressed: () {
                     _onTap(name, swatch, shade);
                   },
@@ -121,9 +117,7 @@ class _ColorsPageState extends State<ColorsPage> {
                       borderRadius: theme.borderRadiusMd,
                       border: shade == 500
                           ? Border.all(
-                              width: 3,
-                              color: theme.colorScheme.foreground,
-                              strokeAlign: BorderSide.strokeAlignOutside)
+                              width: 3, color: theme.colorScheme.foreground, strokeAlign: BorderSide.strokeAlignOutside)
                           : null,
                     ),
                   ),
@@ -145,8 +139,7 @@ class _ColorsPageState extends State<ColorsPage> {
     ).gap(8);
   }
 
-  Widget buildEditableColorRow(
-      BuildContext context, String name, ColorShades swatch) {
+  Widget buildEditableColorRow(BuildContext context, String name, ColorShades swatch) {
     final theme = Theme.of(context);
     List<Widget> children = [];
     var shadeValues = ColorShades.shadeValues;
@@ -161,8 +154,7 @@ class _ColorsPageState extends State<ColorsPage> {
                 aspectRatio: 16 / 19,
                 child: Builder(builder: (context) {
                   return Clickable(
-                    mouseCursor:
-                        const WidgetStatePropertyAll(SystemMouseCursors.click),
+                    mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
                     onPressed: () {
                       showColorPicker(
                         context: context,
@@ -299,11 +291,8 @@ class _ColorsPageState extends State<ColorsPage> {
                         onPressed: () {
                           setState(() {
                             _customColor = color.value[500].toHSL();
-                            Scrollable.ensureVisible(
-                                _customColorKey.currentContext!,
-                                duration: kDefaultDuration,
-                                alignmentPolicy:
-                                    ScrollPositionAlignmentPolicy.explicit);
+                            Scrollable.ensureVisible(_customColorKey.currentContext!,
+                                duration: kDefaultDuration, alignmentPolicy: ScrollPositionAlignmentPolicy.explicit);
                           });
                         },
                         size: ButtonSize.xSmall,
@@ -470,19 +459,16 @@ class _ColorsPageState extends State<ColorsPage> {
                       builder: (context) {
                         return VNLAlertDialog(
                           title: const Text('Reset Options'),
-                          content: const Text(
-                              'Are you sure you want to reset the options?'),
+                          content: const Text('Are you sure you want to reset the options?'),
                           actions: [
                             PrimaryButton(
                               onPressed: () {
                                 setState(() {
                                   _hueShift = _defaultHueShift;
                                   _saturationStepUp = _defaultSaturationStepUp;
-                                  _saturationStepDown =
-                                      _defaultSaturationStepDown;
+                                  _saturationStepDown = _defaultSaturationStepDown;
                                   _lightnessStepUp = _defaultLightnessStepUp;
-                                  _lightnessStepDown =
-                                      _defaultLightnessStepDown;
+                                  _lightnessStepDown = _defaultLightnessStepDown;
                                 });
                                 Navigator.of(context).pop();
                               },

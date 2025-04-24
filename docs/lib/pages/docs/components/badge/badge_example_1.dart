@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class BadgeExample1 extends StatelessWidget {
   const BadgeExample1({super.key});

@@ -1,7 +1,7 @@
 import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/docs/components/toast/toast_example_1.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ToastExample extends StatelessWidget {
   const ToastExample({super.key});

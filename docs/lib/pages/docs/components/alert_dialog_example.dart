@@ -1,6 +1,6 @@
 import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import 'alert_dialog/alert_dialog_example_1.dart';
 
@@ -11,14 +11,12 @@ class AlertDialogExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'alert_dialog',
-      description:
-          'An alert dialog informs the user about situations that require acknowledgement.',
+      description: 'An alert dialog informs the user about situations that require acknowledgement.',
       displayName: 'Alert Dialog',
       children: [
         WidgetUsageExample(
           title: 'Alert Dialog Example',
-          path:
-              'lib/pages/docs/components/alert_dialog/alert_dialog_example_1.dart',
+          path: 'lib/pages/docs/components/alert_dialog/alert_dialog_example_1.dart',
           child: AlertDialogExample1(),
         ),
       ],

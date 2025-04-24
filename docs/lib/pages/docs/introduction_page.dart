@@ -1,6 +1,6 @@
 import 'package:docs/pages/docs_page.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class IntroductionPage extends StatefulWidget {
@@ -30,9 +30,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text('Introduction').h1(),
-          const Text(
-                  'Beautifully designed components from VNL UI is now available for Flutter.')
-              .lead(),
+          const Text('Beautifully designed components from VNL UI is now available for Flutter.').lead(),
           const Text(
             'Welcome to vnl_ui, a versatile and comprehensive set '
             'of UI components designed specifically for Flutter desktop and '
@@ -64,14 +62,12 @@ class _IntroductionPageState extends State<IntroductionPage> {
               const Text('Pre-made themes from VNL UI.').li(),
               const Text('Supports mobile, web, and desktop platforms.').li(),
               const Text('Supports middle drag scrolling.').li(),
-              const Text('Various widget extensions for typography purposes.')
-                  .li(),
+              const Text('Various widget extensions for typography purposes.').li(),
               const Text('Supports WebAssembly for better performance.').li(),
             ],
           ).p(),
           const Text('Notes').h2().anchored(notesKey),
-          const Text(
-                  'This package is still in development and may have breaking changes in the future. '
+          const Text('This package is still in development and may have breaking changes in the future. '
                   'Please be cautious when using this package in production.')
               .p(),
           const Text(
@@ -81,22 +77,18 @@ class _IntroductionPageState extends State<IntroductionPage> {
           Accordion(
             items: [
               const AccordionItem(
-                trigger: AccordionTrigger(
-                    child: Text('Does this support GoRouter?')),
-                content: Text(
-                    'Yes, it does. You can use GoRouter with vnl_ui. '),
+                trigger: AccordionTrigger(child: Text('Does this support GoRouter?')),
+                content: Text('Yes, it does. You can use GoRouter with vnl_ui. '),
               ),
               const AccordionItem(
                 trigger: AccordionTrigger(
                   child: Text('Can I use this in my project?'),
                 ),
-                content: Text(
-                    'Yes! Free to use for personal and commercial projects. No attribution required.'),
+                content: Text('Yes! Free to use for personal and commercial projects. No attribution required.'),
               ),
               AccordionItem(
                 trigger: const AccordionTrigger(
-                  child:
-                      Text('Can I use this with Material/Cupertino Widgets?'),
+                  child: Text('Can I use this with Material/Cupertino Widgets?'),
                 ),
                 content: const Text('Sure you can! ').thenButton(
                     onPressed: () {
@@ -106,16 +98,13 @@ class _IntroductionPageState extends State<IntroductionPage> {
               ),
               AccordionItem(
                 trigger: const AccordionTrigger(
-                  child: Text(
-                      'Can I configure which style i would like to use? (Default/New York)'),
+                  child: Text('Can I configure which style i would like to use? (Default/New York)'),
                 ),
-                content: const Text(
-                        'Unfortunately you can\'t. This package only supports New York style. '
+                content: const Text('Unfortunately you can\'t. This package only supports New York style. '
                         'But if you wish to have default style of VNL UI, i would recommend ')
                     .thenButton(
                         onPressed: () {
-                          launchUrlString(
-                              'https://github.com/nank1ro/flutter-vnl-ui');
+                          launchUrlString('https://github.com/nank1ro/flutter-vnl-ui');
                         },
                         child: const Text('this package'))
                     .thenText(' by ')
@@ -136,20 +125,16 @@ class _IntroductionPageState extends State<IntroductionPage> {
               const Text('Github: ')
                   .thenButton(
                       onPressed: () {
-                        launchUrlString(
-                            'https://github.com/sunarya-thito/vnl_ui');
+                        launchUrlString('https://github.com/sunarya-thito/vnl_ui');
                       },
-                      child: const Text(
-                          'https://github.com/sunarya-thito/vnl_ui'))
+                      child: const Text('https://github.com/sunarya-thito/vnl_ui'))
                   .li(),
               const Text('pub.dev: ')
                   .thenButton(
                       onPressed: () {
-                        launchUrlString(
-                            'https://pub.dev/packages/vnl_ui');
+                        launchUrlString('https://pub.dev/packages/vnl_ui');
                       },
-                      child:
-                          const Text('https://pub.dev/packages/vnl_ui'))
+                      child: const Text('https://pub.dev/packages/vnl_ui'))
                   .li(),
               const Text('Discord: ')
                   .thenButton(

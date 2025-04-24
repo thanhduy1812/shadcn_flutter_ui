@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 typedef KeyboardShortcutDisplayBuilder = Widget Function(
   BuildContext context,
@@ -50,12 +50,10 @@ class KeyboardShortcutDisplayMapper extends StatefulWidget {
   });
 
   @override
-  State<KeyboardShortcutDisplayMapper> createState() =>
-      _KeyboardShortcutDisplayMapperState();
+  State<KeyboardShortcutDisplayMapper> createState() => _KeyboardShortcutDisplayMapperState();
 }
 
-class _KeyboardShortcutDisplayMapperState
-    extends State<KeyboardShortcutDisplayMapper> {
+class _KeyboardShortcutDisplayMapperState extends State<KeyboardShortcutDisplayMapper> {
   late KeyboardShortcutDisplayHandle _handle;
 
   @override
@@ -105,10 +103,7 @@ class VNLKeyboardDisplay extends StatelessWidget {
     final theme = Theme.of(context);
     var keys = _keys ?? shortcutActivatorToKeySet(_activator!);
     return Row(
-            mainAxisSize: MainAxisSize.min,
-            children: keys
-                .map((key) => KeyboardKeyDisplay(keyboardKey: key))
-                .toList())
+            mainAxisSize: MainAxisSize.min, children: keys.map((key) => KeyboardKeyDisplay(keyboardKey: key)).toList())
         .gap(spacing ?? (2 * theme.scaling));
   }
 }
@@ -128,9 +123,7 @@ class KeyboardKeyDisplay extends StatelessWidget {
     final displayMapper = Data.of<KeyboardShortcutDisplayHandle>(context);
     final theme = Theme.of(context);
     return VNLCard(
-      padding: padding ??
-          (const EdgeInsets.symmetric(horizontal: 6, vertical: 4) *
-              theme.scaling),
+      padding: padding ?? (const EdgeInsets.symmetric(horizontal: 6, vertical: 4) * theme.scaling),
       boxShadow: [
         BoxShadow(
           color: theme.colorScheme.border,
@@ -144,8 +137,7 @@ class KeyboardKeyDisplay extends StatelessWidget {
   }
 }
 
-List<LogicalKeyboardKey> shortcutActivatorToKeySet(
-    ShortcutActivator activator) {
+List<LogicalKeyboardKey> shortcutActivatorToKeySet(ShortcutActivator activator) {
   List<LogicalKeyboardKey> keys = [];
   if (activator is CharacterActivator) {
     if (activator.control) {

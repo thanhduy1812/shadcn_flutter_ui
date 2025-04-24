@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ButtonExample16 extends StatelessWidget {
   const ButtonExample16({super.key});
@@ -10,8 +10,7 @@ class ButtonExample16 extends StatelessWidget {
       child: const Basic(
         title: Text('Project #1'),
         subtitle: Text('Project description'),
-        content:
-            Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+        content: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
       ),
     );
   }

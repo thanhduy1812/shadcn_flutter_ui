@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/src/components/layout/focus_outline.dart';
 
 import '../../../vnl_ui.dart';
+import '../layout/focus_outline.dart';
 
 const kSwitchDuration = Duration(milliseconds: 100);
 

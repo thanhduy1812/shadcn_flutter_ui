@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class PhoneInputExample1 extends StatefulWidget {
   const PhoneInputExample1({super.key});

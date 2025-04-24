@@ -86,7 +86,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:yaml/yaml.dart';
 
 import 'pages/docs/components/badge_example.dart';
@@ -219,10 +219,7 @@ class MyAppState extends State<MyApp> {
       builder: (context, state) => const LayoutPage(),
       name: 'layout',
     ),
-    GoRoute(
-        path: '/external',
-        builder: (context, state) => const MaterialExample(),
-        name: 'external'),
+    GoRoute(path: '/external', builder: (context, state) => const MaterialExample(), name: 'external'),
     GoRoute(
       path: '/web_preloader',
       name: 'web_preloader',
@@ -762,21 +759,16 @@ class MyAppState extends State<MyApp> {
     scaling = widget.initialScaling;
     surfaceOpacity = widget.initialSurfaceOpacity;
     surfaceBlur = widget.initialSurfaceBlur;
-    router = GoRouter(
-        routes: routes,
-        initialLocation: widget.initialPath,
-        observers: [
-          if (!kIsWeb &&
-              (Platform.isMacOS || Platform.isWindows || Platform.isLinux) &&
-              kEnablePersistentPath)
-            _DesktopNavigatorObserver(
-              onRouteChanged: (path) {
-                SharedPreferences.getInstance().then((prefs) {
-                  prefs.setString('initialPath', path);
-                });
-              },
-            ),
-        ]);
+    router = GoRouter(routes: routes, initialLocation: widget.initialPath, observers: [
+      if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux) && kEnablePersistentPath)
+        _DesktopNavigatorObserver(
+          onRouteChanged: (path) {
+            SharedPreferences.getInstance().then((prefs) {
+              prefs.setString('initialPath', path);
+            });
+          },
+        ),
+    ]);
   }
   // This widget is the root of your application.
 

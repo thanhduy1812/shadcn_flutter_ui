@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/component_page.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import 'dropdown_menu/dropdown_menu_example_1.dart';
@@ -11,14 +11,12 @@ class DropdownMenuExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'dropdown_menu',
-      description:
-          'Dropdown menu is a menu that appears when you click a button or other control.',
+      description: 'Dropdown menu is a menu that appears when you click a button or other control.',
       displayName: 'Dropdown Menu',
       children: [
         WidgetUsageExample(
           title: 'Dropdown Menu Example',
-          path:
-              'lib/pages/docs/components/dropdown_menu/dropdown_menu_example_1.dart',
+          path: 'lib/pages/docs/components/dropdown_menu/dropdown_menu_example_1.dart',
           child: DropdownMenuExample1(),
         ),
       ],

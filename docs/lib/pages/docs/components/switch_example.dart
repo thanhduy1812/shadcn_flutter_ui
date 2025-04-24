@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/switch/switch_example_1.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -11,8 +11,7 @@ class SwitchExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'switch',
-      description:
-          'A switch is a visual toggle between two mutually exclusive states — on and off.',
+      description: 'A switch is a visual toggle between two mutually exclusive states — on and off.',
       displayName: 'Switch',
       children: [
         WidgetUsageExample(

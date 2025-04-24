@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class DataExample11 extends StatefulWidget {
   const DataExample11({super.key});
@@ -92,8 +92,7 @@ class _LeafWidgetState extends State<LeafWidget> {
     int secondCounter = Model.of(context, #secondCounter);
     rebuildCount++;
     return VNLCard(
-      child:
-          Text('Second Counter: $secondCounter (Rebuild Count: $rebuildCount)'),
+      child: Text('Second Counter: $secondCounter (Rebuild Count: $rebuildCount)'),
     );
   }
 }

@@ -7,7 +7,7 @@
 
 import 'package:example/main.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

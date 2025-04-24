@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -27,8 +27,7 @@ class ButtonExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'button',
-      description:
-          'Buttons allow users to take actions, and make choices, with a single tap.',
+      description: 'Buttons allow users to take actions, and make choices, with a single tap.',
       displayName: 'Button',
       children: [
         WidgetUsageExample(

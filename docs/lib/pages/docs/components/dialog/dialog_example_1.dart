@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class DialogExample1 extends StatelessWidget {
   const DialogExample1({super.key});
@@ -17,8 +17,7 @@ class DialogExample1 extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                      'Make changes to your profile here. Click save when you\'re done'),
+                  const Text('Make changes to your profile here. Click save when you\'re done'),
                   const Gap(16),
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 400),

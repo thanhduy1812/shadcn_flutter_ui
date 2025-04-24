@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vnl_ui/vnl_ui.dart' as vnlui;
+import 'package:vnl_common_ui/vnl_ui.dart' as vnlui;
 
 class MaterialExample1 extends StatefulWidget {
   const MaterialExample1({super.key});
@@ -46,8 +46,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                      'You can also use vnl_ui widgets inside Material widgets'),
+                  const Text('You can also use vnl_ui widgets inside Material widgets'),
                   const vnlui.Gap(16),
                   vnlui.PrimaryButton(
                     onPressed: () {
@@ -79,8 +78,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
                         builder: (context) {
                           return vnlui.VNLAlertDialog(
                             title: const Text('Hello'),
-                            content:
-                                const Text('This is vnl_ui dialog'),
+                            content: const Text('This is vnl_ui dialog'),
                             actions: [
                               vnlui.PrimaryButton(
                                 onPressed: () {

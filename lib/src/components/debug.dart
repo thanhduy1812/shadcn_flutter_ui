@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 const kDebugStickerVisible = true;
 const kDebugContainerVisible = true;
 
-void debugPostSticker(
-    BuildContext context, Rect rect, Color color, String text) {
+void debugPostSticker(BuildContext context, Rect rect, Color color, String text) {
   if (!kDebugStickerVisible) {
     return;
   }

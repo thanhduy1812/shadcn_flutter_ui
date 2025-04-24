@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 abstract class InputPart implements FormattedValuePart {
   const factory InputPart.static(String text) = StaticPart;
@@ -122,20 +122,13 @@ class EditablePart extends InputPart {
 class _EditablePartController extends TextEditingController {
   final int maxLength;
   final bool hasPlaceholder;
-  _EditablePartController(
-      {required this.maxLength, required this.hasPlaceholder, super.text});
+  _EditablePartController({required this.maxLength, required this.hasPlaceholder, super.text});
 
   @override
-  TextSpan buildTextSpan(
-      {required BuildContext context,
-      TextStyle? style,
-      required bool withComposing}) {
+  TextSpan buildTextSpan({required BuildContext context, TextStyle? style, required bool withComposing}) {
     final theme = Theme.of(context);
-    assert(!value.composing.isValid ||
-        !withComposing ||
-        value.isComposingRangeValid);
-    final bool composingRegionOutOfRange =
-        !value.isComposingRangeValid || !withComposing;
+    assert(!value.composing.isValid || !withComposing || value.isComposingRangeValid);
+    final bool composingRegionOutOfRange = !value.isComposingRangeValid || !withComposing;
 
     if (composingRegionOutOfRange) {
       var text = this.text;
@@ -155,14 +148,12 @@ class _EditablePartController extends TextEditingController {
       ]);
     }
 
-    final TextStyle composingStyle =
-        style?.merge(const TextStyle(decoration: TextDecoration.underline)) ??
-            const TextStyle(decoration: TextDecoration.underline);
+    final TextStyle composingStyle = style?.merge(const TextStyle(decoration: TextDecoration.underline)) ??
+        const TextStyle(decoration: TextDecoration.underline);
     var textBefore = value.composing.textBefore(value.text);
     var textInside = value.composing.textInside(value.text);
     var textAfter = value.composing.textAfter(value.text);
-    int totalTextLength =
-        textBefore.length + textInside.length + textAfter.length;
+    int totalTextLength = textBefore.length + textInside.length + textAfter.length;
     if (totalTextLength == 0 && hasPlaceholder) {
       return const TextSpan();
     }
@@ -252,8 +243,7 @@ class _EditablePartWidgetState extends State<_EditablePartWidget> {
     }
     if (oldWidget.data.controller != widget.data.controller) {
       if (oldWidget.data.controller != null) {
-        oldWidget.data.controller!
-            .removeListener(_onFormattedInputControllerChange);
+        oldWidget.data.controller!.removeListener(_onFormattedInputControllerChange);
       }
       if (widget.data.controller != null) {
         widget.data.controller!.addListener(_onFormattedInputControllerChange);
@@ -281,22 +271,19 @@ class _EditablePartWidgetState extends State<_EditablePartWidget> {
   KeyEventResult _onKeyEvent(FocusNode node, KeyEvent event) {
     if (event is KeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.backspace) {
-        if (_controller.selection.isCollapsed &&
-            _controller.selection.baseOffset == 0) {
+        if (_controller.selection.isCollapsed && _controller.selection.baseOffset == 0) {
           _previousFocus();
           return KeyEventResult.handled;
         }
       }
       if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-        if (_controller.selection.isCollapsed &&
-            _controller.selection.baseOffset == 0) {
+        if (_controller.selection.isCollapsed && _controller.selection.baseOffset == 0) {
           _previousFocus();
           return KeyEventResult.handled;
         }
       }
       if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
-        if (_controller.selection.isCollapsed &&
-            _controller.selection.baseOffset == _controller.text.length) {
+        if (_controller.selection.isCollapsed && _controller.selection.baseOffset == _controller.text.length) {
           _nextFocus();
           return KeyEventResult.handled;
         }
@@ -335,8 +322,7 @@ class _EditablePartWidgetState extends State<_EditablePartWidget> {
             controller: _controller,
             maxLength: widget.length,
             onChanged: _onChanged,
-            style:
-                DefaultTextStyle.of(context).style.merge(theme.typography.mono),
+            style: DefaultTextStyle.of(context).style.merge(theme.typography.mono),
             border: false,
             textAlign: TextAlign.center,
             initialValue: data.initialValue,
@@ -372,9 +358,7 @@ class FormattedValuePart {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is FormattedValuePart &&
-        part == other.part &&
-        value == other.value;
+    return other is FormattedValuePart && part == other.part && value == other.value;
   }
 
   @override
@@ -386,8 +370,7 @@ class FormattedValue {
 
   const FormattedValue([this.parts = const []]);
 
-  Iterable<FormattedValuePart> get values =>
-      parts.where((part) => part.part.canHaveValue);
+  Iterable<FormattedValuePart> get values => parts.where((part) => part.part.canHaveValue);
 
   FormattedValuePart? operator [](int index) {
     int partIndex = 0;
@@ -415,13 +398,11 @@ class FormattedValue {
   int get hashCode => parts.hashCode;
 }
 
-class FormattedInputController extends ValueNotifier<FormattedValue>
-    with ComponentController<FormattedValue> {
+class FormattedInputController extends ValueNotifier<FormattedValue> with ComponentController<FormattedValue> {
   FormattedInputController([super.value = const FormattedValue()]);
 }
 
-class VNLFormattedInput extends StatefulWidget
-    with ControlledComponent<FormattedValue> {
+class VNLFormattedInput extends StatefulWidget with ControlledComponent<FormattedValue> {
   @override
   final FormattedValue? initialValue;
   @override
@@ -471,8 +452,7 @@ class _FormattedInputState extends State<VNLFormattedInput> {
     _focusNodes = _allocateFocusNodes(partIndex);
   }
 
-  List<FocusNode> _allocateFocusNodes(int newLength,
-      [List<FocusNode>? oldNodes]) {
+  List<FocusNode> _allocateFocusNodes(int newLength, [List<FocusNode>? oldNodes]) {
     if (oldNodes == null) {
       return List.generate(newLength, (index) => FocusNode());
     }
@@ -563,8 +543,7 @@ class _FormattedInputState extends State<VNLFormattedInput> {
       }
     }
     return SizedBox(
-      height: kTextFieldHeight *
-          theme.scaling, // 32 (textfield height) + 2 (border)
+      height: kTextFieldHeight * theme.scaling, // 32 (textfield height) + 2 (border)
       child: TextFieldTapRegion(
         child: Focus(
           onFocusChange: (hasFocus) {
@@ -574,8 +553,7 @@ class _FormattedInputState extends State<VNLFormattedInput> {
           },
           child: OutlinedContainer(
             borderRadius: theme.borderRadiusMd,
-            borderColor:
-                _hasFocus ? theme.colorScheme.ring : theme.colorScheme.border,
+            borderColor: _hasFocus ? theme.colorScheme.ring : theme.colorScheme.border,
             padding: EdgeInsets.symmetric(
               horizontal: 6 * theme.scaling,
             ),
@@ -632,15 +610,12 @@ class FormattedInputData {
   }
 
   @override
-  int get hashCode => Object.hash(
-      partIndex, initialValue, enabled, controller, focusNode, focusNodes);
+  int get hashCode => Object.hash(partIndex, initialValue, enabled, controller, focusNode, focusNodes);
 }
 
-typedef FormattedInputPopupBuilder<T> = Widget Function(
-    BuildContext context, ComponentController<T?> controller);
+typedef FormattedInputPopupBuilder<T> = Widget Function(BuildContext context, ComponentController<T?> controller);
 
-class FormattedObjectInput<T> extends StatefulWidget
-    with ControlledComponent<T?> {
+class FormattedObjectInput<T> extends StatefulWidget with ControlledComponent<T?> {
   @override
   final T? initialValue;
   @override
@@ -675,12 +650,10 @@ class FormattedObjectInput<T> extends StatefulWidget
   });
 
   @override
-  State<FormattedObjectInput<T>> createState() =>
-      _FormattedObjectInputState<T>();
+  State<FormattedObjectInput<T>> createState() => _FormattedObjectInputState<T>();
 }
 
-class _FormattedObjectController<T> extends ValueNotifier<T?>
-    with ComponentController<T?> {
+class _FormattedObjectController<T> extends ValueNotifier<T?> with ComponentController<T?> {
   _FormattedObjectController([super.value]);
 }
 
@@ -696,8 +669,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
   void initState() {
     super.initState();
     _controller = widget.controller ?? _FormattedObjectController<T>();
-    List<String?> values = widget.converter
-        .convertA(widget.initialValue ?? widget.controller?.value);
+    List<String?> values = widget.converter.convertA(widget.initialValue ?? widget.controller?.value);
     List<FormattedValuePart> valueParts = [];
     int partIndex = 0;
     for (var i = 0; i < widget.parts.length; i++) {
@@ -727,8 +699,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
     if (!listEquals(widget.parts, oldWidget.parts)) {
       List<String?> values = widget.converter.convertA(_controller.value);
       List<FormattedValuePart> valueParts = [];
-      List<FormattedValuePart> oldValues =
-          _formattedController.value.values.toList();
+      List<FormattedValuePart> oldValues = _formattedController.value.values.toList();
       int partIndex = 0;
       for (var i = 0; i < widget.parts.length; i++) {
         var part = widget.parts[i];
@@ -737,8 +708,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
           if (value != null) {
             valueParts.add(part.withValue(value));
           } else {
-            var oldValue =
-                partIndex < oldValues.length ? oldValues[partIndex] : null;
+            var oldValue = partIndex < oldValues.length ? oldValues[partIndex] : null;
             if (oldValue != null) {
               valueParts.add(oldValue);
             } else {
@@ -781,8 +751,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
       List<String?> values = widget.converter.convertA(_controller.value);
       List<FormattedValuePart> valueParts = [];
       int partIndex = 0;
-      List<FormattedValuePart> oldValues =
-          _formattedController.value.values.toList();
+      List<FormattedValuePart> oldValues = _formattedController.value.values.toList();
       for (var i = 0; i < widget.parts.length; i++) {
         var part = widget.parts[i];
         if (part.canHaveValue) {
@@ -790,8 +759,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
           if (value != null) {
             valueParts.add(part.withValue(value));
           } else {
-            var oldValue =
-                partIndex < oldValues.length ? oldValues[partIndex] : null;
+            var oldValue = partIndex < oldValues.length ? oldValues[partIndex] : null;
             if (oldValue != null) {
               valueParts.add(oldValue);
             } else {
@@ -819,8 +787,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
     _popoverController.show(
         context: context,
         alignment: widget.popoverAlignment ?? AlignmentDirectional.topStart,
-        anchorAlignment:
-            widget.popoverAnchorAlignment ?? AlignmentDirectional.bottomStart,
+        anchorAlignment: widget.popoverAnchorAlignment ?? AlignmentDirectional.bottomStart,
         offset: widget.popoverOffset ?? (const Offset(0, 4) * theme.scaling),
         builder: (context) {
           return popupBuilder(context, _controller);
@@ -853,8 +820,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
                 builder: (context, child) {
                   return WidgetStatesProvider(
                     states: {
-                      if (_popoverController.hasOpenPopover)
-                        WidgetState.hovered,
+                      if (_popoverController.hasOpenPopover) WidgetState.hovered,
                     },
                     child: child!,
                   );

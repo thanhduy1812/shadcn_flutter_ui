@@ -1,5 +1,5 @@
 import 'package:docs/debug.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class WindowExample1 extends StatefulWidget {
   const WindowExample1({super.key});
@@ -42,8 +42,7 @@ class _WindowExample1State extends State<WindowExample1> {
             navigatorKey.currentState?.pushWindow(
               Window(
                 bounds: const Rect.fromLTWH(0, 0, 200, 200),
-                title: Text(
-                    'Window ${navigatorKey.currentState!.windows.length + 1}'),
+                title: Text('Window ${navigatorKey.currentState!.windows.length + 1}'),
                 content: const RebuildCounter(),
               ),
             );

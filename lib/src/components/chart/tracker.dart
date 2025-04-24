@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// An abstract class that holds values for different Tracker levels.
 ///
@@ -18,22 +18,19 @@ abstract class TrackerLevel {
   ///
   /// [color] is set to `Colors.orange`
   /// [name] is set to `"Warning"`
-  static const TrackerLevel warning =
-      _SimpleTrackerLevel(Colors.orange, 'Warning');
+  static const TrackerLevel warning = _SimpleTrackerLevel(Colors.orange, 'Warning');
 
   /// Default values for the critical level.
   ///
   /// [color] is set to `Colors.red`
   /// [name] is set to `"Critical"`
-  static const TrackerLevel critical =
-      _SimpleTrackerLevel(Colors.red, 'Critical');
+  static const TrackerLevel critical = _SimpleTrackerLevel(Colors.red, 'Critical');
 
   /// Default values for the unknown level.
   ///
   /// [color] is set to `Colors.gray`
   /// [name] is set to `"Unknown"`
-  static const TrackerLevel unknown =
-      _SimpleTrackerLevel(Colors.gray, 'Unknown');
+  static const TrackerLevel unknown = _SimpleTrackerLevel(Colors.gray, 'Unknown');
   // enum? no, this will allow custom implementations
   /// Gets the color for the specified [TrackerLevel].
   Color get color;
@@ -108,10 +105,7 @@ class TrackerTheme {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TrackerTheme &&
-        other.radius == radius &&
-        other.gap == gap &&
-        other.itemHeight == itemHeight;
+    return other is TrackerTheme && other.radius == radius && other.gap == gap && other.itemHeight == itemHeight;
   }
 
   @override
@@ -122,8 +116,7 @@ class TrackerTheme {
       );
 
   @override
-  String toString() =>
-      'TrackerTheme(radius: $radius, gap: $gap, itemHeight: $itemHeight)';
+  String toString() => 'TrackerTheme(radius: $radius, gap: $gap, itemHeight: $itemHeight)';
 }
 
 /// A widget that displays a tracker.
@@ -153,8 +146,7 @@ class Tracker extends StatelessWidget {
     final theme = Theme.of(context);
     final trackerTheme = ComponentTheme.maybeOf<TrackerTheme>(context);
     return ClipRRect(
-      borderRadius:
-          BorderRadius.circular(trackerTheme?.radius ?? theme.radiusMd),
+      borderRadius: BorderRadius.circular(trackerTheme?.radius ?? theme.radiusMd),
       child: Row(
         children: [
           for (final data in this.data)

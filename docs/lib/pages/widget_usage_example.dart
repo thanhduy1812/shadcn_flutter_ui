@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class WidgetUsageExample extends StatefulWidget {
@@ -89,8 +89,7 @@ class CodeSnippetFutureBuilder extends StatefulWidget {
   });
 
   @override
-  State<CodeSnippetFutureBuilder> createState() =>
-      _CodeSnippetFutureBuilderState();
+  State<CodeSnippetFutureBuilder> createState() => _CodeSnippetFutureBuilderState();
 }
 
 class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
@@ -98,10 +97,8 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
 
   void _refresh() {
     //https://raw.githubusercontent.com/sunarya-thito/vnl_ui/master/docs/lib/pages/docs/layout_page/layout_page_example_1.dart
-    String url =
-        'https://raw.githubusercontent.com/sunarya-thito/vnl_ui/master/docs/${widget.path}';
-    futureCode =
-        http.get(Uri.parse(url)).then((response) => response.body).then((code) {
+    String url = 'https://raw.githubusercontent.com/sunarya-thito/vnl_ui/master/docs/${widget.path}';
+    futureCode = http.get(Uri.parse(url)).then((response) => response.body).then((code) {
       try {
         return widget.summarize ? _formatCode(code) : code;
       } catch (e, stackTrace) {
@@ -136,8 +133,7 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
           print(snapshot.error);
           print(snapshot.stackTrace);
           return CodeSnippet(
-            code:
-                'Error loading code\n${snapshot.error}\n${snapshot.stackTrace}',
+            code: 'Error loading code\n${snapshot.error}\n${snapshot.stackTrace}',
             mode: widget.mode,
             actions: [
               GhostButton(
@@ -161,8 +157,7 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
                   density: ButtonDensity.icon,
                   onPressed: () {
                     // open in new tab
-                    String url =
-                        'https://github.com/sunarya-thito/vnl_ui/blob/master/docs/${widget.path}';
+                    String url = 'https://github.com/sunarya-thito/vnl_ui/blob/master/docs/${widget.path}';
                     // html.window.open(url, 'blank');
                     launchUrlString(url);
                   },
@@ -183,8 +178,7 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
                 onPressed: () {
                   // open in new tab
                   //https://github.com/sunarya-thito/vnl_ui/blob/master/docs/lib/pages/docs/layout_page/layout_page_example_1.dart
-                  String url =
-                      'https://github.com/sunarya-thito/vnl_ui/blob/master/docs/${widget.path}';
+                  String url = 'https://github.com/sunarya-thito/vnl_ui/blob/master/docs/${widget.path}';
                   // html.window.open(url, 'blank');
                   launchUrlString(url);
                 },
@@ -219,8 +213,7 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
 String _formatCode(String code) {
   // check if code uses stateful widget
   if (code.contains('StatefulWidget')) {
-    RegExp exp = RegExp(r'extends[\s]*State<.+?>[\s]*{[\s]*\n(.*)[\s]*}',
-        multiLine: true, dotAll: true);
+    RegExp exp = RegExp(r'extends[\s]*State<.+?>[\s]*{[\s]*\n(.*)[\s]*}', multiLine: true, dotAll: true);
     var firstMatch = exp.firstMatch(code);
     if (firstMatch == null) {
       return code;

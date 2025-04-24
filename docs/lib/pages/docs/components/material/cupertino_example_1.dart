@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:vnl_ui/vnl_ui.dart' as vnlui;
+import 'package:vnl_common_ui/vnl_ui.dart' as vnlui;
 
 class CupertinoExample1 extends StatefulWidget {
   const CupertinoExample1({super.key});

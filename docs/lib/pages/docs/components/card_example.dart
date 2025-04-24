@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -11,8 +11,7 @@ class CardExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'card',
-      description:
-          'Cards are surfaces that display content and actions on a single topic.',
+      description: 'Cards are surfaces that display content and actions on a single topic.',
       displayName: 'Card',
       children: [
         WidgetUsageExample(

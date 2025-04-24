@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class SidebarSection extends StatelessWidget {
   final Widget header;
@@ -54,8 +54,7 @@ class SidebarButton extends StatelessWidget {
         alignment: AlignmentDirectional.centerStart,
         style: ButtonVariance.text.copyWith(
           padding: (context, states, value) {
-            return const EdgeInsets.symmetric(vertical: 4, horizontal: 8) *
-                data.scaling;
+            return const EdgeInsets.symmetric(vertical: 4, horizontal: 8) * data.scaling;
           },
           textStyle: (context, states, value) {
             return value.copyWith(
@@ -88,13 +87,11 @@ class DocsNavigationButton extends StatefulWidget {
 }
 
 class _DocsNavigationButtonState extends State<DocsNavigationButton> {
-  EdgeInsetsGeometry _padding(
-      BuildContext context, Set<WidgetState> states, EdgeInsetsGeometry value) {
+  EdgeInsetsGeometry _padding(BuildContext context, Set<WidgetState> states, EdgeInsetsGeometry value) {
     return const EdgeInsets.symmetric(vertical: 4, horizontal: 8);
   }
 
-  TextStyle _textStyle(
-      BuildContext context, Set<WidgetState> states, TextStyle value) {
+  TextStyle _textStyle(BuildContext context, Set<WidgetState> states, TextStyle value) {
     return value.copyWith(
       fontWeight: widget.selected ? FontWeight.w500 : FontWeight.normal,
     );

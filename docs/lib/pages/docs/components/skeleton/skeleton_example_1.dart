@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class SkeletonExample1 extends StatelessWidget {
   const SkeletonExample1({super.key});
@@ -9,8 +9,7 @@ class SkeletonExample1 extends StatelessWidget {
       children: [
         const Basic(
           title: Text('Skeleton Example 1'),
-          content:
-              Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+          content: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
           leading: Avatar(
             initials: '',
           ),
@@ -19,8 +18,7 @@ class SkeletonExample1 extends StatelessWidget {
         const Gap(24),
         Basic(
           title: const Text('Skeleton Example 1'),
-          content: const Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+          content: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
           leading: const Avatar(
             initials: '',
           ).asSkeleton(),

@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-typedef FutureOrWidgetBuilder<T> = Widget Function(
-    BuildContext context, AsyncSnapshot<T> snapshot);
+typedef FutureOrWidgetBuilder<T> = Widget Function(BuildContext context, AsyncSnapshot<T> snapshot);
 
 class FutureOrBuilder<T> extends StatelessWidget {
   final FutureOr<T> future;
@@ -26,7 +25,6 @@ class FutureOrBuilder<T> extends StatelessWidget {
         builder: builder,
       );
     }
-    return builder(
-        context, AsyncSnapshot.withData(ConnectionState.done, future as T));
+    return builder(context, AsyncSnapshot.withData(ConnectionState.done, future as T));
   }
 }

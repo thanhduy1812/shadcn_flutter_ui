@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class AlertDialogExample1 extends StatelessWidget {
   const AlertDialogExample1({super.key});
@@ -13,8 +13,7 @@ class AlertDialogExample1 extends StatelessWidget {
           builder: (context) {
             return VNLAlertDialog(
               title: const Text('Alert title'),
-              content: const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+              content: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
               actions: [
                 OutlineButton(
                   child: const Text('Cancel'),

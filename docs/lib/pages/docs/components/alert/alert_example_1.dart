@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class AlertExample1 extends StatelessWidget {
   const AlertExample1({super.key});

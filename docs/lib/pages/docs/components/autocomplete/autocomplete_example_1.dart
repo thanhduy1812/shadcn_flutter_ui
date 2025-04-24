@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class AutoCompleteExample1 extends StatefulWidget {
   const AutoCompleteExample1({super.key});
@@ -37,10 +37,8 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
       return;
     }
     setState(() {
-      _currentSuggestions = suggestions
-          .where((element) =>
-              element.toLowerCase().contains(currentWord.toLowerCase()))
-          .toList();
+      _currentSuggestions =
+          suggestions.where((element) => element.toLowerCase().contains(currentWord.toLowerCase())).toList();
     });
   }
 

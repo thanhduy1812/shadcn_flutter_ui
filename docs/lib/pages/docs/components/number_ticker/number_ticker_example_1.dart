@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class NumberTickerExample1 extends StatefulWidget {
   const NumberTickerExample1({super.key});

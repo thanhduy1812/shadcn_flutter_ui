@@ -1,17 +1,15 @@
 import 'dart:math';
 
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class TimelineAnimationExample1 extends StatefulWidget {
   const TimelineAnimationExample1({super.key});
 
   @override
-  State<TimelineAnimationExample1> createState() =>
-      _TimelineAnimationExample1State();
+  State<TimelineAnimationExample1> createState() => _TimelineAnimationExample1State();
 }
 
-class _TimelineAnimationExample1State extends State<TimelineAnimationExample1>
-    with SingleTickerProviderStateMixin {
+class _TimelineAnimationExample1State extends State<TimelineAnimationExample1> with SingleTickerProviderStateMixin {
   final TimelineAnimation<Offset> offsetTimeline = TimelineAnimation(
     keyframes: [
       const AbsoluteKeyframe(

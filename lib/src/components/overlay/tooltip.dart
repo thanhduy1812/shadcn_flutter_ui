@@ -1,6 +1,6 @@
-import 'package:vnl_ui/src/components/control/hover.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-import '../../../vnl_ui.dart';
+import '../control/hover.dart';
 
 class TooltipContainer extends StatelessWidget {
   final Widget child;

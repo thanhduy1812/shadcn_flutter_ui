@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -17,14 +17,12 @@ class CircularProgressExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Circular Progress Example',
-          path:
-              'lib/pages/docs/components/circular_progress/circular_progress_example_1.dart',
+          path: 'lib/pages/docs/components/circular_progress/circular_progress_example_1.dart',
           child: CircularProgressExample1(),
         ),
         WidgetUsageExample(
           title: 'Circular Progress with Value Example',
-          path:
-              'lib/pages/docs/components/circular_progress/circular_progress_example_2.dart',
+          path: 'lib/pages/docs/components/circular_progress/circular_progress_example_2.dart',
           child: CircularProgressExample2(),
         ),
       ],

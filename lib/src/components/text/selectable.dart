@@ -2,7 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' as m;
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLSelectableText extends StatelessWidget {
   const VNLSelectableText(
@@ -176,8 +176,7 @@ class VNLSelectableText extends StatelessWidget {
   /// {@macro flutter.widgets.EditableText.contextMenuBuilder}
   final EditableTextContextMenuBuilder? contextMenuBuilder;
 
-  static Widget _defaultContextMenuBuilder(
-      BuildContext context, EditableTextState editableTextState) {
+  static Widget _defaultContextMenuBuilder(BuildContext context, EditableTextState editableTextState) {
     return buildEditableTextContextMenu(context, editableTextState);
   }
 

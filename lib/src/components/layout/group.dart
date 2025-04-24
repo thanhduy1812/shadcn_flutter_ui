@@ -1,5 +1,5 @@
 import 'package:flutter/rendering.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class GroupWidget extends MultiChildRenderObjectWidget {
   const GroupWidget({
@@ -92,9 +92,7 @@ class RenderGroup extends RenderBox
           childWidth = constraints.maxWidth;
         }
       }
-      child.layout(
-          BoxConstraints.tightFor(width: childWidth, height: childHeight),
-          parentUsesSize: true);
+      child.layout(BoxConstraints.tightFor(width: childWidth, height: childHeight), parentUsesSize: true);
       if (top == null && bottom != null) {
         offsetY -= child.size.height;
       }

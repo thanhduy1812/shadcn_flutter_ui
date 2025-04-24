@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart' show Clipboard, LogicalKeyboardKey;
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 enum InputFeaturePosition {
   leading,
@@ -114,8 +114,7 @@ class InputPasswordToggleFeature extends InputFeature {
   InputFeatureState createState() => _InputPasswordToggleFeatureState();
 }
 
-class _InputPasswordToggleFeatureState
-    extends InputFeatureState<InputPasswordToggleFeature> {
+class _InputPasswordToggleFeatureState extends InputFeatureState<InputPasswordToggleFeature> {
   bool? _obscureText = true;
 
   void _toggleObscureText() {
@@ -236,8 +235,7 @@ class InputRevalidateFeature extends InputFeature {
   InputFeatureState createState() => _InputRevalidateFeatureState();
 }
 
-class _InputRevalidateFeatureState
-    extends InputFeatureState<InputRevalidateFeature> {
+class _InputRevalidateFeatureState extends InputFeatureState<InputRevalidateFeature> {
   void _revalidate() {
     var formFieldHandle = Data.maybeFind<FormFieldHandle>(context);
     if (formFieldHandle != null) {
@@ -330,11 +328,9 @@ class InputAutoCompleteFeature extends InputFeature {
   InputFeatureState createState() => _AutoCompleteFeatureState();
 }
 
-class _AutoCompleteFeatureState
-    extends InputFeatureState<InputAutoCompleteFeature> {
+class _AutoCompleteFeatureState extends InputFeatureState<InputAutoCompleteFeature> {
   final GlobalKey _key = GlobalKey();
-  final ValueNotifier<FutureOr<Iterable<String>>?> _suggestions =
-      ValueNotifier(null);
+  final ValueNotifier<FutureOr<Iterable<String>>?> _suggestions = ValueNotifier(null);
 
   @override
   void onTextChanged(String text) {
@@ -353,8 +349,7 @@ class _AutoCompleteFeatureState
             builder: (context, snapshot) {
               return VNLAutoComplete(
                 key: _key,
-                suggestions:
-                    snapshot.hasData ? snapshot.requireData.toList() : const [],
+                suggestions: snapshot.hasData ? snapshot.requireData.toList() : const [],
                 popoverConstraints: feature.popoverConstraints,
                 popoverWidthConstraint: feature.popoverWidthConstraint,
                 popoverAnchorAlignment: feature.popoverAnchorAlignment,
@@ -576,8 +571,7 @@ class InputTrailingFeature extends InputFeature {
   InputFeatureState createState() => _InputTrailingFeatureState();
 }
 
-class _InputTrailingFeatureState
-    extends InputFeatureState<InputTrailingFeature> {
+class _InputTrailingFeatureState extends InputFeatureState<InputTrailingFeature> {
   @override
   Iterable<Widget> buildTrailing() sync* {
     yield feature.suffix;

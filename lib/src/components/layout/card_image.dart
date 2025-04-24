@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class VNLCardImage extends StatefulWidget {
   final Widget image;
@@ -40,9 +40,7 @@ class _CardImageState extends State<VNLCardImage> {
   final WidgetStatesController _statesController = WidgetStatesController();
 
   Widget _wrapIntrinsic(Widget child) {
-    return widget.direction == Axis.horizontal
-        ? IntrinsicHeight(child: child)
-        : IntrinsicWidth(child: child);
+    return widget.direction == Axis.horizontal ? IntrinsicHeight(child: child) : IntrinsicWidth(child: child);
   }
 
   @override
@@ -64,16 +62,14 @@ class _CardImageState extends State<VNLCardImage> {
           children: [
             Flexible(
               child: OutlinedContainer(
-                backgroundColor:
-                    widget.backgroundColor ?? theme.colorScheme.card,
+                backgroundColor: widget.backgroundColor ?? theme.colorScheme.card,
                 borderColor: widget.borderColor ?? theme.colorScheme.border,
                 child: AnimatedBuilder(
                     animation: _statesController,
                     builder: (context, child) {
                       return AnimatedScale(
                         duration: kDefaultDuration,
-                        scale: _statesController.value
-                                .contains(WidgetState.hovered)
+                        scale: _statesController.value.contains(WidgetState.hovered)
                             ? widget.hoverScale
                             : widget.normalScale,
                         child: widget.image,

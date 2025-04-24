@@ -1,5 +1,5 @@
 import 'package:flutter/rendering.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class Hidden extends StatelessWidget {
   final bool hidden;
@@ -83,8 +83,7 @@ class _HiddenLayout extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, _RenderHiddenLayout renderObject) {
+  void updateRenderObject(BuildContext context, _RenderHiddenLayout renderObject) {
     bool needsLayout = false;
     if (renderObject.textDirection != textDirection) {
       renderObject.textDirection = textDirection;
@@ -116,8 +115,7 @@ class _HiddenLayout extends SingleChildRenderObjectWidget {
   }
 }
 
-class _RenderHiddenLayout extends RenderBox
-    with RenderObjectWithChildMixin<RenderBox> {
+class _RenderHiddenLayout extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
   TextDirection textDirection;
   Axis direction;
   bool reverse;
@@ -136,56 +134,42 @@ class _RenderHiddenLayout extends RenderBox
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    return _computeIntrinsicHeight(
-        (RenderBox child, double width) => child.getMaxIntrinsicHeight(width),
-        width);
+    return _computeIntrinsicHeight((RenderBox child, double width) => child.getMaxIntrinsicHeight(width), width);
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    return _computeIntrinsicWidth(
-        (RenderBox child, double height) => child.getMaxIntrinsicWidth(height),
-        height);
+    return _computeIntrinsicWidth((RenderBox child, double height) => child.getMaxIntrinsicWidth(height), height);
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    return _computeIntrinsicHeight(
-        (RenderBox child, double width) => child.getMinIntrinsicHeight(width),
-        width);
+    return _computeIntrinsicHeight((RenderBox child, double width) => child.getMinIntrinsicHeight(width), width);
   }
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    return _computeIntrinsicWidth(
-        (RenderBox child, double height) => child.getMinIntrinsicWidth(height),
-        height);
+    return _computeIntrinsicWidth((RenderBox child, double height) => child.getMinIntrinsicWidth(height), height);
   }
 
-  double _computeIntrinsicWidth(
-      double Function(RenderBox child, double height) childWidth,
-      double height) {
+  double _computeIntrinsicWidth(double Function(RenderBox child, double height) childWidth, double height) {
     var child = this.child;
     if (child == null) {
       return 0;
     }
     double width = childWidth(child, height);
-    return ((keepMainAxisSize && direction != Axis.vertical) ||
-            (keepCrossAxisSize && direction != Axis.horizontal))
+    return ((keepMainAxisSize && direction != Axis.vertical) || (keepCrossAxisSize && direction != Axis.horizontal))
         ? width
         : width * progress;
   }
 
-  double _computeIntrinsicHeight(
-      double Function(RenderBox child, double width) childHeight,
-      double width) {
+  double _computeIntrinsicHeight(double Function(RenderBox child, double width) childHeight, double width) {
     var child = this.child;
     if (child == null) {
       return 0;
     }
     double height = childHeight(child, width);
-    return ((keepMainAxisSize && direction != Axis.horizontal) ||
-            (keepCrossAxisSize && direction != Axis.vertical))
+    return ((keepMainAxisSize && direction != Axis.horizontal) || (keepCrossAxisSize && direction != Axis.vertical))
         ? height
         : height * progress;
   }
@@ -241,20 +225,16 @@ class _RenderHiddenLayout extends RenderBox
       if (reverse) {
         var parentData = child.parentData as BoxParentData;
         if (direction == Axis.horizontal) {
-          parentData.offset = Offset(size.width - preferredSize.width,
-              -(preferredSize.height - size.height) / 2);
+          parentData.offset = Offset(size.width - preferredSize.width, -(preferredSize.height - size.height) / 2);
         } else {
-          parentData.offset = Offset(-(preferredSize.width - size.width) / 2,
-              size.height - preferredSize.height);
+          parentData.offset = Offset(-(preferredSize.width - size.width) / 2, size.height - preferredSize.height);
         }
       } else {
         var parentData = child.parentData as BoxParentData;
         if (direction == Axis.horizontal) {
-          parentData.offset =
-              Offset(0, -(preferredSize.height - size.height) / 2);
+          parentData.offset = Offset(0, -(preferredSize.height - size.height) / 2);
         } else {
-          parentData.offset =
-              Offset(-(preferredSize.width - size.width) / 2, 0);
+          parentData.offset = Offset(-(preferredSize.width - size.width) / 2, 0);
         }
       }
     } else {

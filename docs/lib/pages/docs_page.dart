@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -171,10 +171,8 @@ class DocsPageState extends State<DocsPage> {
     ),
     VNLookDocsSection('Control', [
       VNLookDocsPage('Button', 'button'),
-      VNLookDocsPage(
-          'Audio Control', 'audio_control', VNLookFeatureTag.workInProgress),
-      VNLookDocsPage(
-          'Video Control', 'video_control', VNLookFeatureTag.workInProgress),
+      VNLookDocsPage('Audio Control', 'audio_control', VNLookFeatureTag.workInProgress),
+      VNLookDocsPage('Video Control', 'video_control', VNLookFeatureTag.workInProgress),
     ]),
     VNLookDocsSection(
       'Disclosure',
@@ -224,11 +222,9 @@ class DocsPageState extends State<DocsPage> {
         VNLookDocsPage('Color Picker', 'color_picker'),
         VNLookDocsPage('Date Picker', 'date_picker'),
         // TODO: https://file-vault-delta.vercel.app/ also https://uploader.sadmn.com/
-        VNLookDocsPage(
-            'File Picker', 'file_picker', VNLookFeatureTag.workInProgress),
+        VNLookDocsPage('File Picker', 'file_picker', VNLookFeatureTag.workInProgress),
         VNLookDocsPage('Form', 'form'),
-        VNLookDocsPage('Formatted Input', 'formatted_input',
-            VNLookFeatureTag.experimental),
+        VNLookDocsPage('Formatted Input', 'formatted_input', VNLookFeatureTag.experimental),
         // TODO: Image Input (with cropper and rotate tool, upload from file or take photo from camera)
         // VNLookDocsPage(
         // 'Image Input', 'image_input', VNLookFeatureTag.workInProgress),
@@ -255,8 +251,7 @@ class DocsPageState extends State<DocsPage> {
         VNLookDocsPage('Time Picker', 'time_picker'),
         VNLookDocsPage('Toggle', 'toggle'),
         VNLookDocsPage('Multi Select', 'multiselect'),
-        VNLookDocsPage(
-            'Item Picker', 'item_picker', VNLookFeatureTag.experimental),
+        VNLookDocsPage('Item Picker', 'item_picker', VNLookFeatureTag.experimental),
       ],
     ),
     VNLookDocsSection(
@@ -324,8 +319,7 @@ class DocsPageState extends State<DocsPage> {
         // TODO https://www.radix-ui.com/themes/docs/components/kbd
         VNLookDocsPage('Keyboard Display', 'keyboard_display'),
         // TODO: Same progress as image input
-        VNLookDocsPage(
-            'Image Tools', 'image_tools', VNLookFeatureTag.workInProgress),
+        VNLookDocsPage('Image Tools', 'image_tools', VNLookFeatureTag.workInProgress),
         // TODO: Mostly same as refresh indicator, but it does not provide indicator
         // the indicator itself is provided by scaffold
         VNLookDocsPage('Refresh Trigger', 'refresh_trigger'),
@@ -403,9 +397,7 @@ class DocsPageState extends State<DocsPage> {
   void _onVisibilityChanged() {
     if (!mounted) return;
     setState(() {
-      currentlyVisible = widget.onThisPage.values
-          .where((element) => element.isVisible.value)
-          .toList();
+      currentlyVisible = widget.onThisPage.values.where((element) => element.isVisible.value).toList();
     });
   }
 
@@ -420,8 +412,7 @@ class DocsPageState extends State<DocsPage> {
         for (final section in sections) {
           final List<Widget> resultItems = [];
           for (final page in section.pages) {
-            if (query == null ||
-                page.title.toLowerCase().contains(query.toLowerCase())) {
+            if (query == null || page.title.toLowerCase().contains(query.toLowerCase())) {
               resultItems.add(CommandItem(
                 title: Text(page.title),
                 trailing: Icon(section.icon),
@@ -473,15 +464,13 @@ class DocsPageState extends State<DocsPage> {
                   MenuButton(
                     child: Text(getReleaseTagName()),
                     onPressed: (context) {
-                      launchUrlString(
-                          'https://sunarya-thito.github.io/vnl_ui/');
+                      launchUrlString('https://sunarya-thito.github.io/vnl_ui/');
                     },
                   ),
                   MenuButton(
                     child: const Text('Experimental'),
                     onPressed: (context) {
-                      launchUrlString(
-                          'https://sunarya-thito.github.io/vnl_ui/experimental/');
+                      launchUrlString('https://sunarya-thito.github.io/vnl_ui/experimental/');
                     },
                   ),
                 ],
@@ -513,10 +502,7 @@ class DocsPageState extends State<DocsPage> {
   @override
   Widget build(BuildContext context) {
     Map<String, OnThisPage> onThisPage = widget.onThisPage;
-    VNLookDocsPage? page = sections
-        .expand((e) => e.pages)
-        .where((e) => e.name == widget.name)
-        .firstOrNull;
+    VNLookDocsPage? page = sections.expand((e) => e.pages).where((e) => e.name == widget.name).firstOrNull;
 
     final theme = Theme.of(context);
 
@@ -555,8 +541,7 @@ class DocsPageState extends State<DocsPage> {
                               GhostButton(
                                 density: ButtonDensity.icon,
                                 onPressed: () {
-                                  openInNewTab(
-                                      'https://github.com/sunarya-thito/vnl_ui');
+                                  openInNewTab('https://github.com/sunarya-thito/vnl_ui');
                                 },
                                 child: FaIcon(
                                   FontAwesomeIcons.github,
@@ -567,8 +552,7 @@ class DocsPageState extends State<DocsPage> {
                               GhostButton(
                                   density: ButtonDensity.icon,
                                   onPressed: () {
-                                    openInNewTab(
-                                        'https://pub.dev/packages/vnl_ui');
+                                    openInNewTab('https://pub.dev/packages/vnl_ui');
                                   },
                                   child: ColorFiltered(
                                     // turns into white
@@ -588,12 +572,8 @@ class DocsPageState extends State<DocsPage> {
                                   onPressed: () {
                                     showSearchBar();
                                   },
-                                  trailing: const Icon(Icons.search)
-                                      .iconSmall()
-                                      .iconMutedForeground(),
-                                  child: const Text('Search documentation...')
-                                      .muted()
-                                      .normal(),
+                                  trailing: const Icon(Icons.search).iconSmall().iconMutedForeground(),
+                                  child: const Text('Search documentation...').muted().normal(),
                                 ),
                               ),
                             ),
@@ -632,13 +612,8 @@ class DocsPageState extends State<DocsPage> {
                       child: FocusTraversalGroup(
                         child: SingleChildScrollView(
                           key: const PageStorageKey('sidebar'),
-                          padding: EdgeInsets.only(
-                                  top: 32,
-                                  left: 24 + padding.left,
-                                  bottom: 32) *
-                              theme.scaling,
-                          child: _DocsSidebar(
-                              sections: sections, pageName: widget.name),
+                          padding: EdgeInsets.only(top: 32, left: 24 + padding.left, bottom: 32) * theme.scaling,
+                          child: _DocsSidebar(sections: sections, pageName: widget.name),
                         ),
                       ),
                     ),
@@ -671,8 +646,7 @@ class DocsPageState extends State<DocsPage> {
                                     ),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
                                         VNLBreadcrumb(
                                           separator: VNLBreadcrumb.arrowSeparator,
@@ -716,8 +690,7 @@ class DocsPageState extends State<DocsPage> {
                                         theme.scaling,
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     VNLBreadcrumb(
                                       separator: VNLBreadcrumb.arrowSeparator,
@@ -797,8 +770,7 @@ class DocsPageState extends State<DocsPage> {
               onPressed: () {
                 showSearchBar();
               },
-              trailing:
-                  const Icon(Icons.search).iconSmall().iconMutedForeground(),
+              trailing: const Icon(Icons.search).iconSmall().iconMutedForeground(),
               child: const Text('Search documentation...').muted().normal(),
             ),
           ),
@@ -809,9 +781,7 @@ class DocsPageState extends State<DocsPage> {
           onPressed: () {
             openInNewTab('https://github.com/sunarya-thito/vnl_ui');
           },
-          child: FaIcon(FontAwesomeIcons.github,
-                  color: theme.colorScheme.secondaryForeground)
-              .iconLarge(),
+          child: FaIcon(FontAwesomeIcons.github, color: theme.colorScheme.secondaryForeground).iconLarge(),
         ),
         // pub.dev icon
         GhostButton(
@@ -873,9 +843,7 @@ class DocsPageState extends State<DocsPage> {
               Expanded(
                 child: FocusTraversalGroup(
                   child: SingleChildScrollView(
-                    padding:
-                        const EdgeInsets.only(left: 32, right: 32, bottom: 48) *
-                            scaling,
+                    padding: const EdgeInsets.only(left: 32, right: 32, bottom: 48) * scaling,
                     key: const PageStorageKey('sidebar'),
                     child: SidebarNav(children: [
                       for (var section in sections)
@@ -885,8 +853,7 @@ class DocsPageState extends State<DocsPage> {
                             for (var page in section.pages)
                               DocsNavigationButton(
                                 onPressed: () {
-                                  if (page.tag ==
-                                      VNLookFeatureTag.workInProgress) {
+                                  if (page.tag == VNLookFeatureTag.workInProgress) {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
@@ -911,8 +878,7 @@ class DocsPageState extends State<DocsPage> {
                                 selected: page.name == widget.name,
                                 child: Basic(
                                   trailing: page.tag?.buildBadge(context),
-                                  trailingAlignment:
-                                      AlignmentDirectional.centerStart,
+                                  trailingAlignment: AlignmentDirectional.centerStart,
                                   content: Text(page.title),
                                 ),
                               ),
@@ -951,8 +917,7 @@ class _DocsSidebarState extends State<_DocsSidebar> {
   void initState() {
     super.initState();
     children = [
-      for (var section in widget.sections)
-        _DocsSidebarSection(section: section, pageName: widget.pageName),
+      for (var section in widget.sections) _DocsSidebarSection(section: section, pageName: widget.pageName),
     ];
     // do we need didUpdateWidget? nope
     // we don't update the children anyway
@@ -989,8 +954,7 @@ class _DocsSecondarySidebarState extends State<_DocsSecondarySidebar> {
       side.add(SidebarButton(
         onPressed: () {
           Scrollable.ensureVisible(widget.onThisPage[key]!.currentContext!,
-              duration: kDefaultDuration,
-              alignmentPolicy: ScrollPositionAlignmentPolicy.explicit);
+              duration: kDefaultDuration, alignmentPolicy: ScrollPositionAlignmentPolicy.explicit);
         },
         selected: widget.isVisible(widget.onThisPage[key]!),
         child: Text(key),
@@ -1044,8 +1008,7 @@ class _DocsSidebarSectionState extends State<_DocsSidebarSection> {
   void initState() {
     super.initState();
     pages = [
-      for (var page in widget.section.pages)
-        _DocsSidebarButton(page: page, pageName: widget.pageName),
+      for (var page in widget.section.pages) _DocsSidebarButton(page: page, pageName: widget.pageName),
     ];
     // do we need didUpdateWidget? nope
     // we don't update the pages anyway
@@ -1096,8 +1059,7 @@ class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
         builder: (context) {
           return VNLAlertDialog(
             title: const Text('Work in Progress'),
-            content: const Text(
-                'This page is still under development. Please come back later.'),
+            content: const Text('This page is still under development. Please come back later.'),
             actions: [
               PrimaryButton(
                   onPressed: () {

@@ -1,7 +1,7 @@
 import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/docs/components/tab_pane/tab_pane_example_1.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class TabPaneExample extends StatelessWidget {
   const TabPaneExample({super.key});
@@ -10,8 +10,7 @@ class TabPaneExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'tab_pane',
-      description:
-          'A chrome-like tab pane that allows you to switch between different tabs.',
+      description: 'A chrome-like tab pane that allows you to switch between different tabs.',
       displayName: 'Tab Pane',
       children: [
         WidgetUsageExample(

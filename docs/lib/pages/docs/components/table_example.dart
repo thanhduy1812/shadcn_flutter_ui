@@ -1,7 +1,7 @@
 import 'package:docs/pages/docs/components/table/table_example_1.dart';
 import 'package:docs/pages/docs/components/table/table_example_2.dart';
 import 'package:docs/pages/docs/components/table/table_example_3.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';

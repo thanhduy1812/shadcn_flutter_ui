@@ -6,7 +6,7 @@ import 'package:docs/pages/docs/components/stepper/stepper_example_4.dart';
 import 'package:docs/pages/docs/components/stepper/stepper_example_5.dart';
 import 'package:docs/pages/docs/components/stepper/stepper_example_6.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class StepperExample extends StatelessWidget {
   const StepperExample({super.key});

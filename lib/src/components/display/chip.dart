@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ChipButton extends StatelessWidget {
   final Widget child;
@@ -65,13 +65,10 @@ class VNLChip extends StatelessWidget {
     return VNLButton(
       style: (style ?? ButtonVariance.secondary).copyWith(
         mouseCursor: (context, states, value) {
-          return onPressed != null
-              ? SystemMouseCursors.click
-              : SystemMouseCursors.basic;
+          return onPressed != null ? SystemMouseCursors.click : SystemMouseCursors.basic;
         },
         padding: (context, states, value) {
-          return EdgeInsets.symmetric(
-              horizontal: theme.scaling * 8, vertical: theme.scaling * 4);
+          return EdgeInsets.symmetric(horizontal: theme.scaling * 8, vertical: theme.scaling * 4);
         },
       ),
       onPressed: onPressed ?? () {},

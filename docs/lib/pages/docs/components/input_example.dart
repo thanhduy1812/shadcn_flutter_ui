@@ -2,7 +2,7 @@ import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/docs/components/input/input_example_3.dart';
 import 'package:docs/pages/docs/components/input/input_example_4.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import 'input/input_example_1.dart';
 import 'input/input_example_2.dart';
@@ -14,8 +14,7 @@ class InputExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'input',
-      description:
-          'A text input is a form field that allows users to enter text.',
+      description: 'A text input is a form field that allows users to enter text.',
       displayName: 'Text Input',
       children: [
         WidgetUsageExample(

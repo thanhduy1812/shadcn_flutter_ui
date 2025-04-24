@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class InputExample3 extends StatelessWidget {
   const InputExample3({super.key});
@@ -13,8 +13,7 @@ class InputExample3 extends StatelessWidget {
             const InputFeature.clear(),
             InputFeature.hint(
               popupBuilder: (context) {
-                return const TooltipContainer(
-                    child: Text('This is for your username'));
+                return const TooltipContainer(child: Text('This is for your username'));
               },
             ),
             const InputFeature.copy(),

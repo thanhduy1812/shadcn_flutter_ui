@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class RadioGroupExample1 extends StatefulWidget {
   const RadioGroupExample1({super.key});

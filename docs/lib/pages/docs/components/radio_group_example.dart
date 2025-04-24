@@ -1,6 +1,6 @@
 import 'package:docs/pages/docs/components/radio_group/radio_group_example_1.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../component_page.dart';
 
@@ -16,8 +16,7 @@ class RadioGroupExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/radio_group/radio_group_example_1.dart',
+          path: 'lib/pages/docs/components/radio_group/radio_group_example_1.dart',
           child: RadioGroupExample1(),
         ),
       ],

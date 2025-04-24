@@ -1,13 +1,11 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-class StarRatingController extends ValueNotifier<double>
-    with ComponentController<double> {
+class StarRatingController extends ValueNotifier<double> with ComponentController<double> {
   StarRatingController([super.value = 0.0]);
 }
 
-class ControlledStarRating extends StatelessWidget
-    with ControlledComponent<double> {
+class ControlledStarRating extends StatelessWidget with ControlledComponent<double> {
   @override
   final double initialValue;
   @override
@@ -125,8 +123,7 @@ class VNLStarRating extends StatefulWidget {
   State<VNLStarRating> createState() => _StarRatingState();
 }
 
-class _StarRatingState extends State<VNLStarRating>
-    with FormValueSupplier<double, VNLStarRating> {
+class _StarRatingState extends State<VNLStarRating> with FormValueSupplier<double, VNLStarRating> {
   double? _changingValue;
   bool _focused = false;
 
@@ -171,9 +168,7 @@ class _StarRatingState extends State<VNLStarRating>
           rotation: starRotation,
           side: focusBorder && _focused
               ? BorderSide(
-                  color: theme.colorScheme.ring,
-                  width: 2.0 * scaling,
-                  strokeAlign: BorderSide.strokeAlignOutside)
+                  color: theme.colorScheme.ring, width: 2.0 * scaling, strokeAlign: BorderSide.strokeAlignOutside)
               : BorderSide.none,
         ),
       ),
@@ -184,23 +179,18 @@ class _StarRatingState extends State<VNLStarRating>
 
   @override
   Widget build(BuildContext context) {
-    double roundedValue =
-        ((_changingValue ?? widget.value) / widget.step).round() * widget.step;
+    double roundedValue = ((_changingValue ?? widget.value) / widget.step).round() * widget.step;
     return AnimatedValueBuilder(
       value: roundedValue,
       duration: kDefaultDuration,
       builder: (context, roundedValue, child) {
         final theme = Theme.of(context);
         final scaling = theme.scaling;
-        var starSize =
-            widget.starSize != null ? widget.starSize! : 24.0 * scaling;
-        var starSpacing =
-            widget.starSpacing != null ? widget.starSpacing! : 5.0 * scaling;
+        var starSize = widget.starSize != null ? widget.starSize! : 24.0 * scaling;
+        var starSpacing = widget.starSpacing != null ? widget.starSpacing! : 5.0 * scaling;
         return FocusableActionDetector(
           enabled: _enabled,
-          mouseCursor: _enabled
-              ? SystemMouseCursors.click
-              : SystemMouseCursors.forbidden,
+          mouseCursor: _enabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
           onShowFocusHighlight: (showFocus) {
             setState(() {
               _focused = showFocus;
@@ -214,17 +204,14 @@ class _StarRatingState extends State<VNLStarRating>
             }
           },
           shortcuts: {
-            LogicalKeySet(LogicalKeyboardKey.arrowRight):
-                IncreaseStarIntent(widget.step),
-            LogicalKeySet(LogicalKeyboardKey.arrowLeft):
-                DecreaseStarIntent(widget.step),
+            LogicalKeySet(LogicalKeyboardKey.arrowRight): IncreaseStarIntent(widget.step),
+            LogicalKeySet(LogicalKeyboardKey.arrowLeft): DecreaseStarIntent(widget.step),
           },
           actions: {
             IncreaseStarIntent: CallbackAction<IncreaseStarIntent>(
               onInvoke: (intent) {
                 if (widget.onChanged != null) {
-                  widget.onChanged!(
-                      (roundedValue + intent.step).clamp(0.0, widget.max));
+                  widget.onChanged!((roundedValue + intent.step).clamp(0.0, widget.max));
                 }
                 return;
               },
@@ -232,8 +219,7 @@ class _StarRatingState extends State<VNLStarRating>
             DecreaseStarIntent: CallbackAction<DecreaseStarIntent>(
               onInvoke: (intent) {
                 if (widget.onChanged != null) {
-                  widget.onChanged!(
-                      (roundedValue - intent.step).clamp(0.0, widget.max));
+                  widget.onChanged!((roundedValue - intent.step).clamp(0.0, widget.max));
                 }
                 return;
               },
@@ -260,24 +246,18 @@ class _StarRatingState extends State<VNLStarRating>
               onTapDown: (details) {
                 if (!_enabled) return;
                 if (widget.onChanged == null) return;
-                double totalStarSize =
-                    starSize + (starSpacing * (widget.max.ceil() - 1));
-                double progress =
-                    (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
-                double newValue =
-                    (progress * widget.max).clamp(0.0, widget.max);
+                double totalStarSize = starSize + (starSpacing * (widget.max.ceil() - 1));
+                double progress = (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
+                double newValue = (progress * widget.max).clamp(0.0, widget.max);
                 widget.onChanged!(newValue);
               },
               onPanUpdate: (details) {
                 if (!_enabled) return;
                 if (widget.onChanged == null) return;
                 int totalStars = widget.max.ceil();
-                double totalStarSize =
-                    starSize * totalStars + (starSpacing * (totalStars - 1));
-                double progress =
-                    (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
-                double newValue =
-                    (progress * widget.max).clamp(0.0, widget.max);
+                double totalStarSize = starSize * totalStars + (starSpacing * (totalStars - 1));
+                double progress = (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
+                double newValue = (progress * widget.max).clamp(0.0, widget.max);
                 setState(() {
                   _changingValue = newValue;
                 });
@@ -311,22 +291,16 @@ class _StarRatingState extends State<VNLStarRating>
                             return LinearGradient(
                               colors: [
                                 widget.activeColor ??
-                                    (_enabled
-                                        ? theme.colorScheme.primary
-                                        : theme.colorScheme.mutedForeground),
-                                widget.backgroundColor ??
-                                    theme.colorScheme.muted,
+                                    (_enabled ? theme.colorScheme.primary : theme.colorScheme.mutedForeground),
+                                widget.backgroundColor ?? theme.colorScheme.muted,
                               ],
                               stops: [
                                 (roundedValue - i).clamp(0.0, 1.0),
                                 (roundedValue - i).clamp(0.0, 1.0),
                               ],
-                              begin: widget.direction == Axis.horizontal
-                                  ? Alignment.centerLeft
-                                  : Alignment.bottomCenter,
-                              end: widget.direction == Axis.horizontal
-                                  ? Alignment.centerRight
-                                  : Alignment.topCenter,
+                              begin:
+                                  widget.direction == Axis.horizontal ? Alignment.centerLeft : Alignment.bottomCenter,
+                              end: widget.direction == Axis.horizontal ? Alignment.centerRight : Alignment.topCenter,
                             ).createShader(bounds);
                           },
                           blendMode: BlendMode.srcIn,

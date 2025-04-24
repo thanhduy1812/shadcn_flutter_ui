@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
@@ -11,14 +11,12 @@ class ChipInputExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'chip_input',
-      description:
-          'A chip input is a text input that allows users to input multiple chips.',
+      description: 'A chip input is a text input that allows users to input multiple chips.',
       displayName: 'Chip Input',
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/chip_input/chip_input_example_1.dart',
+          path: 'lib/pages/docs/components/chip_input/chip_input_example_1.dart',
           child: ChipInputExample1(),
         ),
       ],

@@ -1,5 +1,5 @@
-import 'package:vnl_ui/vnl_ui.dart';
-import 'package:vnl_ui/src/components/layout/hidden.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
+import '../layout/hidden.dart';
 
 enum NavigationBarAlignment {
   start(MainAxisAlignment.start),
@@ -78,8 +78,7 @@ class VNLNavigationBar extends StatefulWidget {
   State<VNLNavigationBar> createState() => _NavigationBarState();
 }
 
-class _NavigationBarState extends State<VNLNavigationBar>
-    with NavigationContainerMixin {
+class _NavigationBarState extends State<VNLNavigationBar> with NavigationContainerMixin {
   void _onSelected(int index) {
     widget.onSelected?.call(index);
   }
@@ -93,8 +92,7 @@ class _NavigationBarState extends State<VNLNavigationBar>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    var parentPadding = widget.padding ??
-        (const EdgeInsets.symmetric(vertical: 8, horizontal: 12) * scaling);
+    var parentPadding = widget.padding ?? (const EdgeInsets.symmetric(vertical: 8, horizontal: 12) * scaling);
     var directionality = Directionality.of(context);
     var resolvedPadding = parentPadding.resolve(directionality);
     List<Widget> rawChildren = wrapChildren(context, widget.children);
@@ -199,8 +197,7 @@ double _endPadding(EdgeInsets padding, Axis direction) {
 }
 
 mixin NavigationContainerMixin {
-  List<Widget> wrapChildren(
-      BuildContext context, List<NavigationBarItem> children) {
+  List<Widget> wrapChildren(BuildContext context, List<NavigationBarItem> children) {
     int index = 0;
     List<Widget> newChildren = List.of(children);
     for (var i = 0; i < children.length; i++) {
@@ -271,8 +268,7 @@ class VNLNavigationRail extends StatefulWidget {
   State<VNLNavigationRail> createState() => _NavigationRailState();
 }
 
-class _NavigationRailState extends State<VNLNavigationRail>
-    with NavigationContainerMixin {
+class _NavigationRailState extends State<VNLNavigationRail> with NavigationContainerMixin {
   AlignmentGeometry get _alignment {
     switch ((widget.alignment, widget.direction)) {
       case (NavigationRailAlignment.start, Axis.horizontal):
@@ -298,8 +294,7 @@ class _NavigationRailState extends State<VNLNavigationRail>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    var parentPadding = widget.padding ??
-        (const EdgeInsets.symmetric(vertical: 8, horizontal: 12) * scaling);
+    var parentPadding = widget.padding ?? (const EdgeInsets.symmetric(vertical: 8, horizontal: 12) * scaling);
     var directionality = Directionality.of(context);
     var resolvedPadding = parentPadding.resolve(directionality);
     return RepaintBoundary(
@@ -322,9 +317,7 @@ class _NavigationRailState extends State<VNLNavigationRail>
         child: SurfaceBlur(
           surfaceBlur: widget.surfaceBlur,
           child: Container(
-            color: widget.backgroundColor ??
-                (theme.colorScheme.background
-                    .scaleAlpha(widget.surfaceOpacity ?? 1)),
+            color: widget.backgroundColor ?? (theme.colorScheme.background.scaleAlpha(widget.surfaceOpacity ?? 1)),
             alignment: _alignment,
             child: SingleChildScrollView(
               scrollDirection: widget.direction,
@@ -391,8 +384,7 @@ class VNLNavigationSidebar extends StatefulWidget {
   State<VNLNavigationSidebar> createState() => _NavigationSidebarState();
 }
 
-class _NavigationSidebarState extends State<VNLNavigationSidebar>
-    with NavigationContainerMixin {
+class _NavigationSidebarState extends State<VNLNavigationSidebar> with NavigationContainerMixin {
   BoxConstraints getDefaultConstraints(BuildContext context, ThemeData theme) {
     final scaling = theme.scaling;
     return BoxConstraints(
@@ -417,8 +409,7 @@ class _NavigationSidebarState extends State<VNLNavigationSidebar>
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     List<Widget> children = wrapChildren(context, widget.children);
-    var parentPadding = widget.padding ??
-        (const EdgeInsets.symmetric(vertical: 8, horizontal: 12) * scaling);
+    var parentPadding = widget.padding ?? (const EdgeInsets.symmetric(vertical: 8, horizontal: 12) * scaling);
     var directionality = Directionality.of(context);
     var resolvedPadding = parentPadding.resolve(directionality);
     const direction = Axis.vertical;
@@ -439,8 +430,7 @@ class _NavigationSidebarState extends State<VNLNavigationSidebar>
         keepMainAxisSize: widget.keepMainAxisSize,
       ),
       child: ConstrainedBox(
-        constraints:
-            widget.constraints ?? getDefaultConstraints(context, theme),
+        constraints: widget.constraints ?? getDefaultConstraints(context, theme),
         child: SurfaceBlur(
           surfaceBlur: widget.surfaceBlur,
           child: Container(
@@ -508,9 +498,7 @@ class NavigationChildControlData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is NavigationChildControlData &&
-        other.index == index &&
-        other.actualIndex == actualIndex;
+    return other is NavigationChildControlData && other.index == index && other.actualIndex == actualIndex;
   }
 
   @override
@@ -535,8 +523,7 @@ class NavigationControlData {
   final bool keepMainAxisSize;
 
   Axis get labelDirection {
-    return parentLabelPosition == NavigationLabelPosition.start ||
-            parentLabelPosition == NavigationLabelPosition.end
+    return parentLabelPosition == NavigationLabelPosition.start || parentLabelPosition == NavigationLabelPosition.end
         ? Axis.horizontal
         : Axis.vertical;
   }
@@ -689,7 +676,8 @@ class NavigationItem extends AbstractNavigationButton {
   final bool? selected;
   final ValueChanged<bool>? onChanged;
   final int? index;
-  const NavigationItem({super.key, 
+  const NavigationItem({
+    super.key,
     this.selectedStyle,
     this.selected,
     this.onChanged,
@@ -715,11 +703,9 @@ class NavigationItem extends AbstractNavigationButton {
   State<AbstractNavigationButton> createState() => _NavigationItemState();
 }
 
-class _NavigationItemState
-    extends _AbstractNavigationButtonState<NavigationItem> {
+class _NavigationItemState extends _AbstractNavigationButtonState<NavigationItem> {
   @override
-  Widget buildBox(BuildContext context, NavigationControlData? data,
-      NavigationChildControlData? childData) {
+  Widget buildBox(BuildContext context, NavigationControlData? data, NavigationChildControlData? childData) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final labelType = data?.parentLabelType ?? NavigationLabelType.none;
@@ -745,9 +731,7 @@ class _NavigationItemState
             textAlign: TextAlign.center,
             child: _NavigationChildOverflowHandle(
               overflow: widget.overflow,
-              child: data?.parentLabelSize == NavigationLabelSize.small
-                  ? widget.label!.xSmall()
-                  : widget.label!,
+              child: data?.parentLabelSize == NavigationLabelSize.small ? widget.label!.xSmall() : widget.label!,
             ),
           );
     var canShowLabel = (labelType == NavigationLabelType.expanded ||
@@ -767,8 +751,7 @@ class _NavigationItemState
         style: style,
         selectedStyle: selectedStyle,
         alignment: widget.alignment ??
-            (data?.containerType == NavigationContainerType.sidebar &&
-                    data?.labelDirection == Axis.horizontal
+            (data?.containerType == NavigationContainerType.sidebar && data?.labelDirection == Axis.horizontal
                 ? (data?.parentLabelPosition == NavigationLabelPosition.start
                     ? AlignmentDirectional.centerEnd
                     : AlignmentDirectional.centerStart)
@@ -791,7 +774,8 @@ class _NavigationItemState
 
 class NavigationButton extends AbstractNavigationButton {
   final VoidCallback? onPressed;
-  const NavigationButton({super.key, 
+  const NavigationButton({
+    super.key,
     this.onPressed,
     super.label,
     super.spacing,
@@ -812,17 +796,15 @@ class NavigationButton extends AbstractNavigationButton {
   State<AbstractNavigationButton> createState() => _NavigationButtonState();
 }
 
-class _NavigationButtonState
-    extends _AbstractNavigationButtonState<NavigationButton> {
+class _NavigationButtonState extends _AbstractNavigationButtonState<NavigationButton> {
   @override
-  Widget buildBox(BuildContext context, NavigationControlData? data,
-      NavigationChildControlData? childData) {
+  Widget buildBox(BuildContext context, NavigationControlData? data, NavigationChildControlData? childData) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final labelType = data?.parentLabelType ?? NavigationLabelType.none;
     final direction = data?.direction ?? Axis.vertical;
-    bool showLabel = labelType == NavigationLabelType.all ||
-        (labelType == NavigationLabelType.expanded && data?.expanded == true);
+    bool showLabel =
+        labelType == NavigationLabelType.all || (labelType == NavigationLabelType.expanded && data?.expanded == true);
     AbstractButtonStyle style = widget.style ??
         (data?.containerType != NavigationContainerType.sidebar
             ? const ButtonStyle.ghost(density: ButtonDensity.icon)
@@ -834,9 +816,7 @@ class _NavigationButtonState
             textAlign: TextAlign.center,
             child: _NavigationChildOverflowHandle(
               overflow: widget.overflow,
-              child: data?.parentLabelSize == NavigationLabelSize.small
-                  ? widget.label!.xSmall()
-                  : widget.label!,
+              child: data?.parentLabelSize == NavigationLabelSize.small ? widget.label!.xSmall() : widget.label!,
             ),
           );
     var canShowLabel = (labelType == NavigationLabelType.expanded ||
@@ -849,8 +829,7 @@ class _NavigationButtonState
         marginAlignment: widget.marginAlignment,
         style: style,
         alignment: widget.alignment ??
-            (data?.containerType == NavigationContainerType.sidebar &&
-                    data?.labelDirection == Axis.horizontal
+            (data?.containerType == NavigationContainerType.sidebar && data?.labelDirection == Axis.horizontal
                 ? (data?.parentLabelPosition == NavigationLabelPosition.start
                     ? AlignmentDirectional.centerEnd
                     : AlignmentDirectional.centerStart)
@@ -871,8 +850,7 @@ class _NavigationButtonState
   }
 }
 
-abstract class AbstractNavigationButton extends StatefulWidget
-    implements NavigationBarItem {
+abstract class AbstractNavigationButton extends StatefulWidget implements NavigationBarItem {
   final Widget child;
   final Widget? label;
   final double? spacing;
@@ -899,8 +877,7 @@ abstract class AbstractNavigationButton extends StatefulWidget
   State<AbstractNavigationButton> createState();
 }
 
-abstract class _AbstractNavigationButtonState<
-    T extends AbstractNavigationButton> extends State<T> {
+abstract class _AbstractNavigationButtonState<T extends AbstractNavigationButton> extends State<T> {
   @override
   Widget build(BuildContext context) {
     final data = Data.maybeOf<NavigationControlData>(context);
@@ -915,8 +892,7 @@ abstract class _AbstractNavigationButtonState<
     return _buildBox(context, data, childData);
   }
 
-  Widget buildTooltip(BuildContext context, NavigationControlData? data,
-      NavigationChildControlData? childData) {
+  Widget buildTooltip(BuildContext context, NavigationControlData? data, NavigationChildControlData? childData) {
     if (widget.label == null) {
       return buildBox(context, data, childData);
     }
@@ -927,9 +903,7 @@ abstract class _AbstractNavigationButtonState<
       anchorAlignment = AlignmentDirectional.centerEnd;
     }
     return VNLTooltip(
-      waitDuration: !isMobile(Theme.of(context).platform)
-          ? Duration.zero
-          : const Duration(milliseconds: 500),
+      waitDuration: !isMobile(Theme.of(context).platform) ? Duration.zero : const Duration(milliseconds: 500),
       alignment: alignment,
       anchorAlignment: anchorAlignment,
       tooltip: TooltipContainer(child: widget.label!).call,
@@ -937,8 +911,7 @@ abstract class _AbstractNavigationButtonState<
     );
   }
 
-  Widget buildSliver(BuildContext context, NavigationControlData? data,
-      NavigationChildControlData? childData) {
+  Widget buildSliver(BuildContext context, NavigationControlData? data, NavigationChildControlData? childData) {
     final labelType = data?.parentLabelType ?? NavigationLabelType.none;
     if (labelType == NavigationLabelType.tooltip) {
       return SliverToBoxAdapter(
@@ -950,18 +923,15 @@ abstract class _AbstractNavigationButtonState<
     );
   }
 
-  Widget _buildBox(BuildContext context, NavigationControlData? data,
-      NavigationChildControlData? childData) {
+  Widget _buildBox(BuildContext context, NavigationControlData? data, NavigationChildControlData? childData) {
     if (childData == null) {
       return buildBox(context, data, null);
     } else {
-      return RepaintBoundary.wrap(
-          buildBox(context, data, childData), childData.actualIndex);
+      return RepaintBoundary.wrap(buildBox(context, data, childData), childData.actualIndex);
     }
   }
 
-  Widget buildBox(BuildContext context, NavigationControlData? data,
-      NavigationChildControlData? childData);
+  Widget buildBox(BuildContext context, NavigationControlData? data, NavigationChildControlData? childData);
 }
 
 class _NavigationLabeled extends StatelessWidget {
@@ -989,19 +959,15 @@ class _NavigationLabeled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var direction = position == NavigationLabelPosition.top ||
-            position == NavigationLabelPosition.bottom
+    var direction = position == NavigationLabelPosition.top || position == NavigationLabelPosition.bottom
         ? Axis.vertical
         : Axis.horizontal;
     var animatedSize = Hidden(
       hidden: !showLabel,
       direction: direction,
-      reverse: position == NavigationLabelPosition.start ||
-          position == NavigationLabelPosition.top,
-      keepCrossAxisSize:
-          (this.direction != direction ? keepCrossAxisSize : keepMainAxisSize),
-      keepMainAxisSize:
-          (this.direction != direction ? keepMainAxisSize : keepCrossAxisSize),
+      reverse: position == NavigationLabelPosition.start || position == NavigationLabelPosition.top,
+      keepCrossAxisSize: (this.direction != direction ? keepCrossAxisSize : keepMainAxisSize),
+      keepMainAxisSize: (this.direction != direction ? keepMainAxisSize : keepCrossAxisSize),
       child: Padding(
         padding: EdgeInsetsDirectional.only(
           top: position == NavigationLabelPosition.bottom ? spacing : 0,
@@ -1018,12 +984,10 @@ class _NavigationLabeled extends StatelessWidget {
           direction: direction,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (position == NavigationLabelPosition.start ||
-                position == NavigationLabelPosition.top)
+            if (position == NavigationLabelPosition.start || position == NavigationLabelPosition.top)
               Flexible(child: animatedSize),
             child,
-            if (position == NavigationLabelPosition.end ||
-                position == NavigationLabelPosition.bottom)
+            if (position == NavigationLabelPosition.end || position == NavigationLabelPosition.bottom)
               Flexible(child: animatedSize),
           ],
         ),
@@ -1164,8 +1128,7 @@ class NavigationLabel extends StatelessWidget implements NavigationBarItem {
                 },
                 child: Container(
                   alignment: alignment ?? AlignmentDirectional.centerStart,
-                  padding:
-                      padding ?? EdgeInsets.symmetric(horizontal: 16 * scaling),
+                  padding: padding ?? EdgeInsets.symmetric(horizontal: 16 * scaling),
                   child: child!.semiBold().large(),
                 ),
               ),
@@ -1217,8 +1180,7 @@ class _NavigationLabelDelegate extends SliverPersistentHeaderDelegate {
   });
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     final theme = Theme.of(context);
     final data = Data.maybeOf<NavigationControlData>(context);
     final parentPadding = data?.parentPadding ?? EdgeInsets.zero;
@@ -1237,9 +1199,7 @@ class _NavigationLabelDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant _NavigationLabelDelegate oldDelegate) {
-    return oldDelegate.child != child ||
-        oldDelegate.maxExtent != maxExtent ||
-        oldDelegate.minExtent != minExtent;
+    return oldDelegate.child != child || oldDelegate.maxExtent != maxExtent || oldDelegate.minExtent != minExtent;
   }
 }
 
@@ -1282,8 +1242,7 @@ class _NavigationLabelBackgroundPainter extends CustomPainter {
   }
 }
 
-typedef NavigationWidgetBuilder = Widget Function(
-    BuildContext context, bool selected);
+typedef NavigationWidgetBuilder = Widget Function(BuildContext context, bool selected);
 
 class NavigationWidget extends StatelessWidget implements NavigationBarItem {
   final int? index;

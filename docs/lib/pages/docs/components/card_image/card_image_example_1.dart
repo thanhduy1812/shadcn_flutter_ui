@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class CardImageExample1 extends StatelessWidget {
   const CardImageExample1({super.key});

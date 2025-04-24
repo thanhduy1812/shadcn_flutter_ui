@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class NavigationMenuExample1 extends StatelessWidget {
   const NavigationMenuExample1({super.key});
@@ -14,25 +14,21 @@ class NavigationMenuExample1 extends StatelessWidget {
             children: [
               NavigationMenuContent(
                 title: const Text('Introduction'),
-                content: const Text(
-                    'Component library for Flutter based on VNL UI design.'),
+                content: const Text('Component library for Flutter based on VNL UI design.'),
                 onPressed: () {},
               ),
               NavigationMenuContent(
                 title: const Text('Installation'),
-                content: const Text(
-                    'How to install this package in your Flutter project.'),
+                content: const Text('How to install this package in your Flutter project.'),
                 onPressed: () {},
               ),
               NavigationMenuContent(
                 title: const Text('Typography'),
-                content: const Text(
-                    'Styles and usage of typography in this package.'),
+                content: const Text('Styles and usage of typography in this package.'),
                 onPressed: () {},
               ),
               Clickable(
-                mouseCursor:
-                    const WidgetStatePropertyAll(SystemMouseCursors.click),
+                mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
                 child: VNLCard(
                   borderRadius: theme.borderRadiusMd,
                   child: Column(
@@ -46,9 +42,7 @@ class NavigationMenuExample1 extends StatelessWidget {
                       const Gap(16),
                       const Text('vnl_ui').mono().semiBold().large(),
                       const Gap(8),
-                      const Text(
-                              'Beautifully designed components from VNL UI is now available for Flutter')
-                          .muted(),
+                      const Text('Beautifully designed components from VNL UI is now available for Flutter').muted(),
                     ],
                   ),
                 ).constrained(maxWidth: 192),

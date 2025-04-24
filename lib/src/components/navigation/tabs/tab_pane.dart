@@ -1,12 +1,11 @@
-import 'package:vnl_ui/vnl_ui.dart';
-import 'package:vnl_ui/src/components/display/fade_scroll.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
+import '../../display/fade_scroll.dart';
 
 class TabPaneData<T> extends SortableData<T> {
   const TabPaneData(super.data);
 }
 
-typedef TabPaneItemBuilder<T> = TabChild Function(
-    BuildContext context, TabPaneData<T> item, int index);
+typedef TabPaneItemBuilder<T> = TabChild Function(BuildContext context, TabPaneData<T> item, int index);
 
 class TabPane<T> extends StatefulWidget {
   final List<TabPaneData<T>> items;
@@ -21,7 +20,8 @@ class TabPane<T> extends StatefulWidget {
   final BorderSide? border;
   final Widget child;
   final double? barHeight;
-  const TabPane({super.key, 
+  const TabPane({
+    super.key,
     // required this.children,
     required this.items,
     required this.itemBuilder,
@@ -55,15 +55,13 @@ class TabPaneState<T> extends State<TabPane<T>> {
   final ScrollController _scrollController = ScrollController();
   static const kTabDrag = #tabDrag;
 
-  Widget _childBuilder(
-      BuildContext context, TabContainerData data, Widget child) {
+  Widget _childBuilder(BuildContext context, TabContainerData data, Widget child) {
     final theme = Theme.of(context);
     final isFocused = data.index == data.selected;
     final backgroundColor = widget.backgroundColor ?? theme.colorScheme.card;
     final borderColor = widget.border?.color ?? theme.colorScheme.border;
     final borderWidth = widget.border?.width ?? 1;
-    final borderRadius = (widget.borderRadius ?? theme.borderRadiusLg)
-        .optionallyResolve(context);
+    final borderRadius = (widget.borderRadius ?? theme.borderRadiusLg).optionallyResolve(context);
     return Builder(builder: (context) {
       var tabGhost = Data.maybeOf<_TabGhostData>(context);
       return SizedBox(
@@ -76,8 +74,7 @@ class TabPaneState<T> extends State<TabPane<T>> {
                   borderColor: borderColor,
                   borderWidth: borderWidth),
               child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8) * theme.scaling,
+                  padding: const EdgeInsets.symmetric(horizontal: 8) * theme.scaling,
                   child: IntrinsicWidth(
                     child: child,
                   ))));
@@ -95,13 +92,10 @@ class TabPaneState<T> extends State<TabPane<T>> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    final BorderRadiusGeometry borderRadius =
-        widget.borderRadius ?? theme.borderRadiusLg;
-    final BorderRadius resolvedBorderRadius =
-        borderRadius.optionallyResolve(context);
+    final BorderRadiusGeometry borderRadius = widget.borderRadius ?? theme.borderRadiusLg;
+    final BorderRadius resolvedBorderRadius = borderRadius.optionallyResolve(context);
     return ScrollConfiguration(
-      behavior: ScrollConfiguration.of(context)
-          .copyWith(scrollbars: false, overscroll: false),
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false, overscroll: false),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -124,8 +118,7 @@ class TabPaneState<T> extends State<TabPane<T>> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 2) * theme.scaling,
+                  padding: const EdgeInsets.symmetric(vertical: 2) * theme.scaling,
                   child: Row(
                     spacing: 2 * theme.scaling,
                     children: widget.leading,
@@ -141,8 +134,7 @@ class TabPaneState<T> extends State<TabPane<T>> {
                     endCrossOffset: widget.border?.width ?? 1,
                     controller: _scrollController,
                     child: ClipRect(
-                      clipper:
-                          _ClipRectWithAdjustment(widget.border?.width ?? 1),
+                      clipper: _ClipRectWithAdjustment(widget.border?.width ?? 1),
                       child: SortableLayer(
                         clipBehavior: Clip.none,
                         lock: true,
@@ -189,8 +181,7 @@ class TabPaneState<T> extends State<TabPane<T>> {
                                           if (value is! TabPaneData<T>) {
                                             return;
                                           }
-                                          List<TabPaneData<T>> tabs =
-                                              widget.items;
+                                          List<TabPaneData<T>> tabs = widget.items;
                                           tabs.swapItem(value, index);
                                           widget.onSort?.call(tabs);
                                           widget.onFocused(index);
@@ -199,8 +190,7 @@ class TabPaneState<T> extends State<TabPane<T>> {
                                           if (value is! TabPaneData<T>) {
                                             return;
                                           }
-                                          List<TabPaneData<T>> tabs =
-                                              widget.items;
+                                          List<TabPaneData<T>> tabs = widget.items;
                                           tabs.swapItem(value, index + 1);
                                           widget.onSort?.call(tabs);
                                           widget.onFocused(index);
@@ -214,10 +204,8 @@ class TabPaneState<T> extends State<TabPane<T>> {
                                     );
                                   },
                                   separatorBuilder: (context, index) {
-                                    bool beforeIsFocused =
-                                        widget.focused == index;
-                                    bool afterIsFocused =
-                                        widget.focused == index + 1;
+                                    bool beforeIsFocused = widget.focused == index;
+                                    bool afterIsFocused = widget.focused == index + 1;
                                     if (!beforeIsFocused && !afterIsFocused) {
                                       return VerticalDivider(
                                         indent: 8 * theme.scaling,
@@ -240,8 +228,7 @@ class TabPaneState<T> extends State<TabPane<T>> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 2) * theme.scaling,
+                  padding: const EdgeInsets.symmetric(vertical: 2) * theme.scaling,
                   child: Row(
                     spacing: 2 * theme.scaling,
                     children: widget.trailing,
@@ -284,15 +271,13 @@ class _TabItemPainter extends CustomPainter {
     Path path = Path();
     double adjustment = borderWidth;
     path.moveTo(-borderRadius.bottomLeft.x, size.height + adjustment);
-    path.quadraticBezierTo(
-        0, size.height, 0, size.height - borderRadius.bottomLeft.y);
+    path.quadraticBezierTo(0, size.height, 0, size.height - borderRadius.bottomLeft.y);
     path.lineTo(0, borderRadius.topLeft.y);
     path.quadraticBezierTo(0, 0, borderRadius.topLeft.x, 0);
     path.lineTo(size.width - borderRadius.topRight.x, 0);
     path.quadraticBezierTo(size.width, 0, size.width, borderRadius.topRight.y);
     path.lineTo(size.width, size.height - borderRadius.bottomRight.y);
-    path.quadraticBezierTo(size.width, size.height,
-        size.width + borderRadius.bottomRight.x, size.height + adjustment);
+    path.quadraticBezierTo(size.width, size.height, size.width + borderRadius.bottomRight.x, size.height + adjustment);
     if (closed) {
       path.close();
     }

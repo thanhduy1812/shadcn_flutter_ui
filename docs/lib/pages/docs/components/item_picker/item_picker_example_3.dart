@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class NamedColor {
   final String name;
@@ -52,8 +52,7 @@ class _ItemPickerExample3State extends State<ItemPickerExample3> {
                 width: 100,
                 height: 100,
                 alignment: Alignment.center,
-                decoration:
-                    BoxDecoration(color: item.color, shape: BoxShape.circle),
+                decoration: BoxDecoration(color: item.color, shape: BoxShape.circle),
               ),
             );
           },

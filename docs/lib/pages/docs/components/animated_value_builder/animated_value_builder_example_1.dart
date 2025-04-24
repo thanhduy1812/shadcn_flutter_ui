@@ -1,15 +1,13 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class AnimatedValueBuilderExample1 extends StatefulWidget {
   const AnimatedValueBuilderExample1({super.key});
 
   @override
-  State<AnimatedValueBuilderExample1> createState() =>
-      _AnimatedValueBuilderExample1State();
+  State<AnimatedValueBuilderExample1> createState() => _AnimatedValueBuilderExample1State();
 }
 
-class _AnimatedValueBuilderExample1State
-    extends State<AnimatedValueBuilderExample1> {
+class _AnimatedValueBuilderExample1State extends State<AnimatedValueBuilderExample1> {
   List<Color> colors = [
     Colors.red,
     Colors.green,

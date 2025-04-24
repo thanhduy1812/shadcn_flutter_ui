@@ -1,7 +1,7 @@
 import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/docs/components/navigation_menu/navigation_menu_example_1.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class NavigationMenuExample extends StatelessWidget {
   const NavigationMenuExample({super.key});
@@ -10,8 +10,7 @@ class NavigationMenuExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return ComponentPage(
       name: 'navigation_menu',
-      description:
-          'Navigation menu is a component that provides a list of navigation items.',
+      description: 'Navigation menu is a component that provides a list of navigation items.',
       displayName: 'Navigation Menu',
       children: [
         ConstrainedBox(
@@ -20,8 +19,7 @@ class NavigationMenuExample extends StatelessWidget {
           ),
           child: const WidgetUsageExample(
             title: 'Example',
-            path:
-                'lib/pages/docs/components/navigation_menu/navigation_menu_example_1.dart',
+            path: 'lib/pages/docs/components/navigation_menu/navigation_menu_example_1.dart',
             child: NavigationMenuExample1(),
           ),
         ),

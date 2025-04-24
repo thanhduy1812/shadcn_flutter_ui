@@ -1,4 +1,4 @@
-import 'package:vnl_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class DataExample4 extends StatefulWidget {
   const DataExample4({super.key});
@@ -65,11 +65,7 @@ class _InnerWidgetState extends State<InnerWidget> {
     return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('InnerWidget Rebuild Count: $innerRebuildCount'),
-          const Gap(12),
-          widget.child
-        ],
+        children: [Text('InnerWidget Rebuild Count: $innerRebuildCount'), const Gap(12), widget.child],
       ),
     );
   }
@@ -93,8 +89,7 @@ class _MostInnerWidgetState extends State<MostInnerWidget> {
     return VNLCard(
       child: Column(
         children: [
-          Text(
-              'MostInnerWidget Data: $parentCounter - Rebuild Count: $mostInnerRebuildCount'),
+          Text('MostInnerWidget Data: $parentCounter - Rebuild Count: $mostInnerRebuildCount'),
           if (widget.child != null) ...[
             const Gap(12),
             widget.child!,
