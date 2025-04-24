@@ -87,7 +87,7 @@ class ControlledSelect<T> extends StatelessWidget
   Widget build(BuildContext context) {
     return ControlledComponentAdapter<T?>(
       builder: (context, data) {
-        return Select<T>(
+        return VNLSelect<T>(
           onChanged: data.onChanged,
           placeholder: placeholder,
           filled: filled,
@@ -252,7 +252,7 @@ class SelectItemButton<T> extends StatelessWidget {
     final data = Data.maybeOf<SelectPopupHandle>(context);
     bool isSelected = data?.isSelected(value) ?? false;
     bool hasSelection = data?.hasSelection ?? false;
-    return Button(
+    return VNLButton(
       disableTransition: true,
       alignment: AlignmentDirectional.centerStart,
       onPressed: () {
@@ -417,7 +417,7 @@ mixin SelectBase<T> {
   Predicate<T>? get showValuePredicate;
 }
 
-class Select<T> extends StatefulWidget with SelectBase<T> {
+class VNLSelect<T> extends StatefulWidget with SelectBase<T> {
   static const kDefaultSelectMaxHeight = 240.0;
   @override
   final ValueChanged<T?>? onChanged; // if null, then it's a disabled combobox
@@ -460,7 +460,7 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   @override
   final Predicate<T>? showValuePredicate;
 
-  const Select({
+  const VNLSelect({
     super.key,
     this.onChanged,
     this.placeholder,
@@ -489,8 +489,8 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   SelectState<T> createState() => SelectState<T>();
 }
 
-class SelectState<T> extends State<Select<T>>
-    with FormValueSupplier<T, Select<T>> {
+class SelectState<T> extends State<VNLSelect<T>>
+    with FormValueSupplier<T, VNLSelect<T>> {
   late FocusNode _focusNode;
   final PopoverController _popoverController = PopoverController();
   late ValueNotifier<T?> _valueNotifier;
@@ -504,7 +504,7 @@ class SelectState<T> extends State<Select<T>>
   }
 
   @override
-  void didUpdateWidget(Select<T> oldWidget) {
+  void didUpdateWidget(VNLSelect<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.focusNode != oldWidget.focusNode) {
       _focusNode = widget.focusNode ?? FocusNode();
@@ -589,7 +589,7 @@ class SelectState<T> extends State<Select<T>>
           onTapOutside: (event) {
             _focusNode.unfocus();
           },
-          child: Button(
+          child: VNLButton(
             enabled: enabled,
             disableHoverEffect: widget.disableHoverEffect,
             focusNode: _focusNode,
@@ -624,7 +624,7 @@ class SelectState<T> extends State<Select<T>>
                           constraints: widget.popupConstraints ??
                               BoxConstraints(
                                 maxHeight:
-                                    Select.kDefaultSelectMaxHeight * scaling,
+                                    VNLSelect.kDefaultSelectMaxHeight * scaling,
                               ),
                           child: ListenableBuilder(
                               listenable: _valueNotifier,
@@ -713,7 +713,7 @@ class MultiSelectChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = Data.maybeOf<SelectData>(context);
-    return Chip(
+    return VNLChip(
       style: style,
       trailing: data?.enabled == false
           ? null
@@ -817,7 +817,7 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return Select<Iterable<T>>(
+    return VNLSelect<Iterable<T>>(
       popup: popup,
       itemBuilder: itemBuilder,
       onChanged: onChanged,
@@ -1039,7 +1039,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
           mainAxisSize: MainAxisSize.min,
           children: [
             if (widget.enableSearch)
-              TextField(
+              VNLTextField(
                 controller: _searchController,
                 border: false,
                 features: [
@@ -1081,7 +1081,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                                           CrossAxisAlignment.stretch,
                                       children: [
                                         if (widget.enableSearch)
-                                          const Divider(),
+                                          const VNLDivider(),
                                         Flexible(
                                           child: loadingBuilder,
                                         ),
@@ -1104,7 +1104,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                                           CrossAxisAlignment.stretch,
                                       children: [
                                         if (widget.enableSearch)
-                                          const Divider(),
+                                          const VNLDivider(),
                                         Flexible(
                                           child: errorBuilder,
                                         ),
@@ -1125,7 +1125,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                                             CrossAxisAlignment.stretch,
                                         children: [
                                           if (widget.enableSearch)
-                                            const Divider(),
+                                            const VNLDivider(),
                                           Flexible(
                                             child: Stack(
                                               fit: StackFit.passthrough,
@@ -1302,7 +1302,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      if (widget.enableSearch) const Divider(),
+                                      if (widget.enableSearch) const VNLDivider(),
                                       Flexible(
                                         child: emptyBuilder,
                                       ),

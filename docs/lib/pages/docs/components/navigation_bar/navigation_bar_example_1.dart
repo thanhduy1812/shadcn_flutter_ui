@@ -34,10 +34,10 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
     return OutlinedContainer(
       width: 500,
       height: 400,
-      child: Scaffold(
+      child: VNLScaffold(
         footers: [
-          const Divider(),
-          NavigationBar(
+          const VNLDivider(),
+          VNLNavigationBar(
             alignment: alignment,
             labelType: labelType,
             expanded: expanded,
@@ -60,7 +60,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
         child: Container(
           color: Colors.primaries[Colors.primaries.length - selected - 1],
           padding: const EdgeInsets.all(24),
-          child: Card(
+          child: VNLCard(
             child: Wrap(
               alignment: WrapAlignment.center,
               runAlignment: WrapAlignment.center,
@@ -68,7 +68,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
               runSpacing: 8,
               spacing: 8,
               children: [
-                Select<NavigationBarAlignment>(
+                VNLSelect<NavigationBarAlignment>(
                   value: alignment,
                   itemBuilder:
                       (BuildContext context, NavigationBarAlignment item) {
@@ -91,7 +91,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                       ),
                   ])),
                 ),
-                Select<NavigationLabelType>(
+                VNLSelect<NavigationLabelType>(
                   value: labelType,
                   itemBuilder:
                       (BuildContext context, NavigationLabelType item) {
@@ -114,7 +114,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                       ),
                   ])),
                 ),
-                Checkbox(
+                VNLCheckbox(
                   state:
                       expands ? CheckboxState.checked : CheckboxState.unchecked,
                   onChanged: (value) {
@@ -124,7 +124,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                   },
                   trailing: const Text('Expands'),
                 ),
-                Checkbox(
+                VNLCheckbox(
                   state: customButtonStyle
                       ? CheckboxState.checked
                       : CheckboxState.unchecked,
@@ -135,7 +135,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                   },
                   trailing: const Text('Custom Button Style'),
                 ),
-                Checkbox(
+                VNLCheckbox(
                   state: expanded
                       ? CheckboxState.checked
                       : CheckboxState.unchecked,

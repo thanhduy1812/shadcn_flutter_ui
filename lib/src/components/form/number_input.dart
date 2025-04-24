@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:vnl_ui/vnl_ui.dart';
 
 @Deprecated('Use TextField with InputFeature.spinner() instead.')
-class NumberInput extends StatefulWidget {
+class VNLNumberInput extends StatefulWidget {
   static final _decimalFormatter = FilteringTextInputFormatter.allow(
     RegExp(r'^-?[0-9]+\.?[0-9]*$'),
   );
@@ -24,7 +24,7 @@ class NumberInput extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final VoidCallback? onEditingComplete;
 
-  const NumberInput({
+  const VNLNumberInput({
     super.key,
     this.padding,
     this.controller,
@@ -45,11 +45,11 @@ class NumberInput extends StatefulWidget {
   });
 
   @override
-  State<NumberInput> createState() => _NumberInputState();
+  State<VNLNumberInput> createState() => _NumberInputState();
 }
 
-class _NumberInputState extends State<NumberInput>
-    with FormValueSupplier<num, NumberInput> {
+class _NumberInputState extends State<VNLNumberInput>
+    with FormValueSupplier<num, VNLNumberInput> {
   late TextEditingController _controller;
   late double _lastValidValue;
 
@@ -74,7 +74,7 @@ class _NumberInputState extends State<NumberInput>
   }
 
   @override
-  void didUpdateWidget(covariant NumberInput oldWidget) {
+  void didUpdateWidget(covariant VNLNumberInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       _controller.removeListener(_onTextChanged);
@@ -164,7 +164,7 @@ class _NumberInputState extends State<NumberInput>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Flexible(
-                    child: Button(
+                    child: VNLButton(
                       style: _buttonStyle,
                       enabled: widget.enabled ??
                           (widget.max == null || _lastValidValue < widget.max!),
@@ -186,7 +186,7 @@ class _NumberInputState extends State<NumberInput>
                     ),
                   ),
                   Flexible(
-                    child: Button(
+                    child: VNLButton(
                       style: _buttonStyle,
                       enabled: widget.enabled ??
                           (widget.min == null || _lastValidValue > widget.min!),
@@ -256,7 +256,7 @@ class _NumberInputState extends State<NumberInput>
       constraints: BoxConstraints(
         minWidth: 50 * scaling,
       ),
-      child: TextField(
+      child: VNLTextField(
         border: false,
         minLines: 1,
         maxLines: 1,
@@ -274,7 +274,7 @@ class _NumberInputState extends State<NumberInput>
         style: widget.style,
         inputFormatters: [
           if (!widget.allowDecimals) FilteringTextInputFormatter.digitsOnly,
-          if (widget.allowDecimals) NumberInput._decimalFormatter,
+          if (widget.allowDecimals) VNLNumberInput._decimalFormatter,
         ],
         controller: _controller,
         onChanged: (_) {

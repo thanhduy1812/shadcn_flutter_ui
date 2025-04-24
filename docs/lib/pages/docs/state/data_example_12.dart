@@ -63,7 +63,7 @@ class _InnerWidgetState extends State<InnerWidget> {
     // if you're using var, you must specify the type of the model
     var firstCounter = Model.of<int>(context, #firstCounter);
     rebuildCount++;
-    return Card(
+    return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -106,7 +106,7 @@ class _LeafWidgetState extends State<LeafWidget> {
     ModelProperty<int> secondCounter =
         Model.ofProperty(context, #secondCounter);
     rebuildCount++;
-    return Card(
+    return VNLCard(
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

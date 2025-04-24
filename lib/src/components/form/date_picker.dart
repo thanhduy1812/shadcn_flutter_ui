@@ -52,7 +52,7 @@ class ControlledDatePicker extends StatelessWidget
       onChanged: onChanged,
       enabled: enabled,
       builder: (context, data) {
-        return DatePicker(
+        return VNLDatePicker(
           enabled: data.enabled,
           value: data.value,
           onChanged: data.onChanged,
@@ -71,7 +71,7 @@ class ControlledDatePicker extends StatelessWidget
   }
 }
 
-class DatePicker extends StatelessWidget {
+class VNLDatePicker extends StatelessWidget {
   final DateTime? value;
   final ValueChanged<DateTime?>? onChanged;
   final Widget? placeholder;
@@ -85,7 +85,7 @@ class DatePicker extends StatelessWidget {
   final DateStateBuilder? stateBuilder;
   final bool? enabled;
 
-  const DatePicker({
+  const VNLDatePicker({
     super.key,
     required this.value,
     this.onChanged,

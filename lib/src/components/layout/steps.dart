@@ -1,9 +1,9 @@
 import 'package:vnl_ui/vnl_ui.dart';
 
-class Steps extends StatelessWidget {
+class VNLSteps extends StatelessWidget {
   final List<Widget> children;
 
-  const Steps({
+  const VNLSteps({
     super.key,
     required this.children,
   });

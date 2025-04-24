@@ -346,7 +346,7 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
               child: Center(
                 child: Opacity(
                   opacity: _value == null ? 1 : 0,
-                  child: TextField(
+                  child: VNLTextField(
                     border: false,
                     expands: false,
                     maxLines: null,
@@ -468,13 +468,13 @@ extension OTPCodepointListExtension on OTPCodepointList {
   }
 }
 
-class InputOTP extends StatefulWidget {
+class VNLInputOTP extends StatefulWidget {
   final List<InputOTPChild> children;
   final OTPCodepointList? initialValue;
   final ValueChanged<OTPCodepointList>? onChanged;
   final ValueChanged<OTPCodepointList>? onSubmitted;
 
-  const InputOTP({
+  const VNLInputOTP({
     super.key,
     required this.children,
     this.initialValue,
@@ -483,11 +483,11 @@ class InputOTP extends StatefulWidget {
   });
 
   @override
-  State<InputOTP> createState() => _InputOTPState();
+  State<VNLInputOTP> createState() => _InputOTPState();
 }
 
-class _InputOTPState extends State<InputOTP>
-    with FormValueSupplier<OTPCodepointList, InputOTP> {
+class _InputOTPState extends State<VNLInputOTP>
+    with FormValueSupplier<OTPCodepointList, VNLInputOTP> {
   final List<_InputOTPChild> _children = [];
 
   OTPCodepointList get value {
@@ -548,7 +548,7 @@ class _InputOTPState extends State<InputOTP>
   }
 
   @override
-  void didUpdateWidget(covariant InputOTP oldWidget) {
+  void didUpdateWidget(covariant VNLInputOTP oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!listEquals(oldWidget.initialValue, widget.initialValue) ||
         !listEquals(oldWidget.children, widget.children)) {

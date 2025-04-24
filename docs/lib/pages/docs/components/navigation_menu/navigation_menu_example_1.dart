@@ -6,7 +6,7 @@ class NavigationMenuExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return NavigationMenu(
+    return VNLNavigationMenu(
       children: [
         NavigationMenuItem(
           content: NavigationMenuContentList(
@@ -33,7 +33,7 @@ class NavigationMenuExample1 extends StatelessWidget {
               Clickable(
                 mouseCursor:
                     const WidgetStatePropertyAll(SystemMouseCursors.click),
-                child: Card(
+                child: VNLCard(
                   borderRadius: theme.borderRadiusMd,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

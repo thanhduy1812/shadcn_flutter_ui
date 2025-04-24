@@ -258,7 +258,7 @@ class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>>
     final theme = Theme.of(context);
     return Data<ObjectFormHandler<T>>.inherit(
       data: this,
-      child: AlertDialog(
+      child: VNLAlertDialog(
         title: widget.dialogTitle,
         content: Padding(
           padding: EdgeInsets.only(top: 8 * theme.scaling),

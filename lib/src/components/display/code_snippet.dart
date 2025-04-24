@@ -134,8 +134,8 @@ class _CodeSnippetState extends State<CodeSnippet> {
                         bottom: theme.scaling * 16,
                       ),
                       child: data == null
-                          ? SelectableText(widget.code).muted().mono().small()
-                          : SelectableText.rich(
+                          ? VNLSelectableText(widget.code).muted().mono().small()
+                          : VNLSelectableText.rich(
                               data.highlight(widget.code),
                             ).mono().small(),
                     ),
@@ -160,7 +160,7 @@ class _CodeSnippetState extends State<CodeSnippet> {
                           builder: (context, overlay) {
                             final localizations =
                                 VNLookLocalizations.of(context);
-                            return Alert(
+                            return VNLAlert(
                               leading: const Icon(
                                 LucideIcons.copyCheck,
                               ).iconSmall(),

@@ -1,6 +1,6 @@
 import 'package:vnl_ui/vnl_ui.dart';
 
-class Card extends StatelessWidget {
+class VNLCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
   final bool filled;
@@ -14,7 +14,7 @@ class Card extends StatelessWidget {
   final double? surfaceBlur;
   final Duration? duration;
 
-  const Card({
+  const VNLCard({
     super.key,
     required this.child,
     this.padding,
@@ -99,7 +99,7 @@ class SurfaceCard extends StatelessWidget {
         child: child,
       );
     }
-    return Card(
+    return VNLCard(
       clipBehavior: clipBehavior,
       borderRadius: borderRadius,
       borderWidth: borderWidth,

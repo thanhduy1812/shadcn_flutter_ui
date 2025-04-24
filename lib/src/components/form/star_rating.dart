@@ -60,7 +60,7 @@ class ControlledStarRating extends StatelessWidget
       onChanged: onChanged,
       enabled: enabled,
       builder: (context, data) {
-        return StarRating(
+        return VNLStarRating(
           value: data.value,
           onChanged: data.onChanged,
           enabled: data.enabled,
@@ -83,7 +83,7 @@ class ControlledStarRating extends StatelessWidget
   }
 }
 
-class StarRating extends StatefulWidget {
+class VNLStarRating extends StatefulWidget {
   final double value;
   final ValueChanged<double>? onChanged;
   final double step;
@@ -101,7 +101,7 @@ class StarRating extends StatefulWidget {
   final double? starRotation;
   final bool? enabled;
 
-  const StarRating({
+  const VNLStarRating({
     super.key,
     required this.value,
     this.onChanged,
@@ -122,11 +122,11 @@ class StarRating extends StatefulWidget {
   });
 
   @override
-  State<StarRating> createState() => _StarRatingState();
+  State<VNLStarRating> createState() => _StarRatingState();
 }
 
-class _StarRatingState extends State<StarRating>
-    with FormValueSupplier<double, StarRating> {
+class _StarRatingState extends State<VNLStarRating>
+    with FormValueSupplier<double, VNLStarRating> {
   double? _changingValue;
   bool _focused = false;
 
@@ -137,7 +137,7 @@ class _StarRatingState extends State<StarRating>
   }
 
   @override
-  void didUpdateWidget(covariant StarRating oldWidget) {
+  void didUpdateWidget(covariant VNLStarRating oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.value != oldWidget.value) {
       formValue = widget.value;

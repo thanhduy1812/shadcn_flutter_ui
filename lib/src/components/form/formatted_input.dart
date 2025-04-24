@@ -330,7 +330,7 @@ class _EditablePartWidgetState extends State<_EditablePartWidget> {
         key: FormKey(data.partIndex),
         child: SizedBox(
           width: widget.width,
-          child: TextField(
+          child: VNLTextField(
             focusNode: data.focusNode,
             controller: _controller,
             maxLength: widget.length,
@@ -420,7 +420,7 @@ class FormattedInputController extends ValueNotifier<FormattedValue>
   FormattedInputController([super.value = const FormattedValue()]);
 }
 
-class FormattedInput extends StatefulWidget
+class VNLFormattedInput extends StatefulWidget
     with ControlledComponent<FormattedValue> {
   @override
   final FormattedValue? initialValue;
@@ -434,7 +434,7 @@ class FormattedInput extends StatefulWidget
   final Widget? leading;
   final Widget? trailing;
 
-  const FormattedInput({
+  const VNLFormattedInput({
     super.key,
     this.initialValue,
     this.onChanged,
@@ -446,10 +446,10 @@ class FormattedInput extends StatefulWidget
   });
 
   @override
-  State<FormattedInput> createState() => _FormattedInputState();
+  State<VNLFormattedInput> createState() => _FormattedInputState();
 }
 
-class _FormattedInputState extends State<FormattedInput> {
+class _FormattedInputState extends State<VNLFormattedInput> {
   final FormController _controller = FormController();
   bool _hasFocus = false;
   FormattedValue? _value;
@@ -579,7 +579,7 @@ class _FormattedInputState extends State<FormattedInput> {
             padding: EdgeInsets.symmetric(
               horizontal: 6 * theme.scaling,
             ),
-            child: Form(
+            child: VNLForm(
               controller: _controller,
               child: FocusTraversalGroup(
                 policy: WidgetOrderTraversalPolicy(),
@@ -836,7 +836,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
   @override
   Widget build(BuildContext context) {
     var popoverIcon = widget.popoverIcon;
-    return FormattedInput(
+    return VNLFormattedInput(
         controller: _formattedController,
         onChanged: (value) {
           List<String> values = value.values.map((part) {

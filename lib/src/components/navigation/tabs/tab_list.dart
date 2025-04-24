@@ -1,11 +1,11 @@
 import 'package:vnl_ui/vnl_ui.dart';
 
-class TabList extends StatelessWidget {
+class VNLTabList extends StatelessWidget {
   final List<TabChild> children;
   final int index;
   final ValueChanged<int>? onChanged;
 
-  const TabList({
+  const VNLTabList({
     super.key,
     required this.children,
     required this.index,

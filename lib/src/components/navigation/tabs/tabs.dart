@@ -1,12 +1,12 @@
 import 'package:vnl_ui/vnl_ui.dart';
 
-class Tabs extends StatelessWidget {
+class VNLTabs extends StatelessWidget {
   final int index;
   final ValueChanged<int> onChanged;
   final List<TabChild> children;
   final EdgeInsetsGeometry? padding;
 
-  const Tabs({
+  const VNLTabs({
     super.key,
     required this.index,
     required this.onChanged,

@@ -42,7 +42,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
             ),
             const vnlui.Gap(64),
             vnlui.VNLookUI(
-                child: vnlui.Card(
+                child: vnlui.VNLCard(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -54,7 +54,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return AlertDialog(
+                          return vnlui.VNLAlertDialog(
                             title: const Text('Hello'),
                             content: const Text('This is Material dialog'),
                             actions: [
@@ -77,7 +77,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
                       vnlui.showDialog(
                         context: context,
                         builder: (context) {
-                          return vnlui.AlertDialog(
+                          return vnlui.VNLAlertDialog(
                             title: const Text('Hello'),
                             content:
                                 const Text('This is vnl_ui dialog'),

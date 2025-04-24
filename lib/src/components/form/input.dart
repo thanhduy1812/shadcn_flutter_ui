@@ -175,7 +175,7 @@ class _InputPasswordToggleFeatureState
   }
 
   @override
-  TextField interceptInput(TextField input) {
+  VNLTextField interceptInput(VNLTextField input) {
     return input.copyWith(
       obscureText: _obscureText,
     );
@@ -351,7 +351,7 @@ class _AutoCompleteFeatureState
           return FutureBuilder(
             future: suggestions,
             builder: (context, snapshot) {
-              return AutoComplete(
+              return VNLAutoComplete(
                 key: _key,
                 suggestions:
                     snapshot.hasData ? snapshot.requireData.toList() : const [],
@@ -365,7 +365,7 @@ class _AutoCompleteFeatureState
             },
           );
         }
-        return AutoComplete(
+        return VNLAutoComplete(
           key: _key,
           suggestions: suggestions == null ? const [] : suggestions.toList(),
           popoverConstraints: feature.popoverConstraints,

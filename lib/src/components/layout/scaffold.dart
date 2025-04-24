@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/rendering.dart';
 import 'package:vnl_ui/vnl_ui.dart';
 
-class Scaffold extends StatefulWidget {
+class VNLScaffold extends StatefulWidget {
   final List<Widget> headers;
   final List<Widget> footers;
   final Widget child;
@@ -18,7 +18,7 @@ class Scaffold extends StatefulWidget {
   final bool showLoadingSparks;
   final bool? resizeToAvoidBottomInset;
 
-  const Scaffold({
+  const VNLScaffold({
     super.key,
     required this.child,
     this.headers = const [],
@@ -35,7 +35,7 @@ class Scaffold extends StatefulWidget {
   });
 
   @override
-  State<Scaffold> createState() => ScaffoldState();
+  State<VNLScaffold> createState() => ScaffoldState();
 }
 
 class ScaffoldBarData {
@@ -50,7 +50,7 @@ class ScaffoldBarData {
   });
 }
 
-class ScaffoldState extends State<Scaffold> {
+class ScaffoldState extends State<VNLScaffold> {
   Widget buildHeader(BuildContext context) {
     return RepaintBoundary(
       child: Container(
@@ -300,7 +300,7 @@ class ScaffoldBoxConstraints extends BoxConstraints {
   }
 }
 
-class AppBar extends StatefulWidget {
+class VNLAppBar extends StatefulWidget {
   final List<Widget> trailing;
   final List<Widget> leading;
   final Widget? child;
@@ -319,7 +319,7 @@ class AppBar extends StatefulWidget {
   final double? surfaceBlur;
   final double? surfaceOpacity;
 
-  const AppBar({
+  const VNLAppBar({
     super.key,
     this.trailing = const [],
     this.leading = const [],
@@ -343,10 +343,10 @@ class AppBar extends StatefulWidget {
         );
 
   @override
-  State<AppBar> createState() => _AppBarState();
+  State<VNLAppBar> createState() => _AppBarState();
 }
 
-class _AppBarState extends State<AppBar> {
+class _AppBarState extends State<VNLAppBar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

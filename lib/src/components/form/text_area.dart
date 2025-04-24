@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:vnl_ui/vnl_ui.dart';
 
-class TextArea extends StatefulWidget {
+class VNLTextArea extends StatefulWidget {
   final TextEditingController? controller;
   final bool filled;
   final Widget? placeholder;
@@ -45,7 +45,7 @@ class TextArea extends StatefulWidget {
   final Clip clipBehavior;
   final bool autofocus;
 
-  const TextArea({
+  const VNLTextArea({
     super.key,
     this.expandableHeight = false,
     this.expandableWidth = false,
@@ -92,10 +92,10 @@ class TextArea extends StatefulWidget {
   });
 
   @override
-  State<TextArea> createState() => _TextAreaState();
+  State<VNLTextArea> createState() => _TextAreaState();
 }
 
-class _TextAreaState extends State<TextArea> {
+class _TextAreaState extends State<VNLTextArea> {
   late double _height;
   late double _width;
 
@@ -107,7 +107,7 @@ class _TextAreaState extends State<TextArea> {
   }
 
   @override
-  void didUpdateWidget(covariant TextArea oldWidget) {
+  void didUpdateWidget(covariant VNLTextArea oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialHeight != oldWidget.initialHeight) {
       _height = widget.initialHeight;
@@ -128,7 +128,7 @@ class _TextAreaState extends State<TextArea> {
           fit: StackFit.passthrough,
           children: [
             Positioned.fill(
-              child: TextField(
+              child: VNLTextField(
                 expands: true,
                 controller: widget.controller,
                 onSubmitted: widget.onSubmitted,

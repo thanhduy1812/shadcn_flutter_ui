@@ -32,7 +32,7 @@ abstract class NavigationBarItem extends Widget {
   bool get selectable;
 }
 
-class NavigationBar extends StatefulWidget {
+class VNLNavigationBar extends StatefulWidget {
   final Color? backgroundColor;
   final List<NavigationBarItem> children;
   final NavigationBarAlignment alignment;
@@ -52,7 +52,7 @@ class NavigationBar extends StatefulWidget {
   final bool keepCrossAxisSize;
   final bool keepMainAxisSize;
 
-  const NavigationBar({
+  const VNLNavigationBar({
     super.key,
     this.backgroundColor,
     this.alignment = NavigationBarAlignment.center,
@@ -75,17 +75,17 @@ class NavigationBar extends StatefulWidget {
   });
 
   @override
-  State<NavigationBar> createState() => _NavigationBarState();
+  State<VNLNavigationBar> createState() => _NavigationBarState();
 }
 
-class _NavigationBarState extends State<NavigationBar>
+class _NavigationBarState extends State<VNLNavigationBar>
     with NavigationContainerMixin {
   void _onSelected(int index) {
     widget.onSelected?.call(index);
   }
 
   @override
-  void didUpdateWidget(covariant NavigationBar oldWidget) {
+  void didUpdateWidget(covariant VNLNavigationBar oldWidget) {
     super.didUpdateWidget(oldWidget);
   }
 
@@ -133,7 +133,7 @@ class _NavigationBarState extends State<NavigationBar>
         }
       }
     }
-    return AppBar(
+    return VNLAppBar(
       padding: EdgeInsets.zero,
       surfaceBlur: widget.surfaceBlur,
       surfaceOpacity: widget.surfaceOpacity,
@@ -227,7 +227,7 @@ mixin NavigationContainerMixin {
   }
 }
 
-class NavigationRail extends StatefulWidget {
+class VNLNavigationRail extends StatefulWidget {
   final Color? backgroundColor;
   final List<NavigationBarItem> children;
   final NavigationRailAlignment alignment;
@@ -246,7 +246,7 @@ class NavigationRail extends StatefulWidget {
   final bool keepMainAxisSize;
   final bool keepCrossAxisSize;
 
-  const NavigationRail({
+  const VNLNavigationRail({
     super.key,
     this.backgroundColor,
     this.alignment = NavigationRailAlignment.center,
@@ -268,10 +268,10 @@ class NavigationRail extends StatefulWidget {
   });
 
   @override
-  State<NavigationRail> createState() => _NavigationRailState();
+  State<VNLNavigationRail> createState() => _NavigationRailState();
 }
 
-class _NavigationRailState extends State<NavigationRail>
+class _NavigationRailState extends State<VNLNavigationRail>
     with NavigationContainerMixin {
   AlignmentGeometry get _alignment {
     switch ((widget.alignment, widget.direction)) {
@@ -351,7 +351,7 @@ class _NavigationRailState extends State<NavigationRail>
   }
 }
 
-class NavigationSidebar extends StatefulWidget {
+class VNLNavigationSidebar extends StatefulWidget {
   final Color? backgroundColor;
   final List<NavigationBarItem> children;
   final double? spacing;
@@ -368,7 +368,7 @@ class NavigationSidebar extends StatefulWidget {
   final bool keepCrossAxisSize;
   final bool keepMainAxisSize;
 
-  const NavigationSidebar({
+  const VNLNavigationSidebar({
     super.key,
     this.backgroundColor,
     this.spacing,
@@ -388,10 +388,10 @@ class NavigationSidebar extends StatefulWidget {
   });
 
   @override
-  State<NavigationSidebar> createState() => _NavigationSidebarState();
+  State<VNLNavigationSidebar> createState() => _NavigationSidebarState();
 }
 
-class _NavigationSidebarState extends State<NavigationSidebar>
+class _NavigationSidebarState extends State<VNLNavigationSidebar>
     with NavigationContainerMixin {
   BoxConstraints getDefaultConstraints(BuildContext context, ThemeData theme) {
     final scaling = theme.scaling;
@@ -648,7 +648,7 @@ class NavigationDivider extends StatelessWidget implements NavigationBarItem {
     final direction = data?.direction ?? Axis.vertical;
     Widget child;
     if (direction == Axis.vertical) {
-      child = Divider(
+      child = VNLDivider(
         indent: -parentPadding.left,
         endIndent: -parentPadding.right,
         thickness: thickness ?? (1 * scaling),
@@ -843,7 +843,7 @@ class _NavigationButtonState
         labelType == NavigationLabelType.all ||
         labelType == NavigationLabelType.selected);
     return NavigationPadding(
-      child: Button(
+      child: VNLButton(
         enabled: widget.enabled,
         onPressed: widget.onPressed,
         marginAlignment: widget.marginAlignment,
@@ -926,7 +926,7 @@ abstract class _AbstractNavigationButtonState<
       alignment = AlignmentDirectional.centerStart;
       anchorAlignment = AlignmentDirectional.centerEnd;
     }
-    return Tooltip(
+    return VNLTooltip(
       waitDuration: !isMobile(Theme.of(context).platform)
           ? Duration.zero
           : const Duration(milliseconds: 500),
@@ -1190,7 +1190,7 @@ class _NavigationChildOverflowHandle extends StatelessWidget {
       case NavigationOverflow.clip:
         return ClipRect(child: child);
       case NavigationOverflow.marquee:
-        return OverflowMarquee(child: child);
+        return VNLOverflowMarquee(child: child);
       case NavigationOverflow.ellipsis:
         return DefaultTextStyle.merge(
           maxLines: 1,

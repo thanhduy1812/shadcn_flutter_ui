@@ -215,7 +215,7 @@ class ChipInputState<T> extends State<ChipInput<T>>
     if (!widget.useChips) {
       return widget.chipBuilder(context, widget.chips[index]);
     }
-    return Chip(
+    return VNLChip(
       trailing: ChipButton(
         onPressed: () {
           List<T> chips = List.of(widget.chips);
@@ -466,7 +466,7 @@ class ChipInputState<T> extends State<ChipInput<T>>
               ),
             );
           },
-          child: TextField(
+          child: VNLTextField(
             key: _textFieldKey,
             focusNode: _focusNode,
             initialValue: widget.initialText,

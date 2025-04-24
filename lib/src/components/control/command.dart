@@ -44,7 +44,7 @@ Future<T?> showCommandDialog<T>({
         child: ModalBackdrop(
           borderRadius: subtractByBorder(theme.borderRadiusXxl, 1 * scaling),
           surfaceClip: ModalBackdrop.shouldClipSurface(surfaceOpacity),
-          child: Command(
+          child: VNLCommand(
             autofocus: autofocus,
             builder: builder,
             debounceDuration: debounceDuration,
@@ -60,7 +60,7 @@ Future<T?> showCommandDialog<T>({
   );
 }
 
-class Command extends StatefulWidget {
+class VNLCommand extends StatefulWidget {
   final bool autofocus;
   final CommandBuilder builder;
   final Duration
@@ -72,7 +72,7 @@ class Command extends StatefulWidget {
   final double? surfaceBlur;
   final Widget? searchPlaceholder;
 
-  const Command({
+  const VNLCommand({
     super.key,
     required this.builder,
     this.autofocus = true,
@@ -86,10 +86,10 @@ class Command extends StatefulWidget {
   });
 
   @override
-  State<Command> createState() => _CommandState();
+  State<VNLCommand> createState() => _CommandState();
 }
 
-class _CommandState extends State<Command> {
+class _CommandState extends State<VNLCommand> {
   final TextEditingController _controller = TextEditingController();
   final ValueNotifier<String?> query = ValueNotifier<String?>(null);
 
@@ -141,7 +141,7 @@ class _CommandState extends State<Command> {
                     LucideIcons.search,
                   ).iconSmall().iconMutedForeground(),
                   Expanded(
-                    child: TextField(
+                    child: VNLTextField(
                       autofocus: true,
                       controller: _controller,
                       border: false,
@@ -162,7 +162,7 @@ class _CommandState extends State<Command> {
                     ),
                 ],
               ).withPadding(horizontal: theme.scaling * 12),
-              const Divider(),
+              const VNLDivider(),
               Expanded(
                 child: ValueListenableBuilder(
                     valueListenable: query,
@@ -188,7 +188,7 @@ class _CommandState extends State<Command> {
                             }
                             return ListView.separated(
                               separatorBuilder: (context, index) =>
-                                  const Divider(),
+                                  const VNLDivider(),
                               shrinkWrap: true,
                               itemCount: items.length,
                               itemBuilder: (context, index) => items[index],

@@ -705,11 +705,11 @@ OverlayCompleter<T?> showPopover<T>({
   );
 }
 
-class Popover {
+class VNLPopover {
   final GlobalKey<OverlayHandlerStateMixin> key;
   final OverlayCompleter entry;
 
-  Popover._(this.key, this.entry);
+  VNLPopover._(this.key, this.entry);
 
   Future<void> close([bool immediate = false]) {
     var currentState = key.currentState;
@@ -739,7 +739,7 @@ class Popover {
 
 class PopoverController extends ChangeNotifier {
   bool _disposed = false;
-  final List<Popover> _openPopovers = [];
+  final List<VNLPopover> _openPopovers = [];
 
   bool get hasOpenPopover =>
       _openPopovers.isNotEmpty &&
@@ -749,7 +749,7 @@ class PopoverController extends ChangeNotifier {
       _openPopovers.isNotEmpty &&
       _openPopovers.any((element) => !element.entry.isAnimationCompleted);
 
-  Iterable<Popover> get openPopovers => List.unmodifiable(_openPopovers);
+  Iterable<VNLPopover> get openPopovers => List.unmodifiable(_openPopovers);
 
   Future<T?> show<T>({
     required BuildContext context,
@@ -806,7 +806,7 @@ class PopoverController extends ChangeNotifier {
       overlayBarrier: overlayBarrier,
       handler: handler,
     );
-    var popover = Popover._(
+    var popover = VNLPopover._(
       key,
       res,
     );
@@ -821,7 +821,7 @@ class PopoverController extends ChangeNotifier {
   }
 
   void close([bool immediate = false]) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.close(immediate);
     }
     _openPopovers.clear();
@@ -829,7 +829,7 @@ class PopoverController extends ChangeNotifier {
   }
 
   void closeLater() {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.closeLater();
     }
     _openPopovers.clear();
@@ -837,67 +837,67 @@ class PopoverController extends ChangeNotifier {
   }
 
   set anchorContext(BuildContext value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.anchorContext = value;
     }
   }
 
   set alignment(AlignmentGeometry value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.alignment = value;
     }
   }
 
   set anchorAlignment(AlignmentGeometry value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.anchorAlignment = value;
     }
   }
 
   set widthConstraint(PopoverConstraint value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.widthConstraint = value;
     }
   }
 
   set heightConstraint(PopoverConstraint value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.heightConstraint = value;
     }
   }
 
   set margin(EdgeInsets value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.margin = value;
     }
   }
 
   set follow(bool value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.follow = value;
     }
   }
 
   set offset(Offset? value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.offset = value;
     }
   }
 
   set allowInvertHorizontal(bool value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.allowInvertHorizontal = value;
     }
   }
 
   set allowInvertVertical(bool value) {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.currentState?.allowInvertVertical = value;
     }
   }
 
   void disposePopovers() {
-    for (Popover key in _openPopovers) {
+    for (VNLPopover key in _openPopovers) {
       key.closeLater();
     }
   }

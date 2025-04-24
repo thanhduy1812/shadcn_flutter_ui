@@ -34,7 +34,7 @@ class PhoneNumber {
 }
 
 /// Theme data for [PhoneInput].
-class PhoneInputTheme {
+class VNLPhoneInputTheme {
   /// The padding of the [PhoneInput].
   final EdgeInsetsGeometry? padding;
 
@@ -63,7 +63,7 @@ class PhoneInputTheme {
   final Shape? flagShape;
 
   /// Theme data for [PhoneInput].
-  const PhoneInputTheme({
+  const VNLPhoneInputTheme({
     this.padding,
     this.borderRadius,
     this.popupConstraints,
@@ -76,7 +76,7 @@ class PhoneInputTheme {
   });
 
   /// Creates a copy of this [PhoneInputTheme] with the given values overridden.
-  PhoneInputTheme copyWith({
+  VNLPhoneInputTheme copyWith({
     ValueGetter<EdgeInsetsGeometry?>? padding,
     ValueGetter<BorderRadiusGeometry?>? borderRadius,
     ValueGetter<BoxConstraints?>? popupConstraints,
@@ -87,7 +87,7 @@ class PhoneInputTheme {
     ValueGetter<double?>? countryGap,
     ValueGetter<Shape?>? flagShape,
   }) {
-    return PhoneInputTheme(
+    return VNLPhoneInputTheme(
       padding: padding != null ? padding() : this.padding,
       borderRadius: borderRadius != null ? borderRadius() : this.borderRadius,
       popupConstraints:
@@ -105,7 +105,7 @@ class PhoneInputTheme {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is PhoneInputTheme &&
+    return other is VNLPhoneInputTheme &&
         other.padding == padding &&
         other.borderRadius == borderRadius &&
         other.popupConstraints == popupConstraints &&
@@ -132,11 +132,11 @@ class PhoneInputTheme {
 
   @override
   String toString() {
-    return 'PhoneInputTheme(padding: $padding, borderRadius: $borderRadius, popupConstraints: $popupConstraints, maxWidth: $maxWidth, flagHeight: $flagHeight, flagWidth: $flagWidth, flagGap: $flagGap, countryGap: $countryGap, flagShape: $flagShape)';
+    return 'VNLPhoneInputTheme(padding: $padding, borderRadius: $borderRadius, popupConstraints: $popupConstraints, maxWidth: $maxWidth, flagHeight: $flagHeight, flagWidth: $flagWidth, flagGap: $flagGap, countryGap: $countryGap, flagShape: $flagShape)';
   }
 }
 
-class PhoneInput extends StatefulWidget {
+class VNLPhoneInput extends StatefulWidget {
   final Country? initialCountry;
   final PhoneNumber? initialValue;
   final ValueChanged<PhoneNumber>? onChanged;
@@ -148,7 +148,7 @@ class PhoneInput extends StatefulWidget {
   final List<Country>? countries;
   final Widget? searchPlaceholder;
 
-  const PhoneInput({
+  const VNLPhoneInput({
     super.key,
     this.initialCountry,
     this.initialValue,
@@ -163,11 +163,11 @@ class PhoneInput extends StatefulWidget {
   });
 
   @override
-  State<PhoneInput> createState() => _PhoneInputState();
+  State<VNLPhoneInput> createState() => _PhoneInputState();
 }
 
-class _PhoneInputState extends State<PhoneInput>
-    with FormValueSupplier<PhoneNumber, PhoneInput> {
+class _PhoneInputState extends State<VNLPhoneInput>
+    with FormValueSupplier<PhoneNumber, VNLPhoneInput> {
   late Country _country;
   late TextEditingController _controller;
 
@@ -183,7 +183,7 @@ class _PhoneInputState extends State<PhoneInput>
   }
 
   @override
-  void didUpdateWidget(covariant PhoneInput oldWidget) {
+  void didUpdateWidget(covariant VNLPhoneInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       _controller.removeListener(_dispatchChanged);
@@ -222,13 +222,13 @@ class _PhoneInputState extends State<PhoneInput>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final componentTheme = ComponentTheme.maybeOf<PhoneInputTheme>(context);
+    final componentTheme = ComponentTheme.maybeOf<VNLPhoneInputTheme>(context);
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Select<Country>(
+          VNLSelect<Country>(
             padding: styleValue(
               defaultValue: EdgeInsets.only(
                   top: theme.scaling * 8,
@@ -366,7 +366,7 @@ class _PhoneInputState extends State<PhoneInput>
               defaultValue: 200 * theme.scaling,
               themeValue: componentTheme?.maxWidth,
             ),
-            child: TextField(
+            child: VNLTextField(
               controller: _controller,
               autofillHints: const [AutofillHints.telephoneNumber],
               keyboardType: widget.onlyNumber ? TextInputType.phone : null,

@@ -58,7 +58,7 @@ class TooltipContainer extends StatelessWidget {
   }
 }
 
-class Tooltip extends StatefulWidget {
+class VNLTooltip extends StatefulWidget {
   final Widget child;
   final WidgetBuilder tooltip;
   final AlignmentGeometry alignment;
@@ -67,7 +67,7 @@ class Tooltip extends StatefulWidget {
   final Duration showDuration;
   final Duration minDuration;
 
-  const Tooltip({
+  const VNLTooltip({
     super.key,
     required this.child,
     required this.tooltip,
@@ -79,10 +79,10 @@ class Tooltip extends StatefulWidget {
   });
 
   @override
-  State<Tooltip> createState() => _TooltipState();
+  State<VNLTooltip> createState() => _TooltipState();
 }
 
-class _TooltipState extends State<Tooltip> {
+class _TooltipState extends State<VNLTooltip> {
   final PopoverController _controller = PopoverController();
   @override
   Widget build(BuildContext context) {

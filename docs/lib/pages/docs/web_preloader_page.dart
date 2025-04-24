@@ -16,7 +16,7 @@ class WebPreloaderPage extends StatelessWidget {
             const Text('Customize how flutter load your web application')
                 .lead(),
             const Gap(32),
-            Steps(
+            VNLSteps(
               children: [
                 StepItem(
                   title: const Text('Creating a web directory'),
@@ -100,7 +100,7 @@ class WebPreloaderPage extends StatelessWidget {
               ],
             ),
             const Gap(32),
-            Alert(
+            VNLAlert(
               title: const Text('Contributing'),
               leading: const Icon(Icons.info_outlined),
               content: const Text(

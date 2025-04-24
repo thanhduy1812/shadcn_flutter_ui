@@ -304,7 +304,7 @@ abstract class InputFeatureState<T extends InputFeature> {
     return inputState!.context;
   }
 
-  TextField get input {
+  VNLTextField get input {
     var inputState = _inputState;
     assert(inputState != null, 'Feature not attached');
     return inputState!.widget;
@@ -406,7 +406,7 @@ abstract class InputFeatureState<T extends InputFeature> {
   Iterable<MapEntry<Type, Action<Intent>>> buildActions() sync* {}
   Iterable<MapEntry<ShortcutActivator, Intent>> buildShortcuts() sync* {}
   Widget wrap(Widget child) => child;
-  TextField interceptInput(TextField input) => input;
+  VNLTextField interceptInput(VNLTextField input) => input;
 
   void setState(VoidCallback fn) {
     assert(attached, 'Feature not attached');
@@ -526,8 +526,8 @@ mixin TextInput on Widget {
   List<TextInputFormatter>? get submitFormatters;
 }
 
-class TextField extends StatefulWidget with TextInput {
-  const TextField({
+class VNLTextField extends StatefulWidget with TextInput {
+  const VNLTextField({
     super.key,
     this.groupId = EditableText,
     this.controller,
@@ -869,7 +869,7 @@ class TextField extends StatefulWidget with TextInput {
   final UndoHistoryController? undoController;
 
   @override
-  State<TextField> createState() => TextFieldState();
+  State<VNLTextField> createState() => TextFieldState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -1030,7 +1030,7 @@ class TextField extends StatefulWidget with TextInput {
     properties.add(IterableProperty<InputFeature>('features', features));
   }
 
-  TextField copyWith({
+  VNLTextField copyWith({
     Key? key,
     TextEditingController? controller,
     String? initialValue,
@@ -1103,7 +1103,7 @@ class TextField extends StatefulWidget with TextInput {
     List<InputFeature>? features,
     List<TextInputFormatter>? submitFormatters,
   }) {
-    return TextField(
+    return VNLTextField(
       key: key ?? this.key,
       controller: controller ?? this.controller,
       initialValue: initialValue ?? this.initialValue,
@@ -1193,11 +1193,11 @@ class _AttachedInputFeature {
   _AttachedInputFeature(this.feature, this.state);
 }
 
-class TextFieldState extends State<TextField>
+class TextFieldState extends State<VNLTextField>
     with
         RestorationMixin,
-        AutomaticKeepAliveClientMixin<TextField>,
-        FormValueSupplier<String, TextField>,
+        AutomaticKeepAliveClientMixin<VNLTextField>,
+        FormValueSupplier<String, VNLTextField>,
         TickerProviderStateMixin
     implements TextSelectionGestureDetectorBuilderDelegate, AutofillClient {
   final ValueNotifier<String> _effectiveText = ValueNotifier('');
@@ -1276,7 +1276,7 @@ class TextFieldState extends State<TextField>
   }
 
   @override
-  void didUpdateWidget(TextField oldWidget) {
+  void didUpdateWidget(VNLTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller == null && oldWidget.controller != null) {
       _createLocalController(oldWidget.controller!.value);
@@ -1503,8 +1503,8 @@ class TextFieldState extends State<TextField>
   }
 
   @override
-  TextField get widget {
-    TextField widget = super.widget;
+  VNLTextField get widget {
+    VNLTextField widget = super.widget;
     for (final attached in _attachedFeatures) {
       widget = attached.state.interceptInput(widget);
     }

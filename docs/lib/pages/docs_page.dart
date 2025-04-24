@@ -468,7 +468,7 @@ class DocsPageState extends State<DocsPage> {
             context: context,
             offset: const Offset(0, 8) * Theme.of(context).scaling,
             builder: (context) {
-              return DropdownMenu(
+              return VNLDropdownMenu(
                 children: [
                   MenuButton(
                     child: Text(getReleaseTagName()),
@@ -527,7 +527,7 @@ class DocsPageState extends State<DocsPage> {
         child: Builder(builder: (context) {
           return StageContainer(
             builder: (context, padding) {
-              return Scaffold(
+              return VNLScaffold(
                 headers: [
                   Container(
                     color: theme.colorScheme.background.scaleAlpha(0.3),
@@ -537,7 +537,7 @@ class DocsPageState extends State<DocsPage> {
                       children: [
                         MediaQueryVisibility(
                           minWidth: breakpointWidth,
-                          alternateChild: AppBar(
+                          alternateChild: VNLAppBar(
                             padding: EdgeInsets.symmetric(
                               vertical: 12 * theme.scaling,
                               horizontal: 18 * theme.scaling,
@@ -617,7 +617,7 @@ class DocsPageState extends State<DocsPage> {
                                 theme),
                           ),
                         ),
-                        const Divider(),
+                        const VNLDivider(),
                       ],
                     ),
                   ),
@@ -674,8 +674,8 @@ class DocsPageState extends State<DocsPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.stretch,
                                       children: [
-                                        Breadcrumb(
-                                          separator: Breadcrumb.arrowSeparator,
+                                        VNLBreadcrumb(
+                                          separator: VNLBreadcrumb.arrowSeparator,
                                           children: [
                                             TextButton(
                                               onPressed: () {
@@ -719,8 +719,8 @@ class DocsPageState extends State<DocsPage> {
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    Breadcrumb(
-                                      separator: Breadcrumb.arrowSeparator,
+                                    VNLBreadcrumb(
+                                      separator: VNLBreadcrumb.arrowSeparator,
                                       children: [
                                         TextButton(
                                           onPressed: () {
@@ -759,8 +759,8 @@ class DocsPageState extends State<DocsPage> {
     );
   }
 
-  AppBar _buildAppBar(EdgeInsets padding, ThemeData theme) {
-    return AppBar(
+  VNLAppBar _buildAppBar(EdgeInsets padding, ThemeData theme) {
+    return VNLAppBar(
       // padding: (breakpointWidth2 < mediaQuerySize.width
       //         ? padding * theme.scaling
       //         : padding.copyWith(
@@ -890,7 +890,7 @@ class DocsPageState extends State<DocsPage> {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return AlertDialog(
+                                        return VNLAlertDialog(
                                           title: const Text('Work in Progress'),
                                           content: const Text(
                                               'This page is still under development. Please come back later.'),
@@ -1094,7 +1094,7 @@ class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return VNLAlertDialog(
             title: const Text('Work in Progress'),
             content: const Text(
                 'This page is still under development. Please come back later.'),

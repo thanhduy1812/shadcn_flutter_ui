@@ -44,7 +44,7 @@ class _IconsPageState extends State<IconsPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        return VNLAlertDialog(
           title:
               Text(capitalizeWords(_separateByCamelCase(entry.key)).join(' ')),
           leading: Icon(entry.value, size: 48),
@@ -154,7 +154,7 @@ class _IconsPageState extends State<IconsPage> {
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: Card(
+                                      child: VNLCard(
                                         clipBehavior: Clip.antiAlias,
                                         child: Stack(
                                           clipBehavior: Clip.none,
@@ -186,7 +186,7 @@ class _IconsPageState extends State<IconsPage> {
                                       ),
                                     ),
                                     Expanded(
-                                      child: Card(
+                                      child: VNLCard(
                                         clipBehavior: Clip.antiAlias,
                                         child: Stack(
                                           clipBehavior: Clip.none,
@@ -218,7 +218,7 @@ class _IconsPageState extends State<IconsPage> {
                                       ),
                                     ),
                                     Expanded(
-                                      child: Card(
+                                      child: VNLCard(
                                         clipBehavior: Clip.antiAlias,
                                         child: Stack(
                                           clipBehavior: Clip.none,
@@ -252,7 +252,7 @@ class _IconsPageState extends State<IconsPage> {
                                   ],
                                 ).gap(12).p(),
                                 const Gap(32),
-                                TextField(
+                                VNLTextField(
                                   leading: const Icon(Icons.search),
                                   placeholder: const Text('Search icons'),
                                   controller: _controller,
@@ -280,7 +280,7 @@ class _IconsPageState extends State<IconsPage> {
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
                             var e = filteredRadixIcons[index];
-                            return Tooltip(
+                            return VNLTooltip(
                               tooltip: TooltipContainer(
                                 child: Text(e.key),
                               ),
@@ -314,7 +314,7 @@ class _IconsPageState extends State<IconsPage> {
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
                             var e = filteredBootstrapIcons[index];
-                            return Tooltip(
+                            return VNLTooltip(
                               tooltip: TooltipContainer(
                                 child: Text(e.key),
                               ),
@@ -347,7 +347,7 @@ class _IconsPageState extends State<IconsPage> {
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
                             var e = filteredLucideIcons[index];
-                            return Tooltip(
+                            return VNLTooltip(
                               tooltip: TooltipContainer(
                                 child: Text(e.key),
                               ),
@@ -389,7 +389,7 @@ class _Header extends SliverPersistentHeaderDelegate {
         children: [
           Text(text).x3Large().semiBold(),
           const Gap(8),
-          const Divider(),
+          const VNLDivider(),
         ],
       ),
     );

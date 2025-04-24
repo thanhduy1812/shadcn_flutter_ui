@@ -19,7 +19,7 @@ class PrimaryBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExcludeFocus(
-      child: Button(
+      child: VNLButton(
         leading: leading,
         trailing: trailing,
         onPressed: onPressed,
@@ -61,7 +61,7 @@ class SecondaryBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExcludeFocus(
-      child: Button(
+      child: VNLButton(
         leading: leading,
         trailing: trailing,
         onPressed: onPressed,
@@ -103,7 +103,7 @@ class OutlineBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExcludeFocus(
-      child: Button(
+      child: VNLButton(
         leading: leading,
         trailing: trailing,
         onPressed: onPressed,
@@ -145,7 +145,7 @@ class DestructiveBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExcludeFocus(
-      child: Button(
+      child: VNLButton(
         leading: leading,
         trailing: trailing,
         onPressed: onPressed,

@@ -141,7 +141,7 @@ class _ThemePageState extends State<ThemePage> {
                       'You can customize how rounded your app looks by changing the radius.')),
             ],
           ).p(),
-          Slider(
+          VNLSlider(
             value: SliderValue.single(radius),
             onChanged: (value) {
               setState(() {
@@ -164,7 +164,7 @@ class _ThemePageState extends State<ThemePage> {
                       'You can customize the scale of vnl_ui components by changing the scaling.')),
             ],
           ).p(),
-          Slider(
+          VNLSlider(
             value: SliderValue.single(scaling),
             onChanged: (value) {
               setState(() {
@@ -179,7 +179,7 @@ class _ThemePageState extends State<ThemePage> {
             divisions: 20,
           ).p(),
           const Gap(16),
-          const Alert(
+          const VNLAlert(
             leading: Icon(RadixIcons.infoCircled),
             content: Text(
                 'This does not scale the entire app. Only vnl_ui components are affected.'),
@@ -193,7 +193,7 @@ class _ThemePageState extends State<ThemePage> {
                       'You can customize the opacity of the surface by changing the surface opacity.')),
             ],
           ).p(),
-          Slider(
+          VNLSlider(
             value: SliderValue.single(surfaceOpacity),
             onChanged: (value) {
               setState(() {
@@ -216,7 +216,7 @@ class _ThemePageState extends State<ThemePage> {
                       'You can customize the blur of the surface by changing the surface blur.')),
             ],
           ).p(),
-          Slider(
+          VNLSlider(
             value: SliderValue.single(surfaceBlur),
             onChanged: (value) {
               setState(() {

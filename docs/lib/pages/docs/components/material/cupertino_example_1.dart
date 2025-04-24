@@ -36,7 +36,7 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
             ),
             const vnlui.Gap(64),
             vnlui.VNLookUI(
-                child: vnlui.Card(
+                child: vnlui.VNLCard(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -71,7 +71,7 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
                       vnlui.showDialog(
                         context: context,
                         builder: (context) {
-                          return vnlui.AlertDialog(
+                          return vnlui.VNLAlertDialog(
                             title: const Text('Hello'),
                             content:
                                 const Text('This is vnl_ui dialog'),

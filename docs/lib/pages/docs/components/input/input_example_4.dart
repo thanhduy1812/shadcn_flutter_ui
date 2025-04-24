@@ -5,7 +5,7 @@ class InputExample4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return VNLForm(
       child: FormField(
         key: const InputKey(#test),
         label: const Text('Username'),
@@ -14,7 +14,7 @@ class InputExample4 extends StatelessWidget {
           await Future.delayed(const Duration(seconds: 1));
           return !['sunarya-thito', 'septogeddon', 'admin'].contains(value);
         }, message: 'Username already taken'),
-        child: const TextField(
+        child: const VNLTextField(
           placeholder: Text('Enter your username'),
           initialValue: 'sunarya-thito',
           features: [

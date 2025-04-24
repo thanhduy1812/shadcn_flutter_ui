@@ -7,7 +7,7 @@ class InputExample3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextField(
+        VNLTextField(
           placeholder: const Text('Enter your name'),
           features: [
             const InputFeature.clear(),
@@ -22,7 +22,7 @@ class InputExample3 extends StatelessWidget {
           ],
         ),
         const Gap(24),
-        const TextField(
+        const VNLTextField(
           placeholder: Text('Enter your password'),
           features: [
             InputFeature.clear(),

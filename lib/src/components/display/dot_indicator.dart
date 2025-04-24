@@ -3,7 +3,7 @@ import 'package:vnl_ui/vnl_ui.dart';
 typedef DotBuilder = Widget Function(
     BuildContext context, int index, bool active);
 
-class DotIndicator extends StatelessWidget {
+class VNLDotIndicator extends StatelessWidget {
   static Widget _defaultDotBuilder(
       BuildContext context, int index, bool active) {
     return active ? const ActiveDotItem() : const InactiveDotItem();
@@ -17,7 +17,7 @@ class DotIndicator extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final DotBuilder? dotBuilder;
 
-  const DotIndicator({
+  const VNLDotIndicator({
     super.key,
     required this.index,
     required this.length,

@@ -29,7 +29,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return Swiper(
+    return VNLSwiper(
       builder: (context) {
         return Container(
           constraints: const BoxConstraints(
@@ -48,7 +48,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
                     return ListView.separated(
                       itemCount: 1000,
                       itemBuilder: (context, index) {
-                        return Card(
+                        return VNLCard(
                           child: Text('Item $index'),
                         );
                       },
@@ -68,7 +68,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
       handler: _typeDrawer ? SwiperHandler.drawer : SwiperHandler.sheet,
       child: SizedBox(
         height: 500,
-        child: Card(
+        child: VNLCard(
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -83,7 +83,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
                 ]),
                 const Gap(24),
                 ButtonGroup(children: [
-                  Toggle(
+                  VNLToggle(
                     value: _typeDrawer,
                     onChanged: (value) {
                       setState(() {
@@ -92,7 +92,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
                     },
                     child: const Text('Drawer'),
                   ),
-                  Toggle(
+                  VNLToggle(
                     value: !_typeDrawer,
                     onChanged: (value) {
                       setState(() {

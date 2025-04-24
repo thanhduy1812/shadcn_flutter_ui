@@ -84,14 +84,14 @@ class ItemPicker<T> extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Button.secondary(
+                            VNLButton.secondary(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
                               child: Text(localizations.buttonCancel),
                             ),
                             if (onChanged != null)
-                              Button.primary(
+                              VNLButton.primary(
                                 onPressed: () {
                                   Navigator.of(context).pop(
                                       ObjectFormFieldDialogResult(
@@ -458,7 +458,7 @@ class ItemPickerOption<T> extends StatelessWidget {
     }
     if (data.layout is ListItemPickerLayout) {
       if (label == null) {
-        return Button(
+        return VNLButton(
           onPressed:
               data.onChanged == null ? null : () => data.onChanged!(value),
           style: data.value == value
@@ -467,7 +467,7 @@ class ItemPickerOption<T> extends StatelessWidget {
           child: child,
         );
       }
-      return Button(
+      return VNLButton(
         onPressed: data.onChanged == null ? null : () => data.onChanged!(value),
         leading: child,
         style: data.value == value

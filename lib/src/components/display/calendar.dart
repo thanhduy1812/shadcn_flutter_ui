@@ -428,7 +428,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
         calendarValue: _value,
       );
     }
-    return Calendar(
+    return VNLCalendar(
       value: _value,
       view: view,
       stateBuilder: widget.stateBuilder,
@@ -731,7 +731,7 @@ enum CalendarSelectionMode {
   multi,
 }
 
-class Calendar extends StatefulWidget {
+class VNLCalendar extends StatefulWidget {
   final DateTime? now;
   final CalendarValue? value;
   final CalendarView view;
@@ -740,7 +740,7 @@ class Calendar extends StatefulWidget {
   final bool Function(DateTime date)? isDateEnabled;
   final DateStateBuilder? stateBuilder;
 
-  const Calendar({
+  const VNLCalendar({
     super.key,
     this.now,
     this.value,
@@ -752,10 +752,10 @@ class Calendar extends StatefulWidget {
   });
 
   @override
-  State<Calendar> createState() => _CalendarState();
+  State<VNLCalendar> createState() => _CalendarState();
 }
 
-class _CalendarState extends State<Calendar> {
+class _CalendarState extends State<VNLCalendar> {
   late CalendarGridData _gridData;
 
   @override
@@ -766,7 +766,7 @@ class _CalendarState extends State<Calendar> {
   }
 
   @override
-  void didUpdateWidget(covariant Calendar oldWidget) {
+  void didUpdateWidget(covariant VNLCalendar oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.view.year != widget.view.year ||
         oldWidget.view.month != widget.view.month) {
@@ -1157,7 +1157,7 @@ class CalendarItem extends StatelessWidget {
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
-          child: Button(
+          child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
@@ -1188,7 +1188,7 @@ class CalendarItem extends StatelessWidget {
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
-          child: Button(
+          child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
@@ -1212,7 +1212,7 @@ class CalendarItem extends StatelessWidget {
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
-          child: Button(
+          child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
@@ -1292,7 +1292,7 @@ class CalendarItem extends StatelessWidget {
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
-          child: Button(
+          child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
@@ -1316,7 +1316,7 @@ class CalendarItem extends StatelessWidget {
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
-          child: Button(
+          child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
@@ -1340,7 +1340,7 @@ class CalendarItem extends StatelessWidget {
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
-          child: Button(
+          child: VNLButton(
             alignment: Alignment.center,
             enabled: state == DateState.enabled,
             onPressed: onTap,

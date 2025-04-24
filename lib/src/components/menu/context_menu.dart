@@ -403,14 +403,14 @@ Widget buildEditableTextContextMenu(
   }
 }
 
-class ContextMenu extends StatefulWidget {
+class VNLContextMenu extends StatefulWidget {
   final Widget child;
   final List<MenuItem> items;
   final HitTestBehavior behavior;
   final Axis direction;
   final bool enabled;
 
-  const ContextMenu(
+  const VNLContextMenu(
       {super.key,
       required this.child,
       required this.items,
@@ -419,10 +419,10 @@ class ContextMenu extends StatefulWidget {
       this.enabled = true});
 
   @override
-  State<ContextMenu> createState() => _ContextMenuState();
+  State<VNLContextMenu> createState() => _ContextMenuState();
 }
 
-class _ContextMenuState extends State<ContextMenu> {
+class _ContextMenuState extends State<VNLContextMenu> {
   late ValueNotifier<List<MenuItem>> _children;
 
   @override
@@ -432,7 +432,7 @@ class _ContextMenuState extends State<ContextMenu> {
   }
 
   @override
-  void didUpdateWidget(covariant ContextMenu oldWidget) {
+  void didUpdateWidget(covariant VNLContextMenu oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!listEquals(widget.items, oldWidget.items)) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

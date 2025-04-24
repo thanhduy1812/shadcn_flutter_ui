@@ -1175,14 +1175,14 @@ class FormValueState<T> {
 typedef FormSubmitCallback = void Function(
     BuildContext context, Map<FormKey, dynamic> values);
 
-class Form extends StatefulWidget {
+class VNLForm extends StatefulWidget {
   final FormController? controller;
   final Widget child;
   final FormSubmitCallback? onSubmit;
-  const Form({super.key, required this.child, this.onSubmit, this.controller});
+  const VNLForm({super.key, required this.child, this.onSubmit, this.controller});
 
   @override
-  State<Form> createState() => FormState();
+  State<VNLForm> createState() => FormState();
 }
 
 class FormController extends ChangeNotifier {
@@ -1339,7 +1339,7 @@ class FormController extends ChangeNotifier {
   }
 }
 
-class FormState extends State<Form> {
+class FormState extends State<VNLForm> {
   late FormController _controller;
 
   @override
@@ -1349,7 +1349,7 @@ class FormState extends State<Form> {
   }
 
   @override
-  void didUpdateWidget(covariant Form oldWidget) {
+  void didUpdateWidget(covariant VNLForm oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       _controller = widget.controller ?? FormController();
@@ -1969,7 +1969,7 @@ class _SubmitButtonState extends widgets.State<SubmitButton> {
     var hasError = _future;
     if (hasError is Future) {
       // loading
-      return Button(
+      return VNLButton(
         leading: widget.loadingLeading ?? widget.leading,
         trailing: widget.loadingTrailing ?? widget.trailing,
         alignment: widget.alignment,
@@ -1983,7 +1983,7 @@ class _SubmitButtonState extends widgets.State<SubmitButton> {
       );
     }
     if (hasError == true) {
-      return Button(
+      return VNLButton(
         leading: widget.errorLeading ?? widget.leading,
         trailing: widget.errorTrailing ?? widget.trailing,
         alignment: widget.alignment,
@@ -1996,7 +1996,7 @@ class _SubmitButtonState extends widgets.State<SubmitButton> {
         child: widget.error ?? widget.child,
       );
     }
-    return Button(
+    return VNLButton(
       trailing: widget.trailing,
       leading: widget.leading,
       alignment: widget.alignment,

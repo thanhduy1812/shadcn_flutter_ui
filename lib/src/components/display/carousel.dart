@@ -365,7 +365,7 @@ enum CarouselAlignment {
 
 /// A carousel widget.
 /// The carousel widget is used to display a list of items in a carousel view.
-class Carousel extends StatefulWidget {
+class VNLCarousel extends StatefulWidget {
   /// The carousel transition.
   final CarouselTransition transition;
 
@@ -430,7 +430,7 @@ class Carousel extends StatefulWidget {
   final bool disableDraggingVelocity;
 
   /// Creates a carousel.
-  const Carousel({
+  const VNLCarousel({
     super.key,
     required this.itemBuilder,
     this.itemCount,
@@ -457,10 +457,10 @@ class Carousel extends StatefulWidget {
             'itemCount must be provided if wrap is false');
 
   @override
-  State<Carousel> createState() => _CarouselState();
+  State<VNLCarousel> createState() => _CarouselState();
 }
 
-class _CarouselState extends State<Carousel>
+class _CarouselState extends State<VNLCarousel>
     with SingleTickerProviderStateMixin {
   late CarouselController _controller;
   Duration? _startTime;
@@ -589,7 +589,7 @@ class _CarouselState extends State<Carousel>
   }
 
   @override
-  void didUpdateWidget(covariant Carousel oldWidget) {
+  void didUpdateWidget(covariant VNLCarousel oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       oldWidget.controller?.removeListener(_onControllerChange);
@@ -811,7 +811,7 @@ class CarouselDotIndicator extends StatelessWidget {
         if (value < 0) {
           value += itemCount;
         }
-        return DotIndicator(
+        return VNLDotIndicator(
           index: value,
           length: itemCount,
           onChanged: (value) {

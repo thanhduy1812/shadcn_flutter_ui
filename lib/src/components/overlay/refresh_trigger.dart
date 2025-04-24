@@ -9,7 +9,7 @@ typedef RefreshIndicatorBuilder = Widget Function(
 
 typedef FutureVoidCallback = Future<void> Function();
 
-class RefreshTrigger extends StatefulWidget {
+class VNLRefreshTrigger extends StatefulWidget {
   static Widget defaultIndicatorBuilder(
       BuildContext context, RefreshTriggerStage stage) {
     return DefaultRefreshIndicator(stage: stage);
@@ -25,7 +25,7 @@ class RefreshTrigger extends StatefulWidget {
   final Curve curve;
   final Duration completeDuration;
 
-  const RefreshTrigger({
+  const VNLRefreshTrigger({
     super.key,
     this.minExtent = 75.0,
     this.maxExtent = 150.0,
@@ -39,7 +39,7 @@ class RefreshTrigger extends StatefulWidget {
   });
 
   @override
-  State<RefreshTrigger> createState() => RefreshTriggerState();
+  State<VNLRefreshTrigger> createState() => RefreshTriggerState();
 }
 
 class DefaultRefreshIndicator extends StatefulWidget {
@@ -183,7 +183,7 @@ class _RefreshTriggerTween extends Animatable<double> {
   }
 }
 
-class RefreshTriggerState extends State<RefreshTrigger>
+class RefreshTriggerState extends State<VNLRefreshTrigger>
     with SingleTickerProviderStateMixin {
   double _currentExtent = 0;
   bool _scrolling = false;

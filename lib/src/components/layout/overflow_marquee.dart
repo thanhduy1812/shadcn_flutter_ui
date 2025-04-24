@@ -2,7 +2,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:vnl_ui/vnl_ui.dart';
 
-class OverflowMarquee extends StatefulWidget {
+class VNLOverflowMarquee extends StatefulWidget {
   final Widget child;
   final Axis direction;
   final Duration duration;
@@ -11,7 +11,7 @@ class OverflowMarquee extends StatefulWidget {
   final double fadePortion;
   final Curve curve;
 
-  const OverflowMarquee({
+  const VNLOverflowMarquee({
     super.key,
     required this.child,
     this.direction = Axis.horizontal,
@@ -24,10 +24,10 @@ class OverflowMarquee extends StatefulWidget {
   });
 
   @override
-  State<OverflowMarquee> createState() => _OverflowMarqueeState();
+  State<VNLOverflowMarquee> createState() => _OverflowMarqueeState();
 }
 
-class _OverflowMarqueeState extends State<OverflowMarquee>
+class _OverflowMarqueeState extends State<VNLOverflowMarquee>
     with SingleTickerProviderStateMixin {
   late Ticker _ticker;
   Duration elapsed = Duration.zero;

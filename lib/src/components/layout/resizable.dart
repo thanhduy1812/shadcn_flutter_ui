@@ -441,7 +441,7 @@ class ResizablePanel extends StatefulWidget {
     if (data.direction == Axis.horizontal) {
       return const VerticalDivider();
     } else {
-      return const Divider();
+      return const VNLDivider();
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:vnl_ui/vnl_ui.dart';
 
-class AlertDialog extends StatefulWidget {
+class VNLAlertDialog extends StatefulWidget {
   final Widget? leading;
   final Widget? trailing;
   final Widget? title;
@@ -11,7 +11,7 @@ class AlertDialog extends StatefulWidget {
   final Color? barrierColor;
   final EdgeInsetsGeometry? padding;
 
-  const AlertDialog({
+  const VNLAlertDialog({
     super.key,
     this.leading,
     this.title,
@@ -28,7 +28,7 @@ class AlertDialog extends StatefulWidget {
   _AlertDialogState createState() => _AlertDialogState();
 }
 
-class _AlertDialogState extends State<AlertDialog> {
+class _AlertDialogState extends State<VNLAlertDialog> {
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);

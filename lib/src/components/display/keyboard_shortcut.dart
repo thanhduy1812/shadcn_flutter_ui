@@ -81,19 +81,19 @@ class _KeyboardShortcutDisplayMapperState
   }
 }
 
-class KeyboardDisplay extends StatelessWidget {
+class VNLKeyboardDisplay extends StatelessWidget {
   final List<LogicalKeyboardKey>? _keys;
   final ShortcutActivator? _activator;
   final double? spacing;
 
-  const KeyboardDisplay({
+  const VNLKeyboardDisplay({
     super.key,
     required List<LogicalKeyboardKey> keys,
     this.spacing,
   })  : _keys = keys,
         _activator = null;
 
-  const KeyboardDisplay.fromActivator({
+  const VNLKeyboardDisplay.fromActivator({
     super.key,
     required ShortcutActivator activator,
     this.spacing,
@@ -127,7 +127,7 @@ class KeyboardKeyDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     final displayMapper = Data.of<KeyboardShortcutDisplayHandle>(context);
     final theme = Theme.of(context);
-    return Card(
+    return VNLCard(
       padding: padding ??
           (const EdgeInsets.symmetric(horizontal: 6, vertical: 4) *
               theme.scaling),

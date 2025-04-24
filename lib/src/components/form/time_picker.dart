@@ -50,7 +50,7 @@ class ControlledTimePicker extends StatelessWidget
       onChanged: onChanged,
       enabled: enabled,
       builder: (context, data) {
-        return TimePicker(
+        return VNLTimePicker(
           value: data.value,
           onChanged: data.onChanged,
           mode: mode,
@@ -68,7 +68,7 @@ class ControlledTimePicker extends StatelessWidget
   }
 }
 
-class TimePicker extends StatelessWidget {
+class VNLTimePicker extends StatelessWidget {
   final TimeOfDay? value;
   final ValueChanged<TimeOfDay?>? onChanged;
   final PromptMode mode;
@@ -81,7 +81,7 @@ class TimePicker extends StatelessWidget {
   final Widget? dialogTitle;
   final bool? enabled;
 
-  const TimePicker({
+  const VNLTimePicker({
     super.key,
     required this.value,
     this.onChanged,
@@ -164,7 +164,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
         clipBehavior: Clip.none,
         children: [
           Positioned.fill(
-            child: TextField(
+            child: VNLTextField(
               textAlign: TextAlign.center,
               textAlignVertical: TextAlignVertical.center,
               controller: controller,
@@ -298,7 +298,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Expanded(
-                        child: Toggle(
+                        child: VNLToggle(
                           value: !_pm,
                           onChanged: (value) {
                             setState(() {
@@ -310,7 +310,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
                         ),
                       ),
                       Expanded(
-                        child: Toggle(
+                        child: VNLToggle(
                           value: _pm,
                           onChanged: (value) {
                             setState(() {
@@ -471,7 +471,7 @@ class _DurationPickerDialogState extends State<DurationPickerDialog> {
         clipBehavior: Clip.none,
         children: [
           Positioned.fill(
-            child: TextField(
+            child: VNLTextField(
               textAlign: TextAlign.center,
               controller: controller,
               style: theme.typography.x4Large,

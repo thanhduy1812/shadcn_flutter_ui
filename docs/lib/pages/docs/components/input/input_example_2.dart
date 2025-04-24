@@ -10,7 +10,7 @@ class InputExample2 extends StatefulWidget {
 class _InputExample2State extends State<InputExample2> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return VNLTextField(
         initialValue: 'Hello World!',
         placeholder: const Text('Search something...'),
         features: [

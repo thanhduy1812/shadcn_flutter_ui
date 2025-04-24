@@ -58,7 +58,7 @@ class _ColorsPageState extends State<ColorsPage> {
       context: context,
       builder: (context) {
         final theme = Theme.of(context);
-        return AlertDialog(
+        return VNLAlertDialog(
           title: Text(name),
           leading: Container(
             width: 96,
@@ -287,7 +287,7 @@ class _ColorsPageState extends State<ColorsPage> {
           const Text('Color and ColorShades/ColorSwatch constants').lead(),
           const Text('Predefined Colors').h2().anchored(_predefinedColorsKey),
           for (final color in shadeMap.entries)
-            Card(
+            VNLCard(
               padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -321,7 +321,7 @@ class _ColorsPageState extends State<ColorsPage> {
             ),
           const Text('Generate Color').h2().anchored(_customColorKey),
           const Gap(32),
-          TabList(
+          VNLTabList(
             index: _tabIndex,
             onChanged: (value) {
               setState(() {
@@ -356,7 +356,7 @@ class _ColorsPageState extends State<ColorsPage> {
   }
 
   Widget _buildColorTab(BuildContext context) {
-    return Card(
+    return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -378,8 +378,8 @@ class _ColorsPageState extends State<ColorsPage> {
   }
 
   Widget _buildColorOptions(BuildContext context) {
-    return Card(
-      child: Form(
+    return VNLCard(
+      child: VNLForm(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -387,7 +387,7 @@ class _ColorsPageState extends State<ColorsPage> {
             FormField<SliderValue>(
               key: const FormKey(#hueShift),
               label: const Text('Hue Shift'),
-              child: Slider(
+              child: VNLSlider(
                 value: SliderValue.single(_hueShift.toDouble()),
                 min: -360,
                 max: 360,
@@ -402,7 +402,7 @@ class _ColorsPageState extends State<ColorsPage> {
             FormField<SliderValue>(
               key: const FormKey(#saturationStepUp),
               label: const Text('Saturation Step Up'),
-              child: Slider(
+              child: VNLSlider(
                 value: SliderValue.single(_saturationStepUp.toDouble()),
                 min: 0,
                 max: 20,
@@ -417,7 +417,7 @@ class _ColorsPageState extends State<ColorsPage> {
             FormField<SliderValue>(
               key: const FormKey(#saturationStepDown),
               label: const Text('Saturation Step Down'),
-              child: Slider(
+              child: VNLSlider(
                 value: SliderValue.single(_saturationStepDown.toDouble()),
                 min: 0,
                 max: 20,
@@ -432,7 +432,7 @@ class _ColorsPageState extends State<ColorsPage> {
             FormField<SliderValue>(
               key: const FormKey(#lightnessStepUp),
               label: const Text('Lightness Step Up'),
-              child: Slider(
+              child: VNLSlider(
                 value: SliderValue.single(_lightnessStepUp.toDouble()),
                 min: 0,
                 max: 20,
@@ -447,7 +447,7 @@ class _ColorsPageState extends State<ColorsPage> {
             FormField<SliderValue>(
               key: const FormKey(#lightnessStepDown),
               label: const Text('Lightness Step Down'),
-              child: Slider(
+              child: VNLSlider(
                 value: SliderValue.single(_lightnessStepDown.toDouble()),
                 min: 0,
                 max: 20,
@@ -468,7 +468,7 @@ class _ColorsPageState extends State<ColorsPage> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
+                        return VNLAlertDialog(
                           title: const Text('Reset Options'),
                           content: const Text(
                               'Are you sure you want to reset the options?'),

@@ -4,7 +4,7 @@ import 'package:vnl_ui/vnl_ui.dart';
 
 typedef AutoCompleteCompleter = String Function(String suggestion);
 
-class AutoComplete extends StatefulWidget {
+class VNLAutoComplete extends StatefulWidget {
   final List<String> suggestions;
   final Widget child;
   final BoxConstraints? popoverConstraints;
@@ -13,7 +13,7 @@ class AutoComplete extends StatefulWidget {
   final AlignmentDirectional? popoverAlignment;
   final AutoCompleteMode mode;
   final AutoCompleteCompleter completer;
-  const AutoComplete({
+  const VNLAutoComplete({
     super.key,
     required this.suggestions,
     required this.child,
@@ -26,7 +26,7 @@ class AutoComplete extends StatefulWidget {
   });
 
   @override
-  State<AutoComplete> createState() => _AutoCompleteState();
+  State<VNLAutoComplete> createState() => _AutoCompleteState();
 
   static String _defaultCompleter(String suggestion) {
     return suggestion;
@@ -77,7 +77,7 @@ class _AutoCompleteItemState extends State<_AutoCompleteItem> {
   }
 }
 
-class _AutoCompleteState extends State<AutoComplete> {
+class _AutoCompleteState extends State<VNLAutoComplete> {
   final ValueNotifier<List<String>> _suggestions = ValueNotifier([]);
   final ValueNotifier<int> _selectedIndex = ValueNotifier(-1);
   final PopoverController _popoverController = PopoverController();
@@ -179,7 +179,7 @@ class _AutoCompleteState extends State<AutoComplete> {
   }
 
   @override
-  void didUpdateWidget(covariant AutoComplete oldWidget) {
+  void didUpdateWidget(covariant VNLAutoComplete oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!listEquals(oldWidget.suggestions, widget.suggestions)) {
       WidgetsBinding.instance.addPostFrameCallback((_) {

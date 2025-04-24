@@ -52,9 +52,9 @@ class _CounterPageState extends State<CounterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return VNLScaffold(
       headers: [
-        AppBar(
+        VNLAppBar(
           title: const Text('Counter App'),
           subtitle: const Text('A simple counter app'),
           leading: [
@@ -100,11 +100,11 @@ class _CounterPageState extends State<CounterPage> {
             ),
           ],
         ),
-        const Divider(),
+        const VNLDivider(),
       ],
       footers: [
-        const Divider(),
-        NavigationBar(
+        const VNLDivider(),
+        VNLNavigationBar(
           onSelected: (i) {
             setState(() {
               _selected = i;

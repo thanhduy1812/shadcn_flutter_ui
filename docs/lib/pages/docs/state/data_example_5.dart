@@ -60,7 +60,7 @@ class _InnerWidgetState extends State<InnerWidget> {
   @override
   Widget build(BuildContext context) {
     innerRebuildCount++;
-    return Card(
+    return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -88,7 +88,7 @@ class _MostInnerWidgetState extends State<MostInnerWidget> {
   Widget build(BuildContext context) {
     int? parentCounter = Data.maybeFind(context);
     mostInnerRebuildCount++;
-    return Card(
+    return VNLCard(
       child: Column(
         children: [
           Row(

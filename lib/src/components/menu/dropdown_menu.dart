@@ -67,12 +67,12 @@ class DropdownMenuData {
   DropdownMenuData(this.key);
 }
 
-class DropdownMenu extends StatefulWidget {
+class VNLDropdownMenu extends StatefulWidget {
   final double? surfaceOpacity;
   final double? surfaceBlur;
   final List<MenuItem> children;
 
-  const DropdownMenu({
+  const VNLDropdownMenu({
     super.key,
     this.surfaceOpacity,
     this.surfaceBlur,
@@ -80,10 +80,10 @@ class DropdownMenu extends StatefulWidget {
   });
 
   @override
-  State<DropdownMenu> createState() => _DropdownMenuState();
+  State<VNLDropdownMenu> createState() => _DropdownMenuState();
 }
 
-class _DropdownMenuState extends State<DropdownMenu> {
+class _DropdownMenuState extends State<VNLDropdownMenu> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

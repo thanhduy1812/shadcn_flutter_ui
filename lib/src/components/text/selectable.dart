@@ -4,8 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' as m;
 import 'package:vnl_ui/vnl_ui.dart';
 
-class SelectableText extends StatelessWidget {
-  const SelectableText(
+class VNLSelectableText extends StatelessWidget {
+  const VNLSelectableText(
     String this.data, {
     super.key,
     this.focusNode,
@@ -44,7 +44,7 @@ class SelectableText extends StatelessWidget {
         ),
         textSpan = null;
 
-  const SelectableText.rich(
+  const VNLSelectableText.rich(
     TextSpan this.textSpan, {
     super.key,
     this.focusNode,

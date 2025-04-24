@@ -100,7 +100,7 @@ class SheetSwiperHandler extends SwiperHandler {
   }
 }
 
-class Swiper extends StatefulWidget {
+class VNLSwiper extends StatefulWidget {
   final bool enabled;
   final OverlayPosition position;
   final WidgetBuilder builder;
@@ -120,7 +120,7 @@ class Swiper extends StatefulWidget {
   final Widget child;
   final HitTestBehavior? behavior;
 
-  const Swiper({
+  const VNLSwiper({
     super.key,
     this.enabled = true,
     required this.position,
@@ -143,10 +143,10 @@ class Swiper extends StatefulWidget {
   });
 
   @override
-  State<Swiper> createState() => _SwiperState();
+  State<VNLSwiper> createState() => _SwiperState();
 }
 
-class _SwiperState extends State<Swiper> {
+class _SwiperState extends State<VNLSwiper> {
   DrawerOverlayCompleter? _activeOverlay;
   final GlobalKey _key = GlobalKey();
 

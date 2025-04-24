@@ -100,7 +100,7 @@ class _StepVariantCircle extends StepVariant {
                   child: AnimatedBuilder(
                       animation: properties.state,
                       builder: (context, child) {
-                        return Divider(
+                        return VNLDivider(
                           thickness: 2 * scaling,
                           color: properties.hasFailure &&
                                   properties.state.value.currentStep <= i
@@ -285,7 +285,7 @@ class _StepVariantCircleAlternative extends StepVariant {
                                 child: AnimatedBuilder(
                                     animation: properties.state,
                                     builder: (context, child) {
-                                      return Divider(
+                                      return VNLDivider(
                                         thickness: 2 * scaling,
                                         color: properties.hasFailure &&
                                                 properties.state.value
@@ -309,7 +309,7 @@ class _StepVariantCircleAlternative extends StepVariant {
                                 child: AnimatedBuilder(
                                     animation: properties.state,
                                     builder: (context, child) {
-                                      return Divider(
+                                      return VNLDivider(
                                         thickness: 2 * scaling,
                                         color: properties.hasFailure &&
                                                 properties.state.value
@@ -499,7 +499,7 @@ class _StepVariantLine extends StepVariant {
                   AnimatedBuilder(
                       animation: properties.state,
                       builder: (context, child) {
-                        return Divider(
+                        return VNLDivider(
                           thickness: 3 * scaling,
                           color: properties.hasFailure &&
                                   properties.state.value.currentStep <= i
@@ -719,14 +719,14 @@ class StepperController extends ValueNotifier<StepperValue> {
   }
 }
 
-class Stepper extends StatelessWidget {
+class VNLStepper extends StatelessWidget {
   final StepperController controller;
   final List<Step> steps;
   final Axis direction;
   final StepSize size;
   final StepVariant variant;
 
-  const Stepper({
+  const VNLStepper({
     super.key,
     required this.controller,
     required this.steps,

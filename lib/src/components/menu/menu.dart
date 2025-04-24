@@ -134,7 +134,7 @@ class MenuDivider extends StatelessWidget implements MenuItem {
                   : const EdgeInsets.symmetric(horizontal: 4)) *
               scaling,
       child: menuGroupData == null || menuGroupData.direction == Axis.vertical
-          ? Divider(
+          ? VNLDivider(
               height: 1 * scaling,
               thickness: 1 * scaling,
               indent: -4 * scaling,
@@ -405,7 +405,7 @@ class _MenuButtonState extends State<MenuButton> {
           child: AnimatedBuilder(
               animation: menuData!.popoverController,
               builder: (context, child) {
-                return Button(
+                return VNLButton(
                   disableFocusOutline: true,
                   alignment: menuGroupData.direction == Axis.vertical
                       ? AlignmentDirectional.centerStart

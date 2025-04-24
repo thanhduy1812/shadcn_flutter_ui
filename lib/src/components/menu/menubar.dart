@@ -1,11 +1,11 @@
 import 'package:vnl_ui/vnl_ui.dart';
 
-class Menubar extends StatefulWidget {
+class VNLMenubar extends StatefulWidget {
   final List<MenuItem> children;
   final Offset? popoverOffset;
   final bool border;
 
-  const Menubar({
+  const VNLMenubar({
     super.key,
     this.popoverOffset,
     this.border = true,
@@ -13,10 +13,10 @@ class Menubar extends StatefulWidget {
   });
 
   @override
-  State<Menubar> createState() => MenubarState();
+  State<VNLMenubar> createState() => MenubarState();
 }
 
-class MenubarState extends State<Menubar> {
+class MenubarState extends State<VNLMenubar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

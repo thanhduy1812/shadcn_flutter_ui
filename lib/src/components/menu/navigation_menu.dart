@@ -66,7 +66,7 @@ class NavigationMenuItemState extends State<NavigationMenuItem> {
         animation: Listenable.merge(
             [_menuState!._activeIndex, _menuState!._popoverController]),
         builder: (context, child) {
-          return Button(
+          return VNLButton(
             style: const ButtonStyle.ghost().copyWith(
               decoration: (context, states, value) {
                 if (_menuState!.isActive(this)) {
@@ -128,7 +128,7 @@ class NavigationMenuContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    return Button(
+    return VNLButton(
       style: ButtonVariance.ghost.copyWith(
         padding: (context, states, value) {
           return const EdgeInsets.all(12) * scaling;
@@ -206,12 +206,12 @@ class NavigationMenuContentList extends StatelessWidget {
   }
 }
 
-class NavigationMenu extends StatefulWidget {
+class VNLNavigationMenu extends StatefulWidget {
   final double? surfaceOpacity;
   final double? surfaceBlur;
   final List<Widget> children;
 
-  const NavigationMenu({
+  const VNLNavigationMenu({
     super.key,
     this.surfaceOpacity,
     this.surfaceBlur,
@@ -219,10 +219,10 @@ class NavigationMenu extends StatefulWidget {
   });
 
   @override
-  State<NavigationMenu> createState() => NavigationMenuState();
+  State<VNLNavigationMenu> createState() => NavigationMenuState();
 }
 
-class NavigationMenuState extends State<NavigationMenu> {
+class NavigationMenuState extends State<VNLNavigationMenu> {
   static const Duration kDebounceDuration = Duration(milliseconds: 200);
   // final GlobalKey<PopoverAnchorState> _popoverKey = GlobalKey();
   // final ValueNotifier<bool> _visible = ValueNotifier(false);

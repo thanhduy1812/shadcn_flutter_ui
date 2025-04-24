@@ -42,7 +42,7 @@ class ControlledToggle extends StatelessWidget with ControlledComponent<bool> {
       onChanged: onChanged,
       enabled: enabled,
       builder: (context, data) {
-        return Toggle(
+        return VNLToggle(
           value: data.value,
           onChanged: data.onChanged,
           enabled: data.enabled,
@@ -54,14 +54,14 @@ class ControlledToggle extends StatelessWidget with ControlledComponent<bool> {
   }
 }
 
-class Toggle extends StatefulWidget {
+class VNLToggle extends StatefulWidget {
   final bool value;
   final ValueChanged<bool>? onChanged;
   final Widget child;
   final ButtonStyle style;
   final bool? enabled;
 
-  const Toggle({
+  const VNLToggle({
     super.key,
     required this.value,
     this.onChanged,
@@ -75,7 +75,7 @@ class Toggle extends StatefulWidget {
 }
 
 // toggle button is just ghost button
-class ToggleState extends State<Toggle> with FormValueSupplier<bool, Toggle> {
+class ToggleState extends State<VNLToggle> with FormValueSupplier<bool, VNLToggle> {
   final WidgetStatesController statesController = WidgetStatesController();
 
   @override
@@ -86,7 +86,7 @@ class ToggleState extends State<Toggle> with FormValueSupplier<bool, Toggle> {
   }
 
   @override
-  void didUpdateWidget(Toggle oldWidget) {
+  void didUpdateWidget(VNLToggle oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
       statesController.update(WidgetState.selected, widget.value);
@@ -103,7 +103,7 @@ class ToggleState extends State<Toggle> with FormValueSupplier<bool, Toggle> {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
         statesController: statesController,
         enabled: widget.enabled,
         style: widget.value
@@ -230,7 +230,7 @@ class SelectedButtonState extends State<SelectedButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
         statesController: statesController,
         enabled: widget.enabled,
         style: widget.value ? widget.selectedStyle : widget.style,
@@ -268,7 +268,7 @@ class SelectedButtonState extends State<SelectedButton> {
   }
 }
 
-class Button extends StatefulWidget {
+class VNLButton extends StatefulWidget {
   final bool? enabled;
   final bool disableTransition;
   final Widget? leading;
@@ -301,7 +301,7 @@ class Button extends StatefulWidget {
   final WidgetStatesController? statesController;
   final AlignmentGeometry? marginAlignment;
   final bool disableFocusOutline;
-  const Button({
+  const VNLButton({
     super.key,
     this.statesController,
     this.leading,
@@ -336,7 +336,7 @@ class Button extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
-  const Button.primary({
+  const VNLButton.primary({
     super.key,
     this.statesController,
     this.leading,
@@ -371,7 +371,7 @@ class Button extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
-  const Button.secondary({
+  const VNLButton.secondary({
     super.key,
     this.statesController,
     this.leading,
@@ -406,7 +406,7 @@ class Button extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
-  const Button.outline({
+  const VNLButton.outline({
     super.key,
     this.statesController,
     this.leading,
@@ -441,7 +441,7 @@ class Button extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
-  const Button.ghost({
+  const VNLButton.ghost({
     super.key,
     this.statesController,
     this.leading,
@@ -476,7 +476,7 @@ class Button extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
-  const Button.link({
+  const VNLButton.link({
     super.key,
     this.statesController,
     this.leading,
@@ -511,7 +511,7 @@ class Button extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
-  const Button.text({
+  const VNLButton.text({
     super.key,
     this.statesController,
     this.leading,
@@ -546,7 +546,7 @@ class Button extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
-  const Button.destructive({
+  const VNLButton.destructive({
     super.key,
     this.statesController,
     this.leading,
@@ -581,7 +581,7 @@ class Button extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
-  const Button.fixed({
+  const VNLButton.fixed({
     super.key,
     this.statesController,
     this.leading,
@@ -616,7 +616,7 @@ class Button extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
-  const Button.card({
+  const VNLButton.card({
     super.key,
     this.statesController,
     this.leading,
@@ -655,7 +655,7 @@ class Button extends StatefulWidget {
   ButtonState createState() => ButtonState();
 }
 
-class ButtonState<T extends Button> extends State<T> {
+class ButtonState<T extends VNLButton> extends State<T> {
   bool get _shouldEnableFeedback {
     final platform = Theme.of(context).platform;
     return isMobile(platform);
@@ -1110,7 +1110,7 @@ class ButtonStyle implements AbstractButtonStyle {
   }
 }
 
-abstract class ButtonTheme {
+abstract class VNLButtonTheme {
   final ButtonStatePropertyDelegate<Decoration>? decoration;
   final ButtonStatePropertyDelegate<MouseCursor>? mouseCursor;
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding;
@@ -1118,7 +1118,7 @@ abstract class ButtonTheme {
   final ButtonStatePropertyDelegate<IconThemeData>? iconTheme;
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin;
 
-  const ButtonTheme(
+  const VNLButtonTheme(
       {this.decoration,
       this.mouseCursor,
       this.padding,
@@ -1129,7 +1129,7 @@ abstract class ButtonTheme {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ButtonTheme &&
+    return other is VNLButtonTheme &&
         other.decoration == decoration &&
         other.mouseCursor == mouseCursor &&
         other.padding == padding &&
@@ -1147,7 +1147,7 @@ abstract class ButtonTheme {
       '$runtimeType{decoration: $decoration, mouseCursor: $mouseCursor, padding: $padding, textStyle: $textStyle, iconTheme: $iconTheme, margin: $margin}';
 }
 
-class ComponentThemeButtonStyle<T extends ButtonTheme>
+class ComponentThemeButtonStyle<T extends VNLButtonTheme>
     implements AbstractButtonStyle {
   final AbstractButtonStyle fallback;
 
@@ -1296,7 +1296,7 @@ extension DecorationExtension on Decoration {
   }
 }
 
-class PrimaryButtonTheme extends ButtonTheme {
+class PrimaryButtonTheme extends VNLButtonTheme {
   const PrimaryButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1324,7 +1324,7 @@ class PrimaryButtonTheme extends ButtonTheme {
   }
 }
 
-class SecondaryButtonTheme extends ButtonTheme {
+class SecondaryButtonTheme extends VNLButtonTheme {
   const SecondaryButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1352,7 +1352,7 @@ class SecondaryButtonTheme extends ButtonTheme {
   }
 }
 
-class OutlineButtonTheme extends ButtonTheme {
+class OutlineButtonTheme extends VNLButtonTheme {
   const OutlineButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1380,7 +1380,7 @@ class OutlineButtonTheme extends ButtonTheme {
   }
 }
 
-class GhostButtonTheme extends ButtonTheme {
+class GhostButtonTheme extends VNLButtonTheme {
   const GhostButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1408,7 +1408,7 @@ class GhostButtonTheme extends ButtonTheme {
   }
 }
 
-class LinkButtonTheme extends ButtonTheme {
+class LinkButtonTheme extends VNLButtonTheme {
   const LinkButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1436,7 +1436,7 @@ class LinkButtonTheme extends ButtonTheme {
   }
 }
 
-class TextButtonTheme extends ButtonTheme {
+class TextButtonTheme extends VNLButtonTheme {
   const TextButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1464,7 +1464,7 @@ class TextButtonTheme extends ButtonTheme {
   }
 }
 
-class DestructiveButtonTheme extends ButtonTheme {
+class DestructiveButtonTheme extends VNLButtonTheme {
   const DestructiveButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1492,7 +1492,7 @@ class DestructiveButtonTheme extends ButtonTheme {
   }
 }
 
-class FixedButtonTheme extends ButtonTheme {
+class FixedButtonTheme extends VNLButtonTheme {
   const FixedButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1520,7 +1520,7 @@ class FixedButtonTheme extends ButtonTheme {
   }
 }
 
-class MenuButtonTheme extends ButtonTheme {
+class MenuButtonTheme extends VNLButtonTheme {
   const MenuButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1548,7 +1548,7 @@ class MenuButtonTheme extends ButtonTheme {
   }
 }
 
-class MenubarButtonTheme extends ButtonTheme {
+class MenubarButtonTheme extends VNLButtonTheme {
   const MenubarButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1576,7 +1576,7 @@ class MenubarButtonTheme extends ButtonTheme {
   }
 }
 
-class MutedButtonTheme extends ButtonTheme {
+class MutedButtonTheme extends VNLButtonTheme {
   const MutedButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -1604,7 +1604,7 @@ class MutedButtonTheme extends ButtonTheme {
   }
 }
 
-class CardButtonTheme extends ButtonTheme {
+class CardButtonTheme extends VNLButtonTheme {
   const CardButtonTheme(
       {super.decoration,
       super.mouseCursor,
@@ -2610,7 +2610,7 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,
@@ -2709,7 +2709,7 @@ class SecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,
@@ -2808,7 +2808,7 @@ class OutlineButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,
@@ -2907,7 +2907,7 @@ class GhostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,
@@ -3006,7 +3006,7 @@ class LinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,
@@ -3104,7 +3104,7 @@ class TextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,
@@ -3185,7 +3185,7 @@ class DestructiveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,
@@ -3285,7 +3285,7 @@ class TabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,
@@ -3384,7 +3384,7 @@ class CardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,
@@ -3722,7 +3722,7 @@ class IconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       onPressed: onPressed,
       enabled: enabled,
       leading: leading,

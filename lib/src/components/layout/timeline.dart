@@ -14,11 +14,11 @@ class TimelineData {
   });
 }
 
-class Timeline extends StatelessWidget {
+class VNLTimeline extends StatelessWidget {
   final List<TimelineData> data;
   final BoxConstraints? timeConstraints;
 
-  const Timeline({
+  const VNLTimeline({
     super.key,
     required this.data,
     // this.timeConstraints = const BoxConstraints(

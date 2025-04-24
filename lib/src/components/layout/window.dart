@@ -436,7 +436,7 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
         builder: (context, child) {
           var resizeThickness = 8;
 
-          Widget windowClient = Card(
+          Widget windowClient = VNLCard(
             clipBehavior: Clip.antiAlias,
             padding: EdgeInsets.zero,
             borderRadius: state.maximized != null

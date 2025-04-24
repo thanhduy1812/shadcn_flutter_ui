@@ -5,7 +5,7 @@ class ButtonExample17 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
+    return VNLButton(
       style: const ButtonStyle.primary()
           .withBackgroundColor(color: Colors.red, hoverColor: Colors.purple)
       .withForegroundColor(color: Colors.white)

@@ -19,7 +19,7 @@ class MaterialExample extends StatelessWidget {
       displayName: 'Material/Cupertino Widgets',
       children: [
         const Gap(24),
-        Alert(
+        VNLAlert(
           leading: const Icon(Icons.info_outline),
           title: const Text('Note'),
           content: const Text(

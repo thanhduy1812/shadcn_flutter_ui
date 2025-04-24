@@ -29,7 +29,7 @@ class _InstallationPageState extends State<InstallationPage> {
               .lead(),
           const Text('Stable Version').h2().anchored(_manualKey),
           const Gap(32),
-          Steps(
+          VNLSteps(
             children: [
               StepItem(
                 title: const Text('Creating a new Flutter project'),
@@ -130,7 +130,7 @@ void main() {
               .thenText(' for more information.')
               .p(),
           const Gap(16),
-          const Alert(
+          const VNLAlert(
             destructive: true,
             leading: Icon(Icons.warning),
             title: Text('Warning'),

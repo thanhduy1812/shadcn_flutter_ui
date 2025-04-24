@@ -16,7 +16,7 @@ class _NumberInputExample1State extends State<NumberInputExample1> {
       children: [
         SizedBox(
           width: 100,
-          child: TextField(
+          child: VNLTextField(
             initialValue: value.toString(),
             onChanged: (value) {
               setState(() {

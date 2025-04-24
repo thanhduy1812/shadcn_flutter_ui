@@ -1,6 +1,6 @@
 import 'package:vnl_ui/vnl_ui.dart';
 
-class Pagination extends StatelessWidget {
+class VNLPagination extends StatelessWidget {
   final int page;
   final int totalPages;
   final ValueChanged<int> onPageChanged;
@@ -13,7 +13,7 @@ class Pagination extends StatelessWidget {
   final bool hideNextOnLastPage;
   final bool showLabel;
 
-  const Pagination({
+  const VNLPagination({
     super.key,
     required this.page,
     required this.totalPages,

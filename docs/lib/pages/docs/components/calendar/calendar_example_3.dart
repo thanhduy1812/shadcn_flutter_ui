@@ -13,7 +13,7 @@ class _CalendarExample3State extends State<CalendarExample3> {
   @override
   Widget build(BuildContext context) {
     VNLookLocalizations localizations = VNLookLocalizations.of(context);
-    return Card(
+    return VNLCard(
       child: IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -47,7 +47,7 @@ class _CalendarExample3State extends State<CalendarExample3> {
               ],
             ),
             const Gap(16),
-            Calendar(
+            VNLCalendar(
               value: _value,
               view: _view,
               onChanged: (value) {

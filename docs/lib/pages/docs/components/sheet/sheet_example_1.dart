@@ -14,7 +14,7 @@ class _SheetExample1State extends State<SheetExample1> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        return VNLAlertDialog(
           title: const Text('Profile updated'),
           content: Text('Content: ${controller.values}'),
           actions: [
@@ -34,7 +34,7 @@ class _SheetExample1State extends State<SheetExample1> {
     return Container(
       padding: const EdgeInsets.all(24),
       constraints: const BoxConstraints(maxWidth: 400),
-      child: Form(
+      child: VNLForm(
         controller: controller,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -67,7 +67,7 @@ class _SheetExample1State extends State<SheetExample1> {
                   label: const Text('Name'),
                   validator:
                       const NotEmptyValidator() & const LengthValidator(min: 4),
-                  child: const TextField(
+                  child: const VNLTextField(
                     initialValue: 'Thito Yalasatria Sunarya',
                     placeholder: Text('Your fullname'),
                   ),
@@ -77,7 +77,7 @@ class _SheetExample1State extends State<SheetExample1> {
                   label: const Text('Username'),
                   validator:
                       const NotEmptyValidator() & const LengthValidator(min: 4),
-                  child: const TextField(
+                  child: const VNLTextField(
                     initialValue: '@sunarya-thito',
                     placeholder: Text('Your username'),
                   ),

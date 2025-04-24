@@ -17,12 +17,12 @@ class _FormExample2State extends State<FormExample2> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 480,
-      child: Form(
+      child: VNLForm(
         onSubmit: (context, values) {
           showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
+              return VNLAlertDialog(
                 title: const Text('Form Values'),
                 content: Text(values.toString()),
                 actions: [
@@ -51,7 +51,7 @@ class _FormExample2State extends State<FormExample2> {
                     FormValidationMode.changed,
                     FormValidationMode.submitted
                   },
-                  child: const TextField(),
+                  child: const VNLTextField(),
                 ),
                 FormField(
                   key: _passwordKey,
@@ -61,7 +61,7 @@ class _FormExample2State extends State<FormExample2> {
                     FormValidationMode.changed,
                     FormValidationMode.submitted
                   },
-                  child: const TextField(
+                  child: const VNLTextField(
                     obscureText: true,
                   ),
                 ),
@@ -74,7 +74,7 @@ class _FormExample2State extends State<FormExample2> {
                     FormValidationMode.changed,
                     FormValidationMode.submitted
                   },
-                  child: const TextField(
+                  child: const VNLTextField(
                     obscureText: true,
                   ),
                 ),
@@ -89,7 +89,7 @@ class _FormExample2State extends State<FormExample2> {
                   },
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
-                    child: Checkbox(
+                    child: VNLCheckbox(
                         state: state,
                         onChanged: (value) {
                           setState(() {

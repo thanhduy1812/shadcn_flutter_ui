@@ -5,7 +5,7 @@ class FormattedInputExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormattedInput(
+    return VNLFormattedInput(
       onChanged: (value) {
         List<String> parts = [];
         for (FormattedValuePart part in value.values) {

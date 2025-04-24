@@ -172,7 +172,7 @@ class RadioCard<T> extends StatefulWidget {
 }
 
 /// Theme data for the [RadioCard] widget.
-class RadioCardTheme {
+class VNLRadioCardTheme {
   /// The cursor to use when the radio card is enabled.
   final MouseCursor? enabledCursor;
 
@@ -204,7 +204,7 @@ class RadioCardTheme {
   final Color? selectedBorderColor;
 
   /// Theme data for the [RadioCard] widget.
-  const RadioCardTheme({
+  const VNLRadioCardTheme({
     this.enabledCursor,
     this.disabledCursor,
     this.hoverColor,
@@ -219,11 +219,11 @@ class RadioCardTheme {
 
   @override
   String toString() {
-    return 'RadioCardTheme(enabledCursor: $enabledCursor, disabledCursor: $disabledCursor, hoverColor: $hoverColor, color: $color, borderWidth: $borderWidth, selectedBorderWidth: $selectedBorderWidth, borderRadius: $borderRadius, padding: $padding, borderColor: $borderColor, selectedBorderColor: $selectedBorderColor)';
+    return 'VNLRadioCardTheme(enabledCursor: $enabledCursor, disabledCursor: $disabledCursor, hoverColor: $hoverColor, color: $color, borderWidth: $borderWidth, selectedBorderWidth: $selectedBorderWidth, borderRadius: $borderRadius, padding: $padding, borderColor: $borderColor, selectedBorderColor: $selectedBorderColor)';
   }
 
   /// Creates a copy of this [RadioCardTheme] but with the given fields replaced with the new values.
-  RadioCardTheme copyWith({
+  VNLRadioCardTheme copyWith({
     ValueGetter<MouseCursor?>? enabledCursor,
     ValueGetter<MouseCursor?>? disabledCursor,
     ValueGetter<Color?>? hoverColor,
@@ -235,7 +235,7 @@ class RadioCardTheme {
     ValueGetter<Color?>? borderColor,
     ValueGetter<Color?>? selectedBorderColor,
   }) {
-    return RadioCardTheme(
+    return VNLRadioCardTheme(
       enabledCursor:
           enabledCursor != null ? enabledCursor() : this.enabledCursor,
       disabledCursor:
@@ -259,7 +259,7 @@ class RadioCardTheme {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is RadioCardTheme &&
+    return other is VNLRadioCardTheme &&
         other.enabledCursor == enabledCursor &&
         other.disabledCursor == disabledCursor &&
         other.hoverColor == hoverColor &&
@@ -310,7 +310,7 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final componentTheme = ComponentTheme.maybeOf<RadioCardTheme>(context);
+    final componentTheme = ComponentTheme.maybeOf<VNLRadioCardTheme>(context);
     final groupData = Data.maybeOf<RadioGroupData<T>>(context);
     final group = Data.maybeOf<_RadioGroupState<T>>(context);
     assert(groupData != null,
@@ -349,7 +349,7 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
         },
         child: Data<RadioGroupData<T>>.boundary(
           child: Data<_RadioCardState<T>>.boundary(
-            child: Card(
+            child: VNLCard(
               borderColor: groupData?.selectedItem == widget.value
                   ? styleValue(
                       defaultValue: theme.colorScheme.primary,

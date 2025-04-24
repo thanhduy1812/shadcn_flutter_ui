@@ -23,7 +23,7 @@ class _ValidatedState extends State<Validated> {
   final formKey = const FormKey(#validated);
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return VNLForm(
       child: FormEntry(
         key: formKey,
         validator: widget.validator,

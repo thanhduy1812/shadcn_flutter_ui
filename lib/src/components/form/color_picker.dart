@@ -114,7 +114,7 @@ class ColorHistoryGrid extends StatelessWidget {
     if (color == null) {
       return const AspectRatio(
         aspectRatio: 1,
-        child: Button(
+        child: VNLButton(
           style: ButtonStyle.outline(
             density: ButtonDensity.compact,
           ),
@@ -132,7 +132,7 @@ class ColorHistoryGrid extends StatelessWidget {
           : null,
       child: AspectRatio(
         aspectRatio: 1,
-        child: Button(
+        child: VNLButton(
           style: const ButtonStyle.outline(
             density: ButtonDensity.compact,
           ),
@@ -778,7 +778,7 @@ class _ColorInputSetState extends State<ColorInputSet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Tabs(
+            VNLTabs(
                 index: _tabIndex,
                 onChanged: (value) {
                   setState(() {
@@ -1237,7 +1237,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                     ),
                   ),
                 Gap(theme.scaling * 16),
-                TextField(
+                VNLTextField(
                   controller: _hexController,
                   onEditingComplete: () {
                     var hex = _hexController.text;
@@ -1274,7 +1274,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                           children: [
                             Text(aLabel).muted().small(),
                             Gap(theme.scaling * 4),
-                            TextField(
+                            VNLTextField(
                               controller: _aController,
                               onEditingComplete: _onColorChange,
                               inputFormatters: [
@@ -1292,7 +1292,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                           children: [
                             Text(bLabel).muted().small(),
                             Gap(theme.scaling * 4),
-                            TextField(
+                            VNLTextField(
                               controller: _bController,
                               onEditingComplete: _onColorChange,
                               inputFormatters: [
@@ -1310,7 +1310,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                           children: [
                             Text(cLabel).muted().small(),
                             Gap(theme.scaling * 4),
-                            TextField(
+                            VNLTextField(
                               controller: _cController,
                               onEditingComplete: _onColorChange,
                               inputFormatters: [
@@ -1329,7 +1329,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                             children: [
                               Text(localizations.colorAlpha).muted().small(),
                               Gap(theme.scaling * 4),
-                              TextField(
+                              VNLTextField(
                                 onEditingComplete: _onColorChange,
                                 controller: _alphaController,
                                 inputFormatters: [
@@ -1930,7 +1930,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
   Widget build(BuildContext context) {
     final localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
-    return AlertDialog(
+    return VNLAlertDialog(
       title: widget.title,
       content: ColorInputPopup(
         color: _color,
