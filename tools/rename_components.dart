@@ -78,6 +78,11 @@ final Map<String, String> componentMapping = {
   'ImageTools': 'VNLImageTools',
   'RefreshTrigger': 'VNLRefreshTrigger',
   'OverflowMarquee': 'VNLOverflowMarquee',
+  // Theme-related components
+  'ThemeData': 'VNLThemeData',
+  'ColorScheme': 'VNLColorScheme',
+  'Typography': 'VNLTypography',
+  'ThemeMode': 'VNLThemeMode',
   // Add more components as needed
 };
 
