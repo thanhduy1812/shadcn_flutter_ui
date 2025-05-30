@@ -214,7 +214,9 @@ class DialogRoute<T> extends RawDialogRoute<T> {
                 final theme = Theme.of(context);
                 final scaling = theme.scaling;
                 return Padding(
-                  padding: fullScreen ? EdgeInsets.zero : const EdgeInsets.all(16) * scaling,
+                  padding: fullScreen
+                      ? EdgeInsets.zero
+                      : const EdgeInsets.all(16) * scaling,
                   child: builder(context),
                 );
               },
@@ -293,7 +295,14 @@ Future<T?> showDialog<T>({
   final CapturedData data = Data.capture(from: context, to: navigatorState.context);
   var dialogRoute = DialogRoute<T>(
     context: context,
-    builder: builder,
+    builder: (context) {
+      return _DialogOverlayWrapper(
+        route: ModalRoute.of(context) as DialogRoute<T>,
+        child: Builder(builder: (context) {
+          return builder(context);
+        }),
+      );
+    },
     themes: themes,
     barrierDismissible: barrierDismissible,
     barrierColor: barrierColor ?? const Color.fromRGBO(0, 0, 0, 0),
