@@ -78,14 +78,14 @@ enum VNLookFeatureTag {
   workInProgress;
 
   Widget buildBadge(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    ThemeData copy;
+    VNLThemeData theme = VNLTheme.of(context);
+    VNLThemeData copy;
     String badgeText;
     switch (this) {
       case VNLookFeatureTag.newFeature:
         copy = theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
-            primary: Colors.green,
+            primary: VNLColors.green,
           ),
         );
         badgeText = 'New';
@@ -93,7 +93,7 @@ enum VNLookFeatureTag {
       case VNLookFeatureTag.updated:
         copy = theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
-            primary: Colors.blue,
+            primary: VNLColors.blue,
           ),
         );
         badgeText = 'Updated';
@@ -101,7 +101,7 @@ enum VNLookFeatureTag {
       case VNLookFeatureTag.workInProgress:
         copy = theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
-            primary: Colors.orange,
+            primary: VNLColors.orange,
           ),
         );
         badgeText = 'WIP';
@@ -109,13 +109,13 @@ enum VNLookFeatureTag {
       case VNLookFeatureTag.experimental:
         copy = theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
-            primary: Colors.purple,
+            primary: VNLColors.purple,
           ),
         );
         badgeText = 'Experimental';
         break;
     }
-    return Theme(
+    return VNLTheme(
       data: copy,
       child: PrimaryBadge(
         child: Text(badgeText),
@@ -153,7 +153,7 @@ class DocsPageState extends State<DocsPage> {
           VNLookDocsPage('Web Preloader', 'web_preloader'),
           VNLookDocsPage('Components', 'components'),
           VNLookDocsPage('Icons', 'icons'),
-          VNLookDocsPage('Colors', 'colors'),
+          VNLookDocsPage('VNLColors', 'colors'),
           VNLookDocsPage('Material/Cupertino', 'external'),
           VNLookDocsPage('State Management', 'state'),
         ]),
@@ -437,19 +437,19 @@ class DocsPageState extends State<DocsPage> {
 
   Widget buildFlavorTag() {
     String text = 'UKNOWN';
-    Color color = Colors.green;
+    Color color = VNLColors.green;
     switch (flavor) {
       case 'local':
         text = 'Local';
-        color = Colors.red;
+        color = VNLColors.red;
         break;
       case 'experimental':
         text = 'Experimental';
-        color = Colors.orange;
+        color = VNLColors.orange;
         break;
       case 'release':
         text = getReleaseTagName();
-        color = Colors.green;
+        color = VNLColors.green;
         break;
     }
     return Builder(builder: (context) {
@@ -457,7 +457,7 @@ class DocsPageState extends State<DocsPage> {
         onPressed: () {
           showDropdown(
             context: context,
-            offset: const Offset(0, 8) * Theme.of(context).scaling,
+            offset: const Offset(0, 8) * VNLTheme.of(context).scaling,
             builder: (context) {
               return VNLDropdownMenu(
                 children: [
@@ -489,7 +489,7 @@ class DocsPageState extends State<DocsPage> {
           },
           textStyle: (context, states, value) {
             return value.copyWith(
-              color: Colors.white,
+              color: VNLColors.white,
               fontWeight: FontWeight.w500,
             );
           },
@@ -504,7 +504,7 @@ class DocsPageState extends State<DocsPage> {
     Map<String, OnThisPage> onThisPage = widget.onThisPage;
     VNLookDocsPage? page = sections.expand((e) => e.pages).where((e) => e.name == widget.name).firstOrNull;
 
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
 
     var hasOnThisPage = onThisPage.isNotEmpty;
     return ClipRect(
@@ -732,7 +732,7 @@ class DocsPageState extends State<DocsPage> {
     );
   }
 
-  VNLAppBar _buildAppBar(EdgeInsets padding, ThemeData theme) {
+  VNLAppBar _buildAppBar(EdgeInsets padding, VNLThemeData theme) {
     return VNLAppBar(
       // padding: (breakpointWidth2 < mediaQuerySize.width
       //         ? padding * theme.scaling
@@ -746,15 +746,16 @@ class DocsPageState extends State<DocsPage> {
       // ),
       padding: padding,
       title: Basic(
-        leading: FlutterLogo(
-          size: 32 * theme.scaling,
-        ),
+        // leading: FlutterLogo(
+        //   size: 32 * theme.scaling,
+        // ),
+        leading: Image.asset("assets/icon/icon.png", width: 32 * theme.scaling),
         content: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              'vnl_ui',
+              'VNLook UI',
             ).textLarge().mono(),
             Gap(16 * theme.scaling),
             buildFlavorTag(),
@@ -779,7 +780,7 @@ class DocsPageState extends State<DocsPage> {
         GhostButton(
           density: ButtonDensity.icon,
           onPressed: () {
-            openInNewTab('https://github.com/sunarya-thito/vnl_ui');
+            openInNewTab('https://github.com/vnlook');
           },
           child: FaIcon(FontAwesomeIcons.github, color: theme.colorScheme.secondaryForeground).iconLarge(),
         ),
@@ -787,7 +788,7 @@ class DocsPageState extends State<DocsPage> {
         GhostButton(
             density: ButtonDensity.icon,
             onPressed: () {
-              openInNewTab('https://pub.dev/packages/vnl_ui');
+              openInNewTab('https://vnlook.com/');
             },
             child: ColorFiltered(
               // turns into white
@@ -804,7 +805,7 @@ class DocsPageState extends State<DocsPage> {
   }
 
   void _openDrawer(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     openSheet(
       context: context,
@@ -968,7 +969,7 @@ class _DocsSecondarySidebarState extends State<_DocsSecondarySidebar> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Container(
       width: (widget.padding.right + 180) * theme.scaling,
       alignment: Alignment.topLeft,

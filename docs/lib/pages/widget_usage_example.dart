@@ -96,8 +96,9 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
   late Future<String> futureCode;
 
   void _refresh() {
-    //https://raw.githubusercontent.com/sunarya-thito/vnl_ui/master/docs/lib/pages/docs/layout_page/layout_page_example_1.dart
-    String url = 'https://raw.githubusercontent.com/sunarya-thito/vnl_ui/master/docs/${widget.path}';
+    //https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs/lib/pages/docs/layout_page/layout_page_example_1.dart
+    // String url = 'https://github.com/thanhduy1812/vnl_flutter_ui/tree/master/vnl_ui_docs/${widget.path}';
+    String url = 'https://raw.githubusercontent.com/vnlook/vnl_flutter_ui/master/vnl_ui_docs/${widget.path}';
     futureCode = http.get(Uri.parse(url)).then((response) => response.body).then((code) {
       try {
         return widget.summarize ? _formatCode(code) : code;
@@ -125,7 +126,7 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return FutureBuilder<String>(
       future: futureCode,
       builder: (context, snapshot) {
@@ -157,7 +158,8 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
                   density: ButtonDensity.icon,
                   onPressed: () {
                     // open in new tab
-                    String url = 'https://github.com/sunarya-thito/vnl_ui/blob/master/docs/${widget.path}';
+                    String url =
+                        'https://github.com/vnlook/vnl_flutter_ui/tree/master/vnl_ui_docs/${widget.path}';
                     // html.window.open(url, 'blank');
                     launchUrlString(url);
                   },
@@ -177,8 +179,8 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
                 density: ButtonDensity.icon,
                 onPressed: () {
                   // open in new tab
-                  //https://github.com/sunarya-thito/vnl_ui/blob/master/docs/lib/pages/docs/layout_page/layout_page_example_1.dart
-                  String url = 'https://github.com/sunarya-thito/vnl_ui/blob/master/docs/${widget.path}';
+                  //https://github.com/sunarya-thito/shadcn_flutter/blob/master/docs/lib/pages/docs/layout_page/layout_page_example_1.dart
+                  String url = 'https://github.com/vnlook/vnl_flutter_ui/tree/master/vnl_ui_docs/${widget.path}';
                   // html.window.open(url, 'blank');
                   launchUrlString(url);
                 },

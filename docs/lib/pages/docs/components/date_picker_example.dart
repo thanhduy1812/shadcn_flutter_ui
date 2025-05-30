@@ -4,6 +4,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';
+import 'date_picker/date_picker_example_3.dart';
 
 class DatePickerExample extends StatelessWidget {
   const DatePickerExample({super.key});
@@ -24,6 +25,11 @@ class DatePickerExample extends StatelessWidget {
           title: 'Date Range Picker Example',
           path: 'lib/pages/docs/components/date_picker/date_picker_example_2.dart',
           child: DatePickerExample2(),
+        ),
+        WidgetUsageExample(
+          title: 'Date Range Picker Example 3',
+          path: 'lib/pages/docs/components/date_picker/date_picker_example_3.dart',
+          child: DatePickerExample3(),
         ),
       ],
     );
