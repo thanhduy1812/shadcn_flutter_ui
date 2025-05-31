@@ -3,7 +3,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(systemNavigationBarColor: VNLColors.transparent));
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   runApp(const MyApp());
 }
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return VNLookApp(
       title: 'My App',
       home: const CounterPage(),
-      theme: ThemeData(
+      theme: VNLThemeData(
         colorScheme: ColorSchemes.darkZinc(),
         radius: 0.7,
       ),
