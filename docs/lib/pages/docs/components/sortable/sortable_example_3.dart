@@ -18,7 +18,8 @@ class _SortableExample3State extends State<SortableExample3> {
 
   @override
   Widget build(BuildContext context) {
-    return SortableLayer(
+    return VNLSortableLayer(
+      // Constrain the drag overlay within the horizontal strip.
       lock: true,
       child: SortableDropFallback<int>(
         onAccept: (value) {
@@ -36,6 +37,7 @@ class _SortableExample3State extends State<SortableExample3> {
                 Sortable<String>(
                   key: ValueKey(i),
                   data: names[i],
+                  // For horizontal sorting, drop on the left/right edges to reorder.
                   onAcceptLeft: (value) {
                     setState(() {
                       names.swapItem(value, i);
@@ -46,7 +48,7 @@ class _SortableExample3State extends State<SortableExample3> {
                       names.swapItem(value, i + 1);
                     });
                   },
-                  child: OutlinedContainer(
+                  child: VNLOutlinedContainer(
                     width: 100,
                     padding: const EdgeInsets.all(12),
                     child: Center(child: Text(names[i].data)),

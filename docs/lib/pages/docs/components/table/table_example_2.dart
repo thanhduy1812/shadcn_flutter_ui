@@ -1,5 +1,8 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+// Demonstrates VNLResizableTable with controller defaults (sizes/constraints)
+// and thin per-cell borders; users can drag to resize columns/rows.
+
 class TableExample2 extends StatefulWidget {
   const TableExample2({super.key});
 
@@ -8,10 +11,12 @@ class TableExample2 extends StatefulWidget {
 }
 
 class _TableExample2State extends State<TableExample2> {
-  TableCell buildCell(String text, [bool alignRight = false]) {
-    final theme = VNLTheme.of(context);
-    return TableCell(
-      theme: TableCellTheme(
+  // Builds a single cell with a thin border using the theme's border color.
+  // Optionally right-aligns the content (useful for numeric values).
+  VNLTableCell buildCell(String text, [bool alignRight = false]) {
+    final theme = Theme.of(context);
+    return VNLTableCell(
+      theme: VNLTableCellTheme(
         border: WidgetStatePropertyAll(
           Border.all(
             color: theme.colorScheme.border,
@@ -27,20 +32,24 @@ class _TableExample2State extends State<TableExample2> {
     );
   }
 
-  final ResizableTableController controller = ResizableTableController(
+  // Controller sets defaults for column/row sizes and min constraints.
+  // Users can still drag to resize each column and row at runtime.
+  final VNLResizableTableController controller = VNLResizableTableController(
     defaultColumnWidth: 150,
     defaultRowHeight: 40,
-    defaultHeightConstraint: const ConstrainedTableSize(min: 40),
-    defaultWidthConstraint: const ConstrainedTableSize(min: 80),
+    defaultHeightConstraint: const VNLConstrainedTableSize(min: 40),
+    defaultWidthConstraint: const VNLConstrainedTableSize(min: 80),
   );
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedContainer(
-      child: ResizableTable(
+    return VNLOutlinedContainer(
+      child: VNLResizableTable(
         controller: controller,
+        // A header row followed by regular rows; all cells share the same
+        // border/spacing style via buildCell.
         rows: [
-          TableHeader(
+          VNLTableHeader(
             cells: [
               buildCell('Invoice'),
               buildCell('Status'),
@@ -48,15 +57,15 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('Amount', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV001'),
               buildCell('Paid'),
-              buildCell('Credit Card'),
+              buildCell('Credit VNLCard'),
               buildCell('\$250.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV002'),
               buildCell('Pending'),
@@ -64,7 +73,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$150.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV003'),
               buildCell('Unpaid'),
@@ -72,15 +81,15 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$350.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV004'),
               buildCell('Paid'),
-              buildCell('Credit Card'),
+              buildCell('Credit VNLCard'),
               buildCell('\$450.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV005'),
               buildCell('Paid'),
@@ -88,7 +97,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$550.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV006'),
               buildCell('Pending'),
@@ -96,23 +105,23 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$200.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV007'),
               buildCell('Unpaid'),
-              buildCell('Credit Card'),
+              buildCell('Credit VNLCard'),
               buildCell('\$300.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV008'),
               buildCell('Paid'),
-              buildCell('Credit Card'),
+              buildCell('Credit VNLCard'),
               buildCell('\$250.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV009'),
               buildCell('Pending'),
@@ -120,7 +129,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$150.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV010'),
               buildCell('Unpaid'),

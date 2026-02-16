@@ -1,5 +1,7 @@
 import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/docs/components/number_input/number_input_example_1.dart';
+import 'package:docs/pages/docs/components/number_input/number_input_example_2.dart';
+import 'package:docs/pages/docs/components/number_input/number_input_example_3.dart';
 import 'package:docs/pages/widget_usage_example.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
@@ -17,6 +19,18 @@ class NumberInputExample extends StatelessWidget {
           title: 'Example',
           path: 'lib/pages/docs/components/number_input/number_input_example_1.dart',
           child: NumberInputExample1(),
+        ),
+        WidgetUsageExample(
+          title: 'VNLStepper Buttons',
+          path:
+              'lib/pages/docs/components/number_input/number_input_example_2.dart',
+          child: NumberInputExample2(),
+        ),
+        WidgetUsageExample(
+          title: 'Leading & Trailing VNLStepper Buttons',
+          path:
+              'lib/pages/docs/components/number_input/number_input_example_3.dart',
+          child: NumberInputExample3(),
         ),
       ],
     );

@@ -8,12 +8,14 @@ class LayoutPageExample2 extends StatelessWidget {
     return Container(
       color: VNLColors.red,
       child: Container(
+        margin: const EdgeInsets.only(top: 24, bottom: 12, left: 16, right: 16),
         color: VNLColors.green,
         child: Container(
           color: VNLColors.blue,
           height: 20,
-        ).withMargin(all: 16),
-      ).withMargin(top: 24, bottom: 12, horizontal: 16),
+          margin: const EdgeInsets.all(16),
+        ),
+      ),
     );
   }
 }

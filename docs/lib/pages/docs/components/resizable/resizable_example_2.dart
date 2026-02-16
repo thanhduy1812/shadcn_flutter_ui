@@ -11,11 +11,13 @@ class ResizableExample2 extends StatefulWidget {
 class _ResizableExample2State extends State<ResizableExample2> {
   @override
   Widget build(BuildContext context) {
-    return const OutlinedContainer(
+    return const VNLOutlinedContainer(
       clipBehavior: Clip.antiAlias,
-      child: ResizablePanel.vertical(
+      // A vertical panel splits available height into multiple resizable rows (panes).
+      child: VNLResizablePanel.vertical(
         children: [
-          ResizablePane(
+          VNLResizablePane(
+            // Initial height in logical pixels for this row.
             initialSize: 80,
             child: NumberedContainer(
               index: 0,
@@ -23,7 +25,7 @@ class _ResizableExample2State extends State<ResizableExample2> {
               fill: false,
             ),
           ),
-          ResizablePane(
+          VNLResizablePane(
             initialSize: 120,
             child: NumberedContainer(
               index: 1,
@@ -31,7 +33,7 @@ class _ResizableExample2State extends State<ResizableExample2> {
               fill: false,
             ),
           ),
-          ResizablePane(
+          VNLResizablePane(
             initialSize: 80,
             child: NumberedContainer(
               index: 2,

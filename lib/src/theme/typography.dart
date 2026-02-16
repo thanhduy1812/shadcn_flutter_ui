@@ -1,48 +1,124 @@
-import '../../vnl_ui.dart';
+import '../../shadcn_flutter.dart';
 
-class VNLTypography {
+/// Typography definitions for shadcn_flutter.
+///
+/// Provides predefined text styles for different purposes including
+/// sizes, weights, and semantic styles like headings and paragraphs.
+class Typography {
+  /// Sans-serif font style.
   final TextStyle sans;
+
+  /// Monospace font style.
   final TextStyle mono;
+
+  /// Extra small text (12px).
   final TextStyle xSmall;
+
+  /// Small text (14px).
   final TextStyle small;
+
+  /// Base text size (16px).
   final TextStyle base;
+
+  /// Large text (18px).
   final TextStyle large;
+
+  /// Extra large text (20px).
   final TextStyle xLarge;
+
+  /// 2x large text (24px).
   final TextStyle x2Large;
+
+  /// 3x large text (30px).
   final TextStyle x3Large;
+
+  /// 4x large text (36px).
   final TextStyle x4Large;
+
+  /// 5x large text (48px).
   final TextStyle x5Large;
+
+  /// 6x large text (60px).
   final TextStyle x6Large;
+
+  /// 7x large text (72px).
   final TextStyle x7Large;
+
+  /// 8x large text (96px).
   final TextStyle x8Large;
+
+  /// 9x large text (144px).
   final TextStyle x9Large;
+
+  /// Thin font weight (100).
   final TextStyle thin;
+
+  /// Light font weight (300).
   final TextStyle light;
+
+  /// Extra light font weight (200).
   final TextStyle extraLight;
+
+  /// Normal font weight (400).
   final TextStyle normal;
+
+  /// Medium font weight (500).
   final TextStyle medium;
+
+  /// Semi-bold font weight (600).
   final TextStyle semiBold;
+
+  /// Bold font weight (700).
   final TextStyle bold;
+
+  /// Extra bold font weight (800).
   final TextStyle extraBold;
+
+  /// Black font weight (900).
   final TextStyle black;
+
+  /// Italic text style.
   final TextStyle italic;
+
+  /// Heading 1 style.
   final TextStyle h1;
+
+  /// Heading 2 style.
   final TextStyle h2;
+
+  /// Heading 3 style.
   final TextStyle h3;
+
+  /// Heading 4 style.
   final TextStyle h4;
+
+  /// Paragraph style.
   final TextStyle p;
+
+  /// Block quote style.
   final TextStyle blockQuote;
+
+  /// Inline code style.
   final TextStyle inlineCode;
+
+  /// Lead text style.
   final TextStyle lead;
+
+  /// Large text style.
   final TextStyle textLarge;
+
+  /// Small text style.
   final TextStyle textSmall;
+
+  /// Muted text style.
   final TextStyle textMuted;
 
-  const VNLTypography.geist({
+  /// Creates a typography with Geist font family.
+  const Typography.geist({
     this.sans =
-        const TextStyle(fontFamily: 'GeistSans', package: 'vnl_ui'),
+        const TextStyle(fontFamily: 'GeistSans', package: 'vnl_common_ui'),
     this.mono =
-        const TextStyle(fontFamily: 'GeistMono', package: 'vnl_ui'),
+        const TextStyle(fontFamily: 'GeistMono', package: 'vnl_common_ui'),
     this.xSmall = const TextStyle(fontSize: 12),
     this.small = const TextStyle(fontSize: 14),
     this.base = const TextStyle(fontSize: 16),
@@ -81,7 +157,8 @@ class VNLTypography {
     this.textMuted = const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
   });
 
-  const VNLTypography({
+  /// Creates a custom typography with all required text styles.
+  const Typography({
     required this.sans,
     required this.mono,
     required this.xSmall,
@@ -120,86 +197,93 @@ class VNLTypography {
     required this.textMuted,
   });
 
-  VNLTypography copyWith({
-    TextStyle? sans,
-    TextStyle? mono,
-    TextStyle? xSmall,
-    TextStyle? small,
-    TextStyle? base,
-    TextStyle? large,
-    TextStyle? xLarge,
-    TextStyle? x2Large,
-    TextStyle? x3Large,
-    TextStyle? x4Large,
-    TextStyle? x5Large,
-    TextStyle? x6Large,
-    TextStyle? x7Large,
-    TextStyle? x8Large,
-    TextStyle? x9Large,
-    TextStyle? thin,
-    TextStyle? light,
-    TextStyle? extraLight,
-    TextStyle? normal,
-    TextStyle? medium,
-    TextStyle? semiBold,
-    TextStyle? bold,
-    TextStyle? extraBold,
-    TextStyle? black,
-    TextStyle? italic,
-    TextStyle? h1,
-    TextStyle? h2,
-    TextStyle? h3,
-    TextStyle? h4,
-    TextStyle? p,
-    TextStyle? blockQuote,
-    TextStyle? inlineCode,
-    TextStyle? lead,
-    TextStyle? textLarge,
-    TextStyle? textSmall,
-    TextStyle? textMuted,
+  /// Creates a copy of this typography with the given fields replaced.
+  Typography copyWith({
+    ValueGetter<TextStyle>? sans,
+    ValueGetter<TextStyle>? mono,
+    ValueGetter<TextStyle>? xSmall,
+    ValueGetter<TextStyle>? small,
+    ValueGetter<TextStyle>? base,
+    ValueGetter<TextStyle>? large,
+    ValueGetter<TextStyle>? xLarge,
+    ValueGetter<TextStyle>? x2Large,
+    ValueGetter<TextStyle>? x3Large,
+    ValueGetter<TextStyle>? x4Large,
+    ValueGetter<TextStyle>? x5Large,
+    ValueGetter<TextStyle>? x6Large,
+    ValueGetter<TextStyle>? x7Large,
+    ValueGetter<TextStyle>? x8Large,
+    ValueGetter<TextStyle>? x9Large,
+    ValueGetter<TextStyle>? thin,
+    ValueGetter<TextStyle>? light,
+    ValueGetter<TextStyle>? extraLight,
+    ValueGetter<TextStyle>? normal,
+    ValueGetter<TextStyle>? medium,
+    ValueGetter<TextStyle>? semiBold,
+    ValueGetter<TextStyle>? bold,
+    ValueGetter<TextStyle>? extraBold,
+    ValueGetter<TextStyle>? black,
+    ValueGetter<TextStyle>? italic,
+    ValueGetter<TextStyle>? h1,
+    ValueGetter<TextStyle>? h2,
+    ValueGetter<TextStyle>? h3,
+    ValueGetter<TextStyle>? h4,
+    ValueGetter<TextStyle>? p,
+    ValueGetter<TextStyle>? blockQuote,
+    ValueGetter<TextStyle>? inlineCode,
+    ValueGetter<TextStyle>? lead,
+    ValueGetter<TextStyle>? textLarge,
+    ValueGetter<TextStyle>? textSmall,
+    ValueGetter<TextStyle>? textMuted,
   }) {
-    return VNLTypography(
-      sans: sans ?? this.sans,
-      mono: mono ?? this.mono,
-      xSmall: xSmall ?? this.xSmall,
-      small: small ?? this.small,
-      base: base ?? this.base,
-      large: large ?? this.large,
-      xLarge: xLarge ?? this.xLarge,
-      x2Large: x2Large ?? this.x2Large,
-      x3Large: x3Large ?? this.x3Large,
-      x4Large: x4Large ?? this.x4Large,
-      x5Large: x5Large ?? this.x5Large,
-      x6Large: x6Large ?? this.x6Large,
-      x7Large: x7Large ?? this.x7Large,
-      x8Large: x8Large ?? this.x8Large,
-      x9Large: x9Large ?? this.x9Large,
-      thin: thin ?? this.thin,
-      light: light ?? this.light,
-      extraLight: extraLight ?? this.extraLight,
-      normal: normal ?? this.normal,
-      medium: medium ?? this.medium,
-      semiBold: semiBold ?? this.semiBold,
-      bold: bold ?? this.bold,
-      extraBold: extraBold ?? this.extraBold,
-      black: black ?? this.black,
-      italic: italic ?? this.italic,
-      h1: h1 ?? this.h1,
-      h2: h2 ?? this.h2,
-      h3: h3 ?? this.h3,
-      h4: h4 ?? this.h4,
-      p: p ?? this.p,
-      blockQuote: blockQuote ?? this.blockQuote,
-      inlineCode: inlineCode ?? this.inlineCode,
-      lead: lead ?? this.lead,
-      textLarge: textLarge ?? this.textLarge,
-      textSmall: textSmall ?? this.textSmall,
-      textMuted: textMuted ?? this.textMuted,
+    return Typography(
+      sans: sans == null ? this.sans : sans(),
+      mono: mono == null ? this.mono : mono(),
+      xSmall: xSmall == null ? this.xSmall : xSmall(),
+      small: small == null ? this.small : small(),
+      base: base == null ? this.base : base(),
+      large: large == null ? this.large : large(),
+      xLarge: xLarge == null ? this.xLarge : xLarge(),
+      x2Large: x2Large == null ? this.x2Large : x2Large(),
+      x3Large: x3Large == null ? this.x3Large : x3Large(),
+      x4Large: x4Large == null ? this.x4Large : x4Large(),
+      x5Large: x5Large == null ? this.x5Large : x5Large(),
+      x6Large: x6Large == null ? this.x6Large : x6Large(),
+      x7Large: x7Large == null ? this.x7Large : x7Large(),
+      x8Large: x8Large == null ? this.x8Large : x8Large(),
+      x9Large: x9Large == null ? this.x9Large : x9Large(),
+      thin: thin == null ? this.thin : thin(),
+      light: light == null ? this.light : light(),
+      extraLight: extraLight == null ? this.extraLight : extraLight(),
+      normal: normal == null ? this.normal : normal(),
+      medium: medium == null ? this.medium : medium(),
+      semiBold: semiBold == null ? this.semiBold : semiBold(),
+      bold: bold == null ? this.bold : bold(),
+      extraBold: extraBold == null ? this.extraBold : extraBold(),
+      black: black == null ? this.black : black(),
+      italic: italic == null ? this.italic : italic(),
+      h1: h1 == null ? this.h1 : h1(),
+      h2: h2 == null ? this.h2 : h2(),
+      h3: h3 == null ? this.h3 : h3(),
+      h4: h4 == null ? this.h4 : h4(),
+      p: p == null ? this.p : p(),
+      blockQuote: blockQuote == null ? this.blockQuote : blockQuote(),
+      inlineCode: inlineCode == null ? this.inlineCode : inlineCode(),
+      lead: lead == null ? this.lead : lead(),
+      textLarge: textLarge == null ? this.textLarge : textLarge(),
+      textSmall: textSmall == null ? this.textSmall : textSmall(),
+      textMuted: textMuted == null ? this.textMuted : textMuted(),
     );
   }
 
-  VNLTypography scale(double factor) {
-    return VNLTypography(
+  /// Scales all typography font sizes by the given factor.
+  ///
+  /// Parameters:
+  /// - [factor] (`double`, required): Scaling factor to apply.
+  ///
+  /// Returns: `Typography` — scaled typography.
+  Typography scale(double factor) {
+    return Typography(
       sans: sans.fontSize == null
           ? sans
           : sans.copyWith(fontSize: sans.fontSize! * factor),
@@ -309,8 +393,16 @@ class VNLTypography {
     );
   }
 
-  static VNLTypography lerp(VNLTypography a, VNLTypography b, double t) {
-    return VNLTypography(
+  /// Linearly interpolates between two typographies.
+  ///
+  /// Parameters:
+  /// - [a] (`Typography`, required): Start typography.
+  /// - [b] (`Typography`, required): End typography.
+  /// - [t] (`double`, required): Interpolation position (0.0 to 1.0).
+  ///
+  /// Returns: `Typography` — interpolated typography.
+  static Typography lerp(Typography a, Typography b, double t) {
+    return Typography(
       sans: TextStyle.lerp(a.sans, b.sans, t)!,
       mono: TextStyle.lerp(a.mono, b.mono, t)!,
       xSmall: TextStyle.lerp(a.xSmall, b.xSmall, t)!,
@@ -353,7 +445,7 @@ class VNLTypography {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is VNLTypography &&
+      other is Typography &&
           sans == other.sans &&
           mono == other.mono &&
           xSmall == other.xSmall &&

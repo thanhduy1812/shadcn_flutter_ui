@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class ItemPickerExample1 extends StatelessWidget {
   const ItemPickerExample1({super.key});
@@ -7,9 +7,10 @@ class ItemPickerExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return PrimaryButton(
       onPressed: () {
+        // Show a popover item picker (non-dialog) with a virtual list of 1000 items.
         showItemPicker<int>(
           context,
-          title: Text('Pick an item'),
+          title: const Text('Pick an item'),
           items: ItemBuilder(
             itemCount: 1000,
             itemBuilder: (index) {
@@ -17,24 +18,26 @@ class ItemPickerExample1 extends StatelessWidget {
             },
           ),
           builder: (context, item) {
-            return ItemPickerOption(value: item, child: Text(item.toString()).large);
+            return ItemPickerOption(
+                value: item, child: Text(item.toString()).large);
           },
         ).then(
           (value) {
-            if (value != null) {
+            if (value != null && context.mounted) {
+              // Feedback via toast when a selection is made.
               showToast(
                 context: context,
                 builder: (context, overlay) {
-                  return SurfaceCard(
+                  return VNLSurfaceCard(
                     child: Text('You picked $value!'),
                   );
                 },
               );
-            } else {
+            } else if (context.mounted) {
               showToast(
                 context: context,
                 builder: (context, overlay) {
-                  return const SurfaceCard(
+                  return const VNLSurfaceCard(
                     child: Text('You picked nothing!'),
                   );
                 },

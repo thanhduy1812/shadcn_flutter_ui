@@ -1,36 +1,161 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-/// A widget that tracks the hover state of the mouse cursor
-/// and will call the [onHover] with period of [debounceDuration] when the cursor is hovering over the child widget.
-class HoverActivity extends StatefulWidget {
+/// Theme configuration for hover-related widgets and behaviors.
+///
+/// [HoverTheme] provides configurable durations and behaviors for hover
+/// interactions throughout the application. It can be registered in the
+/// component theme system to customize hover behavior globally.
+///
+/// Example:
+/// ```dart
+/// VNLHoverTheme(
+///   debounceDuration: Duration(milliseconds: 100),
+///   hitTestBehavior: HitTestBehavior.opaque,
+/// )
+/// ```
+class VNLHoverTheme extends ComponentThemeData {
+  /// Debounce duration for repeated hover events.
+  ///
+  /// When set, hover callbacks are throttled to fire at most once per this duration.
+  final Duration? debounceDuration;
+
+  /// Hit test behavior for hover detection.
+  ///
+  /// Determines how the widget participates in hit testing for mouse events.
+  final HitTestBehavior? hitTestBehavior;
+
+  /// Wait duration before showing hover feedback (e.g., tooltips).
+  ///
+  /// Delays the appearance of hover-triggered UI to avoid flashing on quick passes.
+  final Duration? waitDuration;
+
+  /// Minimum duration to keep hover feedback visible once shown.
+  ///
+  /// Prevents hover UI from disappearing too quickly.
+  final Duration? minDuration;
+
+  /// Duration for hover feedback show animations.
+  final Duration? showDuration;
+
+  /// Creates a [HoverTheme] with optional configuration values.
+  const VNLHoverTheme({
+    this.debounceDuration,
+    this.hitTestBehavior,
+    this.waitDuration,
+    this.minDuration,
+    this.showDuration,
+  });
+
+  /// Creates a copy of this theme with selectively replaced properties.
+  ///
+  /// Parameters are [ValueGetter] functions to allow setting values to `null`.
+  VNLHoverTheme copyWith({
+    ValueGetter<Duration?>? debounceDuration,
+    ValueGetter<HitTestBehavior?>? hitTestBehavior,
+    ValueGetter<Duration?>? waitDuration,
+    ValueGetter<Duration?>? minDuration,
+    ValueGetter<Duration?>? showDuration,
+  }) {
+    return VNLHoverTheme(
+      debounceDuration:
+          debounceDuration == null ? this.debounceDuration : debounceDuration(),
+      hitTestBehavior:
+          hitTestBehavior == null ? this.hitTestBehavior : hitTestBehavior(),
+      waitDuration: waitDuration == null ? this.waitDuration : waitDuration(),
+      minDuration: minDuration == null ? this.minDuration : minDuration(),
+      showDuration: showDuration == null ? this.showDuration : showDuration(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is VNLHoverTheme &&
+        other.debounceDuration == debounceDuration &&
+        other.hitTestBehavior == hitTestBehavior &&
+        other.waitDuration == waitDuration &&
+        other.minDuration == minDuration &&
+        other.showDuration == showDuration;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        debounceDuration,
+        hitTestBehavior,
+        waitDuration,
+        minDuration,
+        showDuration,
+      );
+}
+
+/// A widget that tracks mouse hover state and triggers callbacks.
+///
+/// [VNLHoverActivity] monitors when the mouse cursor enters, hovers over, and exits
+/// its child widget, calling appropriate callbacks. The [onHover] callback can be
+/// called repeatedly while hovering if [debounceDuration] is set.
+///
+/// Example:
+/// ```dart
+/// VNLHoverActivity(
+///   debounceDuration: Duration(milliseconds: 500),
+///   onEnter: () => print('Mouse entered'),
+///   onHover: () => print('Still hovering'),
+///   onExit: () => print('Mouse exited'),
+///   child: Container(
+///     width: 100,
+///     height: 100,
+///     color: VNLColors.blue,
+///   ),
+/// )
+/// ```
+class VNLHoverActivity extends StatefulWidget {
+  /// The widget to track for hover events.
   final Widget child;
-  final VoidCallback? onHover;
-  final VoidCallback? onExit;
-  final VoidCallback? onEnter;
-  final Duration debounceDuration;
-  final HitTestBehavior hitTestBehavior;
 
-  const HoverActivity({
+  /// Called periodically while hovering, at intervals of [debounceDuration].
+  ///
+  /// If [debounceDuration] is `null`, this is called only once on initial hover.
+  final VoidCallback? onHover;
+
+  /// Called when the mouse cursor exits the widget bounds.
+  final VoidCallback? onExit;
+
+  /// Called when the mouse cursor first enters the widget bounds.
+  final VoidCallback? onEnter;
+
+  /// Interval for repeated [onHover] callbacks while the cursor remains over the widget.
+  ///
+  /// If `null`, [onHover] is called only once when hover begins.
+  final Duration? debounceDuration;
+
+  /// Hit test behavior determining how this widget participates in pointer event handling.
+  final HitTestBehavior? hitTestBehavior;
+
+  /// Creates a [VNLHoverActivity] widget.
+  const VNLHoverActivity({
     super.key,
     required this.child,
     this.onHover,
     this.onExit,
     this.onEnter,
-    this.hitTestBehavior = HitTestBehavior.deferToChild,
-    this.debounceDuration = const Duration(milliseconds: 100),
+    this.hitTestBehavior,
+    this.debounceDuration,
   });
 
   @override
-  State<HoverActivity> createState() => _HoverActivityState();
+  State<VNLHoverActivity> createState() => _HoverActivityState();
 }
 
-class _HoverActivityState extends State<HoverActivity> with SingleTickerProviderStateMixin {
+class _HoverActivityState extends State<VNLHoverActivity>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.debounceDuration);
+    _controller = AnimationController(
+      vsync: this,
+      duration: widget.debounceDuration,
+    );
     _controller.addStatusListener(_onStatusChanged);
   }
 
@@ -39,7 +164,7 @@ class _HoverActivityState extends State<HoverActivity> with SingleTickerProvider
   }
 
   @override
-  void didUpdateWidget(covariant HoverActivity oldWidget) {
+  void didUpdateWidget(covariant VNLHoverActivity oldWidget) {
     super.didUpdateWidget(oldWidget);
     _controller.duration = widget.debounceDuration;
   }
@@ -52,8 +177,18 @@ class _HoverActivityState extends State<HoverActivity> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    final compTheme = ComponentTheme.maybeOf<VNLHoverTheme>(context);
+    final debounceDuration = styleValue(
+        widgetValue: widget.debounceDuration,
+        themeValue: compTheme?.debounceDuration,
+        defaultValue: const Duration(milliseconds: 100));
+    final behavior = styleValue(
+        widgetValue: widget.hitTestBehavior,
+        themeValue: compTheme?.hitTestBehavior,
+        defaultValue: HitTestBehavior.deferToChild);
+    _controller.duration = debounceDuration;
     return MouseRegion(
-      hitTestBehavior: widget.hitTestBehavior,
+      hitTestBehavior: behavior,
       onEnter: (_) {
         widget.onEnter?.call();
         _controller.repeat(reverse: true);
@@ -67,36 +202,91 @@ class _HoverActivityState extends State<HoverActivity> with SingleTickerProvider
   }
 }
 
-class Hover extends StatefulWidget {
+/// A widget that manages hover state with configurable timing behavior.
+///
+/// [VNLHover] provides sophisticated hover detection with delays and minimum durations
+/// to prevent flickering when the cursor quickly passes over the widget. It calls
+/// [onHover] with `true` when hover activates and `false` when it deactivates.
+///
+/// Unlike [VNLHoverActivity], this widget implements smart timing:
+/// - [waitDuration]: Delay before activating hover
+/// - [minDuration]: Minimum time to keep hover active once triggered
+/// - [showDuration]: Total duration for hover state
+///
+/// Example:
+/// ```dart
+/// VNLHover(
+///   waitDuration: Duration(milliseconds: 500),
+///   minDuration: Duration(milliseconds: 200),
+///   onHover: (hovered) {
+///     print(hovered ? 'VNLHover activated' : 'VNLHover deactivated');
+///   },
+///   child: Container(
+///     width: 100,
+///     height: 100,
+///     color: VNLColors.blue,
+///   ),
+/// )
+/// ```
+class VNLHover extends StatefulWidget {
+  /// The widget to track for hover events.
   final Widget child;
-  final void Function(bool hovered) onHover;
-  final Duration waitDuration;
-  final Duration minDuration; // The minimum duration to show the hover, if the cursor is quickly moved over the widget.
-  final Duration showDuration; // The duration to show the hover
-  final HitTestBehavior hitTestBehavior;
 
-  const Hover({
+  /// Called with `true` when hover activates, `false` when it deactivates.
+  ///
+  /// Activation respects [waitDuration] delay, and deactivation respects [minDuration].
+  final void Function(bool hovered) onHover;
+
+  /// Delay before activating hover after cursor enters.
+  ///
+  /// Prevents accidental activation from quick cursor passes. Defaults to 500ms.
+  final Duration? waitDuration;
+
+  /// Minimum duration to keep hover active once triggered.
+  ///
+  /// Prevents flickering when cursor quickly moves over the widget. Defaults to 0ms.
+  final Duration?
+      minDuration; // The minimum duration to show the hover, if the cursor is quickly moved over the widget.
+
+  /// Total duration for hover state before auto-deactivation.
+  final Duration? showDuration; // The duration to show the hover
+
+  /// Hit test behavior for pointer event handling.
+  final HitTestBehavior? hitTestBehavior;
+
+  /// Creates a [VNLHover] widget with timing configuration.
+  const VNLHover({
     super.key,
     required this.child,
     required this.onHover,
-    this.waitDuration = const Duration(milliseconds: 500),
-    this.minDuration = const Duration(milliseconds: 0),
-    this.showDuration = const Duration(milliseconds: 200),
-    this.hitTestBehavior = HitTestBehavior.deferToChild,
+    this.waitDuration,
+    this.minDuration,
+    this.showDuration,
+    this.hitTestBehavior,
   });
 
   @override
-  _HoverState createState() => _HoverState();
+  State<VNLHover> createState() => _HoverState();
 }
 
-class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
+class _HoverState extends State<VNLHover> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   int? _enterTime;
+  late Duration _waitDur;
+  late Duration _minDur;
+  late Duration _showDur;
+  late HitTestBehavior _behavior;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.waitDuration);
+    _waitDur = widget.waitDuration ?? const Duration(milliseconds: 500);
+    _minDur = widget.minDuration ?? const Duration(milliseconds: 0);
+    _showDur = widget.showDuration ?? const Duration(milliseconds: 200);
+    _controller = AnimationController(
+      vsync: this,
+      duration: _waitDur,
+    );
     _controller.addStatusListener(_onStatusChanged);
   }
 
@@ -106,12 +296,13 @@ class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
   }
 
   void _onExit(bool cursorOut) {
-    int minDuration = widget.minDuration.inMilliseconds;
+    int minDuration = _minDur.inMilliseconds;
     int? enterTime = _enterTime;
     if (enterTime != null) {
       int duration = DateTime.now().millisecondsSinceEpoch - enterTime;
-      _controller.reverseDuration =
-          cursorOut ? Duration(milliseconds: duration < minDuration ? minDuration : 0) : widget.showDuration;
+      _controller.reverseDuration = cursorOut
+          ? Duration(milliseconds: duration < minDuration ? minDuration : 0)
+          : _showDur;
       _controller.reverse();
     }
     _enterTime = null;
@@ -133,38 +324,56 @@ class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final platform = VNLTheme.of(context).platform;
-    bool enableLongPress =
-        platform == TargetPlatform.iOS || platform == TargetPlatform.android || platform == TargetPlatform.fuchsia;
+    final platform = Theme.of(context).platform;
+    final compTheme = ComponentTheme.maybeOf<VNLHoverTheme>(context);
+    _waitDur = styleValue(
+        widgetValue: widget.waitDuration,
+        themeValue: compTheme?.waitDuration,
+        defaultValue: const Duration(milliseconds: 500));
+    _minDur = styleValue(
+        widgetValue: widget.minDuration,
+        themeValue: compTheme?.minDuration,
+        defaultValue: const Duration(milliseconds: 0));
+    _showDur = styleValue(
+        widgetValue: widget.showDuration,
+        themeValue: compTheme?.showDuration,
+        defaultValue: const Duration(milliseconds: 200));
+    _behavior = styleValue(
+        widgetValue: widget.hitTestBehavior,
+        themeValue: compTheme?.hitTestBehavior,
+        defaultValue: HitTestBehavior.deferToChild);
+    _controller.duration = _waitDur;
+    bool enableLongPress = platform == TargetPlatform.iOS ||
+        platform == TargetPlatform.android ||
+        platform == TargetPlatform.fuchsia;
     return TapRegion(
+      behavior: _behavior,
       onTapOutside: (details) {
         _onExit(true);
       },
       child: MouseRegion(
+        hitTestBehavior: _behavior,
         onEnter: (_) => _onEnter(),
         onExit: (_) {
           _onExit(true);
         },
         child: GestureDetector(
           // for mobile platforms, hover is triggered by a long press
-          onLongPressDown:
-              enableLongPress
-                  ? (details) {
-                    _onEnter();
-                  }
-                  : null,
-          onLongPressCancel:
-              enableLongPress
-                  ? () {
-                    _onExit(true);
-                  }
-                  : null,
-          onLongPressUp:
-              enableLongPress
-                  ? () {
-                    _onExit(true);
-                  }
-                  : null,
+          onLongPressDown: enableLongPress
+              ? (details) {
+                  _onEnter();
+                }
+              : null,
+          onLongPressCancel: enableLongPress
+              ? () {
+                  _onExit(true);
+                }
+              : null,
+          onLongPressUp: enableLongPress
+              ? () {
+                  _onExit(true);
+                }
+              : null,
           child: widget.child,
         ),
       ),

@@ -1,35 +1,149 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
+
+/// Theme data for customizing [VNLInputOTP] widget appearance.
+///
+/// This class defines the visual properties that can be applied to
+/// [VNLInputOTP] widgets, including spacing between OTP input fields
+/// and the height of the input containers. These properties can be
+/// set at the theme level to provide consistent styling across the application.
+class VNLInputOTPTheme extends ComponentThemeData {
+  /// Horizontal spacing between OTP input fields.
+  final double? spacing;
+
+  /// Height of each OTP input container.
+  final double? height;
+
+  /// Creates an [InputOTPTheme].
+  ///
+  /// Parameters:
+  /// - [spacing] (`double?`, optional): Space between input fields.
+  /// - [height] (`double?`, optional): Height of input containers.
+  const VNLInputOTPTheme({this.spacing, this.height});
+
+  /// Creates a copy of this theme with specified properties overridden.
+  ///
+  /// Parameters:
+  /// - [spacing] (`ValueGetter<double?>?`, optional): New spacing value.
+  /// - [height] (`ValueGetter<double?>?`, optional): New height value.
+  ///
+  /// Returns: A new [InputOTPTheme] with updated properties.
+  VNLInputOTPTheme copyWith({
+    ValueGetter<double?>? spacing,
+    ValueGetter<double?>? height,
+  }) {
+    return VNLInputOTPTheme(
+      spacing: spacing == null ? this.spacing : spacing(),
+      height: height == null ? this.height : height(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is VNLInputOTPTheme &&
+        other.spacing == spacing &&
+        other.height == height;
+  }
+
+  @override
+  int get hashCode => Object.hash(spacing, height);
+}
 
 class _InputOTPSpacing extends StatelessWidget {
   const _InputOTPSpacing();
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
-    return SizedBox(width: theme.scaling * 8);
+    final theme = Theme.of(context);
+    final compTheme = ComponentTheme.maybeOf<VNLInputOTPTheme>(context);
+    return SizedBox(width: compTheme?.spacing ?? theme.scaling * 8);
   }
 }
 
-abstract class InputOTPChild {
-  static InputOTPChild get separator => const WidgetInputOTPChild(OTPSeparator());
-  static InputOTPChild get space => const WidgetInputOTPChild(_InputOTPSpacing());
-  static InputOTPChild get empty => const WidgetInputOTPChild(SizedBox());
-  factory InputOTPChild.input({
+/// Abstract base class for OTP input child elements.
+///
+/// Defines the interface for children that can be placed within an [VNLInputOTP]
+/// widget, including actual input fields, separators, and spacers.
+/// Subclasses implement the [build] method to render their content.
+///
+/// Common factories:
+/// - [separator]: Creates a visual separator between OTP groups.
+/// - [space]: Creates spacing between OTP input fields.
+/// - [empty]: Creates an empty placeholder.
+/// - [VNLInputOTPChild.input]: Creates a configurable character input.
+/// - [VNLInputOTPChild.character]: Creates a character input with preset filters.
+///
+/// Example:
+/// ```dart
+/// VNLInputOTP(
+///   children: [
+///     VNLInputOTPChild.input(predicate: (cp) => cp >= 48 && cp <= 57),
+///     VNLInputOTPChild.space,
+///     VNLInputOTPChild.input(),
+///   ],
+/// )
+/// ```
+abstract class VNLInputOTPChild {
+  /// A visual separator between OTP groups (e.g., a dash or line).
+  static VNLInputOTPChild get separator =>
+      const VNLWidgetInputOTPChild(VNLOTPSeparator());
+
+  /// Spacing between OTP input fields.
+  static VNLInputOTPChild get space =>
+      const VNLWidgetInputOTPChild(_InputOTPSpacing());
+
+  /// An empty placeholder that takes no space.
+  static VNLInputOTPChild get empty => const VNLWidgetInputOTPChild(SizedBox());
+
+  /// Creates a customizable character input field.
+  ///
+  /// Parameters:
+  /// - [predicate] (`CodepointPredicate?`, optional): Function to validate codepoints.
+  /// - [transform] (`CodepointUnaryOperator?`, optional): Function to transform codepoints.
+  /// - [obscured] (`bool`, default: `false`): Whether to obscure the input.
+  /// - [readOnly] (`bool`, default: `false`): Whether the input is read-only.
+  /// - [keyboardType] (`TextInputType?`, optional): Keyboard type for input.
+  ///
+  /// Returns: A [VNLCharacterInputOTPChild] configured with the specified options.
+  factory VNLInputOTPChild.input({
     CodepointPredicate? predicate,
     CodepointUnaryOperator? transform,
     bool obscured = false,
     bool readOnly = false,
     TextInputType? keyboardType,
-  }) => CharacterInputOTPChild(
-    predicate: predicate,
-    transform: transform,
-    obscured: obscured,
-    readOnly: readOnly,
-    keyboardType: keyboardType,
-  );
-  factory InputOTPChild.character({
+  }) =>
+      VNLCharacterInputOTPChild(
+        predicate: predicate,
+        transform: transform,
+        obscured: obscured,
+        readOnly: readOnly,
+        keyboardType: keyboardType,
+      );
+
+  /// Creates a character input with alphabet and digit filtering.
+  ///
+  /// Parameters:
+  /// - [allowLowercaseAlphabet] (`bool`, default: `false`): Allow lowercase letters.
+  /// - [allowUppercaseAlphabet] (`bool`, default: `false`): Allow uppercase letters.
+  /// - [allowDigit] (`bool`, default: `false`): Allow numeric digits.
+  /// - [obscured] (`bool`, default: `false`): Whether to obscure the input.
+  /// - [onlyUppercaseAlphabet] (`bool`, default: `false`): Convert to uppercase only.
+  /// - [onlyLowercaseAlphabet] (`bool`, default: `false`): Convert to lowercase only.
+  /// - [readOnly] (`bool`, default: `false`): Whether the input is read-only.
+  /// - [keyboardType] (`TextInputType?`, optional): Keyboard type for input.
+  ///
+  /// Returns: A [VNLCharacterInputOTPChild] configured for alphabet/digit input.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLInputOTPChild.character(
+  ///   allowDigit: true,
+  ///   allowUppercaseAlphabet: true,
+  /// )
+  /// ```
+  factory VNLInputOTPChild.character({
     bool allowLowercaseAlphabet = false,
     bool allowUppercaseAlphabet = false,
     bool allowDigit = false,
@@ -39,37 +153,36 @@ abstract class InputOTPChild {
     bool readOnly = false,
     TextInputType? keyboardType,
   }) {
-    assert(
-      !(onlyUppercaseAlphabet && onlyLowercaseAlphabet),
-      'onlyUppercaseAlphabet and onlyLowercaseAlphabet cannot be true at the same time',
-    );
-    keyboardType ??=
-        allowDigit &&
-                !allowLowercaseAlphabet &&
-                !allowUppercaseAlphabet &&
-                !onlyUppercaseAlphabet &&
-                !onlyLowercaseAlphabet
-            ? TextInputType.number
-            : TextInputType.text;
-    return CharacterInputOTPChild(
+    assert(!(onlyUppercaseAlphabet && onlyLowercaseAlphabet),
+        'onlyUppercaseAlphabet and onlyLowercaseAlphabet cannot be true at the same time');
+    keyboardType ??= allowDigit &&
+            !allowLowercaseAlphabet &&
+            !allowUppercaseAlphabet &&
+            !onlyUppercaseAlphabet &&
+            !onlyLowercaseAlphabet
+        ? TextInputType.number
+        : TextInputType.text;
+    return VNLCharacterInputOTPChild(
       predicate: (codepoint) {
-        if (allowLowercaseAlphabet && CharacterInputOTPChild.isAlphabetLower(codepoint)) {
+        if (allowLowercaseAlphabet &&
+            VNLCharacterInputOTPChild.isAlphabetLower(codepoint)) {
           return true;
         }
-        if (allowUppercaseAlphabet && CharacterInputOTPChild.isAlphabetUpper(codepoint)) {
+        if (allowUppercaseAlphabet &&
+            VNLCharacterInputOTPChild.isAlphabetUpper(codepoint)) {
           return true;
         }
-        if (allowDigit && CharacterInputOTPChild.isDigit(codepoint)) {
+        if (allowDigit && VNLCharacterInputOTPChild.isDigit(codepoint)) {
           return true;
         }
         return false;
       },
       transform: (codepoint) {
         if (onlyUppercaseAlphabet) {
-          return CharacterInputOTPChild.lowerToUpper(codepoint);
+          return VNLCharacterInputOTPChild.lowerToUpper(codepoint);
         }
         if (onlyLowercaseAlphabet) {
-          return CharacterInputOTPChild.upperToLower(codepoint);
+          return VNLCharacterInputOTPChild.upperToLower(codepoint);
         }
         return codepoint;
       },
@@ -78,15 +191,53 @@ abstract class InputOTPChild {
       readOnly: readOnly,
     );
   }
-  const InputOTPChild();
-  Widget build(BuildContext context, InputOTPChildData data);
+
+  /// Creates an [VNLInputOTPChild].
+  const VNLInputOTPChild();
+
+  /// Builds the widget for this OTP child.
+  ///
+  /// Parameters:
+  /// - [context] (`BuildContext`, required): The build context.
+  /// - [data] (`VNLInputOTPChildData`, required): Data for building the child.
+  ///
+  /// Returns: The widget representing this OTP child.
+  Widget build(BuildContext context, VNLInputOTPChildData data);
+
+  /// Whether this child can hold a value (i.e., is an input field).
   bool get hasValue;
 }
 
+/// A predicate that tests whether a Unicode codepoint is valid.
+///
+/// Parameters:
+/// - [codepoint] (`int`): The Unicode codepoint to test.
+///
+/// Returns: `true` if the codepoint passes the predicate, `false` otherwise.
 typedef CodepointPredicate = bool Function(int codepoint);
+
+/// A function that transforms a Unicode codepoint to another.
+///
+/// Parameters:
+/// - [codepoint] (`int`): The Unicode codepoint to transform.
+///
+/// Returns: The transformed codepoint.
 typedef CodepointUnaryOperator = int Function(int codepoint);
 
-class CharacterInputOTPChild extends InputOTPChild {
+/// A character-based OTP input field with validation and transformation.
+///
+/// Supports filtering input based on codepoint predicates and transforming
+/// input characters (e.g., converting to uppercase). Commonly used for
+/// creating numeric or alphanumeric OTP fields.
+///
+/// Example:
+/// ```dart
+/// VNLCharacterInputOTPChild(
+///   predicate: VNLCharacterInputOTPChild.isDigit,
+///   keyboardType: TextInputType.number,
+/// )
+/// ```
+class VNLCharacterInputOTPChild extends VNLInputOTPChild {
   static const int _startAlphabetLower = 97; // 'a'
   static const int _endAlphabetLower = 122; // 'z'
   static const int _startAlphabetUpper = 65; // 'A'
@@ -94,19 +245,75 @@ class CharacterInputOTPChild extends InputOTPChild {
   static const int _startDigit = 48; // '0'
   static const int _endDigit = 57; // '9'
 
-  static bool isAlphabetLower(int codepoint) => codepoint >= _startAlphabetLower && codepoint <= _endAlphabetLower;
-  static bool isAlphabetUpper(int codepoint) => codepoint >= _startAlphabetUpper && codepoint <= _endAlphabetUpper;
-  static int lowerToUpper(int codepoint) => isAlphabetLower(codepoint) ? codepoint - 32 : codepoint;
-  static int upperToLower(int codepoint) => isAlphabetUpper(codepoint) ? codepoint + 32 : codepoint;
-  static bool isDigit(int codepoint) => codepoint >= _startDigit && codepoint <= _endDigit;
+  /// Tests if the codepoint is a lowercase letter (a-z).
+  ///
+  /// Parameters:
+  /// - [codepoint] (`int`, required): The codepoint to test.
+  ///
+  /// Returns: `true` if the codepoint is a lowercase letter.
+  static bool isAlphabetLower(int codepoint) =>
+      codepoint >= _startAlphabetLower && codepoint <= _endAlphabetLower;
 
+  /// Tests if the codepoint is an uppercase letter (A-Z).
+  ///
+  /// Parameters:
+  /// - [codepoint] (`int`, required): The codepoint to test.
+  ///
+  /// Returns: `true` if the codepoint is an uppercase letter.
+  static bool isAlphabetUpper(int codepoint) =>
+      codepoint >= _startAlphabetUpper && codepoint <= _endAlphabetUpper;
+
+  /// Converts a lowercase letter to uppercase.
+  ///
+  /// Parameters:
+  /// - [codepoint] (`int`, required): The codepoint to convert.
+  ///
+  /// Returns: The uppercase codepoint if lowercase, otherwise unchanged.
+  static int lowerToUpper(int codepoint) =>
+      isAlphabetLower(codepoint) ? codepoint - 32 : codepoint;
+
+  /// Converts an uppercase letter to lowercase.
+  ///
+  /// Parameters:
+  /// - [codepoint] (`int`, required): The codepoint to convert.
+  ///
+  /// Returns: The lowercase codepoint if uppercase, otherwise unchanged.
+  static int upperToLower(int codepoint) =>
+      isAlphabetUpper(codepoint) ? codepoint + 32 : codepoint;
+
+  /// Tests if the codepoint is a digit (0-9).
+  ///
+  /// Parameters:
+  /// - [codepoint] (`int`, required): The codepoint to test.
+  ///
+  /// Returns: `true` if the codepoint is a digit.
+  static bool isDigit(int codepoint) =>
+      codepoint >= _startDigit && codepoint <= _endDigit;
+
+  /// Predicate to validate allowed codepoints.
   final CodepointPredicate? predicate;
+
+  /// Function to transform codepoints before storing.
   final CodepointUnaryOperator? transform;
+
+  /// Whether to obscure the input character.
   final bool obscured;
+
+  /// Whether the input is read-only.
   final bool readOnly;
+
+  /// The keyboard type to use for input.
   final TextInputType? keyboardType;
 
-  const CharacterInputOTPChild({
+  /// Creates a [VNLCharacterInputOTPChild].
+  ///
+  /// Parameters:
+  /// - [predicate] (`CodepointPredicate?`, optional): Validates input codepoints.
+  /// - [transform] (`CodepointUnaryOperator?`, optional): Transforms codepoints.
+  /// - [obscured] (`bool`, default: `false`): Whether to obscure the character.
+  /// - [readOnly] (`bool`, default: `false`): Whether the field is read-only.
+  /// - [keyboardType] (`TextInputType?`, optional): Keyboard type for input.
+  const VNLCharacterInputOTPChild({
     this.predicate,
     this.transform,
     this.obscured = false,
@@ -120,7 +327,7 @@ class CharacterInputOTPChild extends InputOTPChild {
   }
 
   @override
-  Widget build(BuildContext context, InputOTPChildData data) {
+  Widget build(BuildContext context, VNLInputOTPChildData data) {
     return _OTPCharacterInput(
       key: data._key,
       data: data,
@@ -134,7 +341,7 @@ class CharacterInputOTPChild extends InputOTPChild {
 }
 
 class _OTPCharacterInput extends StatefulWidget {
-  final InputOTPChildData data;
+  final VNLInputOTPChildData data;
   final CodepointPredicate? predicate;
   final CodepointUnaryOperator? transform;
   final bool obscured;
@@ -206,17 +413,24 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
     }
   }
 
-  BorderRadius getBorderRadiusByRelativeIndex(VNLThemeData theme, int relativeIndex, int groupLength) {
+  BorderRadius getBorderRadiusByRelativeIndex(
+      ThemeData theme, int relativeIndex, int groupLength) {
     if (relativeIndex == 0) {
-      return BorderRadius.only(topLeft: Radius.circular(theme.radiusMd), bottomLeft: Radius.circular(theme.radiusMd));
+      return BorderRadius.only(
+        topLeft: Radius.circular(theme.radiusMd),
+        bottomLeft: Radius.circular(theme.radiusMd),
+      );
     } else if (relativeIndex == groupLength - 1) {
-      return BorderRadius.only(topRight: Radius.circular(theme.radiusMd), bottomRight: Radius.circular(theme.radiusMd));
+      return BorderRadius.only(
+        topRight: Radius.circular(theme.radiusMd),
+        bottomRight: Radius.circular(theme.radiusMd),
+      );
     } else {
       return BorderRadius.zero;
     }
   }
 
-  Widget getValueWidget(VNLThemeData theme) {
+  Widget getValueWidget(ThemeData theme) {
     if (_value == null) {
       return const SizedBox();
     }
@@ -224,10 +438,15 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
       return Container(
         width: 8 * theme.scaling,
         height: 8 * theme.scaling,
-        decoration: BoxDecoration(color: theme.colorScheme.foreground, shape: BoxShape.circle),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.foreground,
+          shape: BoxShape.circle,
+        ),
       );
     }
-    return Text(String.fromCharCode(_value!)).small().foreground();
+    return Text(
+      String.fromCharCode(_value!),
+    ).small().foreground();
   }
 
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
@@ -235,7 +454,7 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     return FocusScope(
       node: _focusScopeNode,
       onKeyEvent: (node, event) {
@@ -281,46 +500,56 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
         child: Stack(
           children: [
             Positioned.fill(
-              child: AnimatedBuilder(
-                animation: widget.data.focusNode!,
+              child: ListenableBuilder(
+                listenable: widget.data.focusNode!,
                 builder: (context, child) {
-                  if (widget.data.focusNode!.hasFocus) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: theme.colorScheme.ring, strokeAlign: BorderSide.strokeAlignOutside),
-                        borderRadius: getBorderRadiusByRelativeIndex(
-                          theme,
-                          widget.data.relativeIndex,
-                          widget.data.groupLength,
-                        ),
-                      ),
-                    );
-                  } else {
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: theme.colorScheme.border, strokeAlign: BorderSide.strokeAlignOutside),
-                        borderRadius: getBorderRadiusByRelativeIndex(
-                          theme,
-                          widget.data.relativeIndex,
-                          widget.data.groupLength,
-                        ),
-                      ),
-                    );
-                  }
+                  return VNLFocusOutline(
+                    focused: widget.data.focusNode!.hasFocus,
+                    borderRadius: getBorderRadiusByRelativeIndex(
+                      theme,
+                      widget.data.relativeIndex,
+                      widget.data.groupLength,
+                    ),
+                    child: child!,
+                  );
                 },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.input.scaleAlpha(0.3),
+                    border: Border.all(
+                      color: theme.colorScheme.border,
+                    ),
+                    borderRadius: getBorderRadiusByRelativeIndex(
+                      theme,
+                      widget.data.relativeIndex,
+                      widget.data.groupLength,
+                    ),
+                  ),
+                ),
               ),
             ),
-            if (_value != null) Positioned.fill(child: IgnorePointer(child: Center(child: getValueWidget(theme)))),
+            if (_value != null)
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: Center(
+                    child: getValueWidget(theme),
+                  ),
+                ),
+              ),
             Positioned.fill(
               key: _key,
-              child: Center(
-                child: Opacity(
-                  opacity: _value == null ? 1 : 0,
+              child: Opacity(
+                opacity: _value == null ? 1 : 0,
+                child: ComponentTheme(
+                  data: const VNLFocusOutlineTheme(
+                    border: Border.fromBorderSide(BorderSide.none),
+                  ),
                   child: VNLTextField(
-                    border: false,
+                    border: const Border.fromBorderSide(BorderSide.none),
+                    decoration: const BoxDecoration(),
                     expands: false,
                     maxLines: null,
-                    textAlignVertical: TextAlignVertical.top,
+                    textAlignVertical: TextAlignVertical.center,
                     keyboardType: widget.keyboardType,
                     readOnly: widget.readOnly,
                     textAlign: TextAlign.center,
@@ -338,44 +567,107 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
   }
 }
 
-class WidgetInputOTPChild extends InputOTPChild {
+/// A widget-based OTP child that doesn't accept input.
+///
+/// Used for displaying static content like separators or spacers within
+/// an [VNLInputOTP] widget. This child does not hold any value.
+///
+/// Example:
+/// ```dart
+/// VNLWidgetInputOTPChild(
+///   Icon(Icons.arrow_forward),
+/// )
+/// ```
+class VNLWidgetInputOTPChild extends VNLInputOTPChild {
+  /// The widget to display.
   final Widget child;
 
-  const WidgetInputOTPChild(this.child);
+  /// Creates a [VNLWidgetInputOTPChild].
+  ///
+  /// Parameters:
+  /// - [child] (`Widget`, required): The widget to display.
+  const VNLWidgetInputOTPChild(this.child);
 
   @override
-  Widget build(BuildContext context, InputOTPChildData data) {
-    final theme = VNLTheme.of(context);
-    return SizedBox(width: theme.scaling * 32, height: theme.scaling * 32, child: Center(child: child));
+  Widget build(BuildContext context, VNLInputOTPChildData data) {
+    final theme = Theme.of(context);
+    return SizedBox(
+      width: theme.scaling * 32,
+      height: theme.scaling * 32,
+      child: Center(
+        child: child,
+      ),
+    );
   }
 
   @override
   bool get hasValue => false;
 }
 
-class OTPSeparator extends StatelessWidget {
-  const OTPSeparator({super.key});
+/// A visual separator for OTP input groups.
+///
+/// Displays a dash "-" character between groups of OTP input fields.
+/// Automatically applies theming and spacing based on the current theme.
+///
+/// Example:
+/// ```dart
+/// VNLInputOTP(
+///   children: [
+///     VNLInputOTPChild.input(),
+///     VNLOTPSeparator(),
+///     VNLInputOTPChild.input(),
+///   ],
+/// )
+/// ```
+class VNLOTPSeparator extends StatelessWidget {
+  /// Creates an [VNLOTPSeparator].
+  const VNLOTPSeparator({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
-    return const Text('-').bold().withPadding(horizontal: theme.scaling * 4).base().foreground();
+    final theme = Theme.of(context);
+    return const Text('-')
+        .bold()
+        .withPadding(horizontal: theme.scaling * 4)
+        .base()
+        .foreground();
   }
 }
 
-class InputOTPChildData {
+/// Data passed to [VNLInputOTPChild.build] for rendering OTP input fields.
+///
+/// Contains information about focus nodes, index positions, current value,
+/// and callbacks for changing values. Used internally by [VNLInputOTP] to
+/// coordinate input fields.
+class VNLInputOTPChildData {
+  /// Focus node for the previous input field.
   final FocusNode? previousFocusNode;
+
+  /// Focus node for this input field.
   final FocusNode? focusNode;
+
+  /// Focus node for the next input field.
   final FocusNode? nextFocusNode;
+
+  /// Overall index within all OTP children.
   final int index;
+
+  /// Index of the group this child belongs to.
   final int groupIndex;
+
+  /// Total number of children in this group.
   final int groupLength;
+
+  /// Relative index within the group.
   final int relativeIndex;
+
+  /// Current value (codepoint) of this input field.
   final int? value;
+
   final _InputOTPState _state;
   final GlobalKey<_OTPCharacterInputState>? _key;
 
-  InputOTPChildData._(
+  VNLInputOTPChildData._(
     this._state,
     this._key, {
     required this.focusNode,
@@ -388,6 +680,10 @@ class InputOTPChildData {
     this.value,
   });
 
+  /// Updates the value for this OTP input field.
+  ///
+  /// Parameters:
+  /// - [value] (`int?`, required): The new codepoint value or null.
   void changeValue(int? value) {
     _state._changeValue(index, value);
   }
@@ -398,7 +694,7 @@ class _InputOTPChild {
   final FocusNode focusNode;
   final int groupIndex;
   final int relativeIndex;
-  final InputOTPChild child;
+  final VNLInputOTPChild child;
   int groupLength = 0;
   final GlobalKey<_OTPCharacterInputState> key;
 
@@ -410,37 +706,119 @@ class _InputOTPChild {
     required this.relativeIndex,
   }) : key = GlobalKey<_OTPCharacterInputState>();
 
-  _InputOTPChild.withNewChild(_InputOTPChild old, InputOTPChild newChild)
-    : focusNode = old.focusNode,
-      value = old.value,
-      groupIndex = old.groupIndex,
-      relativeIndex = old.relativeIndex,
-      child = newChild,
-      groupLength = old.groupLength,
-      key = old.key;
+  _InputOTPChild.withNewChild(_InputOTPChild old, VNLInputOTPChild newChild)
+      : focusNode = old.focusNode,
+        value = old.value,
+        groupIndex = old.groupIndex,
+        relativeIndex = old.relativeIndex,
+        child = newChild,
+        groupLength = old.groupLength,
+        key = old.key;
 }
 
+/// A list of nullable codepoints representing OTP input values.
+///
+/// Each element represents a character's Unicode codepoint, or null if not set.
 typedef OTPCodepointList = List<int?>;
 
+/// Extension methods for [OTPCodepointList].
 extension OTPCodepointListExtension on OTPCodepointList {
+  /// Converts the codepoint list to a string.
+  ///
+  /// Null values are converted to empty strings.
+  ///
+  /// Returns: A string representation of the OTP code.
+  ///
+  /// Example:
+  /// ```dart
+  /// final codes = [49, 50, 51]; // '1', '2', '3'
+  /// print(codes.otpToString()); // '123'
+  /// ```
   String otpToString() {
     return map((e) => e == null ? '' : String.fromCharCode(e)).join();
   }
 }
 
+/// A specialized input widget for One-Time Password (OTP) and verification code entry.
+///
+/// [VNLInputOTP] provides a user-friendly interface for entering OTP codes, verification
+/// numbers, and similar sequential input scenarios. The widget displays a series of
+/// individual input fields that automatically advance focus as the user types,
+/// creating an intuitive experience for multi-digit input.
+///
+/// Key features:
+/// - Sequential character input with automatic focus advancement
+/// - Customizable field layout with separators and spacing
+/// - Support for various character types (digits, letters, symbols)
+/// - Keyboard navigation and clipboard paste support
+/// - VNLForm integration with validation support
+/// - Accessibility features for screen readers
+/// - Theming and visual customization
+///
+/// The widget uses a flexible child system that allows mixing input fields
+/// with separators, spaces, and custom widgets:
+/// - Character input fields for actual OTP digits/letters
+/// - Separators for visual grouping (e.g., dashes, dots)
+/// - Spacing elements for layout control
+/// - Custom widgets for specialized display needs
+///
+/// Common use cases:
+/// - SMS verification codes (e.g., 6-digit codes)
+/// - Two-factor authentication tokens
+/// - Credit card security codes
+/// - License key input
+/// - PIN code entry
+///
+/// Example:
+/// ```dart
+/// VNLInputOTP(
+///   children: [
+///     VNLCharacterInputOTPChild(),
+///     VNLCharacterInputOTPChild(),
+///     VNLCharacterInputOTPChild(),
+///     VNLInputOTPChild.separator,
+///     VNLCharacterInputOTPChild(),
+///     VNLCharacterInputOTPChild(),
+///     VNLCharacterInputOTPChild(),
+///   ],
+///   onChanged: (code) => _handleOTPChange(code),
+///   onSubmitted: (code) => _verifyOTP(code),
+/// );
+/// ```
 class VNLInputOTP extends StatefulWidget {
-  final List<InputOTPChild> children;
+  /// The list of children defining input fields, separators, and spaces.
+  final List<VNLInputOTPChild> children;
+
+  /// Initial OTP codepoint values.
   final OTPCodepointList? initialValue;
+
+  /// Called when the OTP value changes.
   final ValueChanged<OTPCodepointList>? onChanged;
+
+  /// Called when the user submits the OTP (e.g., presses Enter on last field).
   final ValueChanged<OTPCodepointList>? onSubmitted;
 
-  const VNLInputOTP({super.key, required this.children, this.initialValue, this.onChanged, this.onSubmitted});
+  /// Creates an [VNLInputOTP] widget.
+  ///
+  /// Parameters:
+  /// - [children] (`List<VNLInputOTPChild>`, required): The OTP input fields and decorations.
+  /// - [initialValue] (`OTPCodepointList?`, optional): Initial codepoints.
+  /// - [onChanged] (`ValueChanged<OTPCodepointList>?`, optional): Value change callback.
+  /// - [onSubmitted] (`ValueChanged<OTPCodepointList>?`, optional): Submit callback.
+  const VNLInputOTP({
+    super.key,
+    required this.children,
+    this.initialValue,
+    this.onChanged,
+    this.onSubmitted,
+  });
 
   @override
   State<VNLInputOTP> createState() => _InputOTPState();
 }
 
-class _InputOTPState extends State<VNLInputOTP> with FormValueSupplier<OTPCodepointList, VNLInputOTP> {
+class _InputOTPState extends State<VNLInputOTP>
+    with FormValueSupplier<OTPCodepointList, VNLInputOTP> {
   final List<_InputOTPChild> _children = [];
 
   OTPCodepointList get value {
@@ -458,6 +836,7 @@ class _InputOTPState extends State<VNLInputOTP> with FormValueSupplier<OTPCodepo
         widget.onSubmitted?.call(val);
       }
     }
+    formValue = this.value;
   }
 
   @override
@@ -469,15 +848,13 @@ class _InputOTPState extends State<VNLInputOTP> with FormValueSupplier<OTPCodepo
     for (final child in widget.children) {
       if (child.hasValue) {
         int? value = getInitialValue(index);
-        _children.add(
-          _InputOTPChild(
-            focusNode: FocusNode(),
-            child: child,
-            value: value,
-            groupIndex: groupIndex,
-            relativeIndex: relativeIndex,
-          ),
-        );
+        _children.add(_InputOTPChild(
+          focusNode: FocusNode(),
+          child: child,
+          value: value,
+          groupIndex: groupIndex,
+          relativeIndex: relativeIndex,
+        ));
         index++;
         relativeIndex++;
       } else {
@@ -505,24 +882,26 @@ class _InputOTPState extends State<VNLInputOTP> with FormValueSupplier<OTPCodepo
   @override
   void didUpdateWidget(covariant VNLInputOTP oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!listEquals(oldWidget.initialValue, widget.initialValue) || !listEquals(oldWidget.children, widget.children)) {
+    if (!listEquals(oldWidget.initialValue, widget.initialValue) ||
+        !listEquals(oldWidget.children, widget.children)) {
       int index = 0;
       int groupIndex = 0;
       int relativeIndex = 0;
       for (final child in widget.children) {
         if (child.hasValue) {
           if (index < _children.length) {
-            _children[index] = _InputOTPChild.withNewChild(_children[index], child);
-          } else {
-            _children.add(
-              _InputOTPChild(
-                focusNode: FocusNode(),
-                child: child,
-                value: getInitialValue(index),
-                groupIndex: groupIndex,
-                relativeIndex: relativeIndex,
-              ),
+            _children[index] = _InputOTPChild.withNewChild(
+              _children[index],
+              child,
             );
+          } else {
+            _children.add(_InputOTPChild(
+              focusNode: FocusNode(),
+              child: child,
+              value: getInitialValue(index),
+              groupIndex: groupIndex,
+              relativeIndex: relativeIndex,
+            ));
           }
           index++;
           relativeIndex++;
@@ -544,34 +923,32 @@ class _InputOTPState extends State<VNLInputOTP> with FormValueSupplier<OTPCodepo
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     List<Widget> children = [];
     int i = 0;
     for (final child in widget.children) {
       if (child.hasValue) {
-        children.add(
-          child.build(
-            context,
-            InputOTPChildData._(
-              this,
-              _children[i].key,
-              focusNode: _children[i].focusNode,
-              index: i,
-              groupIndex: _children[i].groupIndex,
-              relativeIndex: _children[i].relativeIndex,
-              previousFocusNode: i == 0 ? null : _children[i - 1].focusNode,
-              nextFocusNode: i == _children.length - 1 ? null : _children[i + 1].focusNode,
-              value: _children[i].value,
-              groupLength: _children[i].groupLength,
-            ),
+        children.add(child.build(
+          context,
+          VNLInputOTPChildData._(
+            this,
+            _children[i].key,
+            focusNode: _children[i].focusNode,
+            index: i,
+            groupIndex: _children[i].groupIndex,
+            relativeIndex: _children[i].relativeIndex,
+            previousFocusNode: i == 0 ? null : _children[i - 1].focusNode,
+            nextFocusNode:
+                i == _children.length - 1 ? null : _children[i + 1].focusNode,
+            value: _children[i].value,
+            groupLength: _children[i].groupLength,
           ),
-        );
+        ));
         i++;
       } else {
-        children.add(
-          child.build(
+        children.add(child.build(
             context,
-            InputOTPChildData._(
+            VNLInputOTPChildData._(
               this,
               null,
               focusNode: null,
@@ -582,14 +959,19 @@ class _InputOTPState extends State<VNLInputOTP> with FormValueSupplier<OTPCodepo
               nextFocusNode: null,
               value: null,
               groupLength: -1,
-            ),
-          ),
-        );
+            )));
       }
     }
+    final compTheme = ComponentTheme.maybeOf<VNLInputOTPTheme>(context);
     return SizedBox(
-      height: theme.scaling * 36,
-      child: IntrinsicWidth(child: Row(children: [for (final child in children) Expanded(child: child)])),
+      height: compTheme?.height ?? theme.scaling * 36,
+      child: IntrinsicWidth(
+        child: Row(
+          children: [
+            for (final child in children) Expanded(child: child),
+          ],
+        ),
+      ),
     );
   }
 

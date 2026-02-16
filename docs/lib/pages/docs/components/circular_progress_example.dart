@@ -13,15 +13,15 @@ class CircularProgressExample extends StatelessWidget {
     return const ComponentPage(
       name: 'circular_progress',
       description: 'A circular progress indicator.',
-      displayName: 'Circular Progress',
+      displayName: 'Circular VNLProgress',
       children: [
         WidgetUsageExample(
-          title: 'Circular Progress Example',
+          title: 'Circular VNLProgress Example',
           path: 'lib/pages/docs/components/circular_progress/circular_progress_example_1.dart',
           child: CircularProgressExample1(),
         ),
         WidgetUsageExample(
-          title: 'Circular Progress with Value Example',
+          title: 'Circular VNLProgress with Value Example',
           path: 'lib/pages/docs/components/circular_progress/circular_progress_example_2.dart',
           child: CircularProgressExample2(),
         ),

@@ -5,9 +5,9 @@ class ButtonExample16 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardButton(
+    return VNLCardButton(
       onPressed: () {},
-      child: const Basic(
+      child: const VNLBasic(
         title: Text('Project #1'),
         subtitle: Text('Project description'),
         content: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),

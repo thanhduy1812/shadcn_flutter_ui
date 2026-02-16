@@ -1,10 +1,165 @@
 import 'dart:ui' as ui;
 
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
+/// Theme configuration for [VNLLinearProgressIndicator] components.
+///
+/// Provides comprehensive visual styling properties for linear progress indicators
+/// including colors, sizing, border radius, and visual effects. These properties
+/// integrate with the design system and can be overridden at the widget level.
+///
+/// The theme supports advanced features like spark effects for enhanced visual
+/// feedback and animation control for performance optimization scenarios.
+class LinearProgressIndicatorTheme extends ComponentThemeData {
+  /// The primary color of the progress indicator fill.
+  ///
+  /// Type: `Color?`. If null, uses theme's primary color. Applied to the
+  /// filled portion that represents completion progress.
+  final Color? color;
+
+  /// The background color behind the progress indicator.
+  ///
+  /// Type: `Color?`. If null, uses a semi-transparent version of the primary color.
+  /// Visible in the unfilled portion of the progress track.
+  final Color? backgroundColor;
+
+  /// The minimum height of the progress indicator.
+  ///
+  /// Type: `double?`. If null, defaults to 2.0 scaled by theme scaling factor.
+  /// Ensures adequate visual presence while maintaining sleek appearance.
+  final double? minHeight;
+
+  /// The border radius of the progress indicator container.
+  ///
+  /// Type: `BorderRadiusGeometry?`. If null, uses BorderRadius.zero for sharp edges.
+  /// Applied to both the track and progress fill for consistent styling.
+  final BorderRadiusGeometry? borderRadius;
+
+  /// Whether to display spark effects at the progress head.
+  ///
+  /// Type: `bool?`. If null, defaults to false. When enabled, shows a
+  /// radial gradient spark effect at the leading edge of the progress fill.
+  final bool? showSparks;
+
+  /// Whether to disable smooth progress animations.
+  ///
+  /// Type: `bool?`. If null, defaults to false. When true, progress changes
+  /// instantly without transitions for performance optimization.
+  final bool? disableAnimation;
+
+  /// Creates a [LinearProgressIndicatorTheme].
+  ///
+  /// All parameters are optional and can be null to use intelligent defaults
+  /// based on the current theme configuration and design system values.
+  ///
+  /// Example:
+  /// ```dart
+  /// const LinearProgressIndicatorTheme(
+  ///   color: VNLColors.blue,
+  ///   backgroundColor: VNLColors.grey,
+  ///   minHeight: 4.0,
+  ///   borderRadius: BorderRadius.circular(2.0),
+  ///   showSparks: true,
+  /// );
+  /// ```
+  const LinearProgressIndicatorTheme({
+    this.color,
+    this.backgroundColor,
+    this.minHeight,
+    this.borderRadius,
+    this.showSparks,
+    this.disableAnimation,
+  });
+
+  /// Returns a copy of this theme with the given fields replaced.
+  LinearProgressIndicatorTheme copyWith({
+    ValueGetter<Color?>? color,
+    ValueGetter<Color?>? backgroundColor,
+    ValueGetter<double?>? minHeight,
+    ValueGetter<BorderRadiusGeometry?>? borderRadius,
+    ValueGetter<bool?>? showSparks,
+    ValueGetter<bool?>? disableAnimation,
+  }) {
+    return LinearProgressIndicatorTheme(
+      color: color == null ? this.color : color(),
+      backgroundColor:
+          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      minHeight: minHeight == null ? this.minHeight : minHeight(),
+      borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
+      showSparks: showSparks == null ? this.showSparks : showSparks(),
+      disableAnimation:
+          disableAnimation == null ? this.disableAnimation : disableAnimation(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is LinearProgressIndicatorTheme &&
+        other.color == color &&
+        other.backgroundColor == backgroundColor &&
+        other.minHeight == minHeight &&
+        other.borderRadius == borderRadius &&
+        other.showSparks == showSparks &&
+        other.disableAnimation == disableAnimation;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        color,
+        backgroundColor,
+        minHeight,
+        borderRadius,
+        showSparks,
+        disableAnimation,
+      );
+}
+
+/// Duration constant for indeterminate linear progress animation cycle.
+///
+/// Defines the complete animation cycle duration (1800ms) for the dual-line
+/// indeterminate progress pattern, ensuring smooth and consistent motion timing.
 const int _kIndeterminateLinearDuration = 1800;
 
-class LinearProgressIndicator extends StatelessWidget {
+/// A sophisticated linear progress indicator with advanced visual effects.
+///
+/// The VNLLinearProgressIndicator provides both determinate and indeterminate progress
+/// visualization with enhanced features including optional spark effects, smooth
+/// animations, and comprehensive theming support. Built with custom painting for
+/// precise control over visual presentation and performance.
+///
+/// For determinate progress, displays completion as a horizontal bar that fills
+/// from left to right. For indeterminate progress (when value is null), shows
+/// a continuous animation with two overlapping progress segments that move across
+/// the track in a coordinated pattern.
+///
+/// Key features:
+/// - Determinate and indeterminate progress modes
+/// - Optional spark effects with radial gradient animation
+/// - Smooth animated transitions with disable option
+/// - RTL (right-to-left) text direction support
+/// - Custom painting for optimal rendering performance
+/// - Comprehensive theming via [LinearProgressIndicatorTheme]
+/// - Responsive sizing with theme scaling integration
+///
+/// The indeterminate animation uses precisely timed curves to create a natural,
+/// material design compliant motion pattern that communicates ongoing activity
+/// without specific completion timing.
+///
+/// Example:
+/// ```dart
+/// VNLLinearProgressIndicator(
+///   value: 0.7,
+///   showSparks: true,
+///   color: VNLColors.blue,
+///   minHeight: 6.0,
+/// );
+/// ```
+class VNLLinearProgressIndicator extends StatelessWidget {
+  /// Animation curve constants for indeterminate progress motion.
+  ///
+  /// These curves define the precise timing and easing for the dual-line
+  /// indeterminate animation pattern, creating smooth material design motion.
   static const Curve _line1Head = Interval(
     0.0,
     750.0 / _kIndeterminateLinearDuration,
@@ -26,43 +181,135 @@ class LinearProgressIndicator extends StatelessWidget {
     curve: Cubic(0.10, 0.0, 0.45, 1.0),
   );
 
+  /// The progress completion value between 0.0 and 1.0.
+  ///
+  /// Type: `double?`. If null, displays indeterminate animation with dual
+  /// moving progress segments. When provided, shows determinate progress.
   final double? value;
-  final Color? backgroundColor;
-  final double? minHeight;
-  final Color? color;
-  final BorderRadiusGeometry? borderRadius;
-  final bool showSparks;
-  final bool disableAnimation;
 
-  const LinearProgressIndicator({
+  /// The background color of the progress track.
+  ///
+  /// Type: `Color?`. If null, uses theme background color or semi-transparent
+  /// version of progress color. Overrides theme configuration.
+  final Color? backgroundColor;
+
+  /// The minimum height of the progress indicator.
+  ///
+  /// Type: `double?`. If null, uses theme minimum height or 2.0 scaled
+  /// by theme scaling factor. Overrides theme configuration.
+  final double? minHeight;
+
+  /// The primary color of the progress fill.
+  ///
+  /// Type: `Color?`. If null, uses theme primary color. Applied to both
+  /// progress segments in indeterminate mode. Overrides theme configuration.
+  final Color? color;
+
+  /// The border radius of the progress container.
+  ///
+  /// Type: `BorderRadiusGeometry?`. If null, uses BorderRadius.zero.
+  /// Applied via [ClipRRect] to both track and progress elements.
+  final BorderRadiusGeometry? borderRadius;
+
+  /// Whether to display spark effects at the progress head.
+  ///
+  /// Type: `bool?`. If null, defaults to false. Shows radial gradient
+  /// spark effect at the leading edge for enhanced visual feedback.
+  final bool? showSparks;
+
+  /// Whether to disable smooth progress animations.
+  ///
+  /// Type: `bool?`. If null, defaults to false. When true, disables
+  /// [AnimatedValueBuilder] for instant progress changes.
+  final bool? disableAnimation;
+
+  /// Creates a [VNLLinearProgressIndicator].
+  ///
+  /// The component automatically handles both determinate and indeterminate modes
+  /// based on whether [value] is provided. Theming and visual effects can be
+  /// customized through individual parameters or via [LinearProgressIndicatorTheme].
+  ///
+  /// Parameters:
+  /// - [value] (double?, optional): VNLProgress completion (0.0-1.0) or null for indeterminate
+  /// - [backgroundColor] (Color?, optional): Track background color override
+  /// - [minHeight] (double?, optional): Minimum indicator height override
+  /// - [color] (Color?, optional): VNLProgress fill color override
+  /// - [borderRadius] (BorderRadiusGeometry?, optional): Container border radius override
+  /// - [showSparks] (bool?, optional): Whether to show spark effects
+  /// - [disableAnimation] (bool?, optional): Whether to disable smooth transitions
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLLinearProgressIndicator(
+  ///   value: 0.4,
+  ///   color: VNLColors.green,
+  ///   backgroundColor: VNLColors.grey.shade300,
+  ///   minHeight: 8.0,
+  ///   showSparks: true,
+  /// );
+  /// ```
+  const VNLLinearProgressIndicator({
     super.key,
     this.value,
     this.backgroundColor,
     this.minHeight,
     this.color,
     this.borderRadius,
-    this.showSparks = false,
-    this.disableAnimation = false,
+    this.showSparks,
+    this.disableAnimation,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final directionality = Directionality.of(context);
+    final compTheme = ComponentTheme.maybeOf<LinearProgressIndicatorTheme>(
+      context,
+    );
+    final colorValue = styleValue(
+      widgetValue: color,
+      themeValue: compTheme?.color,
+      defaultValue: theme.colorScheme.primary,
+    );
+    final backgroundColorValue = styleValue(
+      widgetValue: backgroundColor,
+      themeValue: compTheme?.backgroundColor,
+      defaultValue: colorValue.scaleAlpha(0.2),
+    );
+    final minHeightValue = styleValue(
+      widgetValue: minHeight,
+      themeValue: compTheme?.minHeight,
+      defaultValue: theme.scaling * 2,
+    );
+    final borderRadiusValue = styleValue(
+      widgetValue: borderRadius,
+      themeValue: compTheme?.borderRadius,
+      defaultValue: BorderRadius.zero,
+    );
+    final showSparksValue = styleValue(
+      widgetValue: showSparks,
+      themeValue: compTheme?.showSparks,
+      defaultValue: false,
+    );
+    final disableAnimationValue = styleValue(
+      widgetValue: disableAnimation,
+      themeValue: compTheme?.disableAnimation,
+      defaultValue: false,
+    );
     Widget childWidget;
     if (value != null) {
       childWidget = AnimatedValueBuilder(
         value: _LinearProgressIndicatorProperties(
           start: 0,
           end: value!.clamp(0, 1),
-          color: color ?? theme.colorScheme.primary,
-          backgroundColor: backgroundColor ?? theme.colorScheme.primary.scaleAlpha(0.2),
-          showSparks: showSparks,
-          sparksColor: color ?? theme.colorScheme.primary,
+          color: colorValue,
+          backgroundColor: backgroundColorValue,
+          showSparks: showSparksValue,
+          sparksColor: colorValue,
           sparksRadius: theme.scaling * 16,
           textDirection: directionality,
         ),
-        duration: disableAnimation ? Duration.zero : kDefaultDuration,
+        duration: disableAnimationValue ? Duration.zero : kDefaultDuration,
         lerp: _LinearProgressIndicatorProperties.lerp,
         curve: Curves.easeInOut,
         builder: (context, value, child) {
@@ -101,10 +348,10 @@ class LinearProgressIndicator extends StatelessWidget {
               end: end,
               start2: start2,
               end2: end2,
-              color: color ?? theme.colorScheme.primary,
-              backgroundColor: backgroundColor ?? theme.colorScheme.primary.scaleAlpha(0.2),
-              showSparks: showSparks,
-              sparksColor: color ?? theme.colorScheme.primary,
+              color: colorValue,
+              backgroundColor: backgroundColorValue,
+              showSparks: showSparksValue,
+              sparksColor: colorValue,
               sparksRadius: theme.scaling * 16,
               textDirection: directionality,
             ),
@@ -131,8 +378,8 @@ class LinearProgressIndicator extends StatelessWidget {
     }
     return RepaintBoundary(
       child: SizedBox(
-        height: minHeight ?? (theme.scaling * 2),
-        child: ClipRRect(borderRadius: borderRadius ?? BorderRadius.zero, child: childWidget),
+        height: minHeightValue,
+        child: ClipRRect(borderRadius: borderRadiusValue, child: childWidget),
       ),
     );
   }
@@ -194,7 +441,8 @@ double? _lerpDouble(double? a, double? b, double t) {
 }
 
 class _LinearProgressIndicatorPainter extends CustomPainter {
-  static final gradientTransform = (Matrix4.identity()..scale(1.0, 0.5)).storage;
+  static final gradientTransform =
+      (Matrix4.identity()..scaleByDouble(1.0, 0.5, 1, 1)).storage;
 
   final double start;
   final double end;
@@ -252,13 +500,32 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
 
     paint.color = backgroundColor;
 
-    canvas.drawRRect(RRect.fromLTRBR(0, 0, size.width, size.height, Radius.circular(size.height / 2)), paint);
+    canvas.drawRRect(
+      RRect.fromLTRBR(
+        0,
+        0,
+        size.width,
+        size.height,
+        Radius.circular(size.height / 2),
+      ),
+      paint,
+    );
 
     paint.color = color;
-    var rectValue = Rect.fromLTWH(size.width * start, 0, size.width * (end - start), size.height);
+    var rectValue = Rect.fromLTWH(
+      size.width * start,
+      0,
+      size.width * (end - start),
+      size.height,
+    );
     canvas.drawRect(rectValue, paint);
     if (start2 != null && end2 != null) {
-      rectValue = Rect.fromLTWH(size.width * start2, 0, size.width * (end2 - start2), size.height);
+      rectValue = Rect.fromLTWH(
+        size.width * start2,
+        0,
+        size.width * (end2 - start2),
+        size.height,
+      );
       canvas.drawRect(rectValue, paint);
     }
 
@@ -266,7 +533,7 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
       // use RadialGradient to create sparks
 
       final gradient = ui.Gradient.radial(
-        // colors: [sparksColor, Colors.transparent],
+        // colors: [sparksColor, VNLColors.transparent],
         // stops: const [0.0, 1.0],
         Offset(size.width * (end - start), size.height / 2),
         sparksRadius,
@@ -277,7 +544,11 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
         gradientTransform,
       );
       paint.shader = gradient;
-      canvas.drawCircle(Offset(size.width * (end - start), size.height / 2), sparksRadius, paint);
+      canvas.drawCircle(
+        Offset(size.width * (end - start), size.height / 2),
+        sparksRadius,
+        paint,
+      );
     }
   }
 

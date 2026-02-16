@@ -1,72 +1,82 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:flutter/foundation.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
+/// Dropdown menu anchored to a button.
+///
+/// Uses [showDropdown] to present a [VNLDropdownMenu] overlay with labels,
+/// dividers, buttons, and a nested submenu.
 class DropdownMenuExample1 extends StatelessWidget {
   const DropdownMenuExample1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
+    return VNLOutlineButton(
       onPressed: () {
+        // Show the dropdown relative to the button.
         showDropdown(
           context: context,
           builder: (context) {
             return const VNLDropdownMenu(
               children: [
-                MenuLabel(child: Text('My Account')),
-                MenuDivider(),
-                MenuButton(
+                VNLMenuLabel(child: Text('My Account')),
+                VNLMenuDivider(),
+                VNLMenuButton(
                   child: Text('Profile'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Billing'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Settings'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Keyboard shortcuts'),
                 ),
-                MenuDivider(),
-                MenuButton(
+                VNLMenuDivider(),
+                VNLMenuButton(
                   child: Text('Team'),
                 ),
-                MenuButton(
+                VNLMenuButton(
+                  // Demonstrates a nested submenu.
                   subMenu: [
-                    MenuButton(
+                    VNLMenuButton(
                       child: Text('Email'),
                     ),
-                    MenuButton(
+                    VNLMenuButton(
                       child: Text('Message'),
                     ),
-                    MenuDivider(),
-                    MenuButton(
+                    VNLMenuDivider(),
+                    VNLMenuButton(
                       child: Text('More...'),
                     ),
                   ],
                   child: Text('Invite users'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('New Team'),
                 ),
-                MenuDivider(),
-                MenuButton(
+                VNLMenuDivider(),
+                VNLMenuButton(
                   child: Text('GitHub'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Support'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   enabled: false,
                   child: Text('API'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Log out'),
                 ),
               ],
             );
           },
         ).future.then((_) {
-          print('Closed');
+          // Called when the dropdown is closed.
+          if (kDebugMode) {
+            print('Closed');
+          }
         });
       },
       child: const Text('Open'),

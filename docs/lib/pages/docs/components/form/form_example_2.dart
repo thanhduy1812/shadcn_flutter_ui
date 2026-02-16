@@ -1,5 +1,7 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
 import 'dart:convert';
+
+import 'package:vnl_common_ui/shadcn_flutter.dart';
+
 class FormExample2 extends StatefulWidget {
   const FormExample2({super.key});
 
@@ -32,7 +34,7 @@ class _FormExample2State extends State<FormExample2> {
             context: context,
             builder: (context) {
               return VNLAlertDialog(
-                title: const Text('Form Values'),
+                title: const Text('VNLForm Values'),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,15 +67,23 @@ class _FormExample2State extends State<FormExample2> {
                   key: _usernameKey,
                   label: const Text('Username'),
                   hint: const Text('This is your public display name'),
-                  validator: const LengthValidator(min: 4),
-                  showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
+                  validator: const VNLLengthValidator(min: 4),
+                  // Show validation messages when the value changes and after submit.
+                  showErrors: const {
+                    FormValidationMode.changed,
+                    FormValidationMode.submitted
+                  },
                   child: const VNLTextField(),
                 ),
                 FormField(
                   key: _passwordKey,
                   label: const Text('Password'),
-                  validator: const LengthValidator(min: 8),
-                  showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
+                  validator: const VNLLengthValidator(min: 8),
+                  // Same validation visibility behavior for password.
+                  showErrors: const {
+                    FormValidationMode.changed,
+                    FormValidationMode.submitted
+                  },
                   child: const VNLTextField(
                     obscureText: true,
                   ),
@@ -81,8 +91,13 @@ class _FormExample2State extends State<FormExample2> {
                 FormField(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
-                  validator: CompareWith.equal(_passwordKey, message: 'Passwords do not match'),
-                  showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
+                  validator: CompareWith.equal(_passwordKey,
+                      message: 'Passwords do not match'),
+                  // Mirror validation visibility on confirm.
+                  showErrors: const {
+                    FormValidationMode.changed,
+                    FormValidationMode.submitted
+                  },
                   child: const VNLTextField(
                     obscureText: true,
                   ),
@@ -92,7 +107,11 @@ class _FormExample2State extends State<FormExample2> {
                   label: const Text('I agree to the terms and conditions'),
                   validator: const CompareTo.equal(CheckboxState.checked,
                       message: 'You must agree to the terms and conditions'),
-                  showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
+                  // Inline field with a trailing checkbox and same visibility behavior.
+                  showErrors: const {
+                    FormValidationMode.changed,
+                    FormValidationMode.submitted
+                  },
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: VNLCheckbox(
@@ -107,7 +126,7 @@ class _FormExample2State extends State<FormExample2> {
               ],
             ).gap(24),
             const Gap(24),
-            FormErrorBuilder(
+            VNLFormErrorBuilder(
               builder: (context, errors, child) {
                 return PrimaryButton(
                   onPressed: errors.isEmpty ? () => context.submitForm() : null,

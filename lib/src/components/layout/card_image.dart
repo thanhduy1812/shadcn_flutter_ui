@@ -1,20 +1,229 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-class VNLCardImage extends StatefulWidget {
-  final Widget image;
-  final Widget? title;
-  final Widget? subtitle;
-  final Widget? trailing;
-  final Widget? leading;
-  final VoidCallback? onPressed;
-  final bool? enabled;
-  final AbstractButtonStyle? style;
-  final Axis direction;
-  final double hoverScale;
-  final double normalScale;
+/// Theme configuration for [VNLCardImage] components.
+///
+/// Defines visual properties like scale animations, background colors,
+/// border styling, and layout direction. Applied through the widget tree
+/// using [ComponentTheme] to provide consistent theming across card images.
+///
+/// Example:
+/// ```dart
+/// ComponentTheme(
+///   data: VNLCardImageTheme(
+///     hoverScale: 1.1,
+///     backgroundColor: VNLColors.grey.shade100,
+///     direction: Axis.horizontal,
+///   ),
+///   child: MyApp(),
+/// );
+/// ```
+class VNLCardImageTheme extends ComponentThemeData {
+  /// VNLButton style for the card.
+  final VNLAbstractButtonStyle? style;
+
+  /// Layout direction for title/subtitle relative to the image.
+  final Axis? direction;
+
+  /// Scale factor when hovering over the image.
+  final double? hoverScale;
+
+  /// Normal scale factor for the image.
+  final double? normalScale;
+
+  /// Background color for the image container.
   final Color? backgroundColor;
+
+  /// Border color for the image container.
   final Color? borderColor;
 
+  /// Gap between image and text content.
+  final double? gap;
+
+  /// Creates a [CardImageTheme].
+  ///
+  /// All parameters are optional and provide default styling for [VNLCardImage]
+  /// widgets in the component tree.
+  ///
+  /// Parameters:
+  /// - [style] (VNLAbstractButtonStyle?): button style configuration
+  /// - [direction] (Axis?): layout direction (vertical/horizontal)
+  /// - [hoverScale] (double?): image scale on hover (default: 1.05)
+  /// - [normalScale] (double?): normal image scale (default: 1.0)
+  /// - [backgroundColor] (Color?): image background color
+  /// - [borderColor] (Color?): image border color
+  /// - [gap] (double?): spacing between image and content
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLCardImageTheme(
+  ///   hoverScale: 1.1,
+  ///   direction: Axis.horizontal,
+  ///   backgroundColor: VNLColors.grey.shade50,
+  /// );
+  /// ```
+  const VNLCardImageTheme({
+    this.style,
+    this.direction,
+    this.hoverScale,
+    this.normalScale,
+    this.backgroundColor,
+    this.borderColor,
+    this.gap,
+  });
+
+  /// Creates a copy of this theme with optionally overridden properties.
+  ///
+  /// Uses [ValueGetter] functions to allow nullable overrides.
+  ///
+  /// Example:
+  /// ```dart
+  /// final newTheme = existingTheme.copyWith(
+  ///   hoverScale: () => 1.2,
+  ///   backgroundColor: () => VNLColors.blue.shade50,
+  /// );
+  /// ```
+  VNLCardImageTheme copyWith({
+    ValueGetter<VNLAbstractButtonStyle?>? style,
+    ValueGetter<Axis?>? direction,
+    ValueGetter<double?>? hoverScale,
+    ValueGetter<double?>? normalScale,
+    ValueGetter<Color?>? backgroundColor,
+    ValueGetter<Color?>? borderColor,
+    ValueGetter<double?>? gap,
+  }) {
+    return VNLCardImageTheme(
+      style: style == null ? this.style : style(),
+      direction: direction == null ? this.direction : direction(),
+      hoverScale: hoverScale == null ? this.hoverScale : hoverScale(),
+      normalScale: normalScale == null ? this.normalScale : normalScale(),
+      backgroundColor:
+          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      borderColor: borderColor == null ? this.borderColor : borderColor(),
+      gap: gap == null ? this.gap : gap(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is VNLCardImageTheme &&
+        other.style == style &&
+        other.direction == direction &&
+        other.hoverScale == hoverScale &&
+        other.normalScale == normalScale &&
+        other.backgroundColor == backgroundColor &&
+        other.borderColor == borderColor &&
+        other.gap == gap;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        style,
+        direction,
+        hoverScale,
+        normalScale,
+        backgroundColor,
+        borderColor,
+        gap,
+      );
+}
+
+/// Interactive card component with an image and optional text content.
+///
+/// Combines an image with title, subtitle, and optional leading/trailing
+/// widgets in a clickable card layout. Features hover animations with
+/// configurable scale effects and supports both vertical and horizontal
+/// orientations.
+///
+/// The widget wraps the content in a [VNLButton] for interaction handling
+/// and uses [VNLOutlinedContainer] for the image styling. Layout direction
+/// can be configured to show content below (vertical) or beside
+/// (horizontal) the image.
+///
+/// Example:
+/// ```dart
+/// VNLCardImage(
+///   image: Image.network('https://example.com/image.jpg'),
+///   title: Text('VNLCard Title'),
+///   subtitle: Text('Subtitle text'),
+///   onPressed: () => print('VNLCard tapped'),
+/// );
+/// ```
+class VNLCardImage extends StatefulWidget {
+  /// The primary image widget to display.
+  final Widget image;
+
+  /// Optional title widget displayed with the image.
+  final Widget? title;
+
+  /// Optional subtitle widget displayed below the title.
+  final Widget? subtitle;
+
+  /// Optional trailing widget (e.g., action buttons).
+  final Widget? trailing;
+
+  /// Optional leading widget (e.g., icon).
+  final Widget? leading;
+
+  /// Callback invoked when the card is pressed.
+  final VoidCallback? onPressed;
+
+  /// Whether the card is enabled for interaction.
+  final bool? enabled;
+
+  /// Custom button style for the card.
+  final VNLAbstractButtonStyle? style;
+
+  /// Layout direction for content relative to image.
+  final Axis? direction;
+
+  /// Scale factor applied to image on hover.
+  final double? hoverScale;
+
+  /// Normal scale factor for the image.
+  final double? normalScale;
+
+  /// Background color for the image container.
+  final Color? backgroundColor;
+
+  /// Border color for the image container.
+  final Color? borderColor;
+
+  /// Gap between image and text content.
+  final double? gap;
+
+  /// Creates a [VNLCardImage].
+  ///
+  /// The [image] parameter is required and should contain the primary
+  /// visual content. All other parameters are optional and provide
+  /// customization for layout, interaction, and styling.
+  ///
+  /// Parameters:
+  /// - [image] (Widget, required): primary image content
+  /// - [title] (Widget?): optional title text or widget
+  /// - [subtitle] (Widget?): optional subtitle below title
+  /// - [trailing] (Widget?): optional widget on the end side
+  /// - [leading] (Widget?): optional widget on the start side
+  /// - [onPressed] (VoidCallback?): tap callback, enables interaction
+  /// - [enabled] (bool?): whether card responds to interaction
+  /// - [style] (VNLAbstractButtonStyle?): custom button styling
+  /// - [direction] (Axis?): vertical or horizontal layout
+  /// - [hoverScale] (double?): image scale on hover (default: 1.05)
+  /// - [normalScale] (double?): normal image scale (default: 1.0)
+  /// - [backgroundColor] (Color?): image background color
+  /// - [borderColor] (Color?): image border color
+  /// - [gap] (double?): spacing between image and content
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLCardImage(
+  ///   image: Image.asset('assets/photo.jpg'),
+  ///   title: Text('Beautiful Landscape'),
+  ///   subtitle: Text('Captured in the mountains'),
+  ///   direction: Axis.horizontal,
+  ///   hoverScale: 1.1,
+  ///   onPressed: () => showDetails(),
+  /// );
+  /// ```
   const VNLCardImage({
     super.key,
     required this.image,
@@ -25,11 +234,12 @@ class VNLCardImage extends StatefulWidget {
     this.onPressed,
     this.enabled,
     this.style,
-    this.direction = Axis.vertical,
-    this.hoverScale = 1.05,
-    this.normalScale = 1,
-    this.backgroundColor = VNLColors.transparent,
-    this.borderColor = VNLColors.transparent,
+    this.direction,
+    this.hoverScale,
+    this.normalScale,
+    this.backgroundColor,
+    this.borderColor,
+    this.gap,
   });
 
   @override
@@ -39,47 +249,86 @@ class VNLCardImage extends StatefulWidget {
 class _CardImageState extends State<VNLCardImage> {
   final WidgetStatesController _statesController = WidgetStatesController();
 
-  Widget _wrapIntrinsic(Widget child) {
-    return widget.direction == Axis.horizontal ? IntrinsicHeight(child: child) : IntrinsicWidth(child: child);
+  /// Wraps child widget with appropriate intrinsic sizing based on direction.
+  Widget _wrapIntrinsic(Widget child, Axis direction) {
+    return direction == Axis.horizontal
+        ? IntrinsicHeight(child: child)
+        : IntrinsicWidth(child: child);
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
+    final compTheme = ComponentTheme.maybeOf<VNLCardImageTheme>(context);
+    final style = styleValue(
+        widgetValue: widget.style,
+        themeValue: compTheme?.style,
+        defaultValue: const VNLButtonStyle.fixed(
+          density: ButtonDensity.compact,
+        ));
+    final direction = styleValue(
+        widgetValue: widget.direction,
+        themeValue: compTheme?.direction,
+        defaultValue: Axis.vertical);
+    final hoverScale = styleValue(
+        widgetValue: widget.hoverScale,
+        themeValue: compTheme?.hoverScale,
+        defaultValue: 1.05);
+    final normalScale = styleValue(
+        widgetValue: widget.normalScale,
+        themeValue: compTheme?.normalScale,
+        defaultValue: 1.0);
+    final backgroundColor = styleValue(
+        widgetValue: widget.backgroundColor,
+        themeValue: compTheme?.backgroundColor,
+        defaultValue: VNLColors.transparent);
+    final borderColor = styleValue(
+        widgetValue: widget.borderColor,
+        themeValue: compTheme?.borderColor,
+        defaultValue: VNLColors.transparent);
+    final gap = styleValue(
+        widgetValue: widget.gap,
+        themeValue: compTheme?.gap,
+        defaultValue: 12 * scaling);
     return VNLButton(
       statesController: _statesController,
-      style: widget.style ?? const ButtonStyle.fixed(density: ButtonDensity.compact),
+      style: style,
       onPressed: widget.onPressed,
       enabled: widget.enabled,
       child: _wrapIntrinsic(
         Flex(
-          direction: widget.direction,
+          direction: direction,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Flexible(
-              child: OutlinedContainer(
-                backgroundColor: widget.backgroundColor ?? theme.colorScheme.card,
-                borderColor: widget.borderColor ?? theme.colorScheme.border,
+              child: VNLOutlinedContainer(
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
                 child: AnimatedBuilder(
-                  animation: _statesController,
-                  builder: (context, child) {
-                    return AnimatedScale(
-                      duration: kDefaultDuration,
-                      scale:
-                          _statesController.value.contains(WidgetState.hovered)
-                              ? widget.hoverScale
-                              : widget.normalScale,
-                      child: widget.image,
-                    );
-                  },
-                ),
+                    animation: _statesController,
+                    builder: (context, child) {
+                      return AnimatedScale(
+                        duration: kDefaultDuration,
+                        scale: _statesController.value
+                                .contains(WidgetState.hovered)
+                            ? hoverScale
+                            : normalScale,
+                        child: widget.image,
+                      );
+                    }),
               ),
             ),
-            Gap(12 * scaling),
-            Basic(title: widget.title, subtitle: widget.subtitle, trailing: widget.trailing, leading: widget.leading),
+            Gap(gap),
+            VNLBasic(
+              title: widget.title,
+              subtitle: widget.subtitle,
+              trailing: widget.trailing,
+              leading: widget.leading,
+            ),
           ],
         ),
+        direction,
       ),
     );
   }

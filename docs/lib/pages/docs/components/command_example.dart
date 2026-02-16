@@ -12,10 +12,10 @@ class CommandExample extends StatelessWidget {
     return const ComponentPage(
       name: 'command',
       description: 'A command is a component that allows you to search for items.',
-      displayName: 'Command',
+      displayName: 'VNLCommand',
       children: [
         WidgetUsageExample(
-          title: 'Command Example',
+          title: 'VNLCommand Example',
           path: 'lib/pages/docs/components/command/command_example_1.dart',
           child: CommandExample1(),
         ),

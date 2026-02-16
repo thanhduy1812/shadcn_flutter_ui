@@ -11,14 +11,15 @@ class ResizableExample3 extends StatefulWidget {
 class _ResizableExample3State extends State<ResizableExample3> {
   @override
   Widget build(BuildContext context) {
-    return OutlinedContainer(
+    return VNLOutlinedContainer(
       clipBehavior: Clip.antiAlias,
-      child: ResizablePanel.horizontal(
+      child: VNLResizablePanel.horizontal(
+        // Provide a custom dragger appearance/behavior for the splitters.
         draggerBuilder: (context) {
-          return const HorizontalResizableDragger();
+          return const VNLHorizontalResizableDragger();
         },
         children: const [
-          ResizablePane(
+          VNLResizablePane(
             initialSize: 80,
             child: NumberedContainer(
               index: 0,
@@ -26,7 +27,7 @@ class _ResizableExample3State extends State<ResizableExample3> {
               fill: false,
             ),
           ),
-          ResizablePane(
+          VNLResizablePane(
             initialSize: 80,
             child: NumberedContainer(
               index: 1,
@@ -34,7 +35,7 @@ class _ResizableExample3State extends State<ResizableExample3> {
               fill: false,
             ),
           ),
-          ResizablePane(
+          VNLResizablePane(
             initialSize: 120,
             child: NumberedContainer(
               index: 2,
@@ -42,7 +43,7 @@ class _ResizableExample3State extends State<ResizableExample3> {
               fill: false,
             ),
           ),
-          ResizablePane(
+          VNLResizablePane(
             initialSize: 80,
             child: NumberedContainer(
               index: 3,
@@ -50,7 +51,7 @@ class _ResizableExample3State extends State<ResizableExample3> {
               fill: false,
             ),
           ),
-          ResizablePane(
+          VNLResizablePane(
             initialSize: 80,
             child: NumberedContainer(
               index: 4,

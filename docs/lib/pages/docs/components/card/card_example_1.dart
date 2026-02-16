@@ -1,5 +1,9 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+/// VNLCard with form-like content and actions.
+///
+/// Demonstrates using [VNLCard] as a container with padding, headings,
+/// inputs, and action buttons aligned via a [Row] and [Spacer].
 class CardExample1 extends StatelessWidget {
   const CardExample1({super.key});
 
@@ -24,7 +28,7 @@ class CardExample1 extends StatelessWidget {
           const SizedBox(height: 24),
           Row(
             children: [
-              OutlineButton(
+              VNLOutlineButton(
                 child: const Text('Cancel'),
                 onPressed: () {},
               ),

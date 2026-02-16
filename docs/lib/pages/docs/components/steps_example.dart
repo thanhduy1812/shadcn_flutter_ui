@@ -11,10 +11,10 @@ class StepsExample extends StatelessWidget {
     return const ComponentPage(
       name: 'steps',
       description: 'A series of steps for progress.',
-      displayName: 'Steps',
+      displayName: 'VNLSteps',
       children: [
         WidgetUsageExample(
-          title: 'Steps Example',
+          title: 'VNLSteps Example',
           path: 'lib/pages/docs/components/steps/steps_example_1.dart',
           child: StepsExample1(),
         ),

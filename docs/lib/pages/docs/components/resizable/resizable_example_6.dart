@@ -11,11 +11,12 @@ class ResizableExample6 extends StatefulWidget {
 class _ResizableExample6State extends State<ResizableExample6> {
   @override
   Widget build(BuildContext context) {
-    return const OutlinedContainer(
+    return const VNLOutlinedContainer(
       clipBehavior: Clip.antiAlias,
-      child: ResizablePanel.horizontal(
+      // Demonstrates nesting panels: horizontal root with vertical and horizontal children.
+      child: VNLResizablePanel.horizontal(
         children: [
-          ResizablePane(
+          VNLResizablePane(
             initialSize: 100,
             minSize: 40,
             child: NumberedContainer(
@@ -24,12 +25,13 @@ class _ResizableExample6State extends State<ResizableExample6> {
               fill: false,
             ),
           ),
-          ResizablePane(
+          VNLResizablePane(
             minSize: 100,
             initialSize: 300,
-            child: ResizablePanel.vertical(
+            // Middle pane is its own vertical resizable group.
+            child: VNLResizablePanel.vertical(
               children: [
-                ResizablePane(
+                VNLResizablePane(
                   initialSize: 80,
                   minSize: 40,
                   child: NumberedContainer(
@@ -37,24 +39,26 @@ class _ResizableExample6State extends State<ResizableExample6> {
                     fill: false,
                   ),
                 ),
-                ResizablePane(
+                VNLResizablePane(
                   minSize: 40,
                   initialSize: 120,
-                  child: ResizablePanel.horizontal(
+                  // This pane contains a horizontal panel using flexible panes below.
+                  child: VNLResizablePanel.horizontal(
                     children: [
-                      ResizablePane.flex(
+                      // Flex panes share remaining space proportionally.
+                      VNLResizablePane.flex(
                         child: NumberedContainer(
                           index: 2,
                           fill: false,
                         ),
                       ),
-                      ResizablePane.flex(
+                      VNLResizablePane.flex(
                         child: NumberedContainer(
                           index: 3,
                           fill: false,
                         ),
                       ),
-                      ResizablePane.flex(
+                      VNLResizablePane.flex(
                         child: NumberedContainer(
                           index: 4,
                           fill: false,
@@ -66,7 +70,7 @@ class _ResizableExample6State extends State<ResizableExample6> {
               ],
             ),
           ),
-          ResizablePane(
+          VNLResizablePane(
             initialSize: 100,
             minSize: 40,
             child: NumberedContainer(

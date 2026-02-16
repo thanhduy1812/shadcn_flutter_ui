@@ -1,5 +1,9 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+/// VNLCalendar with range selection mode.
+///
+/// Demonstrates navigating months using a custom header and binding
+/// a [VNLCalendarValue] for a date range via [CalendarSelectionMode.range].
 class CalendarExample1 extends StatefulWidget {
   const CalendarExample1({super.key});
 
@@ -8,8 +12,10 @@ class CalendarExample1 extends StatefulWidget {
 }
 
 class _CalendarExample1State extends State<CalendarExample1> {
-  CalendarValue? _value;
-  CalendarView _view = CalendarView.now();
+  // Holds the current selection (start/end) when in range mode.
+  VNLCalendarValue? _value;
+  // Tracks the current month/year view independent of selection.
+  VNLCalendarView _view = VNLCalendarView.now();
   @override
   Widget build(BuildContext context) {
     VNLookLocalizations localizations = VNLookLocalizations.of(context);
@@ -21,20 +27,22 @@ class _CalendarExample1State extends State<CalendarExample1> {
           children: [
             Row(
               children: [
-                OutlineButton(
+                VNLOutlineButton(
                   density: ButtonDensity.icon,
                   onPressed: () {
                     setState(() {
+                      // Move the calendar view to the previous month.
                       _view = _view.previous;
                     });
                   },
                   child: const Icon(Icons.arrow_back).iconXSmall(),
                 ),
                 Text('${localizations.getMonth(_view.month)} ${_view.year}').small().medium().center().expanded(),
-                OutlineButton(
+                VNLOutlineButton(
                   density: ButtonDensity.icon,
                   onPressed: () {
                     setState(() {
+                      // Move the calendar view to the next month.
                       _view = _view.next;
                     });
                   },
@@ -51,6 +59,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
                   _value = value;
                 });
               },
+              // Range selection allows choosing a start and end date.
               selectionMode: CalendarSelectionMode.range,
             ),
           ],

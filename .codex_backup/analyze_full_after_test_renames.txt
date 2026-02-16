@@ -1,0 +1,448 @@
+Analyzing shadcn_flutter_ui...                                  
+
+warning • Unused import: 'package:docs/main.dart' • docs/test/widget_test.dart:11:8 • unused_import
+   info • Missing documentation for a public member • lib/src/components/animation.dart:4:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:6:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:8:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:11:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:12:12 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:13:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:14:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:15:34 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:16:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:17:39 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:18:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:19:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:20:41 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:21:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:23:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:36:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:50:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:106:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:138:5 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:214:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:215:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:216:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:217:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:223:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:224:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:225:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:226:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:227:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:228:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:229:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:230:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:231:72 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:233:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:234:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:235:41 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:236:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:238:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:253:34 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:444:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:445:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:446:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:447:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:448:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:450:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:457:31 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:499:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:500:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:528:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:544:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:545:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:546:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:548:38 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:550:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:10:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:11:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:14:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:27:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:28:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:29:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:30:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:31:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:32:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:33:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:34:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:35:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:36:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:37:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:39:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:86:8 • public_member_api_docs
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:88:22 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:90:22 • deprecated_member_use
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:94:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:95:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:96:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:97:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:98:13 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:99:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:101:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:24 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:34 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:175:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:176:8 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:177:8 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:178:8 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:179:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:180:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:181:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:186:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:187:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:188:13 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:189:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:190:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:192:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:214:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:279:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:281:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:282:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:283:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:284:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:285:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:286:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:287:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:289:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:546:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:639:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:640:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:641:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:645:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:650:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:651:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:652:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:653:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:655:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:657:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:663:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:664:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:665:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:666:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:667:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:668:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:669:40 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:670:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:671:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:673:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:793:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:794:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:795:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:796:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:797:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:798:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:799:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:801:9 • public_member_api_docs
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:832:42 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:834:42 • deprecated_member_use
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:838:38 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:839:38 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:840:38 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:867:44 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:869:44 • deprecated_member_use
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:873:40 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:874:40 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:875:40 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:1139:57 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:1141:57 • deprecated_member_use
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1228:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1229:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1230:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1231:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1232:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1233:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1234:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1236:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1386:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1387:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1388:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1389:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1390:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1391:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1392:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1393:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1394:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1395:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1396:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1397:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1398:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1399:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1400:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1401:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1514:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1515:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1516:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1517:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1518:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1519:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1520:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1521:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1523:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:40 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:48 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:58 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:63 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:71 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:81 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:86 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:96 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:40 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:48 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:58 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:63 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:71 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:81 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:86 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:96 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1570:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1630:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1835:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1836:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1840:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1841:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1843:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1844:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1845:12 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1846:12 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1847:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1848:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1849:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1850:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1851:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1852:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1853:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1854:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1855:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1856:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1857:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1858:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1859:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1864:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1869:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1874:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1878:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1882:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1886:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1890:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1894:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1898:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1902:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1906:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1910:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1914:22 • public_member_api_docs
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:1990:34 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:1993:36 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:1996:35 • deprecated_member_use
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:2070:34 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:2073:36 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:2076:35 • deprecated_member_use
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2079:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2080:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2081:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2082:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2083:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2084:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2085:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2086:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2088:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2444:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2445:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2446:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2447:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2448:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2449:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2450:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2451:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2453:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2798:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2799:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2800:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2801:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2803:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3122:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3123:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3124:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3125:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3127:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3446:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3447:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3448:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3449:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:6:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:8:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:9:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:10:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:11:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:12:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:13:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:14:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:15:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:16:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:17:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:18:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:19:31 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:20:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:21:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:22:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:23:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:25:9 • public_member_api_docs
+   info • Library names are not necessary • lib/vnl_ui_extension.dart:1:9 • unnecessary_library_name
+  error • The name 'DotIndicatorTheme' isn't a type, so it can't be used as a type argument • test/components/active_dot_item_test.dart:113:33 • non_type_as_type_argument
+  error • The function 'DotIndicatorTheme' isn't defined • test/components/active_dot_item_test.dart:114:19 • undefined_function
+  error • The name 'DotIndicatorTheme' isn't a type, so it can't be used as a type argument • test/components/active_dot_item_test.dart:139:33 • non_type_as_type_argument
+  error • The function 'DotIndicatorTheme' isn't defined • test/components/active_dot_item_test.dart:140:19 • undefined_function
+  error • The name 'AlertTheme' isn't a type, so it can't be used as a type argument • test/components/alert_test.dart:89:33 • non_type_as_type_argument
+  error • The function 'AlertTheme' isn't defined • test/components/alert_test.dart:90:19 • undefined_function
+  error • Undefined name 'Colors' • test/components/avatar_test.dart:112:42 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/avatar_test.dart:126:42 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/avatar_test.dart:141:42 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/basic_layout_test.dart:285:65 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/basic_layout_test.dart:311:65 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/basic_layout_test.dart:334:65 • undefined_identifier
+  error • Invalid constant value • test/components/button_style_override_test.dart:24:16 • invalid_constant
+  error • Undefined name 'Colors' • test/components/button_style_override_test.dart:24:16 • undefined_identifier
+  error • Invalid constant value • test/components/button_style_override_test.dart:76:16 • invalid_constant
+  error • Undefined name 'Colors' • test/components/button_style_override_test.dart:76:16 • undefined_identifier
+  error • Invalid constant value • test/components/button_style_override_test.dart:94:16 • invalid_constant
+  error • Undefined name 'Colors' • test/components/button_style_override_test.dart:94:16 • undefined_identifier
+  error • Invalid constant value • test/components/button_style_override_test.dart:154:40 • invalid_constant
+  error • Undefined name 'Colors' • test/components/button_style_override_test.dart:154:40 • undefined_identifier
+  error • Invalid constant value • test/components/button_style_override_test.dart:181:51 • invalid_constant
+  error • Undefined name 'Colors' • test/components/button_style_override_test.dart:181:51 • undefined_identifier
+  error • Invalid constant value • test/components/button_style_override_test.dart:183:49 • invalid_constant
+  error • Undefined name 'Colors' • test/components/button_style_override_test.dart:183:49 • undefined_identifier
+  error • Invalid constant value • test/components/button_style_override_test.dart:261:40 • invalid_constant
+  error • Undefined name 'Colors' • test/components/button_style_override_test.dart:261:40 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:11:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:25:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:41:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:60:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:76:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:89:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:104:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:118:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:133:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:148:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:164:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:165:30 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:172:56 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:179:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:180:26 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:187:52 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:194:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:209:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:215:30 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:216:26 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:238:56 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:239:52 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_image_test.dart:250:62 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_test.dart:83:26 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_test.dart:100:24 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_test.dart:215:24 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_test.dart:217:26 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/card_test.dart:221:24 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/circular_progress_indicator_test.dart:36:20 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/circular_progress_indicator_test.dart:37:30 • undefined_identifier
+   info • The imported package 'shadcn_flutter' isn't a dependency of the importing package • test/components/click_detector_test.dart:3:8 • depend_on_referenced_packages
+  error • Target of URI doesn't exist: 'package:shadcn_flutter/src/components/patch.dart' • test/components/click_detector_test.dart:3:8 • uri_does_not_exist
+  error • The function 'VNLClickDetector' isn't defined • test/components/click_detector_test.dart:12:18 • undefined_function
+  error • The function 'VNLClickDetector' isn't defined • test/components/click_detector_test.dart:25:18 • undefined_function
+  error • The function 'VNLClickDetector' isn't defined • test/components/click_detector_test.dart:40:18 • undefined_function
+  error • The function 'VNLClickDetector' isn't defined • test/components/click_detector_test.dart:59:18 • undefined_function
+  error • Undefined name 'Colors' • test/components/color_history_grid_test.dart:28:35 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_history_grid_test.dart:28:47 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_history_grid_test.dart:48:35 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_history_grid_test.dart:64:34 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_history_grid_test.dart:71:35 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_history_grid_test.dart:71:47 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_history_grid_test.dart:71:60 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_picker_test.dart:12:49 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_picker_test.dart:26:49 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_picker_test.dart:39:49 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_picker_test.dart:65:49 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_picker_test.dart:85:49 • undefined_identifier
+  error • Undefined name 'Colors' • test/components/color_picker_test.dart:100:49 • undefined_identifier
+   info • Don't invoke 'print' in production code • tools/analyze_classes.dart:33:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/analyze_classes.dart:37:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/analyze_classes.dart:74:7 • avoid_print
+   info • Don't invoke 'print' in production code • tools/analyze_classes.dart:85:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/analyze_classes.dart:86:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/analyze_classes.dart:87:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:105:9 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:119:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:133:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:134:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:135:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:136:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:137:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:142:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:146:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:156:3 • avoid_print
+warning • The value of the local variable 'stateClasses' isn't used • tools/enhanced_rename.dart:174:11 • unused_local_variable
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:284:7 • avoid_print
+   info • Don't invoke 'print' in production code • tools/enhanced_rename.dart:288:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:89:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:94:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:140:9 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:198:7 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:211:7 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:218:9 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:222:7 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:226:9 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:242:13 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:247:15 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:286:15 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:291:9 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:292:9 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:294:9 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:297:7 • avoid_print
+   info • Don't invoke 'print' in production code • tools/fix_errors.dart:300:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/generate_mapping.dart:75:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/generate_mapping.dart:79:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/generate_mapping.dart:80:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/generate_mapping.dart:198:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/generate_mapping.dart:199:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/generate_mapping.dart:200:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/generate_mapping.dart:201:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/generate_mapping.dart:202:3 • avoid_print
+   info • The imported package 'path' isn't a dependency of the importing package • tools/rename_components.dart:2:8 • depend_on_referenced_packages
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:110:9 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:132:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:133:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:134:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:135:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:136:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:141:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:145:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:155:3 • avoid_print
+warning • The value of the local variable 'originalContent' isn't used • tools/rename_components.dart:200:13 • unused_local_variable
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:331:7 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_components.dart:335:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:10:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:11:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:14:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:18:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:22:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:23:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:24:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:29:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:38:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:41:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:42:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:44:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:53:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:59:3 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:62:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:63:5 • avoid_print
+   info • Don't invoke 'print' in production code • tools/rename_process.dart:67:5 • avoid_print
+   info • The type name 'path' isn't an UpperCamelCase identifier • tools/rename_process.dart:73:7 • camel_case_types
+
+444 issues found. (ran in 3.7s)

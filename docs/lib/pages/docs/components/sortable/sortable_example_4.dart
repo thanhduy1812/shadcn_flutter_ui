@@ -36,20 +36,24 @@ class _SortableExample4State extends State<SortableExample4> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 400,
-      child: SortableLayer(
+      child: VNLSortableLayer(
+        // Constrain drag overlays to the layer bounds so they scroll within the list.
         lock: true,
         child: SortableDropFallback<int>(
+          // If dropped outside a specific edge target, append to the end.
           onAccept: (value) {
             setState(() {
               names.add(names.removeAt(value.data));
             });
           },
-          child: ScrollableSortableLayer(
+          // Wrap the scrollable so auto-scrolling can occur while dragging near edges.
+          child: VNLScrollableSortableLayer(
             controller: controller,
             child: ListView.builder(
               controller: controller,
               itemBuilder: (context, i) {
                 return Sortable<String>(
+                  // Stable key helps maintain drag state with virtualization.
                   key: ValueKey(i),
                   data: names[i],
                   onAcceptTop: (value) {
@@ -62,7 +66,7 @@ class _SortableExample4State extends State<SortableExample4> {
                       names.swapItem(value, i + 1);
                     });
                   },
-                  child: OutlinedContainer(
+                  child: VNLOutlinedContainer(
                     padding: const EdgeInsets.all(12),
                     child: Center(child: Text(names[i].data)),
                   ),

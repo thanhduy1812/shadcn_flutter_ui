@@ -1,15 +1,19 @@
 import 'dart:collection';
 import 'dart:ui';
 
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:flutter/foundation.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 Color _fromAHSL(double a, double h, double s, double l) {
   return HSLColor.fromAHSL(a, h, s, l).toColor();
 }
 
+/// A chart color scheme that uses a single color for all chart elements.
 class SingleChartColorScheme implements ChartColorScheme {
+  /// The single color used for all chart elements.
   final Color color;
 
+  /// Creates a single color chart scheme.
   const SingleChartColorScheme(this.color);
 
   @override
@@ -31,34 +35,76 @@ class SingleChartColorScheme implements ChartColorScheme {
   Color get chart5 => color;
 }
 
+/// A color scheme for charts with 5 distinct colors.
+///
+/// Provides colors for up to 5 different data series in charts.
 class ChartColorScheme {
+  /// The list of chart colors.
   final List<Color> chartColors;
 
+  /// Creates a chart color scheme with the given colors.
   const ChartColorScheme(this.chartColors);
 
+  /// Creates a chart color scheme using a single color for all elements.
   factory ChartColorScheme.single(Color color) {
     return SingleChartColorScheme(color);
   }
 
+  /// Color for the first chart series.
   Color get chart1 => chartColors[0];
+
+  /// Color for the second chart series.
   Color get chart2 => chartColors[1];
+
+  /// Color for the third chart series.
   Color get chart3 => chartColors[2];
+
+  /// Color for the fourth chart series.
   Color get chart4 => chartColors[3];
+
+  /// Color for the fifth chart series.
   Color get chart5 => chartColors[4];
 }
 
+/// A collection of color shades from light to dark.
+///
+/// Implements both [Color] and [ColorSwatch] to provide a primary color
+/// and access to different shade values (50, 100, 200, ..., 950).
 class ColorShades implements Color, ColorSwatch {
   static const int _step = 100;
-  static const List<int> shadeValues = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+
+  /// Standard shade values used in color palettes.
+  ///
+  /// Contains the standard Material Design shade values from lightest (50)
+  /// to darkest (950): [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].
+  static const List<int> shadeValues = [
+    50,
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900,
+    950
+  ];
   final Map<int, Color> _colors;
 
   ColorShades._() : _colors = {};
 
+  /// Creates color shades from a raw map.
   @protected
   const ColorShades.raw(this._colors);
 
+  /// Creates color shades from a sorted list of colors.
+  ///
+  /// The list must contain exactly 11 colors corresponding to shades
+  /// 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, and 950.
   factory ColorShades.sorted(List<Color> colors) {
-    assert(colors.length == shadeValues.length, 'ColorShades.sorted: Invalid number of colors');
+    assert(colors.length == shadeValues.length,
+        'ColorShades.sorted: Invalid number of colors');
     final slate = ColorShades._();
     for (int i = 0; i < shadeValues.length; i++) {
       slate._colors[shadeValues[i]] = colors[i];
@@ -66,6 +112,12 @@ class ColorShades implements Color, ColorSwatch {
     return slate;
   }
 
+  /// Creates color shades from an accent color.
+  ///
+  /// Generates a full shade range by shifting the accent color's HSL values.
+  /// [base] is the shade value for the accent color (default: 500).
+  /// [hueShift], [saturationStepDown], [saturationStepUp], [lightnessStepDown],
+  /// and [lightnessStepUp] control how shades are generated.
   factory ColorShades.fromAccent(Color accent,
       {int base = 500,
       int hueShift = 0,
@@ -73,7 +125,8 @@ class ColorShades implements Color, ColorSwatch {
       int saturationStepUp = 0,
       int lightnessStepDown = 8,
       int lightnessStepUp = 9}) {
-    assert(shadeValues.contains(base), 'ColorShades.fromAccent: Invalid base value');
+    assert(shadeValues.contains(base),
+        'ColorShades.fromAccent: Invalid base value');
     final hsl = HSLColor.fromColor(accent);
     return ColorShades.fromAccentHSL(hsl,
         base: base,
@@ -83,6 +136,10 @@ class ColorShades implements Color, ColorSwatch {
         lightnessStepDown: lightnessStepDown,
         lightnessStepUp: lightnessStepUp);
   }
+
+  /// Creates color shades from an accent HSL color.
+  ///
+  /// Similar to [fromAccent] but takes an HSL color directly.
   factory ColorShades.fromAccentHSL(HSLColor accent,
       {int base = 500,
       int hueShift = 0,
@@ -90,13 +147,16 @@ class ColorShades implements Color, ColorSwatch {
       int saturationStepUp = 0,
       int lightnessStepDown = 8,
       int lightnessStepUp = 9}) {
-    assert(shadeValues.contains(base), 'ColorShades.fromAccent: Invalid base value');
+    assert(shadeValues.contains(base),
+        'ColorShades.fromAccent: Invalid base value');
     final slate = ColorShades._();
     for (final key in shadeValues) {
       double delta = (key - base) / _step;
       double hueDelta = delta * (hueShift / 10);
-      double saturationDelta = delta > 0 ? delta * saturationStepUp : delta * saturationStepDown;
-      double lightnessDelta = delta > 0 ? delta * lightnessStepUp : delta * lightnessStepDown;
+      double saturationDelta =
+          delta > 0 ? delta * saturationStepUp : delta * saturationStepDown;
+      double lightnessDelta =
+          delta > 0 ? delta * lightnessStepUp : delta * lightnessStepDown;
       final h = (accent.hue + hueDelta) % 360;
       final s = (accent.saturation * 100 - saturationDelta).clamp(0, 100) / 100;
       final l = (accent.lightness * 100 - lightnessDelta).clamp(0, 100) / 100;
@@ -106,6 +166,9 @@ class ColorShades implements Color, ColorSwatch {
     return slate;
   }
 
+  /// Shifts an HSL color to a target shade value.
+  ///
+  /// Used internally to generate shade variations.
   static HSLColor shiftHSL(
     HSLColor hsv,
     int targetBase, {
@@ -116,11 +179,14 @@ class ColorShades implements Color, ColorSwatch {
     int lightnessStepUp = 9,
     int lightnessStepDown = 8,
   }) {
-    assert(shadeValues.contains(base), 'ColorShades.fromAccent: Invalid base value');
+    assert(shadeValues.contains(base),
+        'ColorShades.fromAccent: Invalid base value');
     double delta = (targetBase - base) / _step;
     double hueDelta = delta * (hueShift / 10);
-    double saturationDelta = delta > 0 ? delta * saturationStepUp : delta * saturationStepDown;
-    double lightnessDelta = delta > 0 ? delta * lightnessStepUp : delta * lightnessStepDown;
+    double saturationDelta =
+        delta > 0 ? delta * saturationStepUp : delta * saturationStepDown;
+    double lightnessDelta =
+        delta > 0 ? delta * lightnessStepUp : delta * lightnessStepDown;
     final h = (hsv.hue + hueDelta) % 360;
     final s = (hsv.saturation * 100 - saturationDelta).clamp(0, 100) / 100;
     final l = (hsv.lightness * 100 - lightnessDelta).clamp(0, 100) / 100;
@@ -128,10 +194,14 @@ class ColorShades implements Color, ColorSwatch {
     return HSLColor.fromAHSL(a, h, s, l);
   }
 
+  /// Creates color shades from a map of shade values to colors.
+  ///
+  /// The map must contain all standard shade values (50-950).
   factory ColorShades.fromMap(Map<int, Color> colors) {
     final slate = ColorShades._();
     for (final key in shadeValues) {
-      assert(colors.containsKey(key), 'ColorShades.fromMap: Missing value for $key');
+      assert(colors.containsKey(key),
+          'ColorShades.fromMap: Missing value for $key');
       slate._colors[key] = colors[key]!;
     }
     return slate;
@@ -139,30 +209,52 @@ class ColorShades implements Color, ColorSwatch {
 
   ColorShades._direct(this._colors);
 
+  /// Gets the color for a specific shade value.
   Color get(int key) {
     assert(_colors.containsKey(key), 'ColorShades.get: Missing value for $key');
     return _colors[key]!;
   }
 
+  /// Gets the lightest shade (50).
   Color get shade50 => _colors[50]!;
+
+  /// Gets shade 100.
   Color get shade100 => _colors[100]!;
+
+  /// Gets shade 200.
   Color get shade200 => _colors[200]!;
+
+  /// Gets shade 300.
   Color get shade300 => _colors[300]!;
+
+  /// Gets shade 400.
   Color get shade400 => _colors[400]!;
+
+  /// Gets the medium/default shade (500).
   Color get shade500 => _colors[500]!;
+
+  /// Gets shade 600.
   Color get shade600 => _colors[600]!;
+
+  /// Gets shade 700.
   Color get shade700 => _colors[700]!;
+
+  /// Gets shade 800.
   Color get shade800 => _colors[800]!;
+
+  /// Gets shade 900.
   Color get shade900 => _colors[900]!;
+
+  /// Gets the darkest shade (950).
   Color get shade950 => _colors[950]!;
 
   Color get _primary => _colors[500]!;
 
   @override
-  int get alpha => _primary.alpha;
+  int get alpha => (_primary.a * 255).round() & 0xFF;
 
   @override
-  int get blue => _primary.blue;
+  int get blue => (_primary.b * 255).round() & 0xFF;
 
   @override
   double computeLuminance() {
@@ -170,15 +262,16 @@ class ColorShades implements Color, ColorSwatch {
   }
 
   @override
-  int get green => _primary.green;
+  int get green => (_primary.g * 255).round() & 0xFF;
 
   @override
-  double get opacity => _primary.opacity;
+  double get opacity => _primary.a;
 
   @override
-  int get red => _primary.red;
+  int get red => (_primary.r * 255).round() & 0xFF;
 
   @override
+  @Deprecated('Use toARGB32() instead')
   int get value => _primary.value;
 
   @override
@@ -196,7 +289,8 @@ class ColorShades implements Color, ColorSwatch {
     // calculate the difference between the current blue value and the new value
     int delta = b - blue;
     for (final key in shadeValues) {
-      int safe = (_colors[key]!.blue + delta).clamp(0, 255);
+      int safe =
+          (((_colors[key]!.b * 255).round() & 0xFF) + delta).clamp(0, 255);
       colors[key] = _colors[key]!.withBlue(safe);
     }
     return ColorShades._direct(colors);
@@ -208,7 +302,8 @@ class ColorShades implements Color, ColorSwatch {
     // calculate the difference between the current green value and the new value
     int delta = g - green;
     for (final key in shadeValues) {
-      int safe = (_colors[key]!.green + delta).clamp(0, 255);
+      int safe =
+          (((_colors[key]!.g * 255).round() & 0xFF) + delta).clamp(0, 255);
       colors[key] = _colors[key]!.withGreen(safe);
     }
     return ColorShades._direct(colors);
@@ -229,7 +324,8 @@ class ColorShades implements Color, ColorSwatch {
     // calculate the difference between the current red value and the new value
     int delta = r - red;
     for (final key in shadeValues) {
-      int safe = (_colors[key]!.red + delta).clamp(0, 255);
+      int safe =
+          (((_colors[key]!.r * 255).round() & 0xFF) + delta).clamp(0, 255);
       colors[key] = _colors[key]!.withRed(safe);
     }
     return ColorShades._direct(colors);
@@ -261,7 +357,12 @@ class ColorShades implements Color, ColorSwatch {
   double get r => _primary.r;
 
   @override
-  Color withValues({double? alpha, double? red, double? green, double? blue, ColorSpace? colorSpace}) {
+  Color withValues(
+      {double? alpha,
+      double? red,
+      double? green,
+      double? blue,
+      ColorSpace? colorSpace}) {
     Map<int, Color> colors = {};
     for (final key in shadeValues) {
       colors[key] = _colors[key]!.withValues(
@@ -279,13 +380,49 @@ class ColorShades implements Color, ColorSwatch {
   int toARGB32() {
     return _primary.toARGB32();
   }
+
+  @override
+  int get hashCode => _primary.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is ColorShades && mapEquals(other._colors, _colors);
+  }
 }
 
+/// Converts a Flutter [Color] to hexadecimal string representation.
+///
+/// Returns a hex string with hash prefix (e.g., "#RRGGBB" or "#AARRGGBB").
+///
+/// Parameters:
+/// - [color] (Color, required): Color to convert
+///
+/// Returns hex string representation.
 String hexFromColor(Color color) {
-  return '#${color.value.toRadixString(16).toUpperCase()}';
+  return colorToHex(color, true);
 }
 
-class VNLColorScheme implements ChartColorScheme {
+/// The color scheme for shadcn_flutter applications.
+///
+/// Defines all the semantic colors used throughout the app including
+/// background, foreground, primary, secondary, destructive colors, etc.
+/// Also includes chart colors.
+class ColorScheme implements ChartColorScheme {
+  /// Returns the color scheme for the given context.
+  ///
+  /// Parameters:
+  /// - [context] (BuildContext, required): The build context.
+  ///
+  /// Returns the color scheme for the given context.
+  static ColorScheme of(BuildContext context) {
+    return Theme.of(context).colorScheme;
+  }
+
+  /// Set of recognized color key names for the color scheme.
+  ///
+  /// Contains all valid color property names that can be used when
+  /// constructing or serializing a ColorScheme.
   static const Set<String> colorKeys = {
     'background',
     'foreground',
@@ -312,26 +449,68 @@ class VNLColorScheme implements ChartColorScheme {
     'chart4',
     'chart5',
   };
+
+  /// The brightness of this color scheme (light or dark).
   final Brightness brightness;
+
+  /// The background color.
   final Color background;
+
+  /// The foreground color (typically text).
   final Color foreground;
+
+  /// The card background color.
   final Color card;
+
+  /// The card foreground color.
   final Color cardForeground;
+
+  /// The popover background color.
   final Color popover;
+
+  /// The popover foreground color.
   final Color popoverForeground;
+
+  /// The primary brand color.
   final Color primary;
+
+  /// The foreground color for primary elements.
   final Color primaryForeground;
+
+  /// The secondary color.
   final Color secondary;
+
+  /// The foreground color for secondary elements.
   final Color secondaryForeground;
+
+  /// The muted background color.
   final Color muted;
+
+  /// The muted foreground color.
   final Color mutedForeground;
+
+  /// The accent color.
   final Color accent;
+
+  /// The foreground color for accented elements.
   final Color accentForeground;
+
+  /// The destructive action color (typically red).
   final Color destructive;
+
+  /// The foreground color for destructive elements.
+  @Deprecated('Legacy color')
   final Color destructiveForeground;
+
+  /// The border color.
   final Color border;
+
+  /// The input field border color.
   final Color input;
+
+  /// The focus ring color.
   final Color ring;
+
   @override
   final Color chart1;
   @override
@@ -343,7 +522,8 @@ class VNLColorScheme implements ChartColorScheme {
   @override
   final Color chart5;
 
-  const VNLColorScheme({
+  /// Creates a color scheme with all required colors.
+  const ColorScheme({
     required this.brightness,
     required this.background,
     required this.foreground,
@@ -360,7 +540,7 @@ class VNLColorScheme implements ChartColorScheme {
     required this.accent,
     required this.accentForeground,
     required this.destructive,
-    required this.destructiveForeground,
+    this.destructiveForeground = VNLColors.transparent,
     required this.border,
     required this.input,
     required this.ring,
@@ -371,7 +551,8 @@ class VNLColorScheme implements ChartColorScheme {
     required this.chart5,
   });
 
-  VNLColorScheme.fromMap(Map<String, dynamic> map)
+  /// Creates a color scheme from a map of color names to values.
+  ColorScheme.fromMap(Map<String, dynamic> map)
       : background = map._col('background'),
         foreground = map._col('foreground'),
         card = map._col('card'),
@@ -387,6 +568,7 @@ class VNLColorScheme implements ChartColorScheme {
         accent = map._col('accent'),
         accentForeground = map._col('accentForeground'),
         destructive = map._col('destructive'),
+        // ignore: deprecated_member_use_from_same_package
         destructiveForeground = map._col('destructiveForeground'),
         border = map._col('border'),
         input = map._col('input'),
@@ -396,9 +578,17 @@ class VNLColorScheme implements ChartColorScheme {
         chart3 = map._col('chart3'),
         chart4 = map._col('chart4'),
         chart5 = map._col('chart5'),
-        brightness =
-            Brightness.values.where((element) => element.name == map['brightness']).firstOrNull ?? Brightness.light;
+        brightness = Brightness.values
+                .where((element) => element.name == map['brightness'])
+                .firstOrNull ??
+            Brightness.light;
 
+  /// Converts the color scheme to a map of hex color strings.
+  ///
+  /// Returns a map where keys are color property names and values are
+  /// hex-encoded color strings (e.g., "#RRGGBB").
+  ///
+  /// Useful for serialization or CSS generation.
   Map<String, String> toMap() {
     return {
       'background': hexFromColor(background),
@@ -416,6 +606,7 @@ class VNLColorScheme implements ChartColorScheme {
       'accent': hexFromColor(accent),
       'accentForeground': hexFromColor(accentForeground),
       'destructive': hexFromColor(destructive),
+      // ignore: deprecated_member_use_from_same_package
       'destructiveForeground': hexFromColor(destructiveForeground),
       'border': hexFromColor(border),
       'input': hexFromColor(input),
@@ -429,6 +620,12 @@ class VNLColorScheme implements ChartColorScheme {
     };
   }
 
+  /// Converts the color scheme to a map of Color objects.
+  ///
+  /// Returns a map where keys are color property names and values are
+  /// Flutter Color objects.
+  ///
+  /// Useful for programmatic color access.
   Map<String, Color> toColorMap() {
     return {
       'background': background,
@@ -446,6 +643,7 @@ class VNLColorScheme implements ChartColorScheme {
       'accent': accent,
       'accentForeground': accentForeground,
       'destructive': destructive,
+      // ignore: deprecated_member_use_from_same_package
       'destructiveForeground': destructiveForeground,
       'border': border,
       'input': input,
@@ -458,7 +656,22 @@ class VNLColorScheme implements ChartColorScheme {
     };
   }
 
-  VNLColorScheme.fromColors({
+  /// Creates a ColorScheme from a map of colors.
+  ///
+  /// Constructs a ColorScheme by looking up color values from a map.
+  ///
+  /// Parameters:
+  /// - [colors] (`Map<String, Color>`, required): Map of color name to Color
+  /// - [brightness] (Brightness, required): Theme brightness (light or dark)
+  ///
+  /// Example:
+  /// ```dart
+  /// ColorScheme.fromColors(
+  ///   colors: {'background': VNLColors.white, 'foreground': VNLColors.black, ...},
+  ///   brightness: Brightness.light,
+  /// )
+  /// ```
+  ColorScheme.fromColors({
     required Map<String, Color> colors,
     required Brightness brightness,
   }) : this(
@@ -489,79 +702,124 @@ class VNLColorScheme implements ChartColorScheme {
           chart5: colors._col('chart5'),
         );
 
-  VNLColorScheme copyWith({
-    Brightness? brightness,
-    Color? background,
-    Color? foreground,
-    Color? card,
-    Color? cardForeground,
-    Color? popover,
-    Color? popoverForeground,
-    Color? primary,
-    Color? primaryForeground,
-    Color? secondary,
-    Color? secondaryForeground,
-    Color? muted,
-    Color? mutedForeground,
-    Color? accent,
-    Color? accentForeground,
-    Color? destructive,
-    Color? destructiveForeground,
-    Color? border,
-    Color? input,
-    Color? ring,
+  /// Creates a copy of this ColorScheme with specified properties replaced.
+  ///
+  /// Returns a new ColorScheme with any provided properties replaced.
+  /// Uses ValueGetter for each property to allow lazy evaluation.
+  ///
+  /// Parameters are ValueGetters for all color scheme properties. Only
+  /// provided parameters will be replaced in the copy.
+  ///
+  /// Example:
+  /// ```dart
+  /// scheme.copyWith(
+  ///   background: () => VNLColors.white,
+  ///   foreground: () => VNLColors.black,
+  /// )
+  /// ```
+  ColorScheme copyWith({
+    ValueGetter<Brightness>? brightness,
+    ValueGetter<Color>? background,
+    ValueGetter<Color>? foreground,
+    ValueGetter<Color>? card,
+    ValueGetter<Color>? cardForeground,
+    ValueGetter<Color>? popover,
+    ValueGetter<Color>? popoverForeground,
+    ValueGetter<Color>? primary,
+    ValueGetter<Color>? primaryForeground,
+    ValueGetter<Color>? secondary,
+    ValueGetter<Color>? secondaryForeground,
+    ValueGetter<Color>? muted,
+    ValueGetter<Color>? mutedForeground,
+    ValueGetter<Color>? accent,
+    ValueGetter<Color>? accentForeground,
+    ValueGetter<Color>? destructive,
+    ValueGetter<Color>? destructiveForeground,
+    ValueGetter<Color>? border,
+    ValueGetter<Color>? input,
+    ValueGetter<Color>? ring,
+    ValueGetter<Color>? chart1,
+    ValueGetter<Color>? chart2,
+    ValueGetter<Color>? chart3,
+    ValueGetter<Color>? chart4,
+    ValueGetter<Color>? chart5,
   }) {
-    return VNLColorScheme(
-      brightness: brightness ?? this.brightness,
-      background: background ?? this.background,
-      foreground: foreground ?? this.foreground,
-      card: card ?? this.card,
-      cardForeground: cardForeground ?? this.cardForeground,
-      popover: popover ?? this.popover,
-      popoverForeground: popoverForeground ?? this.popoverForeground,
-      primary: primary ?? this.primary,
-      primaryForeground: primaryForeground ?? this.primaryForeground,
-      secondary: secondary ?? this.secondary,
-      secondaryForeground: secondaryForeground ?? this.secondaryForeground,
-      muted: muted ?? this.muted,
-      mutedForeground: mutedForeground ?? this.mutedForeground,
-      accent: accent ?? this.accent,
-      accentForeground: accentForeground ?? this.accentForeground,
-      destructive: destructive ?? this.destructive,
-      destructiveForeground: destructiveForeground ?? this.destructiveForeground,
-      border: border ?? this.border,
-      input: input ?? this.input,
-      ring: ring ?? this.ring,
-      chart1: chart1,
-      chart2: chart2,
-      chart3: chart3,
-      chart4: chart4,
-      chart5: chart5,
+    return ColorScheme(
+      brightness: brightness == null ? this.brightness : brightness(),
+      background: background == null ? this.background : background(),
+      foreground: foreground == null ? this.foreground : foreground(),
+      card: card == null ? this.card : card(),
+      cardForeground:
+          cardForeground == null ? this.cardForeground : cardForeground(),
+      popover: popover == null ? this.popover : popover(),
+      popoverForeground: popoverForeground == null
+          ? this.popoverForeground
+          : popoverForeground(),
+      primary: primary == null ? this.primary : primary(),
+      primaryForeground: primaryForeground == null
+          ? this.primaryForeground
+          : primaryForeground(),
+      secondary: secondary == null ? this.secondary : secondary(),
+      secondaryForeground: secondaryForeground == null
+          ? this.secondaryForeground
+          : secondaryForeground(),
+      muted: muted == null ? this.muted : muted(),
+      mutedForeground:
+          mutedForeground == null ? this.mutedForeground : mutedForeground(),
+      accent: accent == null ? this.accent : accent(),
+      accentForeground:
+          accentForeground == null ? this.accentForeground : accentForeground(),
+      destructive: destructive == null ? this.destructive : destructive(),
+      destructiveForeground: destructiveForeground == null
+          // ignore: deprecated_member_use_from_same_package
+          ? this.destructiveForeground
+          : destructiveForeground(),
+      border: border == null ? this.border : border(),
+      input: input == null ? this.input : input(),
+      ring: ring == null ? this.ring : ring(),
+      chart1: chart1 == null ? this.chart1 : chart1(),
+      chart2: chart2 == null ? this.chart2 : chart2(),
+      chart3: chart3 == null ? this.chart3 : chart3(),
+      chart4: chart4 == null ? this.chart4 : chart4(),
+      chart5: chart5 == null ? this.chart5 : chart5(),
     );
   }
 
   @override
   List<Color> get chartColors => [chart1, chart2, chart3, chart4, chart5];
 
-  static VNLColorScheme lerp(VNLColorScheme a, VNLColorScheme b, double t) {
-    return VNLColorScheme(
+  /// Linearly interpolates between two ColorSchemes.
+  ///
+  /// Creates a new ColorScheme that represents a transition between [a] and [b]
+  /// at position [t]. When t=0, returns [a]; when t=1, returns [b].
+  ///
+  /// Parameters:
+  /// - [a] (ColorScheme, required): Start color scheme
+  /// - [b] (ColorScheme, required): End color scheme
+  /// - [t] (double, required): Interpolation position (0.0 to 1.0)
+  ///
+  /// Returns interpolated ColorScheme.
+  static ColorScheme lerp(ColorScheme a, ColorScheme b, double t) {
+    return ColorScheme(
       brightness: t < 0.5 ? a.brightness : b.brightness,
       background: Color.lerp(a.background, b.background, t)!,
       foreground: Color.lerp(a.foreground, b.foreground, t)!,
       card: Color.lerp(a.card, b.card, t)!,
       cardForeground: Color.lerp(a.cardForeground, b.cardForeground, t)!,
       popover: Color.lerp(a.popover, b.popover, t)!,
-      popoverForeground: Color.lerp(a.popoverForeground, b.popoverForeground, t)!,
+      popoverForeground:
+          Color.lerp(a.popoverForeground, b.popoverForeground, t)!,
       primary: Color.lerp(a.primary, b.primary, t)!,
-      primaryForeground: Color.lerp(a.primaryForeground, b.primaryForeground, t)!,
+      primaryForeground:
+          Color.lerp(a.primaryForeground, b.primaryForeground, t)!,
       secondary: Color.lerp(a.secondary, b.secondary, t)!,
-      secondaryForeground: Color.lerp(a.secondaryForeground, b.secondaryForeground, t)!,
+      secondaryForeground:
+          Color.lerp(a.secondaryForeground, b.secondaryForeground, t)!,
       muted: Color.lerp(a.muted, b.muted, t)!,
       mutedForeground: Color.lerp(a.mutedForeground, b.mutedForeground, t)!,
       accent: Color.lerp(a.accent, b.accent, t)!,
       accentForeground: Color.lerp(a.accentForeground, b.accentForeground, t)!,
       destructive: Color.lerp(a.destructive, b.destructive, t)!,
-      destructiveForeground: Color.lerp(a.destructiveForeground, b.destructiveForeground, t)!,
       border: Color.lerp(a.border, b.border, t)!,
       input: Color.lerp(a.input, b.input, t)!,
       ring: Color.lerp(a.ring, b.ring, t)!,
@@ -576,7 +834,7 @@ class VNLColorScheme implements ChartColorScheme {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is VNLColorScheme &&
+      other is ColorScheme &&
           runtimeType == other.runtimeType &&
           brightness == other.brightness &&
           background == other.background &&
@@ -594,7 +852,6 @@ class VNLColorScheme implements ChartColorScheme {
           accent == other.accent &&
           accentForeground == other.accentForeground &&
           destructive == other.destructive &&
-          destructiveForeground == other.destructiveForeground &&
           border == other.border &&
           input == other.input &&
           ring == other.ring &&
@@ -605,35 +862,36 @@ class VNLColorScheme implements ChartColorScheme {
           chart5 == other.chart5;
 
   @override
-  int get hashCode =>
-      brightness.hashCode ^
-      background.hashCode ^
-      foreground.hashCode ^
-      card.hashCode ^
-      cardForeground.hashCode ^
-      popover.hashCode ^
-      popoverForeground.hashCode ^
-      primary.hashCode ^
-      primaryForeground.hashCode ^
-      secondary.hashCode ^
-      secondaryForeground.hashCode ^
-      muted.hashCode ^
-      mutedForeground.hashCode ^
-      accent.hashCode ^
-      accentForeground.hashCode ^
-      destructive.hashCode ^
-      destructiveForeground.hashCode ^
-      border.hashCode ^
-      input.hashCode ^
-      ring.hashCode ^
-      chart1.hashCode ^
-      chart2.hashCode ^
-      chart3.hashCode ^
-      chart4.hashCode ^
-      chart5.hashCode;
+  int get hashCode => Object.hash(
+        Object.hash(
+          brightness,
+          background,
+          foreground,
+          card,
+          cardForeground,
+          popover,
+          popoverForeground,
+          primary,
+          primaryForeground,
+          secondary,
+          secondaryForeground,
+          muted,
+          mutedForeground,
+          accent,
+          accentForeground,
+          destructive,
+          // ignore: deprecated_member_use_from_same_package
+          destructiveForeground,
+          border,
+          input,
+          ring,
+        ),
+        Object.hash(chart1, chart2, chart3, chart4, chart5),
+      );
 
   @override
   String toString() {
+    // ignore: deprecated_member_use_from_same_package
     return 'ColorScheme{brightness: $brightness, background: $background, foreground: $foreground, card: $card, cardForeground: $cardForeground, popover: $popover, popoverForeground: $popoverForeground, primary: $primary, primaryForeground: $primaryForeground, secondary: $secondary, secondaryForeground: $secondaryForeground, muted: $muted, mutedForeground: $mutedForeground, accent: $accent, accentForeground: $accentForeground, destructive: $destructive, destructiveForeground: $destructiveForeground, border: $border, input: $input, ring: $ring, chart1: $chart1, chart2: $chart2, chart3: $chart3, chart4: $chart4, chart5: $chart5}';
   }
 }
@@ -660,4 +918,82 @@ extension _DynamicMapColorGetter on Map<String, dynamic> {
     assert(parse != null, 'ColorScheme: Invalid hex color value $value');
     return Color(parse!);
   }
+}
+
+/// Helpers for deriving accent variants from a base [ColorScheme].
+extension ColorSchemeRecolorExtension on ColorScheme {
+  /// Returns a copy of this scheme using [primary] as the accent color.
+  ColorScheme recolor(Color primary) {
+    return copyWith(
+      primary: () => primary,
+      primaryForeground: () => primary.getContrastColor(),
+      ring: () => primary,
+    );
+  }
+
+  /// Returns a slate-accented scheme.
+  ColorScheme get slate => recolor(VNLColors.slate);
+
+  /// Returns a gray-accented scheme.
+  ColorScheme get gray => recolor(VNLColors.gray);
+
+  /// Returns a zinc-accented scheme.
+  ColorScheme get zinc => recolor(VNLColors.zinc);
+
+  /// Returns a neutral-accented scheme.
+  ColorScheme get neutral => recolor(VNLColors.neutral);
+
+  /// Returns a stone-accented scheme.
+  ColorScheme get stone => recolor(VNLColors.stone);
+
+  /// Returns a red-accented scheme.
+  ColorScheme get red => recolor(VNLColors.red);
+
+  /// Returns an orange-accented scheme.
+  ColorScheme get orange => recolor(VNLColors.orange);
+
+  /// Returns an amber-accented scheme.
+  ColorScheme get amber => recolor(VNLColors.amber);
+
+  /// Returns a yellow-accented scheme.
+  ColorScheme get yellow => recolor(VNLColors.yellow);
+
+  /// Returns a lime-accented scheme.
+  ColorScheme get lime => recolor(VNLColors.lime);
+
+  /// Returns a green-accented scheme.
+  ColorScheme get green => recolor(VNLColors.green);
+
+  /// Returns an emerald-accented scheme.
+  ColorScheme get emerald => recolor(VNLColors.emerald);
+
+  /// Returns a teal-accented scheme.
+  ColorScheme get teal => recolor(VNLColors.teal);
+
+  /// Returns a cyan-accented scheme.
+  ColorScheme get cyan => recolor(VNLColors.cyan);
+
+  /// Returns a sky-accented scheme.
+  ColorScheme get sky => recolor(VNLColors.sky);
+
+  /// Returns a blue-accented scheme.
+  ColorScheme get blue => recolor(VNLColors.blue);
+
+  /// Returns an indigo-accented scheme.
+  ColorScheme get indigo => recolor(VNLColors.indigo);
+
+  /// Returns a violet-accented scheme.
+  ColorScheme get violet => recolor(VNLColors.violet);
+
+  /// Returns a purple-accented scheme.
+  ColorScheme get purple => recolor(VNLColors.purple);
+
+  /// Returns a fuchsia-accented scheme.
+  ColorScheme get fuchsia => recolor(VNLColors.fuchsia);
+
+  /// Returns a pink-accented scheme.
+  ColorScheme get pink => recolor(VNLColors.pink);
+
+  /// Returns a rose-accented scheme.
+  ColorScheme get rose => recolor(VNLColors.rose);
 }

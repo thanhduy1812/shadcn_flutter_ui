@@ -1,5 +1,8 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
+
+// Demonstrates VNLTabList (a low-level tab header) with an IndexedStack body.
+// The header controls the index; the content is managed separately.
 
 class TabListExample1 extends StatefulWidget {
   const TabListExample1({super.key});
@@ -16,6 +19,7 @@ class _TabListExample1State extends State<TabListExample1> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VNLTabList(
+          // VNLTabList is a lower-level tab header; it doesn't manage content.
           index: index,
           onChanged: (value) {
             setState(() {
@@ -23,18 +27,19 @@ class _TabListExample1State extends State<TabListExample1> {
             });
           },
           children: const [
-            TabItem(
+            VNLTabItem(
               child: Text('Tab 1'),
             ),
-            TabItem(
+            VNLTabItem(
               child: Text('Tab 2'),
             ),
-            TabItem(
+            VNLTabItem(
               child: Text('Tab 3'),
             ),
           ],
         ),
         const Gap(16),
+        // Like VNLTabs example, use an IndexedStack to switch the content area.
         IndexedStack(
           index: index,
           children: const [

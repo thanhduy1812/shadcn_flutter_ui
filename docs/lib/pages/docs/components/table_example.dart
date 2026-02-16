@@ -14,7 +14,7 @@ class TableExample extends StatelessWidget {
     return const ComponentPage(
       name: 'table',
       description: 'A table displays data in a tabular format.',
-      displayName: 'Table',
+      displayName: 'VNLTable',
       children: [
         WidgetUsageExample(
           title: 'Example',

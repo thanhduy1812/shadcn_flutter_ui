@@ -1,11 +1,181 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-typedef DrawerBuilder =
-    Widget Function(BuildContext context, Size extraSize, Size size, EdgeInsets padding, int stackIndex);
+/// Builder function signature for drawer content.
+///
+/// Parameters:
+/// - [context]: build context for the drawer content
+/// - [extraSize]: additional size available due to backdrop transforms
+/// - [size]: total size constraints for the drawer
+/// - [padding]: safe area padding to respect
+/// - [stackIndex]: index in the drawer stack (for layered drawers)
+typedef DrawerBuilder = Widget Function(BuildContext context, Size extraSize,
+    Size size, EdgeInsets padding, int stackIndex);
 
+/// Theme configuration for drawer and sheet overlays.
+///
+/// Defines visual properties for drawer and sheet components including
+/// surface effects, drag handles, and barrier appearance.
+///
+/// Features:
+/// - Surface opacity and blur effects
+/// - Customizable barrier colors
+/// - Drag handle appearance control
+/// - Consistent theming across drawer types
+///
+/// Example:
+/// ```dart
+/// ComponentThemeData(
+///   data: {
+///     DrawerTheme: DrawerTheme(
+///       surfaceOpacity: 0.9,
+///       barrierColor: VNLColors.black54,
+///       showDragHandle: true,
+///     ),
+///   },
+///   child: MyApp(),
+/// )
+/// ```
+class DrawerTheme extends ComponentThemeData {
+  /// Surface opacity for backdrop effects.
+  final double? surfaceOpacity;
+
+  /// Surface blur intensity for backdrop effects.
+  final double? surfaceBlur;
+
+  /// Color of the barrier behind the drawer.
+  final Color? barrierColor;
+
+  /// Whether to display the drag handle for draggable drawers.
+  final bool? showDragHandle;
+
+  /// Size of the drag handle when displayed.
+  final Size? dragHandleSize;
+
+  /// Creates a [DrawerTheme].
+  ///
+  /// All parameters are optional and will use system defaults when null.
+  ///
+  /// Parameters:
+  /// - [surfaceOpacity] (double?, optional): opacity for backdrop surface effects
+  /// - [surfaceBlur] (double?, optional): blur intensity for backdrop effects
+  /// - [barrierColor] (Color?, optional): color of the modal barrier
+  /// - [showDragHandle] (bool?, optional): whether to show drag handles
+  /// - [dragHandleSize] (Size?, optional): size of the drag handle
+  ///
+  /// Example:
+  /// ```dart
+  /// const DrawerTheme(
+  ///   surfaceOpacity: 0.95,
+  ///   showDragHandle: true,
+  ///   barrierColor: Color.fromRGBO(0, 0, 0, 0.7),
+  /// )
+  /// ```
+  const DrawerTheme({
+    this.surfaceOpacity,
+    this.surfaceBlur,
+    this.barrierColor,
+    this.showDragHandle,
+    this.dragHandleSize,
+  });
+
+  /// Creates a copy of this theme with the given fields replaced.
+  ///
+  /// Parameters:
+  /// - [surfaceOpacity] (`ValueGetter<double?>?`, optional): New surface opacity.
+  /// - [surfaceBlur] (`ValueGetter<double?>?`, optional): New surface blur amount.
+  /// - [barrierColor] (`ValueGetter<Color?>?`, optional): New barrier color.
+  /// - [showDragHandle] (`ValueGetter<bool?>?`, optional): New show drag handle setting.
+  /// - [dragHandleSize] (`ValueGetter<Size?>?`, optional): New drag handle size.
+  ///
+  /// Returns: A new [DrawerTheme] with updated properties.
+  DrawerTheme copyWith({
+    ValueGetter<double?>? surfaceOpacity,
+    ValueGetter<double?>? surfaceBlur,
+    ValueGetter<Color?>? barrierColor,
+    ValueGetter<bool?>? showDragHandle,
+    ValueGetter<Size?>? dragHandleSize,
+  }) {
+    return DrawerTheme(
+      surfaceOpacity:
+          surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
+      surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
+      barrierColor: barrierColor == null ? this.barrierColor : barrierColor(),
+      showDragHandle:
+          showDragHandle == null ? this.showDragHandle : showDragHandle(),
+      dragHandleSize:
+          dragHandleSize == null ? this.dragHandleSize : dragHandleSize(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      other is DrawerTheme &&
+      other.surfaceOpacity == surfaceOpacity &&
+      other.surfaceBlur == surfaceBlur &&
+      other.barrierColor == barrierColor &&
+      other.showDragHandle == showDragHandle &&
+      other.dragHandleSize == dragHandleSize;
+
+  @override
+  int get hashCode => Object.hash(surfaceOpacity, surfaceBlur, barrierColor,
+      showDragHandle, dragHandleSize);
+
+  @override
+  String toString() =>
+      'DrawerTheme(surfaceOpacity: $surfaceOpacity, surfaceBlur: $surfaceBlur, barrierColor: $barrierColor, showDragHandle: $showDragHandle, dragHandleSize: $dragHandleSize)';
+}
+
+/// Opens a drawer overlay with comprehensive customization options.
+///
+/// Creates a modal drawer that slides in from the specified position with
+/// draggable interaction, backdrop transformation, and proper theme integration.
+/// Returns a completer that can be used to control the drawer lifecycle.
+///
+/// Features:
+/// - Configurable slide-in positions (left, right, top, bottom)
+/// - Draggable interaction with gesture support
+/// - Backdrop transformation and scaling effects
+/// - Safe area handling and proper theming
+/// - Dismissible barriers and custom backdrop builders
+///
+/// Parameters:
+/// - [context] (BuildContext, required): build context for overlay creation
+/// - [builder] (WidgetBuilder, required): function that builds drawer content
+/// - [position] (OverlayPosition, required): side from which drawer slides in
+/// - [expands] (bool, default: false): whether drawer should expand to fill available space
+/// - [draggable] (bool, default: true): whether drawer can be dragged to dismiss
+/// - [barrierDismissible] (bool, default: true): whether tapping barrier dismisses drawer
+/// - [backdropBuilder] (WidgetBuilder?, optional): custom backdrop builder
+/// - [useSafeArea] (bool, default: true): whether to respect device safe areas
+/// - [showDragHandle] (bool?, optional): whether to show drag handle
+/// - [borderRadius] (BorderRadiusGeometry?, optional): corner radius for drawer
+/// - [dragHandleSize] (Size?, optional): size of the drag handle
+/// - [transformBackdrop] (bool, default: true): whether to scale backdrop
+/// - [surfaceOpacity] (double?, optional): opacity for surface effects
+/// - [surfaceBlur] (double?, optional): blur intensity for surface effects
+/// - [barrierColor] (Color?, optional): color of the modal barrier
+/// - [animationController] (AnimationController?, optional): custom animation controller
+/// - [autoOpen] (bool, default: true): whether to automatically open on creation
+/// - [constraints] (BoxConstraints?, optional): size constraints for drawer
+/// - [alignment] (AlignmentGeometry?, optional): alignment within constraints
+///
+/// Returns:
+/// A [DrawerOverlayCompleter] that provides control over the drawer lifecycle.
+///
+/// Example:
+/// ```dart
+/// final completer = openDrawerOverlay<String>(
+///   context: context,
+///   position: OverlayPosition.left,
+///   builder: (context) => DrawerContent(),
+///   draggable: true,
+///   barrierDismissible: true,
+/// );
+/// final result = await completer.future;
+/// ```
 DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -15,7 +185,7 @@ DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
   bool barrierDismissible = true,
   WidgetBuilder? backdropBuilder,
   bool useSafeArea = true,
-  bool showDragHandle = true,
+  bool? showDragHandle,
   BorderRadiusGeometry? borderRadius,
   Size? dragHandleSize,
   bool transformBackdrop = true,
@@ -27,6 +197,12 @@ DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
   BoxConstraints? constraints,
   AlignmentGeometry? alignment,
 }) {
+  final theme = ComponentTheme.maybeOf<DrawerTheme>(context);
+  showDragHandle ??= theme?.showDragHandle ?? true;
+  surfaceOpacity ??= theme?.surfaceOpacity;
+  surfaceBlur ??= theme?.surfaceBlur;
+  barrierColor ??= theme?.barrierColor;
+  dragHandleSize ??= theme?.dragHandleSize;
   return openRawDrawer<T>(
     context: context,
     barrierDismissible: barrierDismissible,
@@ -38,13 +214,13 @@ DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
     constraints: constraints,
     alignment: alignment,
     builder: (context, extraSize, size, padding, stackIndex) {
-      return DrawerWrapper(
+      return VNLDrawerWrapper(
         position: position,
         expands: expands,
         draggable: draggable,
         extraSize: extraSize,
         size: size,
-        showDragHandle: showDragHandle,
+        showDragHandle: showDragHandle ?? true,
         dragHandleSize: dragHandleSize,
         padding: padding,
         borderRadius: borderRadius,
@@ -52,17 +228,54 @@ DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
         surfaceBlur: surfaceBlur,
         barrierColor: barrierColor,
         stackIndex: stackIndex,
-        child: Builder(
-          builder: (context) {
-            return builder(context);
-          },
-        ),
+        child: Builder(builder: (context) {
+          return builder(context);
+        }),
       );
     },
     position: position,
   );
 }
 
+/// Opens a sheet overlay with minimal styling and full-screen expansion.
+///
+/// Creates a sheet overlay that slides in from the specified position,
+/// typically used for bottom sheets or side panels. Unlike drawers,
+/// sheets don't transform the backdrop and have minimal decoration.
+///
+/// Features:
+/// - Full-screen expansion with edge-to-edge content
+/// - Minimal styling and decoration
+/// - Optional drag interaction
+/// - Safe area integration
+/// - Barrier dismissal support
+///
+/// Parameters:
+/// - [context] (BuildContext, required): build context for overlay creation
+/// - [builder] (WidgetBuilder, required): function that builds sheet content
+/// - [position] (OverlayPosition, required): side from which sheet slides in
+/// - [barrierDismissible] (bool, default: true): whether tapping barrier dismisses sheet
+/// - [transformBackdrop] (bool, default: false): whether to transform backdrop
+/// - [backdropBuilder] (WidgetBuilder?, optional): custom backdrop builder
+/// - [barrierColor] (Color?, optional): color of the modal barrier
+/// - [draggable] (bool, default: false): whether sheet can be dragged to dismiss
+/// - [animationController] (AnimationController?, optional): custom animation controller
+/// - [autoOpen] (bool, default: true): whether to automatically open on creation
+/// - [constraints] (BoxConstraints?, optional): size constraints for sheet
+/// - [alignment] (AlignmentGeometry?, optional): alignment within constraints
+///
+/// Returns:
+/// A [DrawerOverlayCompleter] that provides control over the sheet lifecycle.
+///
+/// Example:
+/// ```dart
+/// final completer = openSheetOverlay<bool>(
+///   context: context,
+///   position: OverlayPosition.bottom,
+///   builder: (context) => BottomSheetContent(),
+///   draggable: true,
+/// );
+/// ```
 DrawerOverlayCompleter<T?> openSheetOverlay<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -77,6 +290,8 @@ DrawerOverlayCompleter<T?> openSheetOverlay<T>({
   BoxConstraints? constraints,
   AlignmentGeometry? alignment,
 }) {
+  final theme = ComponentTheme.maybeOf<DrawerTheme>(context);
+  barrierColor ??= theme?.barrierColor;
   return openRawDrawer<T>(
     context: context,
     transformBackdrop: transformBackdrop,
@@ -88,7 +303,7 @@ DrawerOverlayCompleter<T?> openSheetOverlay<T>({
     constraints: constraints,
     alignment: alignment,
     builder: (context, extraSize, size, padding, stackIndex) {
-      return SheetWrapper(
+      return VNLSheetWrapper(
         position: position,
         expands: true,
         draggable: draggable,
@@ -97,17 +312,31 @@ DrawerOverlayCompleter<T?> openSheetOverlay<T>({
         padding: padding,
         barrierColor: barrierColor,
         stackIndex: stackIndex,
-        child: Builder(
-          builder: (context) {
-            return builder(context);
-          },
-        ),
+        child: Builder(builder: (context) {
+          return builder(context);
+        }),
       );
     },
     position: position,
   );
 }
 
+/// Opens a drawer and returns a future that completes when dismissed.
+///
+/// Convenience function that opens a drawer overlay and returns the future
+/// directly, suitable for use with async/await patterns.
+///
+/// Returns:
+/// A [Future] that completes with the result when the drawer is dismissed.
+///
+/// Example:
+/// ```dart
+/// final result = await openDrawer<String>(
+///   context: context,
+///   position: OverlayPosition.left,
+///   builder: (context) => MyDrawerContent(),
+/// );
+/// ```
 Future<T?> openDrawer<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -117,7 +346,7 @@ Future<T?> openDrawer<T>({
   bool barrierDismissible = true,
   WidgetBuilder? backdropBuilder,
   bool useSafeArea = true,
-  bool showDragHandle = true,
+  bool? showDragHandle,
   BorderRadiusGeometry? borderRadius,
   Size? dragHandleSize,
   bool transformBackdrop = true,
@@ -150,6 +379,22 @@ Future<T?> openDrawer<T>({
   ).future;
 }
 
+/// Opens a sheet and returns a future that completes when dismissed.
+///
+/// Convenience function that opens a sheet overlay and returns the future
+/// directly, suitable for use with async/await patterns.
+///
+/// Returns:
+/// A [Future] that completes with the result when the sheet is dismissed.
+///
+/// Example:
+/// ```dart
+/// final accepted = await openSheet<bool>(
+///   context: context,
+///   position: OverlayPosition.bottom,
+///   builder: (context) => ConfirmationSheet(),
+/// );
+/// ```
 Future<T?> openSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -178,28 +423,70 @@ Future<T?> openSheet<T>({
   ).future;
 }
 
-class DrawerWrapper extends StatefulWidget {
+/// Internal wrapper widget for drawer/sheet rendering.
+///
+/// Manages the visual presentation and interaction behavior of drawer overlays.
+/// Handles sizing, positioning, drag interactions, and animations.
+class VNLDrawerWrapper extends StatefulWidget {
+  /// Position of the drawer on screen.
   final OverlayPosition position;
+
+  /// Content widget displayed in the drawer.
   final Widget child;
+
+  /// Whether the drawer expands to fill available space.
   final bool expands;
+
+  /// Whether the drawer can be dragged to resize or dismiss.
   final bool draggable;
+
+  /// Additional size beyond the content size.
   final Size extraSize;
+
+  /// Size of the drawer.
   final Size size;
+
+  /// Whether to show the drag handle.
   final bool showDragHandle;
+
+  /// Border radius for the drawer.
   final BorderRadiusGeometry? borderRadius;
+
+  /// Size of the drag handle.
   final Size? dragHandleSize;
+
+  /// Internal padding of the drawer content.
   final EdgeInsets padding;
+
+  /// Surface opacity for the drawer background.
   final double? surfaceOpacity;
+
+  /// Surface blur amount for the drawer background.
   final double? surfaceBlur;
+
+  /// Color of the barrier behind the drawer.
   final Color? barrierColor;
+
+  /// Z-index for stacking multiple drawers.
   final int stackIndex;
+
+  /// Gap before the drag handle.
   final double? gapBeforeDragger;
+
+  /// Gap after the drag handle.
   final double? gapAfterDragger;
+
+  /// Optional animation controller for custom animations.
   final AnimationController? animationController;
+
+  /// Size constraints for the drawer.
   final BoxConstraints? constraints;
+
+  /// Alignment of the drawer content.
   final AlignmentGeometry? alignment;
 
-  const DrawerWrapper({
+  /// Creates a [VNLDrawerWrapper].
+  const VNLDrawerWrapper({
     super.key,
     required this.position,
     required this.child,
@@ -223,28 +510,37 @@ class DrawerWrapper extends StatefulWidget {
   });
 
   @override
-  State<DrawerWrapper> createState() => _DrawerWrapperState();
+  State<VNLDrawerWrapper> createState() => _DrawerWrapperState();
 }
 
-class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProviderStateMixin {
+class _DrawerWrapperState extends State<VNLDrawerWrapper>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late ControlledAnimation _extraOffset;
 
   OverlayPosition get resolvedPosition {
-    if (widget.position == OverlayPosition.start) {
-      return Directionality.of(context) == TextDirection.ltr ? OverlayPosition.left : OverlayPosition.right;
+    var position = widget.position;
+    if (position == OverlayPosition.start) {
+      return Directionality.of(context) == TextDirection.ltr
+          ? OverlayPosition.left
+          : OverlayPosition.right;
     }
-    if (widget.position == OverlayPosition.end) {
-      return Directionality.of(context) == TextDirection.ltr ? OverlayPosition.right : OverlayPosition.left;
+    if (position == OverlayPosition.end) {
+      return Directionality.of(context) == TextDirection.ltr
+          ? OverlayPosition.right
+          : OverlayPosition.left;
     }
-    return widget.position;
+    return position;
   }
 
   @override
   void initState() {
     super.initState();
-    _controller =
-        widget.animationController ?? AnimationController(vsync: this, duration: const Duration(milliseconds: 350));
+    _controller = widget.animationController ??
+        AnimationController(
+          vsync: this,
+          duration: const Duration(milliseconds: 350),
+        );
     _extraOffset = ControlledAnimation(_controller);
   }
 
@@ -268,21 +564,28 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
     }
   }
 
-  Widget buildDraggableBar(VNLThemeData theme) {
+  Widget buildDraggableBar(ThemeData theme) {
+    final densityGap = theme.density.baseGap * theme.scaling;
     switch (resolvedPosition) {
       case OverlayPosition.left:
       case OverlayPosition.right:
         return Container(
-          width: widget.dragHandleSize?.width ?? 6 * theme.scaling,
-          height: widget.dragHandleSize?.height ?? 100 * theme.scaling,
-          decoration: BoxDecoration(color: theme.colorScheme.muted, borderRadius: theme.borderRadiusXxl),
+          width: widget.dragHandleSize?.width ?? densityGap * 0.75,
+          height: widget.dragHandleSize?.height ?? densityGap * 12.5,
+          decoration: BoxDecoration(
+            color: theme.colorScheme.muted,
+            borderRadius: theme.borderRadiusXxl,
+          ),
         );
       case OverlayPosition.top:
       case OverlayPosition.bottom:
         return Container(
-          width: widget.dragHandleSize?.width ?? 100 * theme.scaling,
-          height: widget.dragHandleSize?.height ?? 6 * theme.scaling,
-          decoration: BoxDecoration(color: theme.colorScheme.muted, borderRadius: theme.borderRadiusXxl),
+          width: widget.dragHandleSize?.width ?? densityGap * 12.5,
+          height: widget.dragHandleSize?.height ?? densityGap * 0.75,
+          decoration: BoxDecoration(
+            color: theme.colorScheme.muted,
+            borderRadius: theme.borderRadiusXxl,
+          ),
         );
       default:
         throw UnimplementedError('Unknown position');
@@ -291,10 +594,14 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
 
   Size getSize(BuildContext context) {
     final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
-    return renderBox?.hasSize ?? false ? renderBox?.size ?? widget.size : widget.size;
+    return renderBox?.hasSize ?? false
+        ? renderBox?.size ?? widget.size
+        : widget.size;
   }
 
-  Widget buildDraggable(BuildContext context, ControlledAnimation? controlled, Widget child, VNLThemeData theme) {
+  Widget buildDraggable(BuildContext context, ControlledAnimation? controlled,
+      Widget child, ThemeData theme) {
+    final densityGap = theme.density.baseGap * theme.scaling;
     switch (resolvedPosition) {
       case OverlayPosition.left:
         return GestureDetector(
@@ -310,7 +617,8 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
               newValue = 0;
             }
             if (newValue > 1) {
-              _extraOffset.value += details.primaryDelta! / max(_extraOffset.value, 1);
+              _extraOffset.value +=
+                  details.primaryDelta! / max(_extraOffset.value, 1);
               newValue = 1;
             }
             controlled.value = newValue;
@@ -329,31 +637,32 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
             }
           },
           child: Row(
+            textDirection: TextDirection.ltr,
             mainAxisSize: MainAxisSize.min,
             children: [
               AnimatedBuilder(
-                animation: _extraOffset,
-                builder: (context, child) {
-                  return Gap(widget.extraSize.width + _extraOffset.value.max(0));
-                },
-              ),
+                  animation: _extraOffset,
+                  builder: (context, child) {
+                    return Gap(
+                        widget.extraSize.width + _extraOffset.value.max(0));
+                  }),
               Flexible(
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                      scaleX: 1 + _extraOffset.value / getSize(context).width / 4,
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: child,
-                    );
+                        scaleX:
+                            1 + _extraOffset.value / getSize(context).width / 4,
+                        alignment: Alignment.centerRight,
+                        child: child);
                   },
                   animation: _extraOffset,
                   child: child,
                 ),
               ),
               if (widget.showDragHandle) ...[
-                Gap(widget.gapAfterDragger ?? 16 * theme.scaling),
+                Gap(widget.gapAfterDragger ?? densityGap * 2),
                 buildDraggableBar(theme),
-                Gap(widget.gapBeforeDragger ?? 12 * theme.scaling),
+                Gap(widget.gapBeforeDragger ?? densityGap * 1.5),
               ],
             ],
           ),
@@ -372,7 +681,8 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
               newValue = 0;
             }
             if (newValue > 1) {
-              _extraOffset.value += -details.primaryDelta! / max(_extraOffset.value, 1);
+              _extraOffset.value +=
+                  -details.primaryDelta! / max(_extraOffset.value, 1);
               newValue = 1;
             }
             controlled.value = newValue;
@@ -391,32 +701,33 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
             }
           },
           child: Row(
+            textDirection: TextDirection.ltr,
             mainAxisSize: MainAxisSize.min,
             children: [
               if (widget.showDragHandle) ...[
-                Gap(widget.gapBeforeDragger ?? 12 * theme.scaling),
+                Gap(widget.gapBeforeDragger ?? densityGap * 1.5),
                 buildDraggableBar(theme),
-                Gap(widget.gapAfterDragger ?? 16 * theme.scaling),
+                Gap(widget.gapAfterDragger ?? densityGap * 2),
               ],
               Flexible(
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                      scaleX: 1 + _extraOffset.value / getSize(context).width / 4,
-                      alignment: AlignmentDirectional.centerStart,
-                      child: child,
-                    );
+                        scaleX:
+                            1 + _extraOffset.value / getSize(context).width / 4,
+                        alignment: Alignment.centerLeft,
+                        child: child);
                   },
                   animation: _extraOffset,
                   child: child,
                 ),
               ),
               AnimatedBuilder(
-                animation: _extraOffset,
-                builder: (context, child) {
-                  return Gap(widget.extraSize.width + _extraOffset.value.max(0));
-                },
-              ),
+                  animation: _extraOffset,
+                  builder: (context, child) {
+                    return Gap(
+                        widget.extraSize.width + _extraOffset.value.max(0));
+                  }),
             ],
           ),
         );
@@ -434,7 +745,8 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
               newValue = 0;
             }
             if (newValue > 1) {
-              _extraOffset.value += details.primaryDelta! / max(_extraOffset.value, 1);
+              _extraOffset.value +=
+                  details.primaryDelta! / max(_extraOffset.value, 1);
               newValue = 1;
             }
             controlled.value = newValue;
@@ -456,28 +768,28 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
             mainAxisSize: MainAxisSize.min,
             children: [
               AnimatedBuilder(
-                animation: _extraOffset,
-                builder: (context, child) {
-                  return Gap(widget.extraSize.height + _extraOffset.value.max(0));
-                },
-              ),
+                  animation: _extraOffset,
+                  builder: (context, child) {
+                    return Gap(
+                        widget.extraSize.height + _extraOffset.value.max(0));
+                  }),
               Flexible(
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                      scaleY: 1 + _extraOffset.value / getSize(context).height / 4,
-                      alignment: Alignment.bottomCenter,
-                      child: child,
-                    );
+                        scaleY: 1 +
+                            _extraOffset.value / getSize(context).height / 4,
+                        alignment: Alignment.bottomCenter,
+                        child: child);
                   },
                   animation: _extraOffset,
                   child: child,
                 ),
               ),
               if (widget.showDragHandle) ...[
-                Gap(widget.gapAfterDragger ?? 16 * theme.scaling),
+                Gap(widget.gapAfterDragger ?? densityGap * 2),
                 buildDraggableBar(theme),
-                Gap(widget.gapBeforeDragger ?? 12 * theme.scaling),
+                Gap(widget.gapBeforeDragger ?? densityGap * 1.5),
               ],
             ],
           ),
@@ -496,7 +808,8 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
               newValue = 0;
             }
             if (newValue > 1) {
-              _extraOffset.value += -details.primaryDelta! / max(_extraOffset.value, 1);
+              _extraOffset.value +=
+                  -details.primaryDelta! / max(_extraOffset.value, 1);
               newValue = 1;
             }
             controlled.value = newValue;
@@ -518,29 +831,29 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
             mainAxisSize: MainAxisSize.min,
             children: [
               if (widget.showDragHandle) ...[
-                Gap(widget.gapBeforeDragger ?? 12 * theme.scaling),
+                Gap(widget.gapBeforeDragger ?? densityGap * 1.5),
                 buildDraggableBar(theme),
-                Gap(widget.gapAfterDragger ?? 16 * theme.scaling),
+                Gap(widget.gapAfterDragger ?? densityGap * 2),
               ],
               Flexible(
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                      scaleY: 1 + _extraOffset.value / getSize(context).height / 4,
-                      alignment: Alignment.topCenter,
-                      child: child,
-                    );
+                        scaleY: 1 +
+                            _extraOffset.value / getSize(context).height / 4,
+                        alignment: Alignment.topCenter,
+                        child: child);
                   },
                   animation: _extraOffset,
                   child: child,
                 ),
               ),
               AnimatedBuilder(
-                animation: _extraOffset,
-                builder: (context, child) {
-                  return Gap(widget.extraSize.height + _extraOffset.value.max(0));
-                },
-              ),
+                  animation: _extraOffset,
+                  builder: (context, child) {
+                    return Gap(
+                        widget.extraSize.height + _extraOffset.value.max(0));
+                  }),
             ],
           ),
         );
@@ -550,14 +863,17 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
   }
 
   @override
-  void didUpdateWidget(covariant DrawerWrapper oldWidget) {
+  void didUpdateWidget(covariant VNLDrawerWrapper oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.animationController != oldWidget.animationController) {
       if (oldWidget.animationController == null) {
         _controller.dispose();
       }
-      _controller =
-          widget.animationController ?? AnimationController(vsync: this, duration: const Duration(milliseconds: 350));
+      _controller = widget.animationController ??
+          AnimationController(
+            vsync: this,
+            duration: const Duration(milliseconds: 350),
+          );
     }
   }
 
@@ -569,7 +885,7 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
     super.dispose();
   }
 
-  Border getBorder(VNLThemeData theme) {
+  Border getBorder(ThemeData theme) {
     switch (resolvedPosition) {
       case OverlayPosition.left:
         // top, right, bottom
@@ -607,19 +923,31 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
   BorderRadiusGeometry getBorderRadius(double radius) {
     switch (resolvedPosition) {
       case OverlayPosition.left:
-        return BorderRadius.only(topRight: Radius.circular(radius), bottomRight: Radius.circular(radius));
+        return BorderRadius.only(
+          topRight: Radius.circular(radius),
+          bottomRight: Radius.circular(radius),
+        );
       case OverlayPosition.right:
-        return BorderRadius.only(topLeft: Radius.circular(radius), bottomLeft: Radius.circular(radius));
+        return BorderRadius.only(
+          topLeft: Radius.circular(radius),
+          bottomLeft: Radius.circular(radius),
+        );
       case OverlayPosition.top:
-        return BorderRadius.only(bottomLeft: Radius.circular(radius), bottomRight: Radius.circular(radius));
+        return BorderRadius.only(
+          bottomLeft: Radius.circular(radius),
+          bottomRight: Radius.circular(radius),
+        );
       case OverlayPosition.bottom:
-        return BorderRadius.only(topLeft: Radius.circular(radius), topRight: Radius.circular(radius));
+        return BorderRadius.only(
+          topLeft: Radius.circular(radius),
+          topRight: Radius.circular(radius),
+        );
       default:
         throw UnimplementedError('Unknown position');
     }
   }
 
-  BoxDecoration getDecoration(VNLThemeData theme) {
+  BoxDecoration getDecoration(ThemeData theme) {
     var border = getBorder(theme);
     // according to the design, the border radius is 10
     // seems to be a fixed value
@@ -634,7 +962,11 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
       }
       backgroundColor = backgroundColor.scaleAlpha(surfaceOpacity);
     }
-    return BoxDecoration(borderRadius: borderRadius, color: backgroundColor, border: border);
+    return BoxDecoration(
+      borderRadius: borderRadius,
+      color: backgroundColor,
+      border: border,
+    );
   }
 
   Widget buildChild(BuildContext context) {
@@ -653,7 +985,7 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
   Widget build(BuildContext context) {
     final data = Data.maybeOf<_MountedOverlayEntryData>(context);
     final animation = data?.state._controlledAnimation;
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     var surfaceBlur = widget.surfaceBlur ?? theme.surfaceBlur;
     var surfaceOpacity = widget.surfaceOpacity ?? theme.surfaceOpacity;
     var borderRadius = widget.borderRadius ?? getBorderRadius(theme.radiusXxl);
@@ -663,19 +995,27 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
       decoration: getDecoration(theme),
       padding: buildPadding(context),
       margin: buildMargin(context),
-      child: widget.draggable ? buildDraggable(context, animation, buildChild(context), theme) : buildChild(context),
+      child: widget.draggable
+          ? buildDraggable(context, animation, buildChild(context), theme)
+          : buildChild(context),
     );
 
     if (widget.constraints != null) {
-      container = ConstrainedBox(constraints: widget.constraints!, child: container);
+      container = ConstrainedBox(
+        constraints: widget.constraints!,
+        child: container,
+      );
     }
 
     if (widget.alignment != null) {
-      container = Align(alignment: widget.alignment!, child: container);
+      container = Align(
+        alignment: widget.alignment!,
+        child: container,
+      );
     }
 
     if (surfaceBlur != null && surfaceBlur > 0) {
-      container = SurfaceBlur(
+      container = VNLSurfaceBlur(
         surfaceBlur: surfaceBlur,
         borderRadius: getBorderRadius(theme.radiusXxl),
         child: container,
@@ -687,8 +1027,8 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
         // weaken the barrier color for the upper sheets
         barrierColor = barrierColor.scaleAlpha(0.75);
       }
-      container = ModalBackdrop(
-        surfaceClip: ModalBackdrop.shouldClipSurface(surfaceOpacity),
+      container = VNLModalBackdrop(
+        surfaceClip: VNLModalBackdrop.shouldClipSurface(surfaceOpacity),
         borderRadius: borderRadius,
         barrierColor: barrierColor,
         fadeAnimation: animation,
@@ -700,13 +1040,27 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
   }
 }
 
+/// Closes the currently open sheet overlay.
+///
+/// Dismisses the active sheet by closing the drawer. Sheets are drawers
+/// without backdrop transformation.
+///
+/// Parameters:
+/// - [context] (`BuildContext`, required): Build context.
+///
+/// Returns: `Future<void>` that completes when sheet is closed.
 Future<void> closeSheet(BuildContext context) {
   // sheet is just a drawer with no backdrop transformation
   return closeDrawer(context);
 }
 
-class SheetWrapper extends DrawerWrapper {
-  const SheetWrapper({
+/// Wrapper widget for sheet overlays.
+///
+/// Extends [VNLDrawerWrapper] with sheet-specific defaults (no drag, no expansion).
+/// Sheets are simplified drawers without backdrop transformation.
+class VNLSheetWrapper extends VNLDrawerWrapper {
+  /// Creates a [VNLSheetWrapper].
+  const VNLSheetWrapper({
     super.key,
     required super.position,
     required super.child,
@@ -726,12 +1080,12 @@ class SheetWrapper extends DrawerWrapper {
   });
 
   @override
-  State<DrawerWrapper> createState() => _SheetWrapperState();
+  State<VNLDrawerWrapper> createState() => _SheetWrapperState();
 }
 
 class _SheetWrapperState extends _DrawerWrapperState {
   @override
-  Border getBorder(VNLThemeData theme) {
+  Border getBorder(ThemeData theme) {
     switch (resolvedPosition) {
       case OverlayPosition.left:
         return Border(right: BorderSide(color: theme.colorScheme.border));
@@ -770,7 +1124,12 @@ class _SheetWrapperState extends _DrawerWrapperState {
         throw UnimplementedError('Unknown position');
     }
     return super.buildMargin(context) +
-        EdgeInsets.only(top: marginTop, bottom: marginBottom, left: marginLeft, right: marginRight);
+        EdgeInsets.only(
+          top: marginTop,
+          bottom: marginBottom,
+          left: marginLeft,
+          right: marginRight,
+        );
   }
 
   @override
@@ -805,7 +1164,12 @@ class _SheetWrapperState extends _DrawerWrapperState {
         throw UnimplementedError('Unknown position');
     }
     return Padding(
-      padding: EdgeInsets.only(top: paddingTop, bottom: paddingBottom, left: paddingLeft, right: paddingRight),
+      padding: EdgeInsets.only(
+        top: paddingTop,
+        bottom: paddingBottom,
+        left: paddingLeft,
+        right: paddingRight,
+      ),
       child: super.buildChild(context),
     );
   }
@@ -816,7 +1180,7 @@ class _SheetWrapperState extends _DrawerWrapperState {
   }
 
   @override
-  BoxDecoration getDecoration(VNLThemeData theme) {
+  BoxDecoration getDecoration(ThemeData theme) {
     var backgroundColor = theme.colorScheme.background;
     var surfaceOpacity = widget.surfaceOpacity ?? theme.surfaceOpacity;
     if (surfaceOpacity != null && surfaceOpacity < 1) {
@@ -827,33 +1191,75 @@ class _SheetWrapperState extends _DrawerWrapperState {
       }
       backgroundColor = backgroundColor.scaleAlpha(surfaceOpacity);
     }
-    return BoxDecoration(color: backgroundColor, border: getBorder(theme));
+    return BoxDecoration(
+      color: backgroundColor,
+      border: getBorder(theme),
+    );
   }
 }
 
-enum OverlayPosition { left, right, top, bottom, start, end }
+/// Position for overlay components like drawers and sheets.
+enum OverlayPosition {
+  /// Positioned on the left edge
+  left,
 
+  /// Positioned on the right edge
+  right,
+
+  /// Positioned on the top edge
+  top,
+
+  /// Positioned on the bottom edge
+  bottom,
+
+  /// Positioned at the start (left in LTR, right in RTL)
+  start,
+
+  /// Positioned at the end (right in LTR, left in RTL)
+  end,
+}
+
+/// Scale factor for backdrop transform when drawer is open.
+///
+/// Constant value of 0.95 creates a subtle zoom-out effect on the
+/// background content when overlays appear.
 const kBackdropScaleDown = 0.95;
 
-class BackdropTransformData {
+/// Data class containing backdrop transformation information.
+///
+/// Holds the size difference needed to scale and position backdrop
+/// content when overlays are displayed.
+class VNLBackdropTransformData {
+  /// The difference in size between original and transformed backdrop.
   final Size sizeDifference;
 
-  BackdropTransformData(this.sizeDifference);
+  /// Creates backdrop transform data.
+  ///
+  /// Parameters:
+  /// - [sizeDifference] (Size, required): Size difference for transform
+  VNLBackdropTransformData(this.sizeDifference);
 }
 
 class _DrawerOverlayWrapper extends StatefulWidget {
   final Widget child;
   final Completer completer;
-  const _DrawerOverlayWrapper({required this.child, required this.completer});
+  const _DrawerOverlayWrapper({
+    required this.child,
+    required this.completer,
+  });
 
   @override
   State<_DrawerOverlayWrapper> createState() => _DrawerOverlayWrapperState();
 }
 
-class _DrawerOverlayWrapperState extends State<_DrawerOverlayWrapper> with OverlayHandlerStateMixin {
+class _DrawerOverlayWrapperState extends State<_DrawerOverlayWrapper>
+    with OverlayHandlerStateMixin {
   @override
   Widget build(BuildContext context) {
-    return Data<OverlayHandlerStateMixin>.inherit(data: this, child: widget.child);
+    return Data<OverlayHandlerStateMixin>.inherit(
+      data: this,
+      child: widget.child,
+    );
   }
 
   @override
@@ -884,6 +1290,29 @@ class _DrawerOverlayWrapperState extends State<_DrawerOverlayWrapper> with Overl
   }
 }
 
+/// Opens a raw drawer overlay with full customization.
+///
+/// Low-level function for creating custom drawer overlays. Provides complete
+/// control over drawer positioning, appearance, and behavior.
+///
+/// Parameters:
+/// - [key] (`Key?`, optional): Widget key.
+/// - [context] (`BuildContext`, required): Build context.
+/// - [builder] (`DrawerBuilder`, required): Drawer content builder.
+/// - [position] (`OverlayPosition`, required): Drawer position on screen.
+/// - [transformBackdrop] (`bool`, default: `true`): Whether to transform backdrop.
+/// - [useRootDrawerOverlay] (`bool`, default: `true`): Use root overlay.
+/// - [modal] (`bool`, default: `true`): Whether drawer is modal.
+/// - [barrierColor] (`Color?`, optional): Barrier color.
+/// - [barrierDismissible] (`bool`, default: `true`): Dismissible by tapping barrier.
+/// - [backdropBuilder] (`WidgetBuilder?`, optional): Custom backdrop builder.
+/// - [useSafeArea] (`bool`, default: `true`): Respect safe area.
+/// - [animationController] (`AnimationController?`, optional): Custom animation.
+/// - [autoOpen] (`bool`, default: `true`): Auto-open on creation.
+/// - [constraints] (`BoxConstraints?`, optional): Size constraints.
+/// - [alignment] (`AlignmentGeometry?`, optional): Content alignment.
+///
+/// Returns: `DrawerOverlayCompleter<T?>` for managing the drawer lifecycle.
 DrawerOverlayCompleter<T?> openRawDrawer<T>({
   Key? key,
   required BuildContext context,
@@ -901,16 +1330,19 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
   BoxConstraints? constraints,
   AlignmentGeometry? alignment,
 }) {
-  DrawerLayerData? parentLayer = DrawerOverlay.maybeFind(context, useRootDrawerOverlay);
+  VNLDrawerLayerData? parentLayer =
+      VNLDrawerOverlay.maybeFind(context, useRootDrawerOverlay);
   CapturedThemes? themes;
   CapturedData? data;
   if (parentLayer != null) {
-    themes = InheritedTheme.capture(from: context, to: parentLayer.overlay.context);
+    themes =
+        InheritedTheme.capture(from: context, to: parentLayer.overlay.context);
     data = Data.capture(from: context, to: parentLayer.overlay.context);
   } else {
-    parentLayer = DrawerOverlay.maybeFindMessenger(context, useRootDrawerOverlay);
+    parentLayer =
+        VNLDrawerOverlay.maybeFindMessenger(context, useRootDrawerOverlay);
   }
-  assert(parentLayer != null, 'No DrawerOverlay found in the widget tree');
+  assert(parentLayer != null, 'No VNLDrawerOverlay found in the widget tree');
   final completer = Completer<T?>();
   final entry = DrawerOverlayEntry(
     animationController: animationController,
@@ -918,11 +1350,9 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
     builder: (context, extraSize, size, padding, stackIndex) {
       return _DrawerOverlayWrapper(
         completer: completer,
-        child: Builder(
-          builder: (context) {
-            return builder(context, extraSize, size, padding, stackIndex);
-          },
-        ),
+        child: Builder(builder: (context) {
+          return builder(context, extraSize, size, padding, stackIndex);
+        }),
       );
     },
     modal: modal,
@@ -931,67 +1361,89 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
     useSafeArea: useSafeArea,
     constraints: constraints,
     alignment: alignment,
-    backdropBuilder:
-        transformBackdrop
-            ? (context, child, animation, stackIndex) {
-              final theme = VNLTheme.of(context);
-              final existingData = Data.maybeOf<BackdropTransformData>(context);
-              return LayoutBuilder(
-                builder: (context, constraints) {
-                  return stackIndex == 0
-                      ? AnimatedBuilder(
-                        animation: animation,
-                        builder: (context, child) {
-                          Size size = constraints.biggest;
-                          double scale = 1 - (1 - kBackdropScaleDown) * animation.value;
-                          Size sizeAfterScale = Size(size.width * scale, size.height * scale);
-                          var extraSize = Size(
-                            size.width - sizeAfterScale.width / kBackdropScaleDown,
-                            size.height - sizeAfterScale.height / kBackdropScaleDown,
+    backdropBuilder: transformBackdrop
+        ? (context, child, animation, stackIndex) {
+            final theme = Theme.of(context);
+            final existingData = Data.maybeOf<VNLBackdropTransformData>(context);
+            return LayoutBuilder(builder: (context, constraints) {
+              return stackIndex == 0
+                  ? AnimatedBuilder(
+                      animation: animation,
+                      builder: (context, child) {
+                        Size size = constraints.biggest;
+                        double scale =
+                            1 - (1 - kBackdropScaleDown) * animation.value;
+                        Size sizeAfterScale = Size(
+                          size.width * scale,
+                          size.height * scale,
+                        );
+                        var extraSize = Size(
+                          size.width -
+                              sizeAfterScale.width / kBackdropScaleDown,
+                          size.height -
+                              sizeAfterScale.height / kBackdropScaleDown,
+                        );
+                        if (existingData != null) {
+                          extraSize = Size(
+                            extraSize.width +
+                                existingData.sizeDifference.width /
+                                    kBackdropScaleDown,
+                            extraSize.height +
+                                existingData.sizeDifference.height /
+                                    kBackdropScaleDown,
                           );
-                          if (existingData != null) {
-                            extraSize = Size(
-                              extraSize.width + existingData.sizeDifference.width / kBackdropScaleDown,
-                              extraSize.height + existingData.sizeDifference.height / kBackdropScaleDown,
-                            );
-                          }
-                          return Data.inherit(
-                            data: BackdropTransformData(extraSize),
-                            child: Transform.scale(
-                              scale: scale,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(theme.radiusXxl * animation.value),
-                                child: child,
-                              ),
+                        }
+                        return Data.inherit(
+                          data: VNLBackdropTransformData(extraSize),
+                          child: Transform.scale(
+                            scale: scale,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                  theme.radiusXxl * animation.value),
+                              child: child,
                             ),
+                          ),
+                        );
+                      },
+                      child: child,
+                    )
+                  : AnimatedBuilder(
+                      animation: animation,
+                      builder: (context, child) {
+                        Size size = constraints.biggest;
+                        double scale =
+                            1 - (1 - kBackdropScaleDown) * animation.value;
+                        Size sizeAfterScale = Size(
+                          size.width * scale,
+                          size.height * scale,
+                        );
+                        var extraSize = Size(
+                          size.width - sizeAfterScale.width,
+                          size.height - sizeAfterScale.height,
+                        );
+                        if (existingData != null) {
+                          extraSize = Size(
+                            extraSize.width +
+                                existingData.sizeDifference.width /
+                                    kBackdropScaleDown,
+                            extraSize.height +
+                                existingData.sizeDifference.height /
+                                    kBackdropScaleDown,
                           );
-                        },
-                        child: child,
-                      )
-                      : AnimatedBuilder(
-                        animation: animation,
-                        builder: (context, child) {
-                          Size size = constraints.biggest;
-                          double scale = 1 - (1 - kBackdropScaleDown) * animation.value;
-                          Size sizeAfterScale = Size(size.width * scale, size.height * scale);
-                          var extraSize = Size(size.width - sizeAfterScale.width, size.height - sizeAfterScale.height);
-                          if (existingData != null) {
-                            extraSize = Size(
-                              extraSize.width + existingData.sizeDifference.width / kBackdropScaleDown,
-                              extraSize.height + existingData.sizeDifference.height / kBackdropScaleDown,
-                            );
-                          }
-                          return Data.inherit(
-                            data: BackdropTransformData(extraSize),
-                            child: Transform.scale(scale: scale, child: child),
-                          );
-                        },
-                        child: child,
-                      );
-                },
-              );
-            }
-            : (context, child, animation, stackIndex) => child,
+                        }
+                        return Data.inherit(
+                          data: VNLBackdropTransformData(extraSize),
+                          child: Transform.scale(
+                            scale: scale,
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: child,
+                    );
+            });
+          }
+        : (context, child, animation, stackIndex) => child,
     barrierBuilder: (context, child, animation, stackIndex) {
       if (stackIndex > 0) {
         if (!transformBackdrop) {
@@ -1008,12 +1460,17 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
           child: AnimatedBuilder(
             animation: animation,
             builder: (context, child) {
-              return IgnorePointer(ignoring: animation.status != AnimationStatus.completed, child: child!);
+              return IgnorePointer(
+                ignoring: animation.status != AnimationStatus.completed,
+                child: child!,
+              );
             },
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: barrierDismissible ? () => closeDrawer(context) : null,
-              child: Container(child: backdropBuilder?.call(context)),
+              child: Container(
+                child: backdropBuilder?.call(context),
+              ),
             ),
           ),
         ),
@@ -1037,18 +1494,45 @@ class _MountedOverlayEntryData {
   _MountedOverlayEntryData(this.state);
 }
 
+/// Closes the currently open drawer overlay.
+///
+/// Dismisses the active drawer from the overlay stack. Optionally returns
+/// a result value to the code that opened the drawer.
+///
+/// Parameters:
+/// - [context] (`BuildContext`, required): Build context from within the drawer.
+/// - [result] (`T?`, optional): Optional result to return.
+///
+/// Returns: `Future<void>` that completes when drawer is closed.
 Future<void> closeDrawer<T>(BuildContext context, [T? result]) {
   final data = Data.maybeOf<_MountedOverlayEntryData>(context);
   assert(data != null, 'No DrawerEntryWidget found in the widget tree');
   return data!.state.close(result);
 }
 
-class DrawerLayerData {
-  final DrawerOverlayState overlay;
-  final DrawerLayerData? parent;
+/// Data class representing a drawer overlay layer in the hierarchy.
+///
+/// Tracks the drawer overlay state and its parent layer, enabling nested
+/// drawer management and size computation across the layer stack.
+class VNLDrawerLayerData {
+  /// The drawer overlay state for this layer.
+  final VNLDrawerOverlayState overlay;
 
-  const DrawerLayerData(this.overlay, this.parent);
+  /// The parent drawer layer, null if this is the root layer.
+  final VNLDrawerLayerData? parent;
 
+  /// Creates drawer layer data.
+  ///
+  /// Parameters:
+  /// - [overlay] (VNLDrawerOverlayState, required): Overlay state for this layer
+  /// - [parent] (VNLDrawerLayerData?): Parent layer in the hierarchy
+  const VNLDrawerLayerData(this.overlay, this.parent);
+
+  /// Computes the size of this drawer layer.
+  ///
+  /// Delegates to the overlay state to calculate the layer dimensions.
+  ///
+  /// Returns the computed size or null if not available.
   Size? computeSize() {
     return overlay.computeSize();
   }
@@ -1056,7 +1540,9 @@ class DrawerLayerData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is DrawerLayerData && other.overlay == overlay && other.parent == parent;
+    return other is VNLDrawerLayerData &&
+        other.overlay == overlay &&
+        other.parent == parent;
   }
 
   @override
@@ -1065,16 +1551,43 @@ class DrawerLayerData {
   }
 }
 
-class DrawerOverlay extends StatefulWidget {
+/// Widget that manages drawer overlay layers.
+///
+/// Provides a container for drawer overlays, managing their lifecycle and
+/// hierarchical relationships. Supports nested drawers through layer data
+/// propagation.
+///
+/// Example:
+/// ```dart
+/// VNLDrawerOverlay(
+///   child: MyAppContent(),
+/// )
+/// ```
+class VNLDrawerOverlay extends StatefulWidget {
+  /// Child widget displayed under the overlay layer.
   final Widget child;
 
-  const DrawerOverlay({super.key, required this.child});
+  /// Creates a drawer overlay.
+  ///
+  /// Parameters:
+  /// - [child] (Widget, required): Content widget
+  const VNLDrawerOverlay({super.key, required this.child});
 
   @override
-  State<DrawerOverlay> createState() => DrawerOverlayState();
+  State<VNLDrawerOverlay> createState() => VNLDrawerOverlayState();
 
-  static DrawerLayerData? maybeFind(BuildContext context, [bool root = false]) {
-    var data = Data.maybeFind<DrawerLayerData>(context);
+  /// Finds the drawer layer data from the widget tree.
+  ///
+  /// Searches up the widget tree for the nearest [VNLDrawerLayerData].
+  /// Optionally navigates to the root layer if [root] is true.
+  ///
+  /// Parameters:
+  /// - [context] (BuildContext, required): Build context
+  /// - [root] (bool): Whether to find root layer, defaults to false
+  ///
+  /// Returns [VNLDrawerLayerData] or null if not found.
+  static VNLDrawerLayerData? maybeFind(BuildContext context, [bool root = false]) {
+    var data = Data.maybeFind<VNLDrawerLayerData>(context);
     if (root) {
       while (data?.parent != null) {
         data = data!.parent;
@@ -1083,8 +1596,19 @@ class DrawerOverlay extends StatefulWidget {
     return data;
   }
 
-  static DrawerLayerData? maybeFindMessenger(BuildContext context, [bool root = false]) {
-    var data = Data.maybeFindMessenger<DrawerLayerData>(context);
+  /// Finds the drawer layer data using messenger lookup.
+  ///
+  /// Similar to [maybeFind] but uses the messenger mechanism for lookup.
+  /// Optionally navigates to the root layer if [root] is true.
+  ///
+  /// Parameters:
+  /// - [context] (BuildContext, required): Build context
+  /// - [root] (bool): Whether to find root layer, defaults to false
+  ///
+  /// Returns [VNLDrawerLayerData] or null if not found.
+  static VNLDrawerLayerData? maybeFindMessenger(BuildContext context,
+      [bool root = false]) {
+    var data = Data.maybeFindMessenger<VNLDrawerLayerData>(context);
     if (root) {
       while (data?.parent != null) {
         data = data!.parent;
@@ -1094,32 +1618,74 @@ class DrawerOverlay extends StatefulWidget {
   }
 }
 
-class DrawerOverlayState extends State<DrawerOverlay> {
+/// State class for [VNLDrawerOverlay] managing drawer entry lifecycle.
+///
+/// Manages the stack of active drawer overlays, handling their addition,
+/// removal, and size computation. Maintains a backdrop key for managing
+/// backdrop transformations.
+class VNLDrawerOverlayState extends State<VNLDrawerOverlay> {
   final List<DrawerOverlayEntry> _entries = [];
+
+  /// Key for the backdrop widget to enable transformations.
   final GlobalKey backdropKey = GlobalKey();
 
+  /// Adds a drawer overlay entry to the list of active entries.
+  ///
+  /// Updates the widget state to include the new entry, triggering a rebuild
+  /// to display the drawer overlay.
+  ///
+  /// Parameters:
+  /// - [entry] (`DrawerOverlayEntry`, required): The drawer entry to add.
+  ///
+  /// Example:
+  /// ```dart
+  /// final entry = DrawerOverlayEntry(
+  ///   builder: (context) => MyDrawerContent(),
+  /// );
+  /// drawerState.addEntry(entry);
+  /// ```
   void addEntry(DrawerOverlayEntry entry) {
     setState(() {
       _entries.add(entry);
     });
   }
 
+  /// Computes the size of the drawer overlay area.
+  ///
+  /// Returns the size of the overlay's render box. Used for positioning
+  /// and sizing drawer content.
+  ///
+  /// Throws [AssertionError] if overlay is not ready (no size available).
+  ///
+  /// Returns [Size] of the overlay area.
   Size computeSize() {
     Size? size = context.size;
-    assert(size != null, 'DrawerOverlay is not ready');
+    assert(size != null, 'VNLDrawerOverlay is not ready');
     return size!;
   }
 
+  /// Removes a drawer entry from the overlay stack.
+  ///
+  /// Triggers a rebuild to update the overlay display after removing
+  /// the specified entry.
+  ///
+  /// Parameters:
+  /// - [entry] (DrawerOverlayEntry, required): Entry to remove
   void removeEntry(DrawerOverlayEntry entry) {
-    setState(() {
-      _entries.remove(entry);
-    });
+    if (mounted) {
+      setState(() {
+        _entries.remove(entry);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final parentLayer = Data.maybeOf<DrawerLayerData>(context);
-    Widget child = KeyedSubtree(key: backdropKey, child: widget.child);
+    final parentLayer = Data.maybeOf<VNLDrawerLayerData>(context);
+    Widget child = KeyedSubtree(
+      key: backdropKey,
+      child: widget.child,
+    );
     int index = 0;
     for (final entry in _entries) {
       child = DrawerEntryWidget(
@@ -1158,27 +1724,62 @@ class DrawerOverlayState extends State<DrawerOverlay> {
           }
         }
       },
-      child: ForwardableData(data: DrawerLayerData(this, parentLayer), child: child),
+      child: ForwardableData(
+        data: VNLDrawerLayerData(this, parentLayer),
+        child: child,
+      ),
     );
   }
 }
 
+/// Widget representing a single drawer entry in the overlay stack.
+///
+/// Manages the lifecycle and rendering of an individual drawer overlay,
+/// including its backdrop, barrier, and animated transitions.
 class DrawerEntryWidget<T> extends StatefulWidget {
+  /// Builder function for the drawer content.
   final DrawerBuilder builder;
+
+  /// Backdrop widget (content behind the drawer).
   final Widget backdrop;
+
+  /// Builder for transforming the backdrop.
   final BackdropBuilder backdropBuilder;
+
+  /// Builder for the modal barrier.
   final BarrierBuilder barrierBuilder;
+
+  /// Whether the drawer is modal (blocks interaction with backdrop).
   final bool modal;
+
+  /// Captured theme data to apply within the drawer.
   final CapturedThemes? themes;
+
+  /// Captured inherited data to propagate.
   final CapturedData? data;
+
+  /// Completer for the drawer's result value.
   final Completer<T> completer;
+
+  /// Position of the drawer (left, right, top, bottom, start, end).
   final OverlayPosition position;
+
+  /// Index of this drawer in the stack.
   final int stackIndex;
+
+  /// Total number of drawers in the stack.
   final int totalStack;
+
+  /// Whether to apply safe area insets.
   final bool useSafeArea;
+
+  /// Optional external animation controller.
   final AnimationController? animationController;
+
+  /// Whether to automatically open on mount.
   final bool autoOpen;
 
+  /// Creates a drawer entry widget.
   const DrawerEntryWidget({
     super.key,
     required this.builder,
@@ -1201,7 +1802,13 @@ class DrawerEntryWidget<T> extends StatefulWidget {
   State<DrawerEntryWidget<T>> createState() => DrawerEntryWidgetState<T>();
 }
 
-class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>> with SingleTickerProviderStateMixin {
+/// State class for [DrawerEntryWidget] managing drawer animations and lifecycle.
+///
+/// Handles animation control, focus management, and drawer dismissal.
+/// Manages both internal and external animation controllers.
+class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
+    with SingleTickerProviderStateMixin {
+  /// Notifier for additional offset applied during drag gestures.
   late ValueNotifier<double> additionalOffset = ValueNotifier(0);
   late AnimationController _controller;
   late ControlledAnimation _controlledAnimation;
@@ -1210,8 +1817,9 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>> with SingleT
   @override
   void initState() {
     super.initState();
-    _controller =
-        widget.animationController ?? AnimationController(vsync: this, duration: const Duration(milliseconds: 350));
+    _controller = widget.animationController ??
+        AnimationController(
+            vsync: this, duration: const Duration(milliseconds: 350));
 
     _controlledAnimation = ControlledAnimation(_controller);
     if (widget.animationController == null && widget.autoOpen) {
@@ -1236,11 +1844,23 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>> with SingleT
       if (oldWidget.animationController == null) {
         _controller.dispose();
       }
-      _controller =
-          widget.animationController ?? AnimationController(vsync: this, duration: const Duration(milliseconds: 350));
+      _controller = widget.animationController ??
+          AnimationController(
+            vsync: this,
+            duration: const Duration(milliseconds: 350),
+          );
     }
   }
 
+  /// Closes the drawer with an optional result value.
+  ///
+  /// Animates the drawer out using an ease-out cubic curve, then completes
+  /// the completer with the provided result.
+  ///
+  /// Parameters:
+  /// - [result] (T?): Optional result to return when drawer closes
+  ///
+  /// Returns a [Future] that completes when the close animation finishes.
   Future<void> close([T? result]) {
     return _controlledAnimation.forward(0, Curves.easeOutCubic).then((value) {
       widget.completer.complete(result);
@@ -1251,17 +1871,28 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>> with SingleT
   Widget build(BuildContext context) {
     AlignmentGeometry alignment;
     Offset startFractionalOffset;
-    bool padTop = widget.useSafeArea && widget.position != OverlayPosition.top;
-    bool padBottom = widget.useSafeArea && widget.position != OverlayPosition.bottom;
-    bool padLeft = widget.useSafeArea && widget.position != OverlayPosition.left;
-    bool padRight = widget.useSafeArea && widget.position != OverlayPosition.right;
-    switch (widget.position) {
+    var position = widget.position;
+    final textDirection = Directionality.of(context);
+    if (position == OverlayPosition.start) {
+      position = textDirection == TextDirection.ltr
+          ? OverlayPosition.left
+          : OverlayPosition.right;
+    } else if (position == OverlayPosition.end) {
+      position = textDirection == TextDirection.ltr
+          ? OverlayPosition.right
+          : OverlayPosition.left;
+    }
+    bool padTop = widget.useSafeArea && position != OverlayPosition.top;
+    bool padBottom = widget.useSafeArea && position != OverlayPosition.bottom;
+    bool padLeft = widget.useSafeArea && position != OverlayPosition.left;
+    bool padRight = widget.useSafeArea && position != OverlayPosition.right;
+    switch (position) {
       case OverlayPosition.left:
-        alignment = AlignmentDirectional.centerStart;
+        alignment = Alignment.centerLeft;
         startFractionalOffset = const Offset(-1, 0);
         break;
       case OverlayPosition.right:
-        alignment = AlignmentDirectional.centerEnd;
+        alignment = Alignment.centerRight;
         startFractionalOffset = const Offset(1, 0);
         break;
       case OverlayPosition.top:
@@ -1282,150 +1913,210 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>> with SingleT
         data: widget.data,
         child: Data.inherit(
           data: _MountedOverlayEntryData(this),
-          child: Builder(
-            builder: (context) {
-              Widget barrier =
-                  (widget.modal
-                      ? widget.barrierBuilder(context, widget.backdrop, _controlledAnimation, widget.stackIndex)
-                      : null) ??
-                  Positioned(
-                    top: -9999,
-                    left: -9999,
-                    right: -9999,
-                    bottom: -9999,
-                    child: GestureDetector(
-                      onTap: () {
-                        close();
-                      },
-                    ),
-                  );
-              final extraSize = Data.maybeOf<BackdropTransformData>(context)?.sizeDifference;
-              Size additionalSize;
-              Offset additionalOffset;
-              bool insetTop = widget.useSafeArea && widget.position == OverlayPosition.top;
-              bool insetBottom = widget.useSafeArea && widget.position == OverlayPosition.bottom;
-              bool insetLeft = widget.useSafeArea && widget.position == OverlayPosition.left;
-              bool insetRight = widget.useSafeArea && widget.position == OverlayPosition.right;
-              MediaQueryData mediaQueryData = MediaQuery.of(context);
-              EdgeInsets padding = mediaQueryData.padding + mediaQueryData.viewInsets;
-              if (extraSize == null) {
-                additionalSize = Size.zero;
-                additionalOffset = Offset.zero;
-              } else {
-                switch (widget.position) {
-                  case OverlayPosition.left:
-                    additionalSize = Size(extraSize.width / 2, 0);
-                    additionalOffset = Offset(-additionalSize.width, 0);
-                    break;
-                  case OverlayPosition.right:
-                    additionalSize = Size(extraSize.width / 2, 0);
-                    additionalOffset = Offset(additionalSize.width, 0);
-                    break;
-                  case OverlayPosition.top:
-                    additionalSize = Size(0, extraSize.height / 2);
-                    additionalOffset = Offset(0, -additionalSize.height);
-                    break;
-                  case OverlayPosition.bottom:
-                    additionalSize = Size(0, extraSize.height / 2);
-                    additionalOffset = Offset(0, additionalSize.height);
-                    break;
-                  default:
-                    throw UnimplementedError('Unknown position');
-                }
-              }
-              return Stack(
-                clipBehavior: Clip.none,
-                fit: StackFit.passthrough,
-                children: [
-                  IgnorePointer(
-                    child: widget.backdropBuilder(context, widget.backdrop, _controlledAnimation, widget.stackIndex),
+          child: Builder(builder: (context) {
+            Widget barrier = (widget.modal
+                    ? widget.barrierBuilder(context, widget.backdrop,
+                        _controlledAnimation, widget.stackIndex)
+                    : null) ??
+                Positioned(
+                  top: -9999,
+                  left: -9999,
+                  right: -9999,
+                  bottom: -9999,
+                  child: GestureDetector(
+                    onTap: () {
+                      close();
+                    },
                   ),
-                  barrier,
-                  Positioned.fill(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return MediaQuery(
-                          data:
-                              widget.useSafeArea
-                                  ? mediaQueryData.removePadding(
-                                    removeTop: true,
-                                    removeBottom: true,
-                                    removeLeft: true,
-                                    removeRight: true,
-                                  )
-                                  : mediaQueryData,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              top: padTop ? padding.top : 0,
-                              bottom: padBottom ? padding.bottom : 0,
-                              left: padLeft ? padding.left : 0,
-                              right: padRight ? padding.right : 0,
-                            ),
-                            child: Align(
-                              alignment: alignment,
-                              child: AnimatedBuilder(
-                                animation: _controlledAnimation,
-                                builder: (context, child) {
-                                  return FractionalTranslation(
-                                    translation: startFractionalOffset * (1 - _controlledAnimation.value),
-                                    child: child,
-                                  );
-                                },
-                                child: Transform.translate(
-                                  offset: additionalOffset / kBackdropScaleDown,
-                                  child: widget.builder(
-                                    context,
-                                    additionalSize,
-                                    constraints.biggest,
-                                    EdgeInsets.only(
-                                      top: insetTop ? padding.top : 0,
-                                      bottom: insetBottom ? padding.bottom : 0,
-                                      left: insetLeft ? padding.left : 0,
-                                      right: insetRight ? padding.right : 0,
-                                    ),
-                                    widget.stackIndex,
+                );
+            final extraSize =
+                Data.maybeOf<VNLBackdropTransformData>(context)?.sizeDifference;
+            Size additionalSize;
+            Offset additionalOffset;
+            bool insetTop =
+                widget.useSafeArea && position == OverlayPosition.top;
+            bool insetBottom =
+                widget.useSafeArea && position == OverlayPosition.bottom;
+            bool insetLeft =
+                widget.useSafeArea && position == OverlayPosition.left;
+            bool insetRight =
+                widget.useSafeArea && position == OverlayPosition.right;
+            MediaQueryData mediaQueryData = MediaQuery.of(context);
+            EdgeInsets padding =
+                mediaQueryData.padding + mediaQueryData.viewInsets;
+            if (extraSize == null) {
+              additionalSize = Size.zero;
+              additionalOffset = Offset.zero;
+            } else {
+              switch (position) {
+                case OverlayPosition.left:
+                  additionalSize = Size(extraSize.width / 2, 0);
+                  additionalOffset = Offset(-additionalSize.width, 0);
+                  break;
+                case OverlayPosition.right:
+                  additionalSize = Size(extraSize.width / 2, 0);
+                  additionalOffset = Offset(additionalSize.width, 0);
+                  break;
+                case OverlayPosition.top:
+                  additionalSize = Size(0, extraSize.height / 2);
+                  additionalOffset = Offset(0, -additionalSize.height);
+                  break;
+                case OverlayPosition.bottom:
+                  additionalSize = Size(0, extraSize.height / 2);
+                  additionalOffset = Offset(0, additionalSize.height);
+                  break;
+                default:
+                  throw UnimplementedError('Unknown position');
+              }
+            }
+            return Stack(
+              clipBehavior: Clip.none,
+              fit: StackFit.passthrough,
+              children: [
+                IgnorePointer(
+                  child: widget.backdropBuilder(context, widget.backdrop,
+                      _controlledAnimation, widget.stackIndex),
+                ),
+                barrier,
+                Positioned.fill(
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    return MediaQuery(
+                      data: widget.useSafeArea
+                          ? mediaQueryData.removePadding(
+                              removeTop: true,
+                              removeBottom: true,
+                              removeLeft: true,
+                              removeRight: true,
+                            )
+                          : mediaQueryData,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: padTop ? padding.top : 0,
+                          bottom: padBottom ? padding.bottom : 0,
+                          left: padLeft ? padding.left : 0,
+                          right: padRight ? padding.right : 0,
+                        ),
+                        child: Align(
+                          alignment: alignment,
+                          child: AnimatedBuilder(
+                            animation: _controlledAnimation,
+                            builder: (context, child) {
+                              return FractionalTranslation(
+                                translation: startFractionalOffset *
+                                    (1 - _controlledAnimation.value),
+                                child: child,
+                              );
+                            },
+                            child: Transform.translate(
+                              offset: additionalOffset / kBackdropScaleDown,
+                              child: widget.builder(
+                                  context,
+                                  additionalSize,
+                                  constraints.biggest,
+                                  EdgeInsets.only(
+                                    top: insetTop ? padding.top : 0,
+                                    bottom: insetBottom ? padding.bottom : 0,
+                                    left: insetLeft ? padding.left : 0,
+                                    right: insetRight ? padding.right : 0,
                                   ),
-                                ),
-                              ),
+                                  widget.stackIndex),
                             ),
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
   }
 }
 
-typedef BackdropBuilder =
-    Widget Function(BuildContext context, Widget child, Animation<double> animation, int stackIndex);
+/// Builder function for drawer backdrop transformations.
+///
+/// Creates a widget that wraps the backdrop content, applying transformations
+/// during drawer animations.
+///
+/// Parameters:
+/// - [context] (BuildContext): Build context
+/// - [child] (Widget): Backdrop widget to transform
+/// - [animation] (`Animation<double>`): Animation value from 0 (closed) to 1 (open)
+/// - [stackIndex] (int): Index of the drawer in the stack
+///
+/// Returns the transformed backdrop widget.
+typedef BackdropBuilder = Widget Function(BuildContext context, Widget child,
+    Animation<double> animation, int stackIndex);
 
-typedef BarrierBuilder =
-    Widget? Function(BuildContext context, Widget child, Animation<double> animation, int stackIndex);
+/// Builder function for drawer modal barriers.
+///
+/// Creates an optional barrier widget that appears over the backdrop when
+/// the drawer is modal. Typically used for dimming and dismissal handling.
+///
+/// Parameters:
+/// - [context] (BuildContext): Build context
+/// - [child] (Widget): Content behind the barrier
+/// - [animation] (`Animation<double>`): Animation value from 0 (closed) to 1 (open)
+/// - [stackIndex] (int): Index of the drawer in the stack
+///
+/// Returns the barrier widget or null if no barrier needed.
+typedef BarrierBuilder = Widget? Function(BuildContext context, Widget child,
+    Animation<double> animation, int stackIndex);
 
+/// Data class representing a drawer overlay entry in the stack.
+///
+/// Encapsulates all configuration and state needed to render a single
+/// drawer overlay, including builders, animation, theming, and positioning.
 class DrawerOverlayEntry<T> {
+  /// Key for accessing the drawer entry widget state.
   final GlobalKey<DrawerEntryWidgetState<T>> key = GlobalKey();
+
+  /// Builder for backdrop transformations.
   final BackdropBuilder backdropBuilder;
+
+  /// Builder for drawer content.
   final DrawerBuilder builder;
+
+  /// Whether the drawer is modal.
   final bool modal;
+
+  /// Builder for the modal barrier.
   final BarrierBuilder barrierBuilder;
+
+  /// Captured theme data.
   final CapturedThemes? themes;
+
+  /// Captured inherited data.
   final CapturedData? data;
+
+  /// Completer for the drawer result.
   final Completer<T> completer;
+
+  /// Position of the drawer.
   final OverlayPosition position;
+
+  /// Whether tapping the barrier dismisses the drawer.
   final bool barrierDismissible;
+
+  /// Whether to apply safe area insets.
   final bool useSafeArea;
+
+  /// Optional external animation controller.
   final AnimationController? animationController;
+
+  /// Whether to automatically open on mount.
   final bool autoOpen;
+
+  /// Size constraints for the drawer.
   final BoxConstraints? constraints;
+
+  /// Alignment of the drawer content.
   final AlignmentGeometry? alignment;
 
+  /// Creates a drawer overlay entry.
   DrawerOverlayEntry({
     required this.builder,
     required this.backdropBuilder,
@@ -1444,9 +2135,17 @@ class DrawerOverlayEntry<T> {
   });
 }
 
+/// Completer for drawer overlay operations.
+///
+/// Wraps a [DrawerOverlayEntry] to provide overlay lifecycle management,
+/// including animation tracking and dismissal handling.
 class DrawerOverlayCompleter<T> extends OverlayCompleter<T> {
   final DrawerOverlayEntry<T> _entry;
 
+  /// Creates a drawer overlay completer.
+  ///
+  /// Parameters:
+  /// - [_entry] (`DrawerOverlayEntry<T>`, required): The drawer entry to manage
   DrawerOverlayCompleter(this._entry);
 
   @override
@@ -1457,7 +2156,14 @@ class DrawerOverlayCompleter<T> extends OverlayCompleter<T> {
     _entry.completer.complete();
   }
 
-  AnimationController? get animationController => _entry.animationController ?? _entry.key.currentState?._controller;
+  /// Gets the animation controller for the drawer.
+  ///
+  /// Returns the external animation controller if provided, otherwise
+  /// returns the internal controller from the drawer entry widget state.
+  ///
+  /// Returns [AnimationController] or null if not available.
+  AnimationController? get animationController =>
+      _entry.animationController ?? _entry.key.currentState?._controller;
 
   @override
   Future<T> get future => _entry.completer.future;
@@ -1474,20 +2180,43 @@ class DrawerOverlayCompleter<T> extends OverlayCompleter<T> {
   }
 }
 
-class SheetOverlayHandler extends OverlayHandler {
+/// Overlay handler specialized for sheet-style overlays.
+///
+/// Provides a simplified API for showing sheet overlays (bottom sheets,
+/// side sheets, etc.) with standard positioning and barrier behavior.
+class VNLSheetOverlayHandler extends VNLOverlayHandler {
+  /// Checks if the current context is within a sheet overlay.
+  ///
+  /// Parameters:
+  /// - [context] (BuildContext, required): Build context to check
+  ///
+  /// Returns true if context is within a sheet overlay, false otherwise.
   static bool isSheetOverlay(BuildContext context) {
-    return Model.maybeOf<bool>(context, #vnl_ui_sheet_overlay) == true;
+    return Model.maybeOf<bool>(context, #shadcn_flutter_sheet_overlay) == true;
   }
 
+  /// Position where the sheet appears.
   final OverlayPosition position;
+
+  /// Optional barrier color for the modal backdrop.
   final Color? barrierColor;
 
-  const SheetOverlayHandler({this.position = OverlayPosition.bottom, this.barrierColor});
+  /// Creates a sheet overlay handler.
+  ///
+  /// Parameters:
+  /// - [position] (OverlayPosition): Sheet position, defaults to bottom
+  /// - [barrierColor] (Color?): Optional barrier color
+  const VNLSheetOverlayHandler({
+    this.position = OverlayPosition.bottom,
+    this.barrierColor,
+  });
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is SheetOverlayHandler && other.position == position && other.barrierColor == barrierColor;
+    return other is VNLSheetOverlayHandler &&
+        other.position == position &&
+        other.barrierColor == barrierColor;
   }
 
   @override
@@ -1513,13 +2242,13 @@ class SheetOverlayHandler extends OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
+    ValueChanged<VNLPopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
-    OverlayBarrier? overlayBarrier,
+    VNLOverlayBarrier? overlayBarrier,
     LayerLink? layerLink,
   }) {
     return openRawDrawer<T>(
@@ -1528,10 +2257,12 @@ class SheetOverlayHandler extends OverlayHandler {
       useSafeArea: true,
       barrierDismissible: barrierDismissable,
       builder: (context, extraSize, size, padding, stackIndex) {
-        final theme = VNLTheme.of(context);
+        final theme = Theme.of(context);
         return MultiModel(
-          data: const [Model(#vnl_ui_sheet_overlay, true)],
-          child: SheetWrapper(
+          data: const [
+            Model(#shadcn_flutter_sheet_overlay, true),
+          ],
+          child: VNLSheetWrapper(
             position: this.position,
             gapAfterDragger: 8 * theme.scaling,
             expands: true,
@@ -1541,11 +2272,9 @@ class SheetOverlayHandler extends OverlayHandler {
             padding: padding,
             barrierColor: barrierColor,
             stackIndex: stackIndex,
-            child: Builder(
-              builder: (context) {
-                return builder(context);
-              },
-            ),
+            child: Builder(builder: (context) {
+              return builder(context);
+            }),
           ),
         );
       },

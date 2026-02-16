@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class InputExample2 extends StatefulWidget {
   const InputExample2({super.key});
@@ -10,20 +10,31 @@ class InputExample2 extends StatefulWidget {
 class _InputExample2State extends State<InputExample2> {
   @override
   Widget build(BuildContext context) {
-    return VNLTextField(initialValue: 'Hello World!', placeholder: const Text('Search something...'), features: [
-      InputFeature.leading(StatedWidget.builder(
-        builder: (context, states) {
-          if (states.hovered) {
-            return const Icon(Icons.search);
-          } else {
-            return const Icon(Icons.search).iconMutedForeground();
-          }
-        },
-      ), visibility: InputFeatureVisibility.textEmpty),
-      InputFeature.clear(
-        visibility:
-            (InputFeatureVisibility.textNotEmpty & InputFeatureVisibility.focused) | InputFeatureVisibility.hovered,
-      ),
-    ]);
+    // Demonstrates input features:
+    // - A leading search icon that reacts to the hover state when the field is empty
+    // - A clear button that appears when there's text and the field is focused or hovered
+    return VNLTextField(
+        initialValue: 'Hello World!',
+        placeholder: const Text('Search something...'),
+        features: [
+          // Leading icon only visible when the text is empty
+          VNLInputFeature.leading(VNLStatedWidget.builder(
+            builder: (context, states) {
+              // Use a muted icon normally, switch to the full icon on hover
+              if (states.hovered) {
+                return const Icon(Icons.search);
+              } else {
+                return const Icon(Icons.search).iconMutedForeground();
+              }
+            },
+          ), visibility: VNLInputFeatureVisibility.textEmpty),
+          // Clear button visible when there is text and the field is focused,
+          // or whenever the field is hovered
+          VNLInputFeature.clear(
+            visibility: (VNLInputFeatureVisibility.textNotEmpty &
+                    VNLInputFeatureVisibility.focused) |
+                VNLInputFeatureVisibility.hovered,
+          ),
+        ]);
   }
 }

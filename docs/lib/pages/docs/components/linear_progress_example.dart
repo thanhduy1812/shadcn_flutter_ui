@@ -13,7 +13,7 @@ class LinearProgressExample extends StatelessWidget {
     return const ComponentPage(
       name: 'linear_progress',
       description: 'A widget that shows progress along a line.',
-      displayName: 'Linear Progress',
+      displayName: 'Linear VNLProgress',
       children: [
         WidgetUsageExample(
           title: 'Indeterminate Example',

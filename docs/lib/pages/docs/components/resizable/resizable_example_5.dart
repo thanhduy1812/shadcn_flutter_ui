@@ -8,21 +8,23 @@ class ResizableExample5 extends StatefulWidget {
 }
 
 class _ResizableExample5State extends State<ResizableExample5> {
-  final ResizablePaneController controller = AbsoluteResizablePaneController(120);
-  final ResizablePaneController controller2 = AbsoluteResizablePaneController(120);
+  final ResizablePaneController controller = VNLAbsoluteResizablePaneController(120);
+  final ResizablePaneController controller2 = VNLAbsoluteResizablePaneController(120);
   @override
   Widget build(BuildContext context) {
-    return OutlinedContainer(
+    return VNLOutlinedContainer(
       clipBehavior: Clip.antiAlias,
-      child: ResizablePanel.horizontal(
+      child: VNLResizablePanel.horizontal(
         children: [
-          ResizablePane.controlled(
+          VNLResizablePane.controlled(
+            // This controlled pane supports collapsing with a minimum and collapsed size.
             minSize: 100,
             collapsedSize: 40,
             controller: controller,
             child: AnimatedBuilder(
               animation: controller,
               builder: (context, child) {
+                // Render a different UI when the pane is collapsed.
                 if (controller.collapsed) {
                   return Container(
                     alignment: Alignment.center,
@@ -41,7 +43,8 @@ class _ResizableExample5State extends State<ResizableExample5> {
               },
             ),
           ),
-          ResizablePane(
+          VNLResizablePane(
+            // A standard resizable pane with an absolute initial width.
             initialSize: 300,
             child: Container(
               alignment: Alignment.center,
@@ -49,7 +52,7 @@ class _ResizableExample5State extends State<ResizableExample5> {
               child: const Text('Resizable'),
             ),
           ),
-          ResizablePane.controlled(
+          VNLResizablePane.controlled(
             minSize: 100,
             collapsedSize: 40,
             controller: controller2,

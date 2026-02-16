@@ -12,10 +12,10 @@ class ProgressExample extends StatelessWidget {
     return const ComponentPage(
       name: 'progress',
       description: 'A visual indicator of an operation\'s progress.',
-      displayName: 'Progress',
+      displayName: 'VNLProgress',
       children: [
         WidgetUsageExample(
-          title: 'Progress Example',
+          title: 'VNLProgress Example',
           path: 'lib/pages/docs/components/progress/progress_example_1.dart',
           child: ProgressExample1(),
         ),

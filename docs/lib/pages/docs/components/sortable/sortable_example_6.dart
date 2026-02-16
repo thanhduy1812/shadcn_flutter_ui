@@ -28,9 +28,9 @@ class _SortableExample6State extends State<SortableExample6> {
 
   @override
   Widget build(BuildContext context) {
-    return SortableLayer(
+    return VNLSortableLayer(
       child: Builder(
-          // this builder is needed to access the context of the SortableLayer
+          // this builder is needed to access the context of the VNLSortableLayer
           builder: (context) {
         return SortableDropFallback<int>(
           onAccept: (value) {
@@ -70,16 +70,18 @@ class _SortableExample6State extends State<SortableExample6> {
                     // Remove the item from the list if the drop failed
                     setState(() {
                       var removed = names.removeAt(i);
-                      SortableLayer.ensureAndDismissDrop(context, removed);
-                      // Dismissing drop will prevent the SortableLayer from
+                      // Ensure the drag overlay exists and then dismiss it so
+                      // the item does not animate back to its original position.
+                      VNLSortableLayer.ensureAndDismissDrop(context, removed);
+                      // Dismissing drop will prevent the VNLSortableLayer from
                       // animating the item back to its original position
                     });
                   },
-                  child: OutlinedContainer(
+                  child: VNLOutlinedContainer(
                     padding: const EdgeInsets.all(12),
                     child: Row(
                       children: [
-                        const SortableDragHandle(child: Icon(Icons.drag_handle)),
+                        const VNLSortableDragHandle(child: Icon(Icons.drag_handle)),
                         const SizedBox(width: 8),
                         Expanded(child: Text(names[i].data)),
                       ],

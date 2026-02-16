@@ -1,19 +1,83 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-class MenuShortcut extends StatelessWidget {
+/// {@template menu_theme}
+/// Styling options for menu widgets such as [VNLMenuGroup] and [VNLMenuButton].
+/// {@endtemplate}
+class MenuTheme extends ComponentThemeData {
+  /// Default padding applied to each menu item.
+  final EdgeInsets? itemPadding;
+
+  /// Offset applied when showing a submenu.
+  final Offset? subMenuOffset;
+
+  /// {@macro menu_theme}
+  const MenuTheme({
+    this.itemPadding,
+    this.subMenuOffset,
+  });
+
+  /// Creates a copy of this theme but with the given fields replaced.
+  MenuTheme copyWith({
+    ValueGetter<EdgeInsets?>? itemPadding,
+    ValueGetter<Offset?>? subMenuOffset,
+  }) {
+    return MenuTheme(
+      itemPadding: itemPadding == null ? this.itemPadding : itemPadding(),
+      subMenuOffset:
+          subMenuOffset == null ? this.subMenuOffset : subMenuOffset(),
+    );
+  }
+
+  @override
+  int get hashCode => Object.hash(itemPadding, subMenuOffset);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is MenuTheme &&
+        other.itemPadding == itemPadding &&
+        other.subMenuOffset == subMenuOffset;
+  }
+
+  @override
+  String toString() {
+    return 'MenuTheme(itemPadding: $itemPadding, subMenuOffset: $subMenuOffset)';
+  }
+}
+
+/// Displays a keyboard shortcut in a menu.
+///
+/// Renders the visual representation of a keyboard shortcut, typically
+/// displayed on the right side of menu items.
+///
+/// Example:
+/// ```dart
+/// VNLMenuShortcut(
+///   activator: SingleActivator(LogicalKeyboardKey.keyS, control: true),
+/// )
+/// ```
+class VNLMenuShortcut extends StatelessWidget {
+  /// The keyboard shortcut to display.
   final ShortcutActivator activator;
+
+  /// Widget to display between multiple keys.
   final Widget? combiner;
 
-  const MenuShortcut({super.key, required this.activator, this.combiner});
+  /// Creates a [VNLMenuShortcut].
+  ///
+  /// Parameters:
+  /// - [activator] (`ShortcutActivator`, required): The shortcut to display.
+  /// - [combiner] (`Widget?`, optional): Separator between keys (default: " + ").
+  const VNLMenuShortcut({super.key, required this.activator, this.combiner});
 
   @override
   Widget build(BuildContext context) {
     var activator = this.activator;
     var combiner = this.combiner ?? const Text(' + ');
-    final displayMapper = Data.maybeOf<KeyboardShortcutDisplayHandle>(context);
-    assert(displayMapper != null, 'Cannot find KeyboardShortcutDisplayMapper');
+    final displayMapper = Data.maybeOf<VNLKeyboardShortcutDisplayHandle>(context);
+    assert(displayMapper != null, 'Cannot find VNLKeyboardShortcutDisplayMapper');
     List<LogicalKeyboardKey> keys = shortcutActivatorToKeySet(activator);
     List<Widget> children = [];
     for (int i = 0; i < keys.length; i++) {
@@ -22,34 +86,85 @@ class MenuShortcut extends StatelessWidget {
       }
       children.add(displayMapper!.buildKeyboardDisplay(context, keys[i]));
     }
-    return Row(mainAxisSize: MainAxisSize.min, children: children).xSmall().muted();
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: children,
+    ).xSmall().muted();
   }
 }
 
-abstract class MenuItem extends Widget {
-  const MenuItem({super.key});
+/// Abstract base class for menu item widgets.
+///
+/// All menu items (buttons, checkboxes, radio buttons, dividers, etc.) must
+/// implement this interface. Menu items can be placed within menu groups and
+/// support features like leading icons and popover controllers.
+///
+/// See also:
+/// - [VNLMenuButton], clickable menu item
+/// - [VNLMenuCheckbox], checkbox menu item
+/// - [MenuRadio], radio button menu item
+/// - [VNLMenuDivider], divider between menu items
+abstract class VNLMenuItem extends Widget {
+  /// Creates a menu item.
+  const VNLMenuItem({super.key});
 
+  /// Whether this menu item has a leading widget (icon, checkbox indicator, etc.).
   bool get hasLeading;
-  PopoverController? get popoverController;
+
+  /// Optional popover controller for submenu functionality.
+  VNLPopoverController? get popoverController;
 }
 
-class MenuRadioGroup<T> extends StatelessWidget implements MenuItem {
+/// VNLRadio button group container for menu items.
+///
+/// Groups multiple [MenuRadio] items together with shared selection state.
+/// Only one radio button in the group can be selected at a time.
+///
+/// Example:
+/// ```dart
+/// MenuRadioGroup<String>(
+///   value: selectedOption,
+///   onChanged: (context, value) => setState(() => selectedOption = value),
+///   children: [
+///     MenuRadio(value: 'option1', child: Text('Option 1')),
+///     MenuRadio(value: 'option2', child: Text('Option 2')),
+///   ],
+/// )
+/// ```
+class MenuRadioGroup<T> extends StatelessWidget implements VNLMenuItem {
+  /// Currently selected value.
   final T? value;
+
+  /// Callback when selection changes.
   final ContextedValueChanged<T>? onChanged;
+
+  /// List of [MenuRadio] children.
   final List<Widget> children;
 
-  const MenuRadioGroup({super.key, required this.value, required this.onChanged, required this.children});
+  /// Creates a radio group for menu items.
+  ///
+  /// Parameters:
+  /// - [value] (T?): Currently selected value
+  /// - [onChanged] (`ContextedValueChanged<T>?`): Selection change callback
+  /// - [children] (`List<Widget>`): VNLRadio button children
+  const MenuRadioGroup({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.children,
+  });
 
   @override
   bool get hasLeading => children.isNotEmpty;
 
   @override
-  PopoverController? get popoverController => null;
+  VNLPopoverController? get popoverController => null;
 
   @override
   Widget build(BuildContext context) {
-    final menuGroupData = Data.maybeOf<MenuGroupData>(context);
-    assert(menuGroupData != null, 'MenuRadioGroup must be a child of MenuGroup');
+    final menuGroupData = Data.maybeOf<VNLMenuGroupData>(context);
+    assert(
+        menuGroupData != null, 'MenuRadioGroup must be a child of VNLMenuGroup');
     return Data<MenuRadioGroup<T>>.inherit(
       data: this,
       child: Flex(
@@ -62,14 +177,40 @@ class MenuRadioGroup<T> extends StatelessWidget implements MenuItem {
   }
 }
 
+/// Individual radio button item within a [MenuRadioGroup].
+///
+/// Displays a radio button indicator when selected and integrates with
+/// the parent radio group for selection management.
 class MenuRadio<T> extends StatelessWidget {
+  /// The value this radio button represents.
   final T value;
+
+  /// Content widget displayed for this option.
   final Widget child;
+
+  /// Optional trailing widget (e.g., keyboard shortcut).
   final Widget? trailing;
+
+  /// Focus node for keyboard navigation.
   final FocusNode? focusNode;
+
+  /// Whether this radio button is enabled.
   final bool enabled;
+
+  /// Whether selecting this radio closes the menu automatically.
   final bool autoClose;
 
+  /// Creates a radio button menu item.
+  ///
+  /// Must be a child of [MenuRadioGroup].
+  ///
+  /// Parameters:
+  /// - [value] (T, required): Value for this option
+  /// - [child] (Widget, required): Display content
+  /// - [trailing] (Widget?): Optional trailing widget
+  /// - [focusNode] (FocusNode?): Focus node for navigation
+  /// - [enabled] (bool): Whether enabled, defaults to true
+  /// - [autoClose] (bool): Whether to auto-close menu, defaults to true
   const MenuRadio({
     super.key,
     required this.value,
@@ -82,20 +223,21 @@ class MenuRadio<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
     final radioGroup = Data.maybeOf<MenuRadioGroup<T>>(context);
     assert(radioGroup != null, 'MenuRadio must be a child of MenuRadioGroup');
     return Data<MenuRadioGroup<T>>.boundary(
-      child: MenuButton(
-        leading:
-            radioGroup!.value == value
-                ? SizedBox(
-                  width: 16 * scaling,
-                  height: 16 * scaling,
-                  child: const Icon(RadixIcons.dotFilled).iconSmall(),
-                )
-                : SizedBox(width: 16 * scaling),
+      child: VNLMenuButton(
+        leading: radioGroup!.value == value
+            ? SizedBox(
+                width: 16 * scaling,
+                height: 16 * scaling,
+                child: const Icon(
+                  RadixIcons.dotFilled,
+                ).iconSmall(),
+              )
+            : SizedBox(width: 16 * scaling),
         onPressed: (context) {
           radioGroup.onChanged?.call(context, value);
         },
@@ -109,36 +251,52 @@ class MenuRadio<T> extends StatelessWidget {
   }
 }
 
-class MenuDivider extends StatelessWidget implements MenuItem {
-  const MenuDivider({super.key});
+/// Visual divider between menu items.
+///
+/// Renders a horizontal or vertical line to separate groups of menu items.
+/// Automatically adapts direction based on the parent menu's orientation.
+///
+/// Example:
+/// ```dart
+/// VNLMenuGroup(
+///   children: [
+///     VNLMenuButton(child: Text('Cut')),
+///     VNLMenuButton(child: Text('Copy')),
+///     VNLMenuDivider(), // Separator
+///     VNLMenuButton(child: Text('Paste')),
+///   ],
+/// )
+/// ```
+class VNLMenuDivider extends StatelessWidget implements VNLMenuItem {
+  /// Creates a menu divider.
+  const VNLMenuDivider({super.key});
   @override
   Widget build(BuildContext context) {
-    final menuGroupData = Data.maybeOf<MenuGroupData>(context);
-    final theme = VNLTheme.of(context);
+    final menuGroupData = Data.maybeOf<VNLMenuGroupData>(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
     return AnimatedPadding(
       duration: kDefaultDuration,
       padding:
           (menuGroupData == null || menuGroupData.direction == Axis.vertical
-              ? const EdgeInsets.symmetric(vertical: 4)
-              : const EdgeInsets.symmetric(horizontal: 4)) *
-          scaling,
-      child:
-          menuGroupData == null || menuGroupData.direction == Axis.vertical
-              ? VNLDivider(
-                height: 1 * scaling,
-                thickness: 1 * scaling,
-                indent: -4 * scaling,
-                endIndent: -4 * scaling,
-                color: theme.colorScheme.border,
-              )
-              : VerticalDivider(
-                width: 1 * scaling,
-                thickness: 1 * scaling,
-                color: theme.colorScheme.border,
-                indent: -4 * scaling,
-                endIndent: -4 * scaling,
-              ),
+                  ? const EdgeInsets.symmetric(vertical: 4)
+                  : const EdgeInsets.symmetric(horizontal: 4)) *
+              scaling,
+      child: menuGroupData == null || menuGroupData.direction == Axis.vertical
+          ? VNLDivider(
+              height: 1 * scaling,
+              thickness: 1 * scaling,
+              indent: -4 * scaling,
+              endIndent: -4 * scaling,
+              color: theme.colorScheme.border,
+            )
+          : VNLVerticalDivider(
+              width: 1 * scaling,
+              thickness: 1 * scaling,
+              color: theme.colorScheme.border,
+              indent: -4 * scaling,
+              endIndent: -4 * scaling,
+            ),
     );
   }
 
@@ -146,13 +304,22 @@ class MenuDivider extends StatelessWidget implements MenuItem {
   bool get hasLeading => false;
 
   @override
-  PopoverController? get popoverController => null;
+  VNLPopoverController? get popoverController => null;
 }
 
-class MenuGap extends StatelessWidget implements MenuItem {
+/// Spacing gap between menu items.
+///
+/// Creates empty vertical or horizontal space within a menu, based on
+/// the menu's direction. Useful for visually grouping related items.
+class VNLMenuGap extends StatelessWidget implements VNLMenuItem {
+  /// Size of the gap in logical pixels.
   final double size;
 
-  const MenuGap(this.size, {super.key});
+  /// Creates a menu gap.
+  ///
+  /// Parameters:
+  /// - [size] (double, required): Gap size in logical pixels
+  const VNLMenuGap(this.size, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -163,21 +330,64 @@ class MenuGap extends StatelessWidget implements MenuItem {
   bool get hasLeading => false;
 
   @override
-  PopoverController? get popoverController => null;
+  VNLPopoverController? get popoverController => null;
 }
 
-class MenuButton extends StatefulWidget implements MenuItem {
+/// VNLClickable button menu item with optional submenu support.
+///
+/// Primary menu item type that responds to user interaction. Can display
+/// leading icons, trailing widgets (shortcuts), and nested submenus.
+///
+/// Example:
+/// ```dart
+/// VNLMenuButton(
+///   leading: Icon(Icons.cut),
+///   trailing: Text('Ctrl+X').textSmall().muted(),
+///   onPressed: (context) => _handleCut(),
+///   child: Text('Cut'),
+/// )
+/// ```
+class VNLMenuButton extends StatefulWidget implements VNLMenuItem {
+  /// Content widget displayed in the button.
   final Widget child;
-  final List<MenuItem>? subMenu;
+
+  /// Optional submenu items shown on hover or click.
+  final List<VNLMenuItem>? subMenu;
+
+  /// Callback when button is pressed.
   final ContextedCallback? onPressed;
+
+  /// Optional trailing widget (e.g., keyboard shortcut indicator).
   final Widget? trailing;
+
+  /// Optional leading widget (e.g., icon).
   final Widget? leading;
+
+  /// Whether the button is enabled for interaction.
   final bool enabled;
+
+  /// Focus node for keyboard navigation.
   final FocusNode? focusNode;
+
+  /// Whether selecting this button closes the menu automatically.
   final bool autoClose;
+
   @override
-  final PopoverController? popoverController;
-  const MenuButton({
+  final VNLPopoverController? popoverController;
+
+  /// Creates a menu button.
+  ///
+  /// Parameters:
+  /// - [child] (Widget, required): Main content
+  /// - [subMenu] (`List<VNLMenuItem>?`): Optional nested submenu
+  /// - [onPressed] (ContextedCallback?): Click handler
+  /// - [trailing] (Widget?): Trailing widget
+  /// - [leading] (Widget?): Leading icon or widget
+  /// - [enabled] (bool): Whether enabled, defaults to true
+  /// - [focusNode] (FocusNode?): Focus node
+  /// - [autoClose] (bool): Auto-close behavior, defaults to true
+  /// - [popoverController] (VNLPopoverController?): Optional popover controller
+  const VNLMenuButton({
     super.key,
     required this.child,
     this.subMenu,
@@ -191,68 +401,137 @@ class MenuButton extends StatefulWidget implements MenuItem {
   });
 
   @override
-  State<MenuButton> createState() => _MenuButtonState();
+  State<VNLMenuButton> createState() => _MenuButtonState();
 
   @override
   bool get hasLeading => leading != null;
 }
 
-class MenuLabel extends StatelessWidget implements MenuItem {
+/// Non-interactive label menu item.
+///
+/// Displays text or content without click handlers. Useful for section
+/// headers or informational text within menus.
+///
+/// Example:
+/// ```dart
+/// VNLMenuLabel(
+///   leading: Icon(Icons.settings),
+///   child: Text('Settings').semiBold(),
+/// )
+/// ```
+class VNLMenuLabel extends StatelessWidget implements VNLMenuItem {
+  /// Content widget displayed in the label.
   final Widget child;
+
+  /// Optional trailing widget.
   final Widget? trailing;
+
+  /// Optional leading widget (e.g., icon).
   final Widget? leading;
 
-  const MenuLabel({super.key, required this.child, this.trailing, this.leading});
+  /// Creates a menu label.
+  ///
+  /// Parameters:
+  /// - [child] (Widget, required): Main content
+  /// - [trailing] (Widget?): Trailing widget
+  /// - [leading] (Widget?): Leading icon or widget
+  const VNLMenuLabel({
+    super.key,
+    required this.child,
+    this.trailing,
+    this.leading,
+  });
 
   @override
   bool get hasLeading => leading != null;
 
   @override
-  PopoverController? get popoverController => null;
+  VNLPopoverController? get popoverController => null;
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final menuGroupData = Data.maybeOf<MenuGroupData>(context);
-    assert(menuGroupData != null, 'MenuLabel must be a child of MenuGroup');
+    final densityGap = theme.density.baseGap * scaling;
+    final menuGroupData = Data.maybeOf<VNLMenuGroupData>(context);
+    assert(menuGroupData != null, 'VNLMenuLabel must be a child of VNLMenuGroup');
     return Padding(
-      padding: const EdgeInsets.only(left: 8, top: 6, right: 6, bottom: 6) * scaling + menuGroupData!.itemPadding,
-      child: Basic(
-        contentSpacing: 8 * scaling,
-        leading:
-            leading == null && menuGroupData.hasLeading
-                ? SizedBox(width: 16 * scaling)
-                : leading == null
+      padding: EdgeInsets.only(
+            left: densityGap,
+            top: densityGap * 0.75,
+            right: densityGap * 0.75,
+            bottom: densityGap * 0.75,
+          ) +
+          menuGroupData!.itemPadding,
+      child: VNLBasic(
+        contentSpacing: densityGap,
+        leading: leading == null && menuGroupData.hasLeading
+            ? SizedBox(width: densityGap * 2)
+            : leading == null
                 ? null
-                : SizedBox(width: 16 * scaling, height: 16 * scaling, child: leading!.iconSmall()),
+                : SizedBox(
+                    width: densityGap * 2,
+                    height: densityGap * 2,
+                    child: leading!.iconSmall(),
+                  ),
         trailing: trailing,
         content: child.semiBold(),
         trailingAlignment: Alignment.center,
         leadingAlignment: Alignment.center,
-        contentAlignment:
-            menuGroupData.direction == Axis.vertical ? AlignmentDirectional.centerStart : Alignment.center,
+        contentAlignment: menuGroupData.direction == Axis.vertical
+            ? AlignmentDirectional.centerStart
+            : Alignment.center,
       ),
     );
   }
 }
 
-class MenuCheckbox extends StatelessWidget implements MenuItem {
+/// VNLCheckbox menu item with checked/unchecked state.
+///
+/// Displays a checkmark when selected. Used for togglable menu options.
+///
+/// Example:
+/// ```dart
+/// VNLMenuCheckbox(
+///   value: showToolbar,
+///   onChanged: (context, value) => setState(() => showToolbar = value),
+///   child: Text('Show Toolbar'),
+/// )
+/// ```
+class VNLMenuCheckbox extends StatelessWidget implements VNLMenuItem {
+  /// Current checked state.
   final bool value;
+
+  /// Callback when checkbox state changes.
   final ContextedValueChanged<bool>? onChanged;
+
+  /// Content widget displayed for this option.
   final Widget child;
+
+  /// Optional trailing widget (e.g., keyboard shortcut).
   final Widget? trailing;
-  final FocusNode? focusNode;
+
+  /// Whether this checkbox is enabled.
   final bool enabled;
+
+  /// Whether checking this box closes the menu automatically.
   final bool autoClose;
 
-  const MenuCheckbox({
+  /// Creates a checkbox menu item.
+  ///
+  /// Parameters:
+  /// - [value] (bool): Current checked state, defaults to false
+  /// - [onChanged] (`ContextedValueChanged<bool>?`): State change callback
+  /// - [child] (Widget, required): Display content
+  /// - [trailing] (Widget?): Optional trailing widget
+  /// - [enabled] (bool): Whether enabled, defaults to true
+  /// - [autoClose] (bool): Whether to auto-close menu, defaults to true
+  const VNLMenuCheckbox({
     super.key,
     this.value = false,
     this.onChanged,
     required this.child,
     this.trailing,
-    this.focusNode,
     this.enabled = true,
     this.autoClose = true,
   });
@@ -260,22 +539,26 @@ class MenuCheckbox extends StatelessWidget implements MenuItem {
   @override
   bool get hasLeading => true;
   @override
-  PopoverController? get popoverController => null;
+  VNLPopoverController? get popoverController => null;
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
-    return MenuButton(
-      leading:
-          value
-              ? SizedBox(width: 16 * scaling, height: 16 * scaling, child: const Icon(RadixIcons.check).iconSmall())
-              : SizedBox(width: 16 * scaling),
+    return VNLMenuButton(
+      leading: value
+          ? SizedBox(
+              width: 16 * scaling,
+              height: 16 * scaling,
+              child: const Icon(
+                RadixIcons.check,
+              ).iconSmall(),
+            )
+          : SizedBox(width: 16 * scaling),
       onPressed: (context) {
         onChanged?.call(context, !value);
       },
       enabled: enabled,
-      focusNode: focusNode,
       autoClose: autoClose,
       trailing: trailing,
       child: child,
@@ -283,23 +566,18 @@ class MenuCheckbox extends StatelessWidget implements MenuItem {
   }
 }
 
-class _MenuButtonState extends State<MenuButton> {
-  late FocusNode _focusNode;
-  final ValueNotifier<List<MenuItem>> _children = ValueNotifier([]);
+class _MenuButtonState extends State<VNLMenuButton> {
+  final ValueNotifier<List<VNLMenuItem>> _children = ValueNotifier([]);
 
   @override
   void initState() {
     super.initState();
-    _focusNode = widget.focusNode ?? FocusNode();
     _children.value = widget.subMenu ?? [];
   }
 
   @override
-  void didUpdateWidget(covariant MenuButton oldWidget) {
+  void didUpdateWidget(covariant VNLMenuButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.focusNode != oldWidget.focusNode) {
-      _focusNode = widget.focusNode ?? FocusNode();
-    }
     if (!listEquals(widget.subMenu, oldWidget.subMenu)) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         if (mounted) {
@@ -311,167 +589,254 @@ class _MenuButtonState extends State<MenuButton> {
 
   @override
   Widget build(BuildContext context) {
-    final menuBarData = Data.maybeOf<MenubarState>(context);
-    final menuData = Data.maybeOf<MenuData>(context);
-    final menuGroupData = Data.maybeOf<MenuGroupData>(context);
-    assert(menuGroupData != null, 'MenuButton must be a child of MenuGroup');
-    // final dialogOverlayHandler = Data.maybeOf<DialogOverlayHandler>(context);
-    final theme = VNLTheme.of(context);
+    final menuBarData = Data.maybeOf<VNLMenubarState>(context);
+    final menuData = Data.maybeOf<VNLMenuData>(context);
+    final menuGroupData = Data.maybeOf<VNLMenuGroupData>(context);
+    assert(menuGroupData != null, 'VNLMenuButton must be a child of VNLMenuGroup');
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
-    final isDialogOverlay = DialogOverlayHandler.isDialogOverlay(context);
+    final compTheme = ComponentTheme.maybeOf<MenuTheme>(context);
+    final isSheetOverlay = VNLSheetOverlayHandler.isSheetOverlay(context);
+    final isDialogOverlay = VNLDialogOverlayHandler.isDialogOverlay(context);
     final isIndependentOverlay = isSheetOverlay || isDialogOverlay;
-    void openSubMenu(BuildContext context) {
+    void openSubMenu(BuildContext context, bool autofocus) {
       menuGroupData!.closeOthers();
-      final overlayManager = OverlayManager.of(context);
+      final overlayManager = VNLOverlayManager.of(context);
       menuData!.popoverController.show(
         context: context,
         regionGroupId: menuGroupData.regionGroupId,
         consumeOutsideTaps: false,
         dismissBackdropFocus: false,
         modal: true,
-        handler: MenuOverlayHandler(overlayManager),
-        overlayBarrier: OverlayBarrier(borderRadius: BorderRadius.circular(theme.radiusMd)),
+        handler: VNLMenuOverlayHandler(overlayManager),
+        overlayBarrier: VNLOverlayBarrier(
+          borderRadius: BorderRadius.circular(theme.radiusMd),
+        ),
         builder: (context) {
-          final theme = VNLTheme.of(context);
+          final theme = Theme.of(context);
           final scaling = theme.scaling;
+          final densityGap = theme.density.baseGap * scaling;
           var itemPadding = menuGroupData.itemPadding;
-          final isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
+          final isSheetOverlay = VNLSheetOverlayHandler.isSheetOverlay(context);
           if (isSheetOverlay) {
-            itemPadding = const EdgeInsets.symmetric(horizontal: 8) * scaling;
+            itemPadding = EdgeInsets.symmetric(horizontal: densityGap * 0.5);
           }
           return ConstrainedBox(
-            constraints:
-                const BoxConstraints(
+            constraints: const BoxConstraints(
                   minWidth: 192, // 12rem
                 ) *
                 scaling,
             child: AnimatedBuilder(
-              animation: _children,
-              builder: (context, child) {
-                return MenuGroup(
-                  direction: menuGroupData.direction,
-                  parent: menuGroupData,
-                  onDismissed: menuGroupData.onDismissed,
-                  regionGroupId: menuGroupData.regionGroupId,
-                  subMenuOffset: const Offset(8, -4 + -1) * scaling,
-                  itemPadding: itemPadding,
-                  builder: (context, children) {
-                    return MenuPopup(children: children);
-                  },
-                  children: _children.value,
-                );
-              },
-            ),
+                animation: _children,
+                builder: (context, child) {
+                  return VNLMenuGroup(
+                      direction: menuGroupData.direction,
+                      parent: menuGroupData,
+                      onDismissed: menuGroupData.onDismissed,
+                      regionGroupId: menuGroupData.regionGroupId,
+                      subMenuOffset: compTheme?.subMenuOffset ??
+                          Offset(densityGap, -densityGap * 0.625),
+                      itemPadding: itemPadding,
+                      autofocus: autofocus,
+                      builder: (context, children) {
+                        return VNLMenuPopup(
+                          children: children,
+                        );
+                      },
+                      children: _children.value);
+                }),
           );
         },
         alignment: Alignment.topLeft,
-        anchorAlignment: menuBarData != null ? Alignment.bottomLeft : Alignment.topRight,
-        offset: menuGroupData.subMenuOffset,
+        anchorAlignment:
+            menuBarData != null ? Alignment.bottomLeft : Alignment.topRight,
+        offset: menuGroupData.subMenuOffset ?? compTheme?.subMenuOffset,
       );
     }
 
-    return Data<MenuData>.boundary(
-      child: Data<MenubarState>.boundary(
-        child: TapRegion(
-          groupId: menuGroupData!.root,
-          child: AnimatedBuilder(
-            animation: menuData!.popoverController,
-            builder: (context, child) {
-              return VNLButton(
-                disableFocusOutline: true,
-                alignment:
-                    menuGroupData.direction == Axis.vertical ? AlignmentDirectional.centerStart : Alignment.center,
-                style: (menuBarData == null ? ButtonVariance.menu : ButtonVariance.menubar).copyWith(
-                  padding: (context, states, value) {
-                    return value.optionallyResolve(context) + menuGroupData.itemPadding;
-                  },
-                  decoration: (context, states, value) {
-                    final theme = VNLTheme.of(context);
-                    return (value as BoxDecoration).copyWith(
-                      color: menuData.popoverController.hasOpenPopover ? theme.colorScheme.accent : null,
-                      borderRadius: BorderRadius.circular(theme.radiusMd),
-                    );
-                  },
-                ),
-                trailing:
-                    menuBarData != null
-                        ? widget.trailing
-                        : widget.trailing != null || (widget.subMenu != null && menuBarData == null)
-                        ? Row(
-                          children: [
-                            if (widget.trailing != null) widget.trailing!,
-                            if (widget.subMenu != null && menuBarData == null)
-                              const Icon(RadixIcons.chevronRight).iconSmall(),
-                          ],
-                        ).gap(8 * scaling)
-                        : null,
-                leading:
-                    widget.leading == null && menuGroupData.hasLeading && menuBarData == null
-                        ? SizedBox(width: 16 * scaling)
-                        : widget.leading == null
-                        ? null
-                        : SizedBox(width: 16 * scaling, height: 16 * scaling, child: widget.leading!.iconSmall()),
-                disableTransition: true,
-                enabled: widget.enabled,
-                focusNode: _focusNode,
-                onHover: (value) {
-                  if (value) {
-                    if ((menuBarData == null || menuGroupData.hasOpenPopovers) &&
-                        widget.subMenu != null &&
-                        widget.subMenu!.isNotEmpty) {
-                      if (!menuData.popoverController.hasOpenPopover && !isIndependentOverlay) {
-                        openSubMenu(context);
-                      }
-                    } else {
-                      menuGroupData.closeOthers();
-                    }
-                  }
-                },
-                onFocus: (value) {
-                  if (value) {
-                    if (widget.subMenu != null && widget.subMenu!.isNotEmpty) {
-                      if (!menuData.popoverController.hasOpenPopover && !isIndependentOverlay) {
-                        openSubMenu(context);
-                      }
-                    } else {
-                      menuGroupData.closeOthers();
-                    }
-                  }
-                },
-                onPressed: () {
-                  widget.onPressed?.call(context);
-                  if (widget.subMenu != null && widget.subMenu!.isNotEmpty) {
-                    if (!menuData.popoverController.hasOpenPopover) {
-                      openSubMenu(context);
-                    }
-                  } else {
-                    if (widget.autoClose) {
-                      menuGroupData.closeAll();
-                    }
-                  }
-                },
-                child: widget.child,
-              );
-            },
-          ),
+    return Actions(
+      actions: {
+        OpenSubMenuIntent: ContextCallbackAction<OpenSubMenuIntent>(
+          onInvoke: (intent, [context]) {
+            if (widget.subMenu?.isNotEmpty ?? false) {
+              openSubMenu(this.context, true);
+              return true;
+            }
+            return false;
+          },
         ),
-      ),
+        ActivateIntent: CallbackAction<ActivateIntent>(
+          onInvoke: (intent) {
+            widget.onPressed?.call(context);
+            if (widget.subMenu?.isNotEmpty ?? false) {
+              openSubMenu(context, true);
+            }
+            if (widget.autoClose) {
+              menuGroupData!.closeAll();
+            }
+            return;
+          },
+        ),
+      },
+      child: SubFocus(
+          enabled: widget.enabled,
+          builder: (context, subFocusState) {
+            bool hasFocus = subFocusState.isFocused && menuBarData == null;
+            return Data<VNLMenuData>.boundary(
+              child: Data<VNLMenubarState>.boundary(
+                child: TapRegion(
+                  groupId: menuGroupData!.root,
+                  child: AnimatedBuilder(
+                      animation: menuData!.popoverController,
+                      builder: (context, child) {
+                        final theme = Theme.of(context);
+                        final densityGap = theme.density.baseGap * scaling;
+                        return VNLButton(
+                          disableFocusOutline: true,
+                          alignment: menuGroupData.direction == Axis.vertical
+                              ? AlignmentDirectional.centerStart
+                              : Alignment.center,
+                          style: (menuBarData == null
+                                  ? VNLButtonVariance.menu
+                                  : VNLButtonVariance.menubar)
+                              .copyWith(
+                            padding: (context, states, value) {
+                              return value.optionallyResolve(context) +
+                                  menuGroupData.itemPadding;
+                            },
+                            decoration: (context, states, value) {
+                              final theme = Theme.of(context);
+                              return (value as BoxDecoration).copyWith(
+                                color:
+                                    menuData.popoverController.hasOpenPopover ||
+                                            hasFocus
+                                        ? theme.colorScheme.accent
+                                        : null,
+                                borderRadius:
+                                    BorderRadius.circular(theme.radiusMd),
+                              );
+                            },
+                          ),
+                          trailing: menuBarData != null
+                              ? widget.trailing
+                              : widget.trailing != null ||
+                                      (widget.subMenu != null &&
+                                          menuBarData == null)
+                                  ? Row(
+                                      children: [
+                                        if (widget.trailing != null)
+                                          widget.trailing!,
+                                        if (widget.subMenu != null &&
+                                            menuBarData == null)
+                                          const Icon(
+                                            RadixIcons.chevronRight,
+                                          ).iconSmall(),
+                                      ],
+                                    ).gap(densityGap)
+                                  : null,
+                          leading: widget.leading == null &&
+                                  menuGroupData.hasLeading &&
+                                  menuBarData == null
+                              ? SizedBox(width: densityGap * 2)
+                              : widget.leading == null
+                                  ? null
+                                  : SizedBox(
+                                      width: densityGap * 2,
+                                      height: densityGap * 2,
+                                      child: widget.leading!.iconSmall(),
+                                    ),
+                          disableTransition: true,
+                          enabled: widget.enabled,
+                          focusNode: widget.focusNode,
+                          onHover: (value) {
+                            if (value) {
+                              subFocusState.requestFocus();
+                              if ((menuBarData == null ||
+                                      menuGroupData.hasOpenPopovers) &&
+                                  widget.subMenu != null &&
+                                  widget.subMenu!.isNotEmpty) {
+                                if (!menuData
+                                        .popoverController.hasOpenPopover &&
+                                    !isIndependentOverlay) {
+                                  openSubMenu(context, false);
+                                }
+                              } else {
+                                menuGroupData.closeOthers();
+                              }
+                            } else {
+                              subFocusState.unfocus();
+                            }
+                          },
+                          onPressed: () {
+                            widget.onPressed?.call(context);
+                            if (widget.subMenu != null &&
+                                widget.subMenu!.isNotEmpty) {
+                              if (!menuData.popoverController.hasOpenPopover) {
+                                openSubMenu(context, false);
+                              }
+                            } else {
+                              if (widget.autoClose) {
+                                menuGroupData.closeAll();
+                              }
+                            }
+                          },
+                          child: widget.child,
+                        );
+                      }),
+                ),
+              ),
+            );
+          }),
     );
   }
 }
 
-class MenuGroupData {
-  final MenuGroupData? parent;
-  final List<MenuData> children;
+/// Data class containing menu group state and configuration.
+///
+/// Manages the hierarchical structure of menu groups, tracking parent-child
+/// relationships, popover state, and layout properties. Used internally by
+/// the menu system to coordinate behavior across nested menus.
+class VNLMenuGroupData {
+  /// Parent menu group, null for root menus.
+  final VNLMenuGroupData? parent;
+
+  /// Child menu items' data.
+  final List<VNLMenuData> children;
+
+  /// Whether any child items have leading widgets.
   final bool hasLeading;
+
+  /// Offset for positioning submenus relative to parent.
   final Offset? subMenuOffset;
+
+  /// Callback when menu is dismissed.
   final VoidCallback? onDismissed;
+
+  /// Region group ID for tap region management.
   final Object? regionGroupId;
+
+  /// Layout direction (horizontal or vertical).
   final Axis direction;
+
+  /// Padding around menu items.
   final EdgeInsets itemPadding;
 
-  MenuGroupData(
+  /// Focus scope state for keyboard navigation.
+  final SubFocusScopeState focusScope;
+
+  /// Creates menu group data.
+  ///
+  /// Parameters:
+  /// - [parent] (VNLMenuGroupData?): Parent group
+  /// - [children] (`List<VNLMenuData>`): Child items
+  /// - [hasLeading] (bool): Whether items have leading widgets
+  /// - [subMenuOffset] (Offset?): Submenu offset
+  /// - [onDismissed] (VoidCallback?): Dismissal callback
+  /// - [regionGroupId] (Object?): Region group ID
+  /// - [direction] (Axis): Layout direction
+  /// - [itemPadding] (EdgeInsets): Item padding
+  /// - [focusScope] (SubFocusScopeState): Focus scope
+  VNLMenuGroupData(
     this.parent,
     this.children,
     this.hasLeading,
@@ -480,8 +845,12 @@ class MenuGroupData {
     this.regionGroupId,
     this.direction,
     this.itemPadding,
+    this.focusScope,
   );
 
+  /// Checks if any child menu items have open popovers.
+  ///
+  /// Returns true if at least one child has an open submenu popover.
   bool get hasOpenPopovers {
     for (final child in children) {
       if (child.popoverController.hasOpenPopover) {
@@ -491,12 +860,19 @@ class MenuGroupData {
     return false;
   }
 
+  /// Closes all open popovers in child menu items.
+  ///
+  /// Iterates through children and closes any open submenu popovers.
   void closeOthers() {
     for (final child in children) {
       child.popoverController.close();
     }
   }
 
+  /// Closes all menus in the hierarchy by bubbling up to root.
+  ///
+  /// Recursively closes popovers in parent groups and invokes the
+  /// dismissal callback at the root level.
   void closeAll() {
     var menuGroupData = parent;
     if (menuGroupData == null) {
@@ -510,7 +886,7 @@ class MenuGroupData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (other is MenuGroupData) {
+    if (other is VNLMenuGroupData) {
       return listEquals(children, other.children) &&
           parent == other.parent &&
           hasLeading == other.hasLeading &&
@@ -520,7 +896,12 @@ class MenuGroupData {
     return false;
   }
 
-  MenuGroupData get root {
+  /// Gets the root menu group in the hierarchy.
+  ///
+  /// Traverses up the parent chain to find the topmost menu group.
+  ///
+  /// Returns the root [VNLMenuGroupData].
+  VNLMenuGroupData get root {
     var menuGroupData = parent;
     if (menuGroupData == null) {
       return this;
@@ -529,32 +910,104 @@ class MenuGroupData {
   }
 
   @override
-  int get hashCode => Object.hash(children, parent, hasLeading, subMenuOffset, onDismissed);
+  int get hashCode => Object.hash(
+        children,
+        parent,
+        hasLeading,
+        subMenuOffset,
+        onDismissed,
+      );
 
   @override
   String toString() {
-    return 'MenuGroupData{parent: $parent, children: $children, hasLeading: $hasLeading, subMenuOffset: $subMenuOffset, onDismissed: $onDismissed, regionGroupId: $regionGroupId, direction: $direction}';
+    return 'VNLMenuGroupData{parent: $parent, children: $children, hasLeading: $hasLeading, subMenuOffset: $subMenuOffset, onDismissed: $onDismissed, regionGroupId: $regionGroupId, direction: $direction}';
   }
 }
 
-class MenuData {
-  final PopoverController popoverController;
+/// Data container for individual menu item state.
+///
+/// Wraps a popover controller for each menu item, managing submenu
+/// display and interaction state.
+class VNLMenuData {
+  /// Controller for this item's submenu popover.
+  final VNLPopoverController popoverController;
 
-  MenuData({PopoverController? popoverController}) : popoverController = popoverController ?? PopoverController();
+  /// Creates menu item data.
+  ///
+  /// Parameters:
+  /// - [popoverController] (VNLPopoverController?): Optional controller, creates default if null
+  VNLMenuData({VNLPopoverController? popoverController})
+      : popoverController = popoverController ?? VNLPopoverController();
 }
 
-class MenuGroup extends StatefulWidget {
-  final List<MenuItem> children;
-  final Widget Function(BuildContext context, List<Widget> children) builder;
-  final MenuGroupData? parent;
-  final Offset? subMenuOffset;
-  final VoidCallback? onDismissed;
-  final Object? regionGroupId;
-  final Axis direction;
-  final Map<Type, Action> actions;
-  final EdgeInsets itemPadding;
+/// Container widget for organizing menu items into a group.
+///
+/// Provides layout, focus management, and keyboard navigation for a collection
+/// of menu items. Supports both horizontal and vertical orientations, nested
+/// submenus, and customizable actions.
+///
+/// Example:
+/// ```dart
+/// VNLMenuGroup(
+///   direction: Axis.vertical,
+///   builder: (context, children) => Column(children: children),
+///   children: [
+///     VNLMenuButton(child: Text('Cut')),
+///     VNLMenuButton(child: Text('Copy')),
+///     VNLMenuDivider(),
+///     VNLMenuButton(child: Text('Paste')),
+///   ],
+/// )
+/// ```
+class VNLMenuGroup extends StatefulWidget {
+  /// List of menu item widgets.
+  final List<VNLMenuItem> children;
 
-  const MenuGroup({
+  /// Builder function that layouts the menu items.
+  final Widget Function(BuildContext context, List<Widget> children) builder;
+
+  /// Parent menu group for nested submenus.
+  final VNLMenuGroupData? parent;
+
+  /// Offset for positioning submenus.
+  final Offset? subMenuOffset;
+
+  /// Callback when menu is dismissed.
+  final VoidCallback? onDismissed;
+
+  /// Region group ID for tap region management.
+  final Object? regionGroupId;
+
+  /// Layout direction (horizontal or vertical).
+  final Axis direction;
+
+  /// Custom keyboard actions.
+  final Map<Type, Action> actions;
+
+  /// Padding around menu items.
+  final EdgeInsets? itemPadding;
+
+  /// Whether to autofocus on mount.
+  final bool autofocus;
+
+  /// Optional focus node for keyboard navigation.
+  final FocusNode? focusNode;
+
+  /// Creates a menu group.
+  ///
+  /// Parameters:
+  /// - [children] (`List<VNLMenuItem>`, required): Menu items
+  /// - [builder] (Function, required): Layout builder
+  /// - [direction] (Axis, required): Layout direction
+  /// - [parent] (VNLMenuGroupData?): Parent group for nesting
+  /// - [subMenuOffset] (Offset?): Submenu positioning offset
+  /// - [onDismissed] (VoidCallback?): Dismissal callback
+  /// - [regionGroupId] (Object?): Tap region group ID
+  /// - [actions] (`Map<Type, Action>`): Custom actions, defaults to empty
+  /// - [itemPadding] (EdgeInsets?): Item padding
+  /// - [autofocus] (bool): Auto-focus behavior, defaults to true
+  /// - [focusNode] (FocusNode?): Focus node
+  const VNLMenuGroup({
     super.key,
     required this.children,
     required this.builder,
@@ -564,30 +1017,31 @@ class MenuGroup extends StatefulWidget {
     this.regionGroupId,
     this.actions = const {},
     required this.direction,
-    required this.itemPadding,
+    this.itemPadding,
+    this.autofocus = true,
+    this.focusNode,
   });
 
   @override
-  State<MenuGroup> createState() => _MenuGroupState();
+  State<VNLMenuGroup> createState() => _MenuGroupState();
 }
 
-class _MenuGroupState extends State<MenuGroup> {
-  final FocusScopeNode _focusScopeNode = FocusScopeNode();
-  late List<MenuData> _data;
+class _MenuGroupState extends State<VNLMenuGroup> {
+  late List<VNLMenuData> _data;
 
   @override
   void initState() {
     super.initState();
     _data = List.generate(widget.children.length, (i) {
-      return MenuData();
+      return VNLMenuData();
     });
   }
 
   @override
-  void didUpdateWidget(covariant MenuGroup oldWidget) {
+  void didUpdateWidget(covariant VNLMenuGroup oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!listEquals(oldWidget.children, widget.children)) {
-      Map<Key, MenuData> oldKeyedData = {};
+      Map<Key, VNLMenuData> oldKeyedData = {};
       for (int i = 0; i < oldWidget.children.length; i++) {
         oldKeyedData[oldWidget.children[i].key ?? ValueKey(i)] = _data[i];
       }
@@ -596,12 +1050,13 @@ class _MenuGroupState extends State<MenuGroup> {
         var key = child.key ?? ValueKey(i);
         var oldData = oldKeyedData[key];
         if (oldData != null) {
-          if (child.popoverController != null && oldData.popoverController != child.popoverController) {
+          if (child.popoverController != null &&
+              oldData.popoverController != child.popoverController) {
             oldData.popoverController.dispose();
-            oldData = MenuData(popoverController: child.popoverController);
+            oldData = VNLMenuData(popoverController: child.popoverController);
           }
         } else {
-          oldData = MenuData(popoverController: child.popoverController);
+          oldData = VNLMenuData(popoverController: child.popoverController);
         }
         return oldData;
       });
@@ -623,7 +1078,7 @@ class _MenuGroupState extends State<MenuGroup> {
   }
 
   void closeAll() {
-    MenuGroupData? data = widget.parent;
+    VNLMenuGroupData? data = widget.parent;
     if (data == null) {
       widget.onDismissed?.call();
       return;
@@ -634,6 +1089,12 @@ class _MenuGroupState extends State<MenuGroup> {
 
   @override
   Widget build(BuildContext context) {
+    final parentGroupData = Data.maybeOf<VNLMenuGroupData>(context);
+    final menubarData = Data.maybeOf<VNLMenubarState>(context);
+    final compTheme = ComponentTheme.maybeOf<MenuTheme>(context);
+    final itemPadding =
+        widget.itemPadding ?? compTheme?.itemPadding ?? EdgeInsets.zero;
+    final subMenuOffset = widget.subMenuOffset ?? compTheme?.subMenuOffset;
     List<Widget> children = [];
     bool hasLeading = false;
     for (int i = 0; i < widget.children.length; i++) {
@@ -642,96 +1103,177 @@ class _MenuGroupState extends State<MenuGroup> {
       if (child.hasLeading) {
         hasLeading = true;
       }
-      children.add(Data<MenuData>.inherit(data: data, child: child));
-    }
-    return Shortcuts(
-      shortcuts: {
-        if (widget.direction == Axis.vertical)
-          const SingleActivator(LogicalKeyboardKey.arrowUp): const PreviousFocusIntent(),
-        if (widget.direction == Axis.vertical)
-          const SingleActivator(LogicalKeyboardKey.arrowDown): const NextFocusIntent(),
-        if (widget.direction == Axis.vertical)
-          const SingleActivator(LogicalKeyboardKey.arrowLeft): const PreviousSiblingFocusIntent(),
-        if (widget.direction == Axis.vertical)
-          const SingleActivator(LogicalKeyboardKey.arrowRight): const NextSiblingFocusIntent(),
-        if (widget.direction == Axis.horizontal)
-          const SingleActivator(LogicalKeyboardKey.arrowLeft): const PreviousFocusIntent(),
-        if (widget.direction == Axis.horizontal)
-          const SingleActivator(LogicalKeyboardKey.arrowRight): const NextFocusIntent(),
-        if (widget.direction == Axis.horizontal)
-          const SingleActivator(LogicalKeyboardKey.arrowUp): const PreviousSiblingFocusIntent(),
-        if (widget.direction == Axis.horizontal)
-          const SingleActivator(LogicalKeyboardKey.arrowDown): const NextSiblingFocusIntent(),
-        const SingleActivator(LogicalKeyboardKey.escape): const CloseMenuIntent(),
-      },
-      child: Actions(
-        actions: {
-          PreviousFocusIntent: CallbackAction<PreviousFocusIntent>(
-            onInvoke: (intent) {
-              if (widget.direction == Axis.vertical) {
-                _focusScopeNode.focusInDirection(TraversalDirection.up);
-              } else {
-                _focusScopeNode.focusInDirection(TraversalDirection.left);
-              }
-              return;
-            },
-          ),
-          NextFocusIntent: CallbackAction<NextFocusIntent>(
-            onInvoke: (intent) {
-              if (widget.direction == Axis.vertical) {
-                _focusScopeNode.focusInDirection(TraversalDirection.down);
-              } else {
-                _focusScopeNode.focusInDirection(TraversalDirection.right);
-              }
-              return;
-            },
-          ),
-          CloseMenuIntent: CallbackAction<CloseMenuIntent>(
-            onInvoke: (intent) {
-              closeAll();
-              return;
-            },
-          ),
-          ...widget.actions,
-        },
-        child: FocusScope(
-          autofocus: true,
-          node: _focusScopeNode,
-          child: Data.inherit(
-            data: MenuGroupData(
-              widget.parent,
-              _data,
-              hasLeading,
-              widget.subMenuOffset,
-              widget.onDismissed,
-              widget.regionGroupId,
-              widget.direction,
-              widget.itemPadding,
-            ),
-            child: widget.builder(context, children),
-          ),
+      children.add(
+        Data<VNLMenuData>.inherit(
+          data: data,
+          child: child,
         ),
-      ),
-    );
+      );
+    }
+    final direction = Directionality.of(context);
+    return SubFocusScope(
+        autofocus: widget.autofocus,
+        builder: (context, scope) {
+          return Actions(
+            actions: {
+              NextMenuFocusIntent: CallbackAction<NextMenuFocusIntent>(
+                onInvoke: (intent) {
+                  scope.nextFocus(intent.forward
+                      ? widget.direction == Axis.horizontal
+                          ? TraversalDirection.left
+                          : TraversalDirection.up
+                      : widget.direction == Axis.horizontal
+                          ? TraversalDirection.right
+                          : TraversalDirection.down);
+                  return;
+                },
+              ),
+              DirectionalMenuFocusIntent:
+                  CallbackAction<DirectionalMenuFocusIntent>(
+                onInvoke: (intent) {
+                  if (widget.direction == Axis.vertical) {
+                    if (intent.direction == TraversalDirection.left) {
+                      if (direction == TextDirection.ltr) {
+                        for (final menu in parentGroupData?.children ?? []) {
+                          menu.popoverController.close();
+                        }
+                        return;
+                      } else {}
+                    } else if (intent.direction == TraversalDirection.right) {
+                      if (direction == TextDirection.ltr) {
+                        bool? result = scope.invokeActionOnFocused(
+                            const OpenSubMenuIntent()) as bool?;
+                        if (result != true) {
+                          parentGroupData?.root.focusScope
+                              .nextFocus(TraversalDirection.right);
+                        }
+                        return;
+                      } else {}
+                    }
+                  }
+                  if (!scope.nextFocus(intent.direction)) {
+                    for (final menu in parentGroupData?.children ?? []) {
+                      menu.popoverController.close();
+                    }
+                    parentGroupData?.focusScope.nextFocus(
+                      intent.direction,
+                    );
+                  }
+                  return;
+                },
+              ),
+              VNLCloseMenuIntent: CallbackAction<VNLCloseMenuIntent>(
+                onInvoke: (intent) {
+                  closeAll();
+                  return;
+                },
+              ),
+              ActivateIntent: CallbackAction<ActivateIntent>(
+                onInvoke: (intent) {
+                  scope.invokeActionOnFocused(const ActivateIntent());
+                  return;
+                },
+              ),
+              ...widget.actions,
+            },
+            child: Shortcuts(
+              shortcuts: {
+                const SingleActivator(LogicalKeyboardKey.arrowUp):
+                    const DirectionalMenuFocusIntent(TraversalDirection.up),
+                const SingleActivator(LogicalKeyboardKey.arrowDown):
+                    const DirectionalMenuFocusIntent(TraversalDirection.down),
+                const SingleActivator(LogicalKeyboardKey.arrowLeft):
+                    const DirectionalMenuFocusIntent(TraversalDirection.left),
+                const SingleActivator(LogicalKeyboardKey.arrowRight):
+                    const DirectionalMenuFocusIntent(TraversalDirection.right),
+                const SingleActivator(LogicalKeyboardKey.tab):
+                    DirectionalMenuFocusIntent(widget.direction == Axis.vertical
+                        ? TraversalDirection.down
+                        : TraversalDirection.right),
+                const SingleActivator(LogicalKeyboardKey.tab, shift: true):
+                    DirectionalMenuFocusIntent(widget.direction == Axis.vertical
+                        ? TraversalDirection.up
+                        : TraversalDirection.left),
+                const SingleActivator(LogicalKeyboardKey.escape):
+                    const VNLCloseMenuIntent(),
+                const SingleActivator(LogicalKeyboardKey.enter):
+                    const ActivateIntent(),
+                const SingleActivator(LogicalKeyboardKey.space):
+                    const ActivateIntent(),
+                const SingleActivator(LogicalKeyboardKey.backspace):
+                    const VNLCloseMenuIntent(),
+                const SingleActivator(LogicalKeyboardKey.numpadEnter):
+                    const ActivateIntent(),
+              },
+              child: Focus(
+                autofocus: menubarData == null,
+                focusNode: widget.focusNode,
+                child: Data.inherit(
+                  data: VNLMenuGroupData(
+                    widget.parent,
+                    _data,
+                    hasLeading,
+                    subMenuOffset,
+                    widget.onDismissed,
+                    widget.regionGroupId,
+                    widget.direction,
+                    itemPadding,
+                    scope,
+                  ),
+                  child: Builder(builder: (context) {
+                    return widget.builder(context, children);
+                  }),
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
 
-class CloseMenuIntent extends Intent {
-  const CloseMenuIntent();
+/// Intent for closing the current menu via keyboard action.
+///
+/// Used with keyboard shortcuts to dismiss open menus.
+class VNLCloseMenuIntent extends Intent {
+  /// Creates a close menu intent.
+  const VNLCloseMenuIntent();
 }
 
-class PreviousSiblingFocusIntent extends Intent {
-  const PreviousSiblingFocusIntent();
+/// Intent for opening a submenu via keyboard action.
+///
+/// Triggers submenu expansion when navigating with keyboard.
+class OpenSubMenuIntent extends Intent {
+  /// Creates an open submenu intent.
+  const OpenSubMenuIntent();
 }
 
-class NextSiblingFocusIntent extends Intent {
-  const NextSiblingFocusIntent();
+/// Intent for moving focus to next/previous menu item.
+///
+/// Used for keyboard navigation within menus (Tab/Shift+Tab).
+class NextMenuFocusIntent extends Intent {
+  /// Whether to move focus forward (true) or backward (false).
+  final bool forward;
+
+  /// Creates a next menu focus intent.
+  ///
+  /// Parameters:
+  /// - [forward] (bool, required): Direction of focus movement
+  const NextMenuFocusIntent(this.forward);
 }
 
-class MenuOverlayHandler extends OverlayHandler {
-  final OverlayManager manager;
+/// Overlay handler specialized for menu popover display.
+///
+/// Delegates to an [VNLOverlayManager] to show menu popovers with
+/// appropriate positioning, transitions, and dismissal behavior.
+class VNLMenuOverlayHandler extends VNLOverlayHandler {
+  /// The overlay manager handling menu display.
+  final VNLOverlayManager manager;
 
-  const MenuOverlayHandler(this.manager);
+  /// Creates a menu overlay handler.
+  ///
+  /// Parameters:
+  /// - [manager] (VNLOverlayManager, required): Overlay manager for menu display
+  const VNLMenuOverlayHandler(this.manager);
 
   @override
   OverlayCompleter<T?> show<T>({
@@ -753,13 +1295,13 @@ class MenuOverlayHandler extends OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
+    ValueChanged<VNLPopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
-    OverlayBarrier? overlayBarrier,
+    VNLOverlayBarrier? overlayBarrier,
     LayerLink? layerLink,
   }) {
     return manager.showMenu(
@@ -791,4 +1333,18 @@ class MenuOverlayHandler extends OverlayHandler {
       layerLink: layerLink,
     );
   }
+}
+
+/// Intent for directional focus traversal within menus.
+///
+/// Used for arrow key navigation (up, down, left, right) within menu structures.
+class DirectionalMenuFocusIntent extends Intent {
+  /// Direction of focus traversal.
+  final TraversalDirection direction;
+
+  /// Creates a directional menu focus intent.
+  ///
+  /// Parameters:
+  /// - [direction] (TraversalDirection, required): Traversal direction
+  const DirectionalMenuFocusIntent(this.direction);
 }

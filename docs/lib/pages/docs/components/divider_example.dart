@@ -14,20 +14,20 @@ class DividerExample extends StatelessWidget {
     return const ComponentPage(
       name: 'divider',
       description: 'A divider is a thin line that groups content in lists and layouts.',
-      displayName: 'Divider',
+      displayName: 'VNLDivider',
       children: [
         WidgetUsageExample(
-          title: 'Horizontal Divider Example',
+          title: 'Horizontal VNLDivider Example',
           path: 'lib/pages/docs/components/divider/divider_example_1.dart',
           child: DividerExample1(),
         ),
         WidgetUsageExample(
-          title: 'Vertical Divider Example',
+          title: 'Vertical VNLDivider Example',
           path: 'lib/pages/docs/components/divider/divider_example_2.dart',
           child: DividerExample2(),
         ),
         WidgetUsageExample(
-          title: 'Divider with Text Example',
+          title: 'VNLDivider with Text Example',
           path: 'lib/pages/docs/components/divider/divider_example_3.dart',
           child: DividerExample3(),
         ),

@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class RefreshTriggerExample1 extends StatefulWidget {
   const RefreshTriggerExample1({super.key});
@@ -8,16 +8,22 @@ class RefreshTriggerExample1 extends StatefulWidget {
 }
 
 class _RefreshTriggerExample1State extends State<RefreshTriggerExample1> {
-  final GlobalKey<RefreshTriggerState> _refreshTriggerKey = GlobalKey<RefreshTriggerState>();
+  // A GlobalKey lets us access the VNLRefreshTrigger's state so we can
+  // trigger a programmatic refresh (via a button) in addition to pull-to-refresh.
+  final GlobalKey<VNLRefreshTriggerState> _refreshTriggerKey =
+      GlobalKey<VNLRefreshTriggerState>();
   @override
   Widget build(BuildContext context) {
     return VNLRefreshTrigger(
       key: _refreshTriggerKey,
+      // Called when the user pulls down far enough or when we call .refresh().
+      // Here we simulate a network call with a short delay.
       onRefresh: () async {
         await Future.delayed(const Duration(seconds: 2));
       },
       child: SingleChildScrollView(
         child: Container(
+          // Give the scroll view some height so pull-to-refresh can be triggered.
           height: 800,
           padding: const EdgeInsets.only(top: 32),
           alignment: Alignment.topCenter,
@@ -27,6 +33,7 @@ class _RefreshTriggerExample1State extends State<RefreshTriggerExample1> {
               const Gap(16),
               PrimaryButton(
                 onPressed: () {
+                  // Programmatically trigger the refresh without a pull gesture.
                   _refreshTriggerKey.currentState!.refresh();
                 },
                 child: const Text('Refresh'),

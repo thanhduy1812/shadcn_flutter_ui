@@ -24,7 +24,7 @@ class RefreshTriggerExample extends StatelessWidget {
               PointerDeviceKind.mouse,
               PointerDeviceKind.touch,
             }),
-            child: OutlinedContainer(
+            child: VNLOutlinedContainer(
               child: const RefreshTriggerExample1().sized(
                 height: 400,
               ),

@@ -1,9 +1,11 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:flutter/material.dart' as material show Colors;
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(systemNavigationBarColor: VNLColors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(systemNavigationBarColor: material.Colors.transparent));
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   runApp(const MyApp());
 }
@@ -16,8 +18,8 @@ class MyApp extends StatelessWidget {
     return VNLookApp(
       title: 'My App',
       home: const CounterPage(),
-      theme: VNLThemeData(
-        colorScheme: ColorSchemes.darkZinc(),
+      theme: ThemeData(
+        colorScheme: LegacyColorSchemes.darkZinc(),
         radius: 0.7,
       ),
     );
@@ -28,13 +30,13 @@ class CounterPage extends StatefulWidget {
   const CounterPage({super.key});
 
   @override
-  _CounterPageState createState() => _CounterPageState();
+  CounterPageState createState() => CounterPageState();
 }
 
-class _CounterPageState extends State<CounterPage> {
+class CounterPageState extends State<CounterPage> {
   int _counter = 0;
 
-  int _selected = 0;
+  Key? _selected = const ValueKey(0);
 
   void _incrementCounter() {
     setState(() {
@@ -42,8 +44,9 @@ class _CounterPageState extends State<CounterPage> {
     });
   }
 
-  NavigationItem _buildButton(String label, IconData icon) {
-    return NavigationItem(
+  VNLNavigationItem _buildButton(String label, IconData icon, Key key) {
+    return VNLNavigationItem(
+      key: key,
       label: Text(label),
       child: Icon(icon),
     );
@@ -51,13 +54,13 @@ class _CounterPageState extends State<CounterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return VNLScaffold(
+    return Scaffold(
       headers: [
-        VNLAppBar(
+        AppBar(
           title: const Text('Counter App'),
           subtitle: const Text('A simple counter app'),
           leading: [
-            GhostButton(
+            VNLGhostButton(
               onPressed: () {
                 openDrawer(
                   context: context,
@@ -78,7 +81,7 @@ class _CounterPageState extends State<CounterPage> {
             ),
           ],
           trailing: [
-            GhostButton(
+            VNLGhostButton(
               density: ButtonDensity.icon,
               onPressed: () {
                 openSheet(
@@ -104,16 +107,16 @@ class _CounterPageState extends State<CounterPage> {
       footers: [
         const VNLDivider(),
         VNLNavigationBar(
-          onSelected: (i) {
+          onSelected: (key) {
             setState(() {
-              _selected = i;
+              _selected = key;
             });
           },
-          index: _selected,
+          selectedKey: _selected,
           children: [
-            _buildButton('Home', Icons.home),
-            _buildButton('Explore', Icons.explore),
-            _buildButton('Library', Icons.library_music),
+            _buildButton('Home', Icons.home, const ValueKey(0)),
+            _buildButton('Explore', Icons.explore, const ValueKey(1)),
+            _buildButton('Library', Icons.library_music, const ValueKey(2)),
           ],
         ),
       ],

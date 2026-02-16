@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class SelectExample2 extends StatefulWidget {
   const SelectExample2({super.key});
@@ -16,9 +16,13 @@ class _SelectExample2State extends State<SelectExample2> {
   };
   String? selectedValue;
 
-  Iterable<MapEntry<String, List<String>>> _filteredFruits(String searchQuery) sync* {
+  Iterable<MapEntry<String, List<String>>> _filteredFruits(
+      String searchQuery) sync* {
+    // Yield entries whose key or children match the current search query.
     for (final entry in fruits.entries) {
-      final filteredValues = entry.value.where((value) => _filterName(value, searchQuery)).toList();
+      final filteredValues = entry.value
+          .where((value) => _filterName(value, searchQuery))
+          .toList();
       if (filteredValues.isNotEmpty) {
         yield MapEntry(entry.key, filteredValues);
       } else if (_filterName(entry.key, searchQuery)) {
@@ -28,25 +32,31 @@ class _SelectExample2State extends State<SelectExample2> {
   }
 
   bool _filterName(String name, String searchQuery) {
+    // Case-insensitive substring filter.
     return name.toLowerCase().contains(searchQuery);
   }
 
   @override
   Widget build(BuildContext context) {
-    return VNLSelect<String>(
+    return Select<String>(
       itemBuilder: (context, item) {
         return Text(item);
       },
       popup: SelectPopup.builder(
+        // Provide a search field inside the popup.
         searchPlaceholder: const Text('Search fruit'),
         builder: (context, searchQuery) {
-          final filteredFruits = searchQuery == null ? fruits.entries : _filteredFruits(searchQuery);
-          return SelectItemList(
+          // Filter entries by the user's search.
+          final filteredFruits = searchQuery == null
+              ? fruits.entries
+              : _filteredFruits(searchQuery);
+          return VNLSelectItemList(
             children: [
               for (final entry in filteredFruits)
-                SelectGroup(
+                VNLSelectGroup(
+                  // Group by category (e.g., Apple, Banana) with a header label.
                   headers: [
-                    SelectLabel(
+                    VNLSelectLabel(
                       child: Text(entry.key),
                     ),
                   ],

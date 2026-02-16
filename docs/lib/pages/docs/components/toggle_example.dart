@@ -11,8 +11,8 @@ class ToggleExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'toggle',
-      description: 'Toggle is a widget that can be used to switch between two states.',
-      displayName: 'Toggle',
+      description: 'VNLToggle is a widget that can be used to switch between two states.',
+      displayName: 'VNLToggle',
       children: [
         WidgetUsageExample(
           title: 'Example',

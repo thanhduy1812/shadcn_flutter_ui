@@ -11,7 +11,7 @@ class TrackerExample extends StatelessWidget {
     return const ComponentPage(
       name: 'tracker',
       description: 'Component for visualizing data related to monitoring',
-      displayName: 'Tracker',
+      displayName: 'VNLTracker',
       children: [
         WidgetUsageExample(
           title: 'Example',

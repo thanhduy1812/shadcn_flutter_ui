@@ -1,33 +1,211 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
+/// Theme configuration for [VNLOverflowMarquee] scrolling text displays.
+///
+/// Provides comprehensive styling and behavior options for marquee animations
+/// including scroll direction, timing, fade effects, and animation curves.
+/// All properties are optional and will fall back to default values when not specified.
+///
+/// Animation Properties:
+/// - [direction]: Horizontal or vertical scrolling axis
+/// - [duration]: Complete cycle time for one full scroll
+/// - [delayDuration]: Pause time before restarting animation
+/// - [curve]: Easing function for smooth animation transitions
+///
+/// Visual Properties:
+/// - [step]: Pixel step size for scroll speed calculation
+/// - [fadePortion]: Edge fade effect intensity (0.0 to 1.0)
+///
+/// Example:
+/// ```dart
+/// VNLOverflowMarqueeTheme(
+///   direction: Axis.horizontal,
+///   duration: Duration(seconds: 5),
+///   delayDuration: Duration(seconds: 1),
+///   fadePortion: 0.1,
+///   curve: Curves.easeInOut,
+/// )
+/// ```
+class VNLOverflowMarqueeTheme extends ComponentThemeData {
+  /// Scrolling direction of the marquee.
+  final Axis? direction;
+
+  /// Duration of one full scroll cycle.
+  final Duration? duration;
+
+  /// Delay before scrolling starts again.
+  final Duration? delayDuration;
+
+  /// VNLStep size used to compute scroll speed.
+  final double? step;
+
+  /// Portion of the child to fade at the edges.
+  final double? fadePortion;
+
+  /// Animation curve of the scroll.
+  final Curve? curve;
+
+  /// Creates an [OverflowMarqueeTheme].
+  const VNLOverflowMarqueeTheme({
+    this.direction,
+    this.duration,
+    this.delayDuration,
+    this.step,
+    this.fadePortion,
+    this.curve,
+  });
+
+  /// Creates a copy of this theme with the given fields replaced.
+  VNLOverflowMarqueeTheme copyWith({
+    ValueGetter<Axis?>? direction,
+    ValueGetter<Duration?>? duration,
+    ValueGetter<Duration?>? delayDuration,
+    ValueGetter<double?>? step,
+    ValueGetter<double?>? fadePortion,
+    ValueGetter<Curve?>? curve,
+  }) {
+    return VNLOverflowMarqueeTheme(
+      direction: direction == null ? this.direction : direction(),
+      duration: duration == null ? this.duration : duration(),
+      delayDuration:
+          delayDuration == null ? this.delayDuration : delayDuration(),
+      step: step == null ? this.step : step(),
+      fadePortion: fadePortion == null ? this.fadePortion : fadePortion(),
+      curve: curve == null ? this.curve : curve(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is VNLOverflowMarqueeTheme &&
+        other.direction == direction &&
+        other.duration == duration &&
+        other.delayDuration == delayDuration &&
+        other.step == step &&
+        other.fadePortion == fadePortion &&
+        other.curve == curve;
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(direction, duration, delayDuration, step, fadePortion, curve);
+}
+
+/// Automatically scrolling widget for content that overflows its container.
+///
+/// Creates smooth, continuous scrolling animation for content that exceeds the
+/// available space. Commonly used for long text labels, news tickers, or any
+/// content that needs horizontal or vertical scrolling to be fully visible.
+///
+/// Key Features:
+/// - **Auto-scroll Detection**: Only animates when content actually overflows
+/// - **Bi-directional Support**: Horizontal and vertical scrolling modes
+/// - **Edge Fading**: Smooth fade effects at container boundaries
+/// - **Customizable Timing**: Configurable duration, delay, and animation curves
+/// - **Performance Optimized**: Uses Flutter's Ticker system for smooth 60fps animation
+/// - **Theme Integration**: Respects OverflowMarqueeTheme configuration
+///
+/// Animation Behavior:
+/// 1. Measures content size vs. container size
+/// 2. If content fits, displays normally without animation
+/// 3. If content overflows, starts continuous scrolling animation
+/// 4. Scrolls content from start to end position
+/// 5. Pauses briefly (delayDuration) before restarting
+/// 6. Applies edge fade effects for smooth visual transitions
+///
+/// The widget automatically handles text direction (RTL/LTR) and adapts
+/// scroll behavior accordingly for proper internationalization support.
+///
+/// Example:
+/// ```dart
+/// VNLOverflowMarquee(
+///   direction: Axis.horizontal,
+///   duration: Duration(seconds: 8),
+///   delayDuration: Duration(seconds: 2),
+///   fadePortion: 0.15,
+///   child: Text(
+///     'This is a very long text that will scroll horizontally when it overflows the container',
+///     style: TextStyle(fontSize: 16),
+///   ),
+/// )
+/// ```
 class VNLOverflowMarquee extends StatefulWidget {
+  /// The child widget to display and potentially scroll.
   final Widget child;
-  final Axis direction;
-  final Duration duration;
-  final double step;
-  final Duration delayDuration;
-  final double fadePortion;
-  final Curve curve;
 
+  /// Scroll direction (horizontal or vertical).
+  ///
+  /// If `null`, uses theme default or [Axis.horizontal].
+  final Axis? direction;
+
+  /// Total duration for one complete scroll cycle.
+  ///
+  /// If `null`, uses theme default.
+  final Duration? duration;
+
+  /// Distance to scroll per animation step.
+  ///
+  /// If `null`, scrolls the entire overflow amount.
+  final double? step;
+
+  /// Pause duration between scroll cycles.
+  ///
+  /// If `null`, uses theme default.
+  final Duration? delayDuration;
+
+  /// Portion of edges to apply fade effect (0.0 to 1.0).
+  ///
+  /// For example, 0.15 fades 15% of each edge. If `null`, uses theme default.
+  final double? fadePortion;
+
+  /// Animation curve for scroll motion.
+  ///
+  /// If `null`, uses theme default or [Curves.linear].
+  final Curve? curve;
+
+  /// Creates an [VNLOverflowMarquee] widget with customizable scrolling behavior.
+  ///
+  /// Parameters:
+  /// - [child] (Widget, required): Content to display and potentially scroll
+  /// - [direction] (Axis?, optional): Scroll direction, defaults to horizontal
+  /// - [duration] (Duration?, optional): Time for one complete scroll cycle
+  /// - [delayDuration] (Duration?, optional): Pause time before restarting animation
+  /// - [step] (double?, optional): VNLStep size for scroll speed calculation
+  /// - [fadePortion] (double?, optional): Fade effect intensity at edges (0.0-1.0)
+  /// - [curve] (Curve?, optional): Animation easing curve
+  ///
+  /// All optional parameters will use theme defaults or built-in fallback values
+  /// when not explicitly provided.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLOverflowMarquee(
+  ///   duration: Duration(seconds: 10),
+  ///   delayDuration: Duration(seconds: 1),
+  ///   fadePortion: 0.2,
+  ///   child: Text('Long scrolling text content'),
+  /// )
+  /// ```
   const VNLOverflowMarquee({
     super.key,
     required this.child,
-    this.direction = Axis.horizontal,
-    this.duration = const Duration(seconds: 1),
-    this.delayDuration = const Duration(milliseconds: 500),
-    this.step = 100, // note: the speed of the marquee depends on this value
-    // speed = (sizeDiff / step) * duration
-    this.fadePortion = 25,
-    this.curve = Curves.linear,
+    this.direction,
+    this.duration,
+    this.delayDuration,
+    this.step,
+    this.fadePortion,
+    this.curve,
   });
 
   @override
   State<VNLOverflowMarquee> createState() => _OverflowMarqueeState();
 }
 
-class _OverflowMarqueeState extends State<VNLOverflowMarquee> with SingleTickerProviderStateMixin {
+class _OverflowMarqueeState extends State<VNLOverflowMarquee>
+    with SingleTickerProviderStateMixin {
   late Ticker _ticker;
   Duration elapsed = Duration.zero;
 
@@ -53,16 +231,39 @@ class _OverflowMarqueeState extends State<VNLOverflowMarquee> with SingleTickerP
   @override
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
+    final compTheme = ComponentTheme.maybeOf<VNLOverflowMarqueeTheme>(context);
+    final direction = styleValue(
+        widgetValue: widget.direction,
+        themeValue: compTheme?.direction,
+        defaultValue: Axis.horizontal);
+    final fadePortion = styleValue(
+        widgetValue: widget.fadePortion,
+        themeValue: compTheme?.fadePortion,
+        defaultValue: 25.0);
+    final duration = styleValue(
+        widgetValue: widget.duration,
+        themeValue: compTheme?.duration,
+        defaultValue: const Duration(seconds: 1));
+    final delayDuration = styleValue(
+        widgetValue: widget.delayDuration,
+        themeValue: compTheme?.delayDuration,
+        defaultValue: const Duration(milliseconds: 500));
+    final step = styleValue(
+        widgetValue: widget.step,
+        themeValue: compTheme?.step,
+        defaultValue: 100.0);
+    final curve = widget.curve ?? compTheme?.curve ?? Curves.linear;
     return ClipRect(
       child: _OverflowMarqueeLayout(
-        direction: widget.direction,
-        fadePortion: widget.fadePortion,
-        duration: widget.duration,
-        delayDuration: widget.delayDuration,
+        direction: direction,
+        fadePortion: fadePortion,
+        duration: duration,
+        delayDuration: delayDuration,
         ticker: _ticker,
         elapsed: elapsed,
-        step: widget.step,
+        step: step,
         textDirection: textDirection,
+        curve: curve,
         child: widget.child,
       ),
     );
@@ -78,6 +279,7 @@ class _OverflowMarqueeLayout extends SingleChildRenderObjectWidget {
   final Duration elapsed;
   final double step;
   final TextDirection textDirection;
+  final Curve curve;
 
   const _OverflowMarqueeLayout({
     required this.direction,
@@ -88,6 +290,7 @@ class _OverflowMarqueeLayout extends SingleChildRenderObjectWidget {
     required this.elapsed,
     required this.step,
     required this.textDirection,
+    required this.curve,
     required Widget child,
   }) : super(child: child);
 
@@ -102,11 +305,13 @@ class _OverflowMarqueeLayout extends SingleChildRenderObjectWidget {
       step: step,
       elapsed: elapsed,
       textDirection: textDirection,
+      curve: curve,
     );
   }
 
   @override
-  void updateRenderObject(BuildContext context, _RenderOverflowMarqueeLayout renderObject) {
+  void updateRenderObject(
+      BuildContext context, _RenderOverflowMarqueeLayout renderObject) {
     bool hasChanged = false;
     if (renderObject.direction != direction) {
       renderObject.direction = direction;
@@ -141,18 +346,21 @@ class _OverflowMarqueeLayout extends SingleChildRenderObjectWidget {
       renderObject.textDirection = textDirection;
       hasChanged = true;
     }
+    if (renderObject.curve != curve) {
+      renderObject.curve = curve;
+      hasChanged = true;
+    }
     if (hasChanged) {
       renderObject.markNeedsLayout();
     }
   }
 }
 
-class _OverflowMarqueeParentData extends ContainerBoxParentData<RenderBox> {
+class _OverflowMarqueeParentData extends BoxParentData {
   double? sizeDiff;
 }
 
-class _RenderOverflowMarqueeLayout extends RenderShiftedBox
-    with ContainerRenderObjectMixin<RenderBox, _OverflowMarqueeParentData> {
+class _RenderOverflowMarqueeLayout extends RenderShiftedBox {
   Axis direction;
   double fadePortion;
   Duration duration;
@@ -161,6 +369,7 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
   Duration elapsed;
   double step;
   TextDirection textDirection;
+  Curve curve;
 
   _RenderOverflowMarqueeLayout({
     required this.direction,
@@ -171,6 +380,7 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
     required this.elapsed,
     required this.step,
     required this.textDirection,
+    required this.curve,
   }) : super(null);
 
   @override
@@ -215,9 +425,13 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
   @override
   Size computeDryLayout(covariant BoxConstraints constraints) {
     if (direction == Axis.horizontal) {
-      constraints = constraints.copyWith(maxWidth: double.infinity);
+      constraints = constraints.copyWith(
+        maxWidth: double.infinity,
+      );
     } else {
-      constraints = constraints.copyWith(maxHeight: double.infinity);
+      constraints = constraints.copyWith(
+        maxHeight: double.infinity,
+      );
     }
     final child = this.child;
     if (child != null) {
@@ -233,18 +447,26 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
   bool get alwaysNeedsCompositing => child != null;
 
   double get offsetProgress {
-    double durationInMicros = duration.inMicroseconds * ((sizeDiff ?? 0) / step);
+    double durationInMicros =
+        duration.inMicroseconds * ((sizeDiff ?? 0) / step);
     int delayDurationInMicros = delayDuration.inMicroseconds;
     double elapsedInMicros = elapsed.inMicroseconds.toDouble();
     // includes the reverse
-    double overalCycleDuration = delayDurationInMicros + durationInMicros + delayDurationInMicros + durationInMicros;
+    double overalCycleDuration = delayDurationInMicros +
+        durationInMicros +
+        delayDurationInMicros +
+        durationInMicros;
     elapsedInMicros = elapsedInMicros % overalCycleDuration;
     bool reverse = elapsedInMicros > delayDurationInMicros + durationInMicros;
-    double cycleElapsedInMicros = elapsedInMicros % (delayDurationInMicros + durationInMicros);
+    double cycleElapsedInMicros =
+        elapsedInMicros % (delayDurationInMicros + durationInMicros);
     if (cycleElapsedInMicros < delayDurationInMicros) {
       return reverse ? 1 : 0;
-    } else if (cycleElapsedInMicros < delayDurationInMicros + durationInMicros) {
-      double progress = (cycleElapsedInMicros - delayDurationInMicros) / durationInMicros;
+    } else if (cycleElapsedInMicros <
+        delayDurationInMicros + durationInMicros) {
+      double progress =
+          (cycleElapsedInMicros - delayDurationInMicros) / durationInMicros;
+      progress = curve.transform(progress);
       return reverse ? 1 - progress : progress;
     } else {
       return reverse ? 0 : 1;
@@ -276,7 +498,8 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
     return 0;
   }
 
-  Shader _createAlphaShader(bool fadeStart, bool fadeEnd, Rect bounds, double fadePortion) {
+  Shader _createAlphaShader(
+      bool fadeStart, bool fadeEnd, Rect bounds, double fadePortion) {
     double portionSize;
     if (direction == Axis.horizontal) {
       portionSize = fadePortion / bounds.width;
@@ -312,7 +535,12 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
       begin = Alignment.topCenter;
       end = Alignment.bottomCenter;
     }
-    return LinearGradient(begin: begin, end: end, colors: colors, stops: stops).createShader(bounds);
+    return LinearGradient(
+      begin: begin,
+      end: end,
+      colors: colors,
+      stops: stops,
+    ).createShader(bounds);
   }
 
   @override
@@ -358,9 +586,13 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
     if (child != null) {
       var constraints = this.constraints;
       if (direction == Axis.horizontal) {
-        constraints = constraints.copyWith(maxWidth: double.infinity);
+        constraints = constraints.copyWith(
+          maxWidth: double.infinity,
+        );
       } else {
-        constraints = constraints.copyWith(maxHeight: double.infinity);
+        constraints = constraints.copyWith(
+          maxHeight: double.infinity,
+        );
       }
       child.layout(constraints, parentUsesSize: true);
       size = this.constraints.constrain(child.size);
@@ -375,7 +607,9 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
         }
       }
       var progress = offsetProgress;
-      final offset = direction == Axis.horizontal ? Offset(-sizeDiff * progress, 0) : Offset(0, -sizeDiff * progress);
+      final offset = direction == Axis.horizontal
+          ? Offset(-sizeDiff * progress, 0)
+          : Offset(0, -sizeDiff * progress);
       final parentData = child.parentData as _OverflowMarqueeParentData;
       parentData.sizeDiff = sizeDiff;
       parentData.offset = offset;

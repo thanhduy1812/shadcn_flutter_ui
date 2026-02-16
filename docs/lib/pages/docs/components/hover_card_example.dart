@@ -11,7 +11,7 @@ class HoverCardExample extends StatelessWidget {
     return const ComponentPage(
       name: 'hover_card',
       description: 'For sighted users to preview content available behind a link',
-      displayName: 'Hover Card',
+      displayName: 'VNLHover VNLCard',
       children: [
         WidgetUsageExample(
           title: 'Example',

@@ -5,11 +5,21 @@ import 'package:flutter/cupertino.dart' as c;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as m;
 import 'package:flutter/services.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-import 'platform_interface.dart' if (dart.library.js_interop) 'platform/platform_implementations_web.dart';
+import 'platform_interface.dart'
+    if (dart.library.js_interop) 'platform/platform_implementations_web.dart';
 
+/// The main application widget for shadcn_flutter.
+///
+/// VNLookApp provides a Material-style app structure with shadcn theming.
+/// It wraps the Flutter [WidgetsApp] and provides theme management,
+/// navigation, and other app-level configurations.
 class VNLookApp extends StatefulWidget {
+  /// Creates a VNLookApp with navigator-based routing.
+  ///
+  /// This constructor is used for apps that use named routes and
+  /// a Navigator for navigation.
   const VNLookApp({
     super.key,
     this.navigatorKey,
@@ -25,7 +35,8 @@ class VNLookApp extends StatefulWidget {
     this.title = '',
     this.onGenerateTitle,
     this.color,
-    required this.theme,
+    this.background,
+    this.theme = const ThemeData(),
     this.locale,
     this.localizationsDelegates,
     this.localeListResolutionCallback,
@@ -54,12 +65,16 @@ class VNLookApp extends StatefulWidget {
     this.tooltipHandler,
     this.menuHandler,
     this.enableThemeAnimation = true,
-  }) : routeInformationProvider = null,
-       routeInformationParser = null,
-       routerDelegate = null,
-       backButtonDispatcher = null,
-       routerConfig = null;
+  })  : routeInformationProvider = null,
+        routeInformationParser = null,
+        routerDelegate = null,
+        backButtonDispatcher = null,
+        routerConfig = null;
 
+  /// Creates a VNLookApp with router-based routing.
+  ///
+  /// This constructor is used for apps that use the Router API
+  /// for declarative navigation.
   const VNLookApp.router({
     super.key,
     this.routeInformationProvider,
@@ -72,7 +87,8 @@ class VNLookApp extends StatefulWidget {
     this.onGenerateTitle,
     this.onNavigationNotification,
     this.color,
-    required this.theme,
+    this.background,
+    this.theme = const ThemeData(),
     this.locale,
     this.localizationsDelegates,
     this.localeListResolutionCallback,
@@ -101,88 +117,170 @@ class VNLookApp extends StatefulWidget {
     this.tooltipHandler,
     this.menuHandler,
     this.enableThemeAnimation = true,
-  }) : assert(routerDelegate != null || routerConfig != null),
-       navigatorObservers = null,
-       navigatorKey = null,
-       onGenerateRoute = null,
-       home = null,
-       onGenerateInitialRoutes = null,
-       onUnknownRoute = null,
-       routes = null,
-       initialRoute = null;
+  })  : assert(routerDelegate != null || routerConfig != null),
+        navigatorObservers = null,
+        navigatorKey = null,
+        onGenerateRoute = null,
+        home = null,
+        onGenerateInitialRoutes = null,
+        onUnknownRoute = null,
+        routes = null,
+        initialRoute = null;
 
+  /// A key to use when building the [Navigator].
   final GlobalKey<NavigatorState>? navigatorKey;
 
+  /// The scaling strategy for the app.
   final AdaptiveScaling? scaling;
 
+  /// The widget for the default route of the app.
   final Widget? home;
 
+  /// The application's top-level routing table.
   final Map<String, WidgetBuilder>? routes;
 
+  /// The name of the first route to show.
   final String? initialRoute;
 
+  /// The route generator callback used when the app is navigated to a named route.
   final RouteFactory? onGenerateRoute;
 
+  /// The route generator callback used to generate initial routes.
   final InitialRouteListFactory? onGenerateInitialRoutes;
 
+  /// Called when [onGenerateRoute] fails to generate a route.
   final RouteFactory? onUnknownRoute;
 
-  final NotificationListenerCallback<NavigationNotification>? onNavigationNotification;
+  /// Called when a navigation notification is dispatched.
+  final NotificationListenerCallback<NavigationNotification>?
+      onNavigationNotification;
 
+  /// The list of observers for the [Navigator] created for this app.
   final List<NavigatorObserver>? navigatorObservers;
 
+  /// The route information provider for router-based navigation.
   final RouteInformationProvider? routeInformationProvider;
 
+  /// The route information parser for router-based navigation.
   final RouteInformationParser<Object>? routeInformationParser;
 
+  /// The router delegate for router-based navigation.
   final RouterDelegate<Object>? routerDelegate;
 
+  /// The back button dispatcher for router-based navigation.
   final BackButtonDispatcher? backButtonDispatcher;
 
+  /// The router configuration for router-based navigation.
   final RouterConfig<Object>? routerConfig;
 
+  /// A builder that wraps the app's content.
   final TransitionBuilder? builder;
 
+  /// A one-line description used by the device to identify the app.
   final String title;
 
+  /// A callback that produces the app title based on the context.
   final GenerateAppTitle? onGenerateTitle;
 
-  final VNLThemeData theme;
-  final VNLThemeData? darkTheme;
+  /// The theme data for the app.
+  final ThemeData theme;
+
+  /// The dark theme data for the app.
+  final ThemeData? darkTheme;
+
+  /// Determines which theme will be used by the app.
   final ThemeMode themeMode;
+
+  /// The primary color to use for the app's widgets.
   final Color? color;
+
+  /// The background color for the app.
+  final Color? background;
+
+  /// The initial locale for this app's [Localizations] widget.
   final Locale? locale;
 
+  /// The delegates for this app's [Localizations] widget.
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
+
+  /// Callback that receives the list of locales and returns the best match.
   final LocaleListResolutionCallback? localeListResolutionCallback;
+
+  /// Callback that receives locale and supported locales and returns the best match.
   final LocaleResolutionCallback? localeResolutionCallback;
+
+  /// The list of locales that this app has been localized for.
   final Iterable<Locale> supportedLocales;
+
+  /// Whether to show the performance overlay.
   final bool showPerformanceOverlay;
+
+  /// Whether to show the semantics debugger.
   final bool showSemanticsDebugger;
+
+  /// Whether to show the debug banner.
   final bool debugShowCheckedModeBanner;
+
+  /// The default map of shortcuts to intents for the application.
   final Map<ShortcutActivator, Intent>? shortcuts;
+
+  /// The default map of intent types to actions for the application.
   final Map<Type, Action<Intent>>? actions;
+
+  /// The identifier to use for state restoration of the app.
   final String? restorationScopeId;
+
+  /// The scroll behavior for the app.
   final ScrollBehavior? scrollBehavior;
+
+  /// Whether to show the Material grid in debug mode.
   final bool debugShowMaterialGrid;
+
+  /// The Material theme to use for Material widgets.
   final m.ThemeData? materialTheme;
+
+  /// The Cupertino theme to use for Cupertino widgets.
   final c.CupertinoThemeData? cupertinoTheme;
+
+  /// Whether to disable the browser context menu.
   final bool disableBrowserContextMenu;
+
+  /// The initial list of recent colors.
   final List<Color> initialRecentColors;
+
+  /// The maximum number of recent colors to track.
   final int maxRecentColors;
+
+  /// Called when the list of recent colors changes.
   final ValueChanged<List<Color>>? onRecentColorsChanged;
+
+  /// Whether to snap widgets to physical pixels.
   final bool pixelSnap;
+
+  /// Whether to enable scroll interception.
   final bool enableScrollInterception;
-  final OverlayHandler? popoverHandler;
-  final OverlayHandler? tooltipHandler;
-  final OverlayHandler? menuHandler;
+
+  /// The overlay handler for popovers.
+  final VNLOverlayHandler? popoverHandler;
+
+  /// The overlay handler for tooltips.
+  final VNLOverlayHandler? tooltipHandler;
+
+  /// The overlay handler for menus.
+  final VNLOverlayHandler? menuHandler;
+
+  /// Whether to animate theme changes.
   final bool enableThemeAnimation;
 
   @override
   State<VNLookApp> createState() => _VNLookAppState();
 }
 
+/// Default scroll behavior for shadcn_flutter applications.
+///
+/// Provides bouncing physics and platform-appropriate scrollbars.
 class VNLookScrollBehavior extends ScrollBehavior {
+  /// Creates a shadcn scroll behavior.
   const VNLookScrollBehavior();
 
   @override
@@ -191,7 +289,8 @@ class VNLookScrollBehavior extends ScrollBehavior {
   }
 
   @override
-  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildScrollbar(
+      BuildContext context, Widget child, ScrollableDetails details) {
     // When modifying this function, consider modifying the implementation in
     // the base class ScrollBehavior as well.
     switch (axisDirectionToAxis(details.direction)) {
@@ -202,17 +301,27 @@ class VNLookScrollBehavior extends ScrollBehavior {
           case TargetPlatform.linux:
           case TargetPlatform.macOS:
           case TargetPlatform.windows:
-            return Scrollbar(controller: details.controller, child: child);
+            return VNLScrollbar(
+              controller: details.controller,
+              child: child,
+            );
           case TargetPlatform.android:
           case TargetPlatform.fuchsia:
           case TargetPlatform.iOS:
             return child;
+          // ignore: unreachable_switch_default
+          default:
+            return VNLScrollbar(
+              controller: details.controller,
+              child: child,
+            );
         }
     }
   }
 
   @override
-  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
     // When modifying this function, consider modifying the implementation in
     // the base class ScrollBehavior as well.
     switch (getPlatform(context)) {
@@ -229,24 +338,29 @@ class VNLookScrollBehavior extends ScrollBehavior {
         );
       case TargetPlatform.fuchsia:
         break;
+      // ignore: unreachable_switch_default
+      default:
+        return child;
     }
     return GlowingOverscrollIndicator(
       axisDirection: details.direction,
-      color: VNLTheme.of(context).colorScheme.secondary,
+      color: Theme.of(context).colorScheme.secondary,
       child: child,
     );
   }
 }
 
 class _VNLookAppState extends State<VNLookApp> {
-  final VNLookPlatformImplementations _platform = VNLookPlatformImplementations();
+  final VNLookPlatformImplementations _platform =
+      VNLookPlatformImplementations();
   late HeroController _heroController;
 
   void _dispatchAppInitialized() {
     _platform.onAppInitialized();
   }
 
-  bool get _usesRouter => widget.routerDelegate != null || widget.routerConfig != null;
+  bool get _usesRouter =>
+      widget.routerDelegate != null || widget.routerConfig != null;
 
   @override
   void initState() {
@@ -274,7 +388,9 @@ class _VNLookAppState extends State<VNLookApp> {
   @override
   void didUpdateWidget(covariant VNLookApp oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (kIsWeb && widget.disableBrowserContextMenu != oldWidget.disableBrowserContextMenu) {
+    if (kIsWeb &&
+        widget.disableBrowserContextMenu !=
+            oldWidget.disableBrowserContextMenu) {
       if (widget.disableBrowserContextMenu) {
         BrowserContextMenu.disableContextMenu();
       } else {
@@ -294,11 +410,12 @@ class _VNLookAppState extends State<VNLookApp> {
 
   Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates {
     return <LocalizationsDelegate<dynamic>>[
-      if (widget.localizationsDelegates != null) ...widget.localizationsDelegates!,
+      if (widget.localizationsDelegates != null)
+        ...widget.localizationsDelegates!,
       m.DefaultMaterialLocalizations.delegate,
       c.DefaultCupertinoLocalizations.delegate,
       DefaultWidgetsLocalizations.delegate,
-      VNLookLocalizationsDelegate.delegate,
+      VNLookLocalizations.delegate,
     ];
   }
 
@@ -324,31 +441,35 @@ class _VNLookAppState extends State<VNLookApp> {
   Widget _buildWidgetApp(BuildContext context) {
     final Color primaryColor = widget.color ?? widget.theme.colorScheme.primary;
     if (_usesRouter) {
-      return WidgetsApp.router(
-        key: GlobalObjectKey(this),
-        routeInformationProvider: widget.routeInformationProvider,
-        routeInformationParser: widget.routeInformationParser,
-        routerDelegate: widget.routerDelegate,
-        routerConfig: widget.routerConfig,
-        backButtonDispatcher: widget.backButtonDispatcher,
-        builder: _builder,
-        title: widget.title,
-        onGenerateTitle: widget.onGenerateTitle,
-        textStyle: widget.theme.typography.sans.copyWith(color: widget.theme.colorScheme.foreground),
-        color: primaryColor,
-        locale: widget.locale,
-        localizationsDelegates: _localizationsDelegates,
-        localeResolutionCallback: widget.localeResolutionCallback,
-        localeListResolutionCallback: widget.localeListResolutionCallback,
-        supportedLocales: widget.supportedLocales,
-        showPerformanceOverlay: widget.showPerformanceOverlay,
-        // checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
-        // checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
-        showSemanticsDebugger: widget.showSemanticsDebugger,
-        debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
-        shortcuts: widget.shortcuts,
-        actions: widget.actions,
-        restorationScopeId: widget.restorationScopeId,
+      return DataMessengerRoot(
+        child: WidgetsApp.router(
+          key: GlobalObjectKey(this),
+          routeInformationProvider: widget.routeInformationProvider,
+          routeInformationParser: widget.routeInformationParser,
+          routerDelegate: widget.routerDelegate,
+          routerConfig: widget.routerConfig,
+          backButtonDispatcher: widget.backButtonDispatcher,
+          builder: _builder,
+          title: widget.title,
+          onGenerateTitle: widget.onGenerateTitle,
+          textStyle: widget.theme.typography.sans.copyWith(
+            color: widget.theme.colorScheme.foreground,
+          ),
+          color: primaryColor,
+          locale: widget.locale,
+          localizationsDelegates: _localizationsDelegates,
+          localeResolutionCallback: widget.localeResolutionCallback,
+          localeListResolutionCallback: widget.localeListResolutionCallback,
+          supportedLocales: widget.supportedLocales,
+          showPerformanceOverlay: widget.showPerformanceOverlay,
+          // checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
+          // checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
+          showSemanticsDebugger: widget.showSemanticsDebugger,
+          debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
+          shortcuts: widget.shortcuts,
+          actions: widget.actions,
+          restorationScopeId: widget.restorationScopeId,
+        ),
       );
     }
 
@@ -369,7 +490,9 @@ class _VNLookAppState extends State<VNLookApp> {
       builder: _builder,
       title: widget.title,
       onGenerateTitle: widget.onGenerateTitle,
-      textStyle: widget.theme.typography.sans.copyWith(color: widget.theme.colorScheme.foreground),
+      textStyle: widget.theme.typography.sans.copyWith(
+        color: widget.theme.colorScheme.foreground,
+      ),
       color: primaryColor,
       locale: widget.locale,
       localizationsDelegates: _localizationsDelegates,
@@ -390,40 +513,51 @@ class _VNLookAppState extends State<VNLookApp> {
     Widget result = _buildWidgetApp(context);
     assert(() {
       if (widget.debugShowMaterialGrid) {
-        result = GridPaper(color: const Color(0xE0F9BBE0), interval: 8.0, subdivisions: 1, child: result);
+        result = GridPaper(
+          color: const Color(0xE0F9BBE0),
+          interval: 8.0,
+          subdivisions: 1,
+          child: result,
+        );
       }
       return true;
     }());
-    return m.Theme(
-      data:
-          widget.materialTheme ??
-          m.ThemeData.from(
-            colorScheme: m.ColorScheme.fromSeed(
-              seedColor: widget.theme.colorScheme.primary,
-              brightness: widget.theme.brightness,
-              surface: widget.theme.colorScheme.background,
-              primary: widget.theme.colorScheme.primary,
-              secondary: widget.theme.colorScheme.secondary,
-              error: widget.theme.colorScheme.destructive,
+    return Data<_VNLookAppState>.inherit(
+      data: this,
+      child: m.Theme(
+        data: widget.materialTheme ??
+            m.ThemeData.from(
+              colorScheme: m.ColorScheme.fromSeed(
+                seedColor: widget.theme.colorScheme.primary,
+                brightness: widget.theme.brightness,
+                surface: widget.theme.colorScheme.background,
+                primary: widget.theme.colorScheme.primary,
+                secondary: widget.theme.colorScheme.secondary,
+                error: widget.theme.colorScheme.destructive,
+              ),
             ),
-          ),
-      child: c.CupertinoTheme(
-        data:
-            widget.cupertinoTheme ??
-            c.CupertinoThemeData(
-              brightness: widget.theme.brightness,
-              primaryColor: widget.theme.colorScheme.primary,
-              barBackgroundColor: widget.theme.colorScheme.accent,
-              scaffoldBackgroundColor: widget.theme.colorScheme.background,
-              applyThemeToAll: true,
-              primaryContrastingColor: widget.theme.colorScheme.primaryForeground,
-            ),
-        child: m.Material(
-          color: m.Colors.transparent,
-          child: m.ScaffoldMessenger(
-            child: ScrollConfiguration(
-              behavior: (widget.scrollBehavior ?? const VNLookScrollBehavior()),
-              child: HeroControllerScope(controller: _heroController, child: result),
+        child: c.CupertinoTheme(
+          data: widget.cupertinoTheme ??
+              c.CupertinoThemeData(
+                brightness: widget.theme.brightness,
+                primaryColor: widget.theme.colorScheme.primary,
+                barBackgroundColor: widget.theme.colorScheme.accent,
+                scaffoldBackgroundColor: widget.theme.colorScheme.background,
+                applyThemeToAll: true,
+                primaryContrastingColor:
+                    widget.theme.colorScheme.primaryForeground,
+              ),
+          child: m.Material(
+            color: widget.background ?? m.Colors.transparent,
+            child: m.ScaffoldMessenger(
+              child: ScrollConfiguration(
+                behavior:
+                    (widget.scrollBehavior ?? const VNLookScrollBehavior()),
+                child: HeroControllerScope(
+                  controller: _heroController,
+                  child: result,
+                ),
+              ),
             ),
           ),
         ),
@@ -432,22 +566,54 @@ class _VNLookAppState extends State<VNLookApp> {
   }
 }
 
+/// A layer widget that provides shadcn theme and infrastructure.
+///
+/// This widget sets up the theming, overlay handlers, scroll behavior,
+/// and other infrastructure needed for shadcn_flutter widgets to work correctly.
 class VNLookLayer extends StatelessWidget {
+  /// The child widget to wrap with shadcn infrastructure.
   final Widget? child;
-  final VNLThemeData theme;
-  final VNLThemeData? darkTheme;
+
+  /// The light theme data.
+  final ThemeData theme;
+
+  /// The dark theme data.
+  final ThemeData? darkTheme;
+
+  /// Determines which theme to use.
   final ThemeMode themeMode;
+
+  /// The scaling strategy for adaptive layouts.
   final AdaptiveScaling? scaling;
+
+  /// The initial list of recent colors.
   final List<Color> initialRecentColors;
+
+  /// The maximum number of recent colors to track.
   final int maxRecentColors;
+
+  /// Called when the list of recent colors changes.
   final ValueChanged<List<Color>>? onRecentColorsChanged;
+
+  /// A builder to wrap the child widget.
   final Widget Function(BuildContext context, Widget? child)? builder;
+
+  /// Whether to enable scroll interception.
   final bool enableScrollInterception;
-  final OverlayHandler? popoverHandler;
-  final OverlayHandler? tooltipHandler;
-  final OverlayHandler? menuHandler;
+
+  /// The overlay handler for popovers.
+  final VNLOverlayHandler? popoverHandler;
+
+  /// The overlay handler for tooltips.
+  final VNLOverlayHandler? tooltipHandler;
+
+  /// The overlay handler for menus.
+  final VNLOverlayHandler? menuHandler;
+
+  /// Whether to animate theme changes.
   final bool enableThemeAnimation;
 
+  /// Creates a shadcn layer.
   const VNLookLayer({
     super.key,
     required this.theme,
@@ -471,68 +637,97 @@ class VNLookLayer extends StatelessWidget {
     var appScaling = scaling ?? AdaptiveScaler.defaultScaling(theme);
     var platformBrightness = MediaQuery.platformBrightnessOf(context);
     var mobileMode = isMobile(theme.platform);
-    final scaledTheme =
-        themeMode == ThemeMode.dark || (themeMode == ThemeMode.system && platformBrightness == Brightness.dark)
-            ? appScaling.scale(darkTheme ?? theme)
-            : appScaling.scale(theme);
-    return OverlayManagerLayer(
-      menuHandler: menuHandler ?? (mobileMode ? const SheetOverlayHandler() : const PopoverOverlayHandler()),
-      popoverHandler: popoverHandler ?? (mobileMode ? const SheetOverlayHandler() : const PopoverOverlayHandler()),
-      tooltipHandler:
-          tooltipHandler ?? (mobileMode ? const FixedTooltipOverlayHandler() : const PopoverOverlayHandler()),
+    var hasShadcnApp = Data.maybeOf<_VNLookAppState>(context) != null;
+    final scaledTheme = themeMode == ThemeMode.dark ||
+            (themeMode == ThemeMode.system &&
+                platformBrightness == Brightness.dark)
+        ? appScaling.scale(darkTheme ?? theme)
+        : appScaling.scale(theme);
+    return VNLOverlayManagerLayer(
+      menuHandler: menuHandler ??
+          (mobileMode
+              ? const VNLSheetOverlayHandler()
+              : const VNLPopoverOverlayHandler()),
+      popoverHandler: popoverHandler ??
+          (mobileMode
+              ? const VNLSheetOverlayHandler()
+              : const VNLPopoverOverlayHandler()),
+      tooltipHandler: tooltipHandler ??
+          (mobileMode
+              ? const VNLFixedTooltipOverlayHandler()
+              : const VNLPopoverOverlayHandler()),
       child: VNLookAnimatedTheme(
         duration: kDefaultDuration,
         data: scaledTheme,
-        child: Builder(
-          builder: (context) {
-            var theme = VNLTheme.of(context);
-            return DataMessengerRoot(
-              child: ScrollViewInterceptor(
-                enabled: enableScrollInterception,
-                child: VNLookSkeletonizerConfigLayer(
-                  theme: theme,
-                  child: DefaultTextStyle.merge(
-                    style: theme.typography.base.copyWith(color: theme.colorScheme.foreground),
-                    child: IconTheme.merge(
-                      data: theme.iconTheme.medium.copyWith(color: theme.colorScheme.foreground),
-                      child: RecentColorsScope(
-                        initialRecentColors: initialRecentColors,
-                        maxRecentColors: maxRecentColors,
-                        onRecentColorsChanged: onRecentColorsChanged,
-                        child: ColorPickingLayer(
-                          child: KeyboardShortcutDisplayMapper(
-                            child: ToastLayer(
-                              child:
-                                  builder != null
-                                      ? Builder(
-                                        builder: (BuildContext context) {
-                                          return builder!(context, child);
-                                        },
-                                      )
-                                      : child ?? const SizedBox.shrink(),
-                            ),
-                          ),
+        child: Builder(builder: (context) {
+          var theme = Theme.of(context);
+          var scrollViewInterceptor = VNLScrollViewInterceptor(
+            enabled: enableScrollInterception,
+            child: ShadcnSkeletonizerConfigLayer(
+              theme: theme,
+              child: DefaultTextStyle.merge(
+                style: theme.typography.base.copyWith(
+                  color: theme.colorScheme.foreground,
+                ),
+                child: IconTheme.merge(
+                  data: theme.iconTheme.medium.copyWith(
+                    color: theme.colorScheme.foreground,
+                  ),
+                  child: VNLRecentColorsScope(
+                    initialRecentColors: initialRecentColors,
+                    maxRecentColors: maxRecentColors,
+                    onRecentColorsChanged: onRecentColorsChanged,
+                    child: EyeDropperLayer(
+                      child: VNLKeyboardShortcutDisplayMapper(
+                        child: VNLToastLayer(
+                          child: builder != null
+                              ? Builder(
+                                  builder: (BuildContext context) {
+                                    return builder!(context, child);
+                                  },
+                                )
+                              : child ?? const SizedBox.shrink(),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
+            ),
+          );
+          if (!hasShadcnApp) {
+            return DataMessengerRoot(
+              child: scrollViewInterceptor,
             );
-          },
-        ),
+          } else {
+            return scrollViewInterceptor;
+          }
+        }),
       ),
     );
   }
 }
 
+/// An animated theme widget for shadcn_flutter.
+///
+/// Animates theme changes over time with smooth transitions.
 class VNLookAnimatedTheme extends StatelessWidget {
+  /// The child widget to apply the theme to.
   final Widget child;
-  final VNLThemeData data;
+
+  /// The theme data to animate to.
+  final ThemeData data;
+
+  /// The duration of the animation.
   final Duration duration;
+
+  /// The curve for the animation.
   final Curve curve;
+
+  /// Called when the animation completes.
   final VoidCallback? onEnd;
 
+  /// Creates an animated theme widget.
   const VNLookAnimatedTheme({
     super.key,
     required this.data,
@@ -545,14 +740,30 @@ class VNLookAnimatedTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (duration == Duration.zero) {
-      return VNLTheme(data: data, child: child);
+      return Theme(
+        data: data,
+        child: child,
+      );
     }
-    return AnimatedTheme(data: data, duration: duration, curve: curve, child: child);
+    return AnimatedTheme(
+      data: data,
+      duration: duration,
+      curve: curve,
+      child: child,
+    );
   }
 }
 
+/// A custom tween for animating rectangles along an arc.
+///
+/// This tween creates more natural-looking animations for rectangles
+/// by moving them along an arc path rather than a straight line.
 class VNLookRectArcTween extends RectTween {
-  VNLookRectArcTween({super.begin, super.end});
+  /// Creates a rectangle arc tween.
+  VNLookRectArcTween({
+    super.begin,
+    super.end,
+  });
 
   bool _dirty = true;
 
@@ -561,21 +772,25 @@ class VNLookRectArcTween extends RectTween {
     assert(end != null);
     final Offset centersVector = end!.center - begin!.center;
     final _BorderRadiusCorner diagonal = _findMax<_BorderRadiusCorner>(
-      _allDiagonals,
-      (_BorderRadiusCorner d) => _diagonalSupport(centersVector, d),
-    );
+        _allDiagonals,
+        (_BorderRadiusCorner d) => _diagonalSupport(centersVector, d));
     _beginArc = VNLookPointArcTween(
       begin: _cornerFor(begin!, diagonal.beginId),
       end: _cornerFor(end!, diagonal.beginId),
     );
-    _endArc = VNLookPointArcTween(begin: _cornerFor(begin!, diagonal.endId), end: _cornerFor(end!, diagonal.endId));
+    _endArc = VNLookPointArcTween(
+      begin: _cornerFor(begin!, diagonal.endId),
+      end: _cornerFor(end!, diagonal.endId),
+    );
     _dirty = false;
   }
 
   double _diagonalSupport(Offset centersVector, _BorderRadiusCorner diagonal) {
-    final Offset delta = _cornerFor(begin!, diagonal.endId) - _cornerFor(begin!, diagonal.beginId);
+    final Offset delta = _cornerFor(begin!, diagonal.endId) -
+        _cornerFor(begin!, diagonal.beginId);
     final double length = delta.distance;
-    return centersVector.dx * delta.dx / length + centersVector.dy * delta.dy / length;
+    return centersVector.dx * delta.dx / length +
+        centersVector.dy * delta.dy / length;
   }
 
   Offset _cornerFor(Rect rect, _CornerType id) {
@@ -587,6 +802,7 @@ class VNLookRectArcTween extends RectTween {
     };
   }
 
+  /// Gets the arc tween for the beginning point of the rectangle.
   VNLookPointArcTween? get beginArc {
     if (begin == null) {
       return null;
@@ -598,6 +814,8 @@ class VNLookRectArcTween extends RectTween {
   }
 
   late VNLookPointArcTween _beginArc;
+
+  /// Gets the arc tween for the ending point of the rectangle.
   VNLookPointArcTween? get endArc {
     if (end == null) {
       return null;
@@ -673,8 +891,16 @@ class _BorderRadiusCorner {
 
 const double _kOnAxisDelta = 2.0;
 
+/// A custom tween for animating points along an arc.
+///
+/// This tween creates curved motion between two points, useful for
+/// creating natural-looking animations.
 class VNLookPointArcTween extends Tween<Offset> {
-  VNLookPointArcTween({super.begin, super.end});
+  /// Creates a point arc tween.
+  VNLookPointArcTween({
+    super.begin,
+    super.end,
+  });
 
   bool _dirty = true;
 
@@ -696,7 +922,8 @@ class VNLookPointArcTween extends Tween<Offset> {
 
     if (deltaX > _kOnAxisDelta && deltaY > _kOnAxisDelta) {
       if (deltaX < deltaY) {
-        _radius = distanceFromAtoB * distanceFromAtoB / (c - begin).distance / 2.0;
+        _radius =
+            distanceFromAtoB * distanceFromAtoB / (c - begin).distance / 2.0;
         _center = Offset(end.dx + _radius! * (begin.dx - end.dx).sign, end.dy);
         if (begin.dx < end.dx) {
           _beginAngle = sweepAngle() * (begin.dy - end.dy).sign;
@@ -706,8 +933,10 @@ class VNLookPointArcTween extends Tween<Offset> {
           _endAngle = pi;
         }
       } else {
-        _radius = distanceFromAtoB * distanceFromAtoB / (c - end).distance / 2.0;
-        _center = Offset(begin.dx, begin.dy + (end.dy - begin.dy).sign * _radius!);
+        _radius =
+            distanceFromAtoB * distanceFromAtoB / (c - end).distance / 2.0;
+        _center =
+            Offset(begin.dx, begin.dy + (end.dy - begin.dy).sign * _radius!);
         if (begin.dy < end.dy) {
           _beginAngle = -pi / 2.0;
           _endAngle = _beginAngle! + sweepAngle() * (end.dx - begin.dx).sign;
@@ -725,6 +954,11 @@ class VNLookPointArcTween extends Tween<Offset> {
     _dirty = false;
   }
 
+  /// Gets the center point of the arc between [begin] and [end].
+  ///
+  /// Returns `null` if either [begin] or [end] is null.
+  ///
+  /// The center is computed lazily and cached for performance.
   Offset? get center {
     if (begin == null || end == null) {
       return null;
@@ -736,6 +970,12 @@ class VNLookPointArcTween extends Tween<Offset> {
   }
 
   Offset? _center;
+
+  /// Gets the radius of the arc between [begin] and [end].
+  ///
+  /// Returns `null` if either [begin] or [end] is null.
+  ///
+  /// The radius is the distance from the center to either endpoint.
   double? get radius {
     if (begin == null || end == null) {
       return null;
@@ -747,6 +987,12 @@ class VNLookPointArcTween extends Tween<Offset> {
   }
 
   double? _radius;
+
+  /// Gets the starting angle of the arc in radians.
+  ///
+  /// Returns `null` if either [begin] or [end] is null.
+  ///
+  /// Angle is measured clockwise from the positive x-axis.
   double? get beginAngle {
     if (begin == null || end == null) {
       return null;
@@ -758,6 +1004,12 @@ class VNLookPointArcTween extends Tween<Offset> {
   }
 
   double? _beginAngle;
+
+  /// Gets the ending angle of the arc in radians.
+  ///
+  /// Returns `null` if either [begin] or [end] is null.
+  ///
+  /// Angle is measured clockwise from the positive x-axis.
   double? get endAngle {
     if (begin == null || end == null) {
       return null;
@@ -807,19 +1059,38 @@ class VNLookPointArcTween extends Tween<Offset> {
   }
 }
 
+/// A widget that provides text and icon styling for shadcn UI components.
+///
+/// Applies consistent text styles and icon themes to its descendants.
 class VNLookUI extends StatelessWidget {
+  /// Optional text style override.
   final TextStyle? textStyle;
+
+  /// The child widget.
   final Widget child;
 
-  const VNLookUI({super.key, this.textStyle, required this.child});
+  /// Creates a VNLookUI widget.
+  const VNLookUI({
+    super.key,
+    this.textStyle,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     return AnimatedDefaultTextStyle(
-      style: textStyle ?? theme.typography.sans.copyWith(color: theme.colorScheme.foreground),
+      style: textStyle ??
+          theme.typography.sans.copyWith(
+            color: theme.colorScheme.foreground,
+          ),
       duration: kDefaultDuration,
-      child: IconTheme(data: IconThemeData(color: theme.colorScheme.foreground), child: child),
+      child: IconTheme(
+        data: IconThemeData(
+          color: theme.colorScheme.foreground,
+        ),
+        child: child,
+      ),
     );
   }
 }
@@ -827,16 +1098,26 @@ class VNLookUI extends StatelessWidget {
 class _GlobalPointerListener extends c.StatefulWidget {
   final Widget child;
 
-  const _GlobalPointerListener({required this.child});
+  const _GlobalPointerListener({
+    required this.child,
+  });
 
   @override
-  c.State<_GlobalPointerListener> createState() => _GlobalPointerListenerState();
+  c.State<_GlobalPointerListener> createState() =>
+      _GlobalPointerListenerState();
 }
 
+/// Data about the current pointer position.
+///
+/// Used to track mouse/pointer location in the app.
 class PointerData {
+  /// The current position of the pointer.
   final Offset position;
 
-  PointerData({required this.position});
+  /// Creates pointer data with the given position.
+  PointerData({
+    required this.position,
+  });
 
   @override
   bool operator ==(Object other) {
@@ -877,7 +1158,10 @@ class _GlobalPointerListenerState extends c.State<_GlobalPointerListener> {
       child: widget.child,
     );
     if (_position != null) {
-      child = Data.inherit(data: PointerData(position: _position!), child: child);
+      child = Data.inherit(
+        data: PointerData(position: _position!),
+        child: child,
+      );
     }
     return child;
   }

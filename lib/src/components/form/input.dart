@@ -1,17 +1,68 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart' show Clipboard, LogicalKeyboardKey;
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-enum InputFeaturePosition { leading, trailing }
+/// Position where an input feature is displayed.
+///
+/// Determines whether an input feature (icon, button, widget) appears on
+/// the leading (left/start) or trailing (right/end) side of the input.
+enum InputFeaturePosition {
+  /// Display the feature on the leading side.
+  leading,
 
-class InputHintFeature extends InputFeature {
+  /// Display the feature on the trailing side.
+  trailing,
+
+  /// Display above the editable text.
+  above,
+
+  /// Display below the editable text.
+  below,
+}
+
+/// Adds a hint/info button to the input field with a popover.
+///
+/// Displays an icon button that shows a popover with additional information
+/// when clicked. Optionally supports keyboard shortcuts (F1) to open the hint.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   features: [
+///     VNLInputHintFeature(
+///       popupBuilder: (context) => const Text('Enter your email'),
+///       icon: Icon(Icons.help),
+///     ),
+///   ],
+/// )
+/// ```
+class VNLInputHintFeature extends VNLInputFeature {
+  /// Builder for the hint popover content.
   final WidgetBuilder popupBuilder;
+
+  /// Custom icon to display (defaults to info icon).
   final Widget? icon;
+
+  /// Position of the hint button.
   final InputFeaturePosition position;
+
+  /// Whether to enable keyboard shortcut (F1) to show the hint.
   final bool enableShortcuts;
-  const InputHintFeature({
+
+  /// Creates an [VNLInputHintFeature].
+  ///
+  /// Parameters:
+  /// - [popupBuilder] (`WidgetBuilder`, required): Builds the hint content.
+  /// - [position] (`InputFeaturePosition`, default: `InputFeaturePosition.trailing`):
+  ///   Where to place the hint icon.
+  /// - [icon] (`Widget?`, optional): Custom icon widget.
+  /// - [enableShortcuts] (`bool`, default: `true`): Enable F1 keyboard shortcut.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputHintFeature({
     super.visibility,
+    super.skipFocusTraversal,
     required this.popupBuilder,
     this.position = InputFeaturePosition.trailing,
     this.icon,
@@ -22,40 +73,36 @@ class InputHintFeature extends InputFeature {
   InputFeatureState createState() => _InputHintFeatureState();
 }
 
-class _InputHintFeatureState extends InputFeatureState<InputHintFeature> {
-  final _popoverController = PopoverController();
-  void _showPopup() {
+class _InputHintFeatureState extends InputFeatureState<VNLInputHintFeature> {
+  final _popoverController = VNLPopoverController();
+  void _showPopup(BuildContext context) {
     _popoverController.show(
       context: context,
       builder: feature.popupBuilder,
-      alignment:
-          feature.position == InputFeaturePosition.trailing
-              ? AlignmentDirectional.topEnd
-              : AlignmentDirectional.topStart,
-      anchorAlignment:
-          feature.position == InputFeaturePosition.trailing
-              ? AlignmentDirectional.bottomEnd
-              : AlignmentDirectional.bottomStart,
+      alignment: AlignmentDirectional.topCenter,
+      anchorAlignment: AlignmentDirectional.bottomCenter,
     );
   }
 
   @override
   Iterable<Widget> buildTrailing() sync* {
     if (feature.position == InputFeaturePosition.trailing) {
-      yield IconButton.text(
-        icon: feature.icon ?? const Icon(LucideIcons.info),
-        onPressed: _showPopup,
-        density: ButtonDensity.compact,
-      );
+      yield Builder(builder: (context) {
+        return VNLIconButton.text(
+          icon: feature.icon ?? const Icon(LucideIcons.info),
+          onPressed: () => _showPopup(context),
+          density: ButtonDensity.compact,
+        );
+      });
     }
   }
 
   @override
   Iterable<Widget> buildLeading() sync* {
     if (feature.position == InputFeaturePosition.leading) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.info),
-        onPressed: _showPopup,
+        onPressed: () => _showPopup(context),
         density: ButtonDensity.compact,
       );
     }
@@ -64,7 +111,10 @@ class _InputHintFeatureState extends InputFeatureState<InputHintFeature> {
   @override
   Iterable<MapEntry<ShortcutActivator, Intent>> buildShortcuts() sync* {
     if (feature.enableShortcuts) {
-      yield const MapEntry(SingleActivator(LogicalKeyboardKey.f1), InputShowHintIntent());
+      yield const MapEntry(
+        SingleActivator(LogicalKeyboardKey.f1),
+        VNLInputShowHintIntent(),
+      );
     }
   }
 
@@ -72,10 +122,16 @@ class _InputHintFeatureState extends InputFeatureState<InputHintFeature> {
   Iterable<MapEntry<Type, Action<Intent>>> buildActions() sync* {
     if (feature.enableShortcuts) {
       yield MapEntry(
-        InputShowHintIntent,
-        CallbackAction<InputShowHintIntent>(
-          onInvoke: (intent) {
-            _showPopup();
+        VNLInputShowHintIntent,
+        CallbackContextAction<VNLInputShowHintIntent>(
+          onInvoke: (intent, [context]) {
+            if (context == null) {
+              throw FlutterError(
+                  'CallbackContextAction was invoked without a valid BuildContext. '
+                  'This likely indicates a problem in the action system. '
+                  'Context must not be null when invoking VNLInputShowHintIntent.');
+            }
+            _showPopup(context);
             return true;
           },
         ),
@@ -84,30 +140,81 @@ class _InputHintFeatureState extends InputFeatureState<InputHintFeature> {
   }
 }
 
-class InputShowHintIntent extends Intent {
-  const InputShowHintIntent();
+/// Intent to show an input hint popover.
+///
+/// Used in keyboard shortcut actions to trigger the hint display.
+class VNLInputShowHintIntent extends Intent {
+  /// Creates an [VNLInputShowHintIntent].
+  const VNLInputShowHintIntent();
 }
 
-enum PasswordPeekMode { hold, toggle }
+/// Mode for password visibility toggling.
+///
+/// Determines whether the password visibility toggle holds (shows while pressed)
+/// or toggles (switches state on each press).
+enum PasswordPeekMode {
+  /// Show password only while button is held down.
+  hold,
 
-class InputPasswordToggleFeature extends InputFeature {
+  /// VNLToggle password visibility on each press.
+  toggle,
+}
+
+/// Adds a password visibility toggle feature to the input field.
+///
+/// Provides a button that allows users to toggle between showing and hiding
+/// password text. Supports both hold-to-reveal and toggle modes.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   obscureText: true,
+///   features: [
+///     VNLInputPasswordToggleFeature(
+///       mode: PasswordPeekMode.toggle,
+///     ),
+///   ],
+/// )
+/// ```
+class VNLInputPasswordToggleFeature extends VNLInputFeature {
+  /// The mode for password peeking behavior.
   final PasswordPeekMode mode;
+
+  /// Position of the toggle button.
   final InputFeaturePosition position;
+
+  /// Icon to display when password is hidden.
   final Widget? icon;
+
+  /// Icon to display when password is shown.
   final Widget? iconShow;
-  const InputPasswordToggleFeature({
+
+  /// Creates an [VNLInputPasswordToggleFeature].
+  ///
+  /// Parameters:
+  /// - [mode] (`PasswordPeekMode`, default: `PasswordPeekMode.toggle`):
+  ///   VNLToggle or hold behavior.
+  /// - [position] (`InputFeaturePosition`, default: `InputFeaturePosition.trailing`):
+  ///   Where to place the toggle.
+  /// - [icon] (`Widget?`, optional): Custom icon for hidden state.
+  /// - [iconShow] (`Widget?`, optional): Custom icon for visible state.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputPasswordToggleFeature({
     super.visibility,
     this.icon,
     this.iconShow,
     this.mode = PasswordPeekMode.toggle,
     this.position = InputFeaturePosition.trailing,
+    super.skipFocusTraversal,
   });
 
   @override
   InputFeatureState createState() => _InputPasswordToggleFeatureState();
 }
 
-class _InputPasswordToggleFeatureState extends InputFeatureState<InputPasswordToggleFeature> {
+class _InputPasswordToggleFeatureState
+    extends InputFeatureState<VNLInputPasswordToggleFeature> {
   bool? _obscureText = true;
 
   void _toggleObscureText() {
@@ -143,7 +250,7 @@ class _InputPasswordToggleFeatureState extends InputFeatureState<InputPasswordTo
 
   Widget _buildIconButton() {
     if (feature.mode == PasswordPeekMode.hold) {
-      return IconButton.text(
+      return VNLIconButton.text(
         icon: _buildIcon(),
         onTapDown: (_) {
           setState(() {
@@ -159,25 +266,63 @@ class _InputPasswordToggleFeatureState extends InputFeatureState<InputPasswordTo
         density: ButtonDensity.compact,
       );
     }
-    return IconButton.text(icon: _buildIcon(), onPressed: _toggleObscureText, density: ButtonDensity.compact);
+    return VNLIconButton.text(
+      icon: _buildIcon(),
+      onPressed: _toggleObscureText,
+      density: ButtonDensity.compact,
+    );
   }
 
   @override
   VNLTextField interceptInput(VNLTextField input) {
-    return input.copyWith(obscureText: _obscureText);
+    return input.copyWith(
+      obscureText: () => _obscureText ?? false,
+    );
   }
 }
 
-class InputClearFeature extends InputFeature {
+/// Adds a clear button to the input field.
+///
+/// Provides a button that clears all text from the input when pressed.
+/// Commonly used to improve user experience by offering quick text removal.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   features: [
+///     VNLInputClearFeature(
+///       position: InputFeaturePosition.trailing,
+///     ),
+///   ],
+/// )
+/// ```
+class VNLInputClearFeature extends VNLInputFeature {
+  /// Position of the clear button.
   final InputFeaturePosition position;
+
+  /// Custom icon for the clear button.
   final Widget? icon;
-  const InputClearFeature({super.visibility, this.position = InputFeaturePosition.trailing, this.icon});
+
+  /// Creates an [VNLInputClearFeature].
+  ///
+  /// Parameters:
+  /// - [position] (`InputFeaturePosition`, default: `InputFeaturePosition.trailing`):
+  ///   Where to place the clear button.
+  /// - [icon] (`Widget?`, optional): Custom icon widget.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputClearFeature({
+    super.visibility,
+    super.skipFocusTraversal,
+    this.position = InputFeaturePosition.trailing,
+    this.icon,
+  });
 
   @override
   InputFeatureState createState() => _InputClearFeatureState();
 }
 
-class _InputClearFeatureState extends InputFeatureState<InputClearFeature> {
+class _InputClearFeatureState extends InputFeatureState<VNLInputClearFeature> {
   void _clear() {
     controller.text = '';
   }
@@ -185,7 +330,7 @@ class _InputClearFeatureState extends InputFeatureState<InputClearFeature> {
   @override
   Iterable<Widget> buildTrailing() sync* {
     if (feature.position == InputFeaturePosition.trailing) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.x),
         onPressed: _clear,
         density: ButtonDensity.compact,
@@ -196,7 +341,7 @@ class _InputClearFeatureState extends InputFeatureState<InputClearFeature> {
   @override
   Iterable<Widget> buildLeading() sync* {
     if (feature.position == InputFeaturePosition.leading) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.x),
         onPressed: _clear,
         density: ButtonDensity.compact,
@@ -205,16 +350,47 @@ class _InputClearFeatureState extends InputFeatureState<InputClearFeature> {
   }
 }
 
-class InputRevalidateFeature extends InputFeature {
+/// Adds a revalidate button to the input field.
+///
+/// Provides a button that triggers form validation when pressed.
+/// Useful for manually triggering validation after user input.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   features: [
+///     VNLInputRevalidateFeature(),
+///   ],
+/// )
+/// ```
+class VNLInputRevalidateFeature extends VNLInputFeature {
+  /// Position of the revalidate button.
   final InputFeaturePosition position;
+
+  /// Custom icon for the revalidate button.
   final Widget? icon;
-  const InputRevalidateFeature({super.visibility, this.position = InputFeaturePosition.trailing, this.icon});
+
+  /// Creates an [VNLInputRevalidateFeature].
+  ///
+  /// Parameters:
+  /// - [position] (`InputFeaturePosition`, default: `InputFeaturePosition.trailing`):
+  ///   Where to place the revalidate button.
+  /// - [icon] (`Widget?`, optional): Custom icon widget.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputRevalidateFeature({
+    super.visibility,
+    super.skipFocusTraversal,
+    this.position = InputFeaturePosition.trailing,
+    this.icon,
+  });
 
   @override
   InputFeatureState createState() => _InputRevalidateFeatureState();
 }
 
-class _InputRevalidateFeatureState extends InputFeatureState<InputRevalidateFeature> {
+class _InputRevalidateFeatureState
+    extends InputFeatureState<VNLInputRevalidateFeature> {
   void _revalidate() {
     var formFieldHandle = Data.maybeFind<FormFieldHandle>(context);
     if (formFieldHandle != null) {
@@ -223,10 +399,10 @@ class _InputRevalidateFeatureState extends InputFeatureState<InputRevalidateFeat
   }
 
   Widget _buildIcon() {
-    return FormPendingBuilder(
+    return VNLFormPendingBuilder(
       builder: (context, futures, _) {
         if (futures.isEmpty) {
-          return IconButton.text(
+          return VNLIconButton.text(
             icon: feature.icon ?? const Icon(LucideIcons.refreshCw),
             onPressed: _revalidate,
             density: ButtonDensity.compact,
@@ -238,21 +414,24 @@ class _InputRevalidateFeatureState extends InputFeatureState<InputRevalidateFeat
           future: futureAll,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return IconButton.text(
+              return VNLIconButton.text(
                 icon: RepeatedAnimationBuilder(
                   start: 0.0,
                   end: 360.0,
                   duration: const Duration(seconds: 1),
                   child: feature.icon ?? const Icon(LucideIcons.refreshCw),
                   builder: (context, value, child) {
-                    return Transform.rotate(angle: degToRad(value), child: child);
+                    return Transform.rotate(
+                      angle: degToRad(value),
+                      child: child,
+                    );
                   },
                 ),
                 onPressed: null,
                 density: ButtonDensity.compact,
               );
             }
-            return IconButton.text(
+            return VNLIconButton.text(
               icon: feature.icon ?? const Icon(LucideIcons.refreshCw),
               onPressed: _revalidate,
               density: ButtonDensity.compact,
@@ -278,19 +457,71 @@ class _InputRevalidateFeatureState extends InputFeatureState<InputRevalidateFeat
   }
 }
 
+/// A callback that provides suggestions based on a query string.
+///
+/// Parameters:
+/// - [query] (`String`): The current input text to generate suggestions for.
+///
+/// Returns: `FutureOr<Iterable<String>>` — The list of suggestion strings.
 typedef SuggestionBuilder = FutureOr<Iterable<String>> Function(String query);
 
-class InputAutoCompleteFeature extends InputFeature {
+/// Adds autocomplete functionality to the input field.
+///
+/// Displays a popover with suggestions as the user types. Suggestions are
+/// provided by the [querySuggestions] callback and can be selected to fill
+/// the input.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   features: [
+///     VNLInputAutoCompleteFeature(
+///       querySuggestions: (query) async {
+///         return ['apple', 'apricot', 'avocado']
+///             .where((s) => s.startsWith(query));
+///       },
+///       child: const Text('Fruits'),
+///     ),
+///   ],
+/// )
+/// ```
+class VNLInputAutoCompleteFeature extends VNLInputFeature {
+  /// Callback to provide suggestions for a given query.
   final SuggestionBuilder querySuggestions;
+
+  /// Child widget displayed in the suggestion list.
   final Widget child;
+
+  /// Constraints for the popover size.
   final BoxConstraints? popoverConstraints;
+
+  /// Width constraint for the popover.
   final PopoverConstraint? popoverWidthConstraint;
+
+  /// Anchor alignment for the popover.
   final AlignmentDirectional? popoverAnchorAlignment;
+
+  /// VNLPopover alignment relative to the anchor.
   final AlignmentDirectional? popoverAlignment;
+
+  /// Autocomplete mode (e.g., popover or inline).
   final AutoCompleteMode mode;
 
-  const InputAutoCompleteFeature({
+  /// Creates an [VNLInputAutoCompleteFeature].
+  ///
+  /// Parameters:
+  /// - [querySuggestions] (`SuggestionBuilder`, required): Provides suggestions.
+  /// - [child] (`Widget`, required): Content for suggestion items.
+  /// - [popoverConstraints] (`BoxConstraints?`, optional): Size constraints.
+  /// - [popoverWidthConstraint] (`PopoverConstraint?`, optional): Width constraint.
+  /// - [popoverAnchorAlignment] (`AlignmentDirectional?`, optional): Anchor alignment.
+  /// - [popoverAlignment] (`AlignmentDirectional?`, optional): VNLPopover alignment.
+  /// - [mode] (`AutoCompleteMode`, required): Autocomplete display mode.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputAutoCompleteFeature({
     super.visibility,
+    super.skipFocusTraversal,
     required this.querySuggestions,
     required this.child,
     this.popoverConstraints,
@@ -304,9 +535,11 @@ class InputAutoCompleteFeature extends InputFeature {
   InputFeatureState createState() => _AutoCompleteFeatureState();
 }
 
-class _AutoCompleteFeatureState extends InputFeatureState<InputAutoCompleteFeature> {
+class _AutoCompleteFeatureState
+    extends InputFeatureState<VNLInputAutoCompleteFeature> {
   final GlobalKey _key = GlobalKey();
-  final ValueNotifier<FutureOr<Iterable<String>>?> _suggestions = ValueNotifier(null);
+  final ValueNotifier<FutureOr<Iterable<String>>?> _suggestions =
+      ValueNotifier(null);
 
   @override
   void onTextChanged(String text) {
@@ -325,7 +558,8 @@ class _AutoCompleteFeatureState extends InputFeatureState<InputAutoCompleteFeatu
             builder: (context, snapshot) {
               return VNLAutoComplete(
                 key: _key,
-                suggestions: snapshot.hasData ? snapshot.requireData.toList() : const [],
+                suggestions:
+                    snapshot.hasData ? snapshot.requireData.toList() : const [],
                 popoverConstraints: feature.popoverConstraints,
                 popoverWidthConstraint: feature.popoverWidthConstraint,
                 popoverAnchorAlignment: feature.popoverAnchorAlignment,
@@ -352,17 +586,93 @@ class _AutoCompleteFeatureState extends InputFeatureState<InputAutoCompleteFeatu
   }
 }
 
-class InputSpinnerFeature extends InputFeature {
+/// Adds spinner controls (increment/decrement) to numeric input fields.
+///
+/// Provides up/down buttons to adjust numeric values in fixed steps.
+/// Optionally supports gesture-based adjustments (e.g., drag to change value).
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   keyboardType: TextInputType.number,
+///   features: [
+///     VNLInputSpinnerFeature(
+///       step: 5.0,
+///       enableGesture: true,
+///     ),
+///   ],
+/// )
+/// ```
+class VNLInputSpinnerFeature extends VNLInputFeature {
+  /// The amount to increment or decrement on each step.
   final double step;
+
+  /// Whether to enable gesture-based value adjustment.
   final bool enableGesture;
+
+  /// Default value when the input is invalid or empty.
   final double? invalidValue;
-  const InputSpinnerFeature({super.visibility, this.step = 1.0, this.enableGesture = true, this.invalidValue = 0.0});
+
+  /// Minimum allowed value.
+  final double? min;
+
+  /// Maximum allowed value.
+  final double? max;
+
+  /// Creates an [VNLInputSpinnerFeature].
+  ///
+  /// Parameters:
+  /// - [step] (`double`, default: `1.0`): Increment/decrement step size.
+  /// - [enableGesture] (`bool`, default: `true`): Enable drag gestures.
+  /// - [invalidValue] (`double?`, default: `0.0`): Fallback value for invalid input.
+  /// - [min] (`double?`, optional): Minimum allowed value.
+  /// - [max] (`double?`, optional): Maximum allowed value.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputSpinnerFeature({
+    super.visibility,
+    super.skipFocusTraversal,
+    this.step = 1.0,
+    this.enableGesture = true,
+    this.invalidValue = 0.0,
+    this.min,
+    this.max,
+  });
 
   @override
   InputFeatureState createState() => _InputSpinnerFeatureState();
 }
 
-class _InputSpinnerFeatureState extends InputFeatureState<InputSpinnerFeature> {
+class _InputSpinnerFeatureState extends InputFeatureState<VNLInputSpinnerFeature> {
+  double _clampValue(double value) {
+    final min = feature.min;
+    final max = feature.max;
+    if (min != null && value < min) {
+      return min;
+    }
+    if (max != null && value > max) {
+      return max;
+    }
+    return value;
+  }
+
+  double? _effectiveValue() {
+    final value = double.tryParse(controller.text);
+    return value ?? feature.invalidValue;
+  }
+
+  bool _canIncrease(double? value) {
+    if (value == null) return false;
+    final max = feature.max;
+    return max == null || value < max;
+  }
+
+  bool _canDecrease(double? value) {
+    if (value == null) return false;
+    final min = feature.min;
+    return min == null || value > min;
+  }
+
   void _replaceText(UnaryOperator<String> replacer) {
     var controller = this.controller;
     var text = controller.text;
@@ -378,11 +688,11 @@ class _InputSpinnerFeatureState extends InputFeatureState<InputSpinnerFeature> {
       var value = double.tryParse(text);
       if (value == null) {
         if (feature.invalidValue != null) {
-          return _newText(feature.invalidValue!);
+          return _newText(_clampValue(feature.invalidValue!));
         }
         return text;
       }
-      return _newText(value + feature.step);
+      return _newText(_clampValue(value + feature.step));
     });
   }
 
@@ -404,11 +714,11 @@ class _InputSpinnerFeatureState extends InputFeatureState<InputSpinnerFeature> {
       var value = double.tryParse(text);
       if (value == null) {
         if (feature.invalidValue != null) {
-          return _newText(feature.invalidValue!);
+          return _newText(_clampValue(feature.invalidValue!));
         }
         return text;
       }
-      return _newText(value - feature.step);
+      return _newText(_clampValue(value - feature.step));
     });
   }
 
@@ -426,42 +736,50 @@ class _InputSpinnerFeatureState extends InputFeatureState<InputSpinnerFeature> {
   }
 
   Widget _buildButtons() {
-    return Builder(
-      builder: (context) {
-        final theme = VNLTheme.of(context);
-        return Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            IconButton.text(
-              icon: Transform.translate(
-                offset: Offset(0, -1 * theme.scaling),
-                child: Transform.scale(
-                  alignment: Alignment.center,
-                  scale: 1.5,
-                  child: const Icon(LucideIcons.chevronUp),
+    return Builder(builder: (context) {
+      final theme = Theme.of(context);
+      return ValueListenableBuilder<TextEditingValue>(
+        valueListenable: controller,
+        builder: (context, value, child) {
+          final currentValue = _effectiveValue();
+          final clampedValue =
+              currentValue == null ? null : _clampValue(currentValue);
+          final canIncrease = _canIncrease(clampedValue);
+          final canDecrease = _canDecrease(clampedValue);
+          return Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              VNLIconButton.text(
+                icon: Transform.translate(
+                  offset: Offset(0, -1 * theme.scaling),
+                  child: Transform.scale(
+                    alignment: Alignment.center,
+                    scale: 1.5,
+                    child: const Icon(LucideIcons.chevronUp),
+                  ),
                 ),
+                onPressed: canIncrease ? _increase : null,
+                density: ButtonDensity.compact,
+                size: VNLButtonSize.xSmall,
               ),
-              onPressed: _increase,
-              density: ButtonDensity.compact,
-              size: ButtonSize.xSmall,
-            ),
-            IconButton.text(
-              icon: Transform.translate(
-                offset: Offset(0, 1 * theme.scaling),
-                child: Transform.scale(
-                  alignment: Alignment.center,
-                  scale: 1.5,
-                  child: const Icon(LucideIcons.chevronDown),
+              VNLIconButton.text(
+                icon: Transform.translate(
+                  offset: Offset(0, 1 * theme.scaling),
+                  child: Transform.scale(
+                    alignment: Alignment.center,
+                    scale: 1.5,
+                    child: const Icon(LucideIcons.chevronDown),
+                  ),
                 ),
+                onPressed: canDecrease ? _decrease : null,
+                density: ButtonDensity.compact,
+                size: VNLButtonSize.xSmall,
               ),
-              onPressed: _decrease,
-              density: ButtonDensity.compact,
-              size: ButtonSize.xSmall,
-            ),
-          ],
-        );
-      },
-    );
+            ],
+          );
+        },
+      );
+    });
   }
 
   @override
@@ -474,24 +792,229 @@ class _InputSpinnerFeatureState extends InputFeatureState<InputSpinnerFeature> {
   }
 }
 
-class InputCopyFeature extends InputFeature {
+/// Adds a single increment button to numeric input fields.
+///
+/// Provides a button that increases the numeric value by a fixed step.
+class InputStepperButtonFeature extends VNLInputFeature {
+  /// The amount to increment on each press.
+  final double step;
+
+  /// Default value when the input is invalid or empty.
+  final double? invalidValue;
+
+  /// Minimum allowed value.
+  final double? min;
+
+  /// Maximum allowed value.
+  final double? max;
+
+  /// Position of the increment button.
   final InputFeaturePosition position;
+
+  /// Custom icon for the increment button.
   final Widget? icon;
-  const InputCopyFeature({super.visibility, this.position = InputFeaturePosition.trailing, this.icon});
+
+  /// Creates an [InputStepperButtonFeature].
+  ///
+  /// Parameters:
+  /// - [step] (`double`, default: `1.0`): Increment step size.
+  /// - [invalidValue] (`double?`, default: `0.0`): Fallback value for invalid input.
+  /// - [min] (`double?`, optional): Minimum allowed value.
+  /// - [max] (`double?`, optional): Maximum allowed value.
+  /// - [position] (`InputFeaturePosition`, default: `InputFeaturePosition.trailing`):
+  ///   Where to place the button.
+  /// - [icon] (`Widget?`, optional): Custom icon widget.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const InputStepperButtonFeature({
+    super.visibility,
+    super.skipFocusTraversal,
+    this.step = 1.0,
+    this.invalidValue = 0.0,
+    this.min,
+    this.max,
+    this.position = InputFeaturePosition.trailing,
+    this.icon = const Icon(LucideIcons.plus),
+  });
+
+  /// Creates a decrement button feature for numeric inputs.
+  ///
+  /// Parameters:
+  /// - [step] (`double`, default: `-1.0`): Decrement step size.
+  /// - [invalidValue] (`double?`, default: `0.0`): Fallback value for invalid input.
+  /// - [min] (`double?`, optional): Minimum allowed value.
+  /// - [max] (`double?`, optional): Maximum allowed value.
+  /// - [position] (`InputFeaturePosition`, default: `InputFeaturePosition.trailing`):
+  ///   Where to place the button.
+  /// - [icon] (`Widget?`, optional): Custom icon widget.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const InputStepperButtonFeature.decrement({
+    super.visibility,
+    super.skipFocusTraversal,
+    this.step = -1.0,
+    this.invalidValue = 0.0,
+    this.min,
+    this.max,
+    this.position = InputFeaturePosition.trailing,
+    this.icon = const Icon(LucideIcons.minus),
+  });
+
+  @override
+  InputFeatureState createState() => _InputStepperButtonFeatureState();
+}
+
+class _InputStepperButtonFeatureState
+    extends InputFeatureState<InputStepperButtonFeature> {
+  double _clampValue(double value) {
+    final min = feature.min;
+    final max = feature.max;
+    if (min != null && value < min) {
+      return min;
+    }
+    if (max != null && value > max) {
+      return max;
+    }
+    return value;
+  }
+
+  double? _effectiveValue() {
+    final value = double.tryParse(controller.text);
+    return value ?? feature.invalidValue;
+  }
+
+  bool _canApplyStep(double? value) {
+    if (value == null) return false;
+    final step = feature.step;
+    final min = feature.min;
+    final max = feature.max;
+    if (step >= 0) {
+      return max == null || value < max;
+    }
+    return min == null || value > min;
+  }
+
+  void _replaceText(UnaryOperator<String> replacer) {
+    var controller = this.controller;
+    var text = controller.text;
+    var newText = replacer(text);
+    if (newText != text) {
+      controller.text = newText;
+      input.onChanged?.call(newText);
+    }
+  }
+
+  String _newText(double value) {
+    String newText = value.toString();
+    if (newText.contains('.')) {
+      while (newText.endsWith('0')) {
+        newText = newText.substring(0, newText.length - 1);
+      }
+      if (newText.endsWith('.')) {
+        newText = newText.substring(0, newText.length - 1);
+      }
+    }
+    return newText;
+  }
+
+  void _increase() {
+    _replaceText((text) {
+      var value = double.tryParse(text);
+      if (value == null) {
+        if (feature.invalidValue != null) {
+          return _newText(_clampValue(feature.invalidValue!));
+        }
+        return text;
+      }
+      return _newText(_clampValue(value + feature.step));
+    });
+  }
+
+  Widget _buildButton() {
+    return ValueListenableBuilder<TextEditingValue>(
+      valueListenable: controller,
+      builder: (context, value, child) {
+        final currentValue = _effectiveValue();
+        final clampedValue =
+            currentValue == null ? null : _clampValue(currentValue);
+        final canApplyStep = _canApplyStep(clampedValue);
+        return AspectRatio(
+          aspectRatio: 1,
+          child: VNLIconButton.outline(
+            icon: feature.icon ?? const Icon(LucideIcons.plus),
+            onPressed: canApplyStep ? _increase : null,
+            density: ButtonDensity.compact,
+            size: VNLButtonSize.small,
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Iterable<Widget> buildSuffix() sync* {
+    if (feature.position == InputFeaturePosition.trailing) {
+      yield _buildButton();
+    }
+  }
+
+  @override
+  Iterable<Widget> buildPrefix() sync* {
+    if (feature.position == InputFeaturePosition.leading) {
+      yield _buildButton();
+    }
+  }
+}
+
+/// Adds a copy button to the input field.
+///
+/// Provides a button that copies the current input text to the clipboard.
+/// Useful for allowing users to easily copy generated or displayed content.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   controller: TextEditingController(text: 'Copy me!'),
+///   features: [
+///     VNLInputCopyFeature(),
+///   ],
+/// )
+/// ```
+class VNLInputCopyFeature extends VNLInputFeature {
+  /// Position of the copy button.
+  final InputFeaturePosition position;
+
+  /// Custom icon for the copy button.
+  final Widget? icon;
+
+  /// Creates an [VNLInputCopyFeature].
+  ///
+  /// Parameters:
+  /// - [position] (`InputFeaturePosition`, default: `InputFeaturePosition.trailing`):
+  ///   Where to place the copy button.
+  /// - [icon] (`Widget?`, optional): Custom icon widget.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputCopyFeature({
+    super.visibility,
+    super.skipFocusTraversal,
+    this.position = InputFeaturePosition.trailing,
+    this.icon,
+  });
 
   @override
   InputFeatureState createState() => _InputCopyFeatureState();
 }
 
-class _InputCopyFeatureState extends InputFeatureState<InputCopyFeature> {
+class _InputCopyFeatureState extends InputFeatureState<VNLInputCopyFeature> {
   void _copy() {
-    Actions.invoke(context, const TextFieldSelectAllAndCopyIntent());
+    Actions.invoke(context, const VNLTextFieldSelectAllAndCopyIntent());
   }
 
   @override
   Iterable<Widget> buildTrailing() sync* {
     if (feature.position == InputFeaturePosition.trailing) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.copy),
         onPressed: _copy,
         density: ButtonDensity.compact,
@@ -502,7 +1025,7 @@ class _InputCopyFeatureState extends InputFeatureState<InputCopyFeature> {
   @override
   Iterable<Widget> buildLeading() sync* {
     if (feature.position == InputFeaturePosition.leading) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.copy),
         onPressed: _copy,
         density: ButtonDensity.compact,
@@ -511,53 +1034,224 @@ class _InputCopyFeatureState extends InputFeatureState<InputCopyFeature> {
   }
 }
 
-class InputLeadingFeature extends InputFeature {
+/// Adds a custom widget to the leading (left) side of the input field.
+///
+/// Allows you to place any widget before the input text, such as icons,
+/// labels, or other decorative elements.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   features: [
+///     VNLInputLeadingFeature(
+///       Icon(Icons.search),
+///     ),
+///   ],
+/// )
+/// ```
+class VNLInputLeadingFeature extends VNLInputFeature {
+  /// The widget to display on the leading side.
   final Widget prefix;
-  const InputLeadingFeature(this.prefix, {super.visibility});
+
+  /// Creates an [VNLInputLeadingFeature].
+  ///
+  /// Parameters:
+  /// - [prefix] (`Widget`, required): The widget to show before the input.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputLeadingFeature(
+    this.prefix, {
+    super.visibility,
+    super.skipFocusTraversal,
+  });
 
   @override
   InputFeatureState createState() => _InputLeadingFeatureState();
 }
 
-class _InputLeadingFeatureState extends InputFeatureState<InputLeadingFeature> {
+class _InputLeadingFeatureState extends InputFeatureState<VNLInputLeadingFeature> {
   @override
   Iterable<Widget> buildLeading() sync* {
     yield feature.prefix;
   }
 }
 
-class InputTrailingFeature extends InputFeature {
+/// Adds a custom widget to the trailing (right) side of the input field.
+///
+/// Allows you to place any widget after the input text, such as icons,
+/// buttons, or other decorative elements.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   features: [
+///     VNLInputTrailingFeature(
+///       Icon(Icons.arrow_forward),
+///     ),
+///   ],
+/// )
+/// ```
+class VNLInputTrailingFeature extends VNLInputFeature {
+  /// The widget to display on the trailing side.
   final Widget suffix;
-  const InputTrailingFeature(this.suffix, {super.visibility});
+
+  /// Creates an [VNLInputTrailingFeature].
+  ///
+  /// Parameters:
+  /// - [suffix] (`Widget`, required): The widget to show after the input.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputTrailingFeature(
+    this.suffix, {
+    super.visibility,
+    super.skipFocusTraversal,
+  });
 
   @override
   InputFeatureState createState() => _InputTrailingFeatureState();
 }
 
-class _InputTrailingFeatureState extends InputFeatureState<InputTrailingFeature> {
+/// Adds a custom widget above or below the text input area.
+///
+/// Use this feature to place helper content inside the input decoration,
+/// directly above or below the editable text.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   features: [
+///     InputAboveBelowFeature(
+///       child: Text('Billing email').small().muted(),
+///       position: InputFeaturePosition.above,
+///     ),
+///   ],
+/// )
+/// ```
+class InputAboveBelowFeature extends VNLInputFeature {
+  /// Widget shown above or below the editable text.
+  final Widget? child;
+
+  /// Position of the [child] relative to the editable text.
+  final InputFeaturePosition position;
+
+  /// Creates an [InputAboveBelowFeature].
+  ///
+  /// Parameters:
+  /// - [child] (`Widget?`, optional): Widget displayed above or below the input text.
+  /// - [position] (`InputFeaturePosition`, default: `InputFeaturePosition.below`): Placement.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const InputAboveBelowFeature({
+    super.visibility,
+    super.skipFocusTraversal,
+    this.child,
+    this.position = InputFeaturePosition.below,
+  });
+
+  /// Creates an [InputAboveBelowFeature] displayed above the input text.
+  ///
+  /// Parameters:
+  /// - [child] (`Widget?`, optional): Widget displayed above the input text.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const InputAboveBelowFeature.above(
+    this.child, {
+    super.visibility,
+    super.skipFocusTraversal,
+  }) : position = InputFeaturePosition.above;
+
+  /// Creates an [InputAboveBelowFeature] displayed below the input text.
+  ///
+  /// Parameters:
+  /// - [child] (`Widget?`, optional): Widget displayed below the input text.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const InputAboveBelowFeature.below(
+    this.child, {
+    super.visibility,
+    super.skipFocusTraversal,
+  }) : position = InputFeaturePosition.below;
+
+  @override
+  InputFeatureState createState() => _InputAboveBelowFeatureState();
+}
+
+class _InputAboveBelowFeatureState
+    extends InputFeatureState<InputAboveBelowFeature> {
+  @override
+  Iterable<Widget> buildAbove() sync* {
+    if (feature.position == InputFeaturePosition.above &&
+        feature.child != null) {
+      yield feature.child!;
+    }
+  }
+
+  @override
+  Iterable<Widget> buildBelow() sync* {
+    if (feature.position == InputFeaturePosition.below &&
+        feature.child != null) {
+      yield feature.child!;
+    }
+  }
+}
+
+class _InputTrailingFeatureState
+    extends InputFeatureState<VNLInputTrailingFeature> {
   @override
   Iterable<Widget> buildTrailing() sync* {
     yield feature.suffix;
   }
 }
 
-class InputPasteFeature extends InputFeature {
+/// Adds a paste button to the input field.
+///
+/// Provides a button that pastes content from the clipboard into the input.
+/// Useful for improving user experience when entering copied data.
+///
+/// Example:
+/// ```dart
+/// VNLTextField(
+///   features: [
+///     VNLInputPasteFeature(
+///       position: InputFeaturePosition.trailing,
+///     ),
+///   ],
+/// )
+/// ```
+class VNLInputPasteFeature extends VNLInputFeature {
+  /// Position of the paste button.
   final InputFeaturePosition position;
+
+  /// Custom icon for the paste button.
   final Widget? icon;
-  const InputPasteFeature({super.visibility, this.position = InputFeaturePosition.trailing, this.icon});
+
+  /// Creates an [VNLInputPasteFeature].
+  ///
+  /// Parameters:
+  /// - [position] (`InputFeaturePosition`, default: `InputFeaturePosition.trailing`):
+  ///   Where to place the paste button.
+  /// - [icon] (`Widget?`, optional): Custom icon widget.
+  /// - [visibility] (`VNLInputFeatureVisibility`, optional): Controls visibility.
+  /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
+  const VNLInputPasteFeature({
+    super.visibility,
+    super.skipFocusTraversal,
+    this.position = InputFeaturePosition.trailing,
+    this.icon,
+  });
 
   @override
   InputFeatureState createState() => _InputPasteFeatureState();
 }
 
-class _InputPasteFeatureState extends InputFeatureState<InputPasteFeature> {
+class _InputPasteFeatureState extends InputFeatureState<VNLInputPasteFeature> {
   void _paste() {
     var clipboardData = Clipboard.getData('text/plain');
     clipboardData.then((value) {
       if (value != null) {
         var text = value.text;
         if (text != null && text.isNotEmpty && context.mounted) {
-          Actions.invoke(context, TextFieldAppendTextIntent(text: text));
+          Actions.invoke(context, VNLTextFieldAppendTextIntent(text: text));
         }
       }
     });
@@ -566,7 +1260,7 @@ class _InputPasteFeatureState extends InputFeatureState<InputPasteFeature> {
   @override
   Iterable<Widget> buildTrailing() sync* {
     if (feature.position == InputFeaturePosition.trailing) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.clipboard),
         onPressed: _paste,
         density: ButtonDensity.compact,
@@ -577,7 +1271,7 @@ class _InputPasteFeatureState extends InputFeatureState<InputPasteFeature> {
   @override
   Iterable<Widget> buildLeading() sync* {
     if (feature.position == InputFeaturePosition.leading) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.clipboard),
         onPressed: _paste,
         density: ButtonDensity.compact,

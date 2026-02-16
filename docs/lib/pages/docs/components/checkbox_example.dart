@@ -13,15 +13,15 @@ class CheckboxExample extends StatelessWidget {
     return const ComponentPage(
       name: 'checkbox',
       description: 'Checkboxes allow the user to select one or more items from a set.',
-      displayName: 'Checkbox',
+      displayName: 'VNLCheckbox',
       children: [
         WidgetUsageExample(
-          title: 'Checkbox Example',
+          title: 'VNLCheckbox Example',
           path: 'lib/pages/docs/components/checkbox/checkbox_example_1.dart',
           child: CheckboxExample1(),
         ),
         WidgetUsageExample(
-          title: 'Checkbox Example with Tristate',
+          title: 'VNLCheckbox Example with Tristate',
           path: 'lib/pages/docs/components/checkbox/checkbox_example_2.dart',
           child: CheckboxExample2(),
         ),

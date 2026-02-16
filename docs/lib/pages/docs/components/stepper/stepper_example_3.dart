@@ -9,7 +9,7 @@ class StepperExample3 extends StatefulWidget {
 }
 
 class _StepperExample3State extends State<StepperExample3> {
-  final StepperController controller = StepperController(
+  final VNLStepperController controller = VNLStepperController(
     stepStates: {
       1: StepState.failed,
     },
@@ -22,12 +22,12 @@ class _StepperExample3State extends State<StepperExample3> {
       controller: controller,
       direction: Axis.horizontal,
       steps: [
-        Step(
-          title: const Text('Step 1'),
+        VNLStep(
+          title: const Text('VNLStep 1'),
           contentBuilder: (context) {
-            return const StepContainer(
+            return const VNLStepContainer(
               actions: [
-                SecondaryButton(
+                VNLSecondaryButton(
                   child: Text('Prev'),
                 ),
                 PrimaryButton(
@@ -41,12 +41,12 @@ class _StepperExample3State extends State<StepperExample3> {
             );
           },
         ),
-        Step(
-          title: const Text('Step 2'),
+        VNLStep(
+          title: const Text('VNLStep 2'),
           contentBuilder: (context) {
-            return const StepContainer(
+            return const VNLStepContainer(
               actions: [
-                SecondaryButton(
+                VNLSecondaryButton(
                   child: Text('Prev'),
                 ),
                 PrimaryButton(
@@ -60,12 +60,12 @@ class _StepperExample3State extends State<StepperExample3> {
             );
           },
         ),
-        Step(
-          title: const Text('Step 3'),
+        VNLStep(
+          title: const Text('VNLStep 3'),
           contentBuilder: (context) {
-            return const StepContainer(
+            return const VNLStepContainer(
               actions: [
-                SecondaryButton(
+                VNLSecondaryButton(
                   child: Text('Prev'),
                 ),
                 PrimaryButton(

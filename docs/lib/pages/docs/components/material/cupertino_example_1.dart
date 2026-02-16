@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:vnl_common_ui/vnl_ui.dart' as vnlui;
+import 'package:vnl_common_ui/shadcn_flutter.dart' as shadcnui;
 
 class CupertinoExample1 extends StatefulWidget {
   const CupertinoExample1({super.key});
@@ -29,22 +29,25 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
               '$_counter',
               style: CupertinoTheme.of(context).textTheme.navTitleTextStyle,
             ),
-            const vnlui.Gap(16),
+            const shadcnui.Gap(16),
             CupertinoButton.filled(
               onPressed: () => setState(() => _counter++),
               child: const Icon(CupertinoIcons.add),
             ),
-            const vnlui.Gap(64),
-            vnlui.VNLookUI(
-                child: vnlui.VNLCard(
+            const shadcnui.Gap(64),
+            // shadcn_flutter widgets can also be used in a Cupertino app.
+            // This card mirrors the Material example but uses Cupertino dialogs.
+            shadcnui.VNLookUI(
+                child: shadcnui.VNLCard(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                      'You can also use vnl_ui widgets inside Material widgets'),
-                  const vnlui.Gap(16),
-                  vnlui.PrimaryButton(
+                      'You can also use shadcn_flutter widgets inside Material widgets'),
+                  const shadcnui.Gap(16),
+                  shadcnui.PrimaryButton(
                     onPressed: () {
+                      // Show a native Cupertino dialog
                       showCupertinoDialog(
                         context: context,
                         builder: (context) {
@@ -65,18 +68,19 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
                     },
                     child: const Text('Open Cupertino Dialog'),
                   ),
-                  const vnlui.Gap(8),
-                  vnlui.SecondaryButton(
+                  const shadcnui.Gap(8),
+                  shadcnui.VNLSecondaryButton(
                     onPressed: () {
-                      vnlui.showDialog(
+                      // Show a shadcn_flutter dialog as a comparison
+                      shadcnui.showDialog(
                         context: context,
                         builder: (context) {
-                          return vnlui.VNLAlertDialog(
+                          return shadcnui.VNLAlertDialog(
                             title: const Text('Hello'),
                             content:
-                                const Text('This is vnl_ui dialog'),
+                                const Text('This is shadcn_flutter dialog'),
                             actions: [
-                              vnlui.PrimaryButton(
+                              shadcnui.PrimaryButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
@@ -87,7 +91,7 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
                         },
                       );
                     },
-                    child: const Text('Open vnl_ui Dialog'),
+                    child: const Text('Open shadcn_flutter Dialog'),
                   ),
                 ],
               ),

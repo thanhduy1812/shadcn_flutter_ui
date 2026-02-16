@@ -1,48 +1,214 @@
 import 'package:flutter/rendering.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-class Hidden extends StatelessWidget {
+/// Theme for [VNLHidden].
+class VNLHiddenTheme extends ComponentThemeData {
+  /// Direction of the hidden transition.
+  final Axis? direction;
+
+  /// Duration of the animation.
+  final Duration? duration;
+
+  /// Curve of the animation.
+  final Curve? curve;
+
+  /// Whether the widget is reversed.
+  final bool? reverse;
+
+  /// Whether to keep cross axis size when hidden.
+  final bool? keepCrossAxisSize;
+
+  /// Whether to keep main axis size when hidden.
+  final bool? keepMainAxisSize;
+
+  /// Creates a [HiddenTheme].
+  const VNLHiddenTheme({
+    this.direction,
+    this.duration,
+    this.curve,
+    this.reverse,
+    this.keepCrossAxisSize,
+    this.keepMainAxisSize,
+  });
+
+  /// Returns a copy of this theme with the given fields replaced.
+  VNLHiddenTheme copyWith({
+    ValueGetter<Axis?>? direction,
+    ValueGetter<Duration?>? duration,
+    ValueGetter<Curve?>? curve,
+    ValueGetter<bool?>? reverse,
+    ValueGetter<bool?>? keepCrossAxisSize,
+    ValueGetter<bool?>? keepMainAxisSize,
+  }) {
+    return VNLHiddenTheme(
+      direction: direction == null ? this.direction : direction(),
+      duration: duration == null ? this.duration : duration(),
+      curve: curve == null ? this.curve : curve(),
+      reverse: reverse == null ? this.reverse : reverse(),
+      keepCrossAxisSize: keepCrossAxisSize == null
+          ? this.keepCrossAxisSize
+          : keepCrossAxisSize(),
+      keepMainAxisSize:
+          keepMainAxisSize == null ? this.keepMainAxisSize : keepMainAxisSize(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is VNLHiddenTheme &&
+        other.direction == direction &&
+        other.duration == duration &&
+        other.curve == curve &&
+        other.reverse == reverse &&
+        other.keepCrossAxisSize == keepCrossAxisSize &&
+        other.keepMainAxisSize == keepMainAxisSize;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        direction,
+        duration,
+        curve,
+        reverse,
+        keepCrossAxisSize,
+        keepMainAxisSize,
+      );
+}
+
+/// A widget that conditionally hides its child with optional animation.
+///
+/// Provides a simple way to show/hide widgets with smooth animations. When
+/// hidden, the widget can maintain its size in either axis or collapse
+/// completely. Supports slide animations in any direction.
+///
+/// Example:
+/// ```dart
+/// VNLHidden(
+///   hidden: !isVisible,
+///   direction: Axis.vertical,
+///   duration: Duration(milliseconds: 300),
+///   child: Container(
+///     height: 100,
+///     child: Text('VNLToggle visibility'),
+///   ),
+/// )
+/// ```
+class VNLHidden extends StatelessWidget {
+  /// Whether the child widget should be hidden.
+  ///
+  /// When `true`, the child is hidden (optionally animated). When `false`,
+  /// the child is visible.
   final bool hidden;
-  final Widget child;
-  final Axis direction;
-  final bool reverse;
-  final Duration duration;
-  final Curve curve;
-  final bool keepCrossAxisSize;
-  final bool keepMainAxisSize;
 
-  const Hidden({
+  /// The child widget to show or hide.
+  final Widget child;
+
+  /// The axis along which to animate the hiding.
+  ///
+  /// If `null`, the widget is hidden without animation.
+  final Axis? direction;
+
+  /// Whether to reverse the hide animation direction.
+  ///
+  /// When `true`, slides out in the opposite direction.
+  final bool? reverse;
+
+  /// Duration of the hide/show animation.
+  ///
+  /// If `null`, uses a default duration or hides instantly.
+  final Duration? duration;
+
+  /// Animation curve for the hide/show transition.
+  ///
+  /// If `null`, uses a default curve.
+  final Curve? curve;
+
+  /// Whether to maintain the widget's cross-axis size when hidden.
+  ///
+  /// When `true`, preserves width (for vertical slides) or height (for
+  /// horizontal slides) during the animation.
+  final bool? keepCrossAxisSize;
+
+  /// Whether to maintain the widget's main-axis size when hidden.
+  ///
+  /// When `true`, preserves the size along the animation axis, creating
+  /// a fade-out effect instead of a slide.
+  final bool? keepMainAxisSize;
+
+  /// Creates a [VNLHidden].
+  ///
+  /// Parameters:
+  /// - [hidden] (`bool`, required): Whether to hide the child.
+  /// - [child] (`Widget`, required): Widget to show/hide.
+  /// - [direction] (`Axis?`, optional): Animation axis.
+  /// - [duration] (`Duration?`, optional): Animation duration.
+  /// - [curve] (`Curve?`, optional): Animation curve.
+  /// - [reverse] (`bool?`, optional): Reverse animation direction.
+  /// - [keepCrossAxisSize] (`bool?`, optional): Maintain cross-axis size.
+  /// - [keepMainAxisSize] (`bool?`, optional): Maintain main-axis size.
+  const VNLHidden({
     super.key,
     required this.hidden,
     required this.child,
-    this.direction = Axis.horizontal,
-    this.duration = kDefaultDuration,
-    this.curve = Curves.easeInOut,
-    this.reverse = false,
-    this.keepCrossAxisSize = false,
-    this.keepMainAxisSize = false,
+    this.direction,
+    this.duration,
+    this.curve,
+    this.reverse,
+    this.keepCrossAxisSize,
+    this.keepMainAxisSize,
   });
 
   @override
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
-    var duration = this.duration;
+    final compTheme = ComponentTheme.maybeOf<VNLHiddenTheme>(context);
+    final directionValue = styleValue(
+      widgetValue: direction,
+      themeValue: compTheme?.direction,
+      defaultValue: Axis.horizontal,
+    );
+    final durationValue = styleValue(
+      widgetValue: duration,
+      themeValue: compTheme?.duration,
+      defaultValue: kDefaultDuration,
+    );
+    final curveValue = styleValue(
+      widgetValue: curve,
+      themeValue: compTheme?.curve,
+      defaultValue: Curves.linear,
+    );
+    final reverseValue = styleValue(
+      widgetValue: reverse,
+      themeValue: compTheme?.reverse,
+      defaultValue: false,
+    );
+    final keepCrossAxisSizeValue = styleValue(
+      widgetValue: keepCrossAxisSize,
+      themeValue: compTheme?.keepCrossAxisSize,
+      defaultValue: false,
+    );
+    final keepMainAxisSizeValue = styleValue(
+      widgetValue: keepMainAxisSize,
+      themeValue: compTheme?.keepMainAxisSize,
+      defaultValue: false,
+    );
     return AnimatedOpacity(
       opacity: hidden ? 0.0 : 1.0,
-      duration: duration,
-      curve: curve,
+      duration: durationValue,
+      curve: curveValue,
       child: AnimatedValueBuilder(
         value: hidden ? 0.0 : 1.0,
-        duration: duration,
-        curve: curve,
+        duration: durationValue,
+        curve: curveValue,
         child: child,
         builder: (context, value, child) {
           return _HiddenLayout(
-            keepCrossAxisSize: keepCrossAxisSize,
-            keepMainAxisSize: keepMainAxisSize,
+            keepCrossAxisSize: keepCrossAxisSizeValue,
+            keepMainAxisSize: keepMainAxisSizeValue,
             textDirection: textDirection,
-            direction: direction,
-            reverse: reverse,
+            direction: directionValue,
+            reverse: reverseValue,
             progress: value.clamp(0.0, 1.0),
             child: child,
           );
@@ -83,7 +249,10 @@ class _HiddenLayout extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, _RenderHiddenLayout renderObject) {
+  void updateRenderObject(
+    BuildContext context,
+    _RenderHiddenLayout renderObject,
+  ) {
     bool needsLayout = false;
     if (renderObject.textDirection != textDirection) {
       renderObject.textDirection = textDirection;
@@ -115,7 +284,8 @@ class _HiddenLayout extends SingleChildRenderObjectWidget {
   }
 }
 
-class _RenderHiddenLayout extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
+class _RenderHiddenLayout extends RenderBox
+    with RenderObjectWithChildMixin<RenderBox> {
   TextDirection textDirection;
   Axis direction;
   bool reverse;
@@ -134,42 +304,62 @@ class _RenderHiddenLayout extends RenderBox with RenderObjectWithChildMixin<Rend
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    return _computeIntrinsicHeight((RenderBox child, double width) => child.getMaxIntrinsicHeight(width), width);
+    return _computeIntrinsicHeight(
+      (RenderBox child, double width) => child.getMaxIntrinsicHeight(width),
+      width,
+    );
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    return _computeIntrinsicWidth((RenderBox child, double height) => child.getMaxIntrinsicWidth(height), height);
+    return _computeIntrinsicWidth(
+      (RenderBox child, double height) => child.getMaxIntrinsicWidth(height),
+      height,
+    );
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    return _computeIntrinsicHeight((RenderBox child, double width) => child.getMinIntrinsicHeight(width), width);
+    return _computeIntrinsicHeight(
+      (RenderBox child, double width) => child.getMinIntrinsicHeight(width),
+      width,
+    );
   }
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    return _computeIntrinsicWidth((RenderBox child, double height) => child.getMinIntrinsicWidth(height), height);
+    return _computeIntrinsicWidth(
+      (RenderBox child, double height) => child.getMinIntrinsicWidth(height),
+      height,
+    );
   }
 
-  double _computeIntrinsicWidth(double Function(RenderBox child, double height) childWidth, double height) {
+  double _computeIntrinsicWidth(
+    double Function(RenderBox child, double height) childWidth,
+    double height,
+  ) {
     var child = this.child;
     if (child == null) {
       return 0;
     }
     double width = childWidth(child, height);
-    return ((keepMainAxisSize && direction != Axis.vertical) || (keepCrossAxisSize && direction != Axis.horizontal))
+    return ((keepMainAxisSize && direction != Axis.vertical) ||
+            (keepCrossAxisSize && direction != Axis.horizontal))
         ? width
         : width * progress;
   }
 
-  double _computeIntrinsicHeight(double Function(RenderBox child, double width) childHeight, double width) {
+  double _computeIntrinsicHeight(
+    double Function(RenderBox child, double width) childHeight,
+    double width,
+  ) {
     var child = this.child;
     if (child == null) {
       return 0;
     }
     double height = childHeight(child, width);
-    return ((keepMainAxisSize && direction != Axis.horizontal) || (keepCrossAxisSize && direction != Axis.vertical))
+    return ((keepMainAxisSize && direction != Axis.horizontal) ||
+            (keepCrossAxisSize && direction != Axis.vertical))
         ? height
         : height * progress;
   }
@@ -180,11 +370,12 @@ class _RenderHiddenLayout extends RenderBox with RenderObjectWithChildMixin<Rend
     if (child != null) {
       var parentData = child.parentData as BoxParentData;
       return result.addWithPaintOffset(
-          offset: parentData.offset,
-          position: position,
-          hitTest: (result, position) {
-            return child.hitTest(result, position: position);
-          });
+        offset: parentData.offset,
+        position: position,
+        hitTest: (result, position) {
+          return child.hitTest(result, position: position);
+        },
+      );
     }
     return false;
   }
@@ -225,20 +416,59 @@ class _RenderHiddenLayout extends RenderBox with RenderObjectWithChildMixin<Rend
       if (reverse) {
         var parentData = child.parentData as BoxParentData;
         if (direction == Axis.horizontal) {
-          parentData.offset = Offset(size.width - preferredSize.width, -(preferredSize.height - size.height) / 2);
+          parentData.offset = Offset(
+            size.width - preferredSize.width,
+            -(preferredSize.height - size.height) / 2,
+          );
         } else {
-          parentData.offset = Offset(-(preferredSize.width - size.width) / 2, size.height - preferredSize.height);
+          parentData.offset = Offset(
+            -(preferredSize.width - size.width) / 2,
+            size.height - preferredSize.height,
+          );
         }
       } else {
         var parentData = child.parentData as BoxParentData;
         if (direction == Axis.horizontal) {
-          parentData.offset = Offset(0, -(preferredSize.height - size.height) / 2);
+          parentData.offset = Offset(
+            0,
+            -(preferredSize.height - size.height) / 2,
+          );
         } else {
-          parentData.offset = Offset(-(preferredSize.width - size.width) / 2, 0);
+          parentData.offset = Offset(
+            -(preferredSize.width - size.width) / 2,
+            0,
+          );
         }
       }
     } else {
       size = constraints.biggest;
+    }
+  }
+
+  @override
+  Size computeDryLayout(covariant BoxConstraints constraints) {
+    var child = this.child;
+    if (child != null) {
+      Size childSize = constraints.constrain(child.getDryLayout(constraints));
+      double width = childSize.width;
+      double height = childSize.height;
+      if (!keepMainAxisSize) {
+        if (direction == Axis.vertical) {
+          height *= progress;
+        } else {
+          width *= progress;
+        }
+      }
+      if (!keepCrossAxisSize) {
+        if (direction == Axis.vertical) {
+          width *= progress;
+        } else {
+          height *= progress;
+        }
+      }
+      return constraints.constrain(Size(width, height));
+    } else {
+      return constraints.biggest;
     }
   }
 }

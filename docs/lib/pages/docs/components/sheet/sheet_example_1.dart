@@ -8,7 +8,8 @@ class SheetExample1 extends StatefulWidget {
 }
 
 class _SheetExample1State extends State<SheetExample1> {
-  final FormController controller = FormController();
+  // A form controller to read values and validation state inside the sheet.
+  final VNLFormController controller = VNLFormController();
 
   void saveProfile() {
     showDialog(
@@ -16,6 +17,7 @@ class _SheetExample1State extends State<SheetExample1> {
       builder: (context) {
         return VNLAlertDialog(
           title: const Text('Profile updated'),
+          // For demo, show raw form values.
           content: Text('Content: ${controller.values}'),
           actions: [
             PrimaryButton(
@@ -46,10 +48,11 @@ class _SheetExample1State extends State<SheetExample1> {
                 Expanded(
                   child: const Text('Edit profile').large().medium(),
                 ),
-                TextButton(
+                VNLTextButton(
                   density: ButtonDensity.icon,
                   child: const Icon(Icons.close),
                   onPressed: () {
+                    // Close the sheet without saving.
                     closeSheet(context);
                   },
                 ),
@@ -58,12 +61,12 @@ class _SheetExample1State extends State<SheetExample1> {
             const Gap(8),
             const Text('Make changes to your profile here. Click save when you\'re done.').muted(),
             const Gap(16),
-            FormTableLayout(
+            VNLFormTableLayout(
               rows: [
                 FormField<String>(
                   key: const FormKey(#name),
                   label: const Text('Name'),
-                  validator: const NotEmptyValidator() & const LengthValidator(min: 4),
+                  validator: const VNLNotEmptyValidator() & const VNLLengthValidator(min: 4),
                   child: const VNLTextField(
                     initialValue: 'Thito Yalasatria Sunarya',
                     placeholder: Text('Your fullname'),
@@ -72,7 +75,7 @@ class _SheetExample1State extends State<SheetExample1> {
                 FormField<String>(
                   key: const FormKey(#username),
                   label: const Text('Username'),
-                  validator: const NotEmptyValidator() & const LengthValidator(min: 4),
+                  validator: const VNLNotEmptyValidator() & const VNLLengthValidator(min: 4),
                   child: const VNLTextField(
                     initialValue: '@sunarya-thito',
                     placeholder: Text('Your username'),
@@ -83,12 +86,15 @@ class _SheetExample1State extends State<SheetExample1> {
             const Gap(16),
             Align(
               alignment: AlignmentDirectional.centerEnd,
-              child: FormErrorBuilder(
+              child: VNLFormErrorBuilder(
                 builder: (context, errors, child) {
                   return PrimaryButton(
+                    // Disable save while there are validation errors.
                     onPressed: errors.isNotEmpty
                         ? null
                         : () {
+                            // Attempt to submit the form; close the sheet when successful
+                            // and show a confirmation dialog.
                             context.submitForm().then(
                               (value) {
                                 if (value.errors.isEmpty) {
@@ -119,9 +125,11 @@ class _SheetExample1State extends State<SheetExample1> {
         openSheet(
           context: context,
           builder: (context) {
+            // Build the sheet content; keep it small and focused on the form.
             return buildSheet(context);
           },
-          position: OverlayPosition.right,
+          // Slide in from the end (right on LTR).
+          position: OverlayPosition.end,
         );
       },
       child: const Text('Open Sheet'),

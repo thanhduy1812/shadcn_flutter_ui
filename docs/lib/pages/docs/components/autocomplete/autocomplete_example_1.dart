@@ -1,5 +1,10 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
+/// VNLAutoComplete with a VNLTextField and filtered suggestions.
+///
+/// Typing in the field updates the current word under the caret using
+/// [TextEditingController.currentWord] and filters a static list of fruits.
+/// The [VNLAutoComplete] widget displays suggestions provided via `suggestions`.
 class AutoCompleteExample1 extends StatefulWidget {
   const AutoCompleteExample1({super.key});
 
@@ -8,6 +13,7 @@ class AutoCompleteExample1 extends StatefulWidget {
 }
 
 class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
+  // Source data for suggestions.
   final List<String> suggestions = [
     'Apple',
     'Banana',
@@ -25,9 +31,12 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
     'Watermelon',
   ];
 
+  // Filtered suggestions for the current input word.
   List<String> _currentSuggestions = [];
+  // Controller for reading the current text and word at the caret.
   final TextEditingController _controller = TextEditingController();
 
+  // Update the filtered suggestions based on the current word being typed.
   void _updateSuggestions(String value) {
     String? currentWord = _controller.currentWord;
     if (currentWord == null || currentWord.isEmpty) {
@@ -37,23 +46,25 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
       return;
     }
     setState(() {
-      _currentSuggestions =
-          suggestions.where((element) => element.toLowerCase().contains(currentWord.toLowerCase())).toList();
+      _currentSuggestions = suggestions
+          .where((element) =>
+              element.toLowerCase().contains(currentWord.toLowerCase()))
+          .toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return VNLAutoComplete(
+      // Provide the list to be shown in the overlay.
       suggestions: _currentSuggestions,
       child: VNLTextField(
         controller: _controller,
+        // Each keystroke recalculates the suggestions.
         onChanged: _updateSuggestions,
-        trailing: const IconButton.text(
-          density: ButtonDensity.compact,
-          icon: Icon(Icons.clear),
-          onPressed: clearActiveTextInput,
-        ),
+        features: const [
+          VNLInputFeature.clear(),
+        ],
       ),
     );
   }

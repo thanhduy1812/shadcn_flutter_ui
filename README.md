@@ -1,27 +1,62 @@
-# shadcn_flutter
-![Pub Likes](https://img.shields.io/pub/likes/shadcn_flutter)
-![Pub Points](https://img.shields.io/pub/points/shadcn_flutter)
-![Pub Version](https://img.shields.io/pub/v/shadcn_flutter)
-![GitHub Sponsors](https://img.shields.io/github/sponsors/sunarya-thito)
-![GitHub Repo stars](https://img.shields.io/github/stars/sunarya-thito/shadcn_flutter)
+<div align="center">
 
-A set of widgets and utilities for building applications in flutter.
-This is a port of the shadcn UI package to flutter.
+# 🎨 shadcn_flutter
 
-[Documentation](https://sunarya-thito.github.io/shadcn_flutter/) - [pub.dev](https://pub.dev/packages/shadcn_flutter) - [Discord](https://discord.gg/ZzfBPQG4sV)
+**A cohesive shadcn/ui ecosystem for Flutter—components, theming, and
+tooling—ready to ditch Material and Cupertino**
 
-## Widgets
+[![Pub Likes](https://img.shields.io/pub/likes/shadcn_flutter?style=for-the-badge&logo=dart&logoColor=white)](https://pub.dev/packages/shadcn_flutter)
+[![Pub Points](https://img.shields.io/pub/points/shadcn_flutter?style=for-the-badge&logo=dart&logoColor=white)](https://pub.dev/packages/shadcn_flutter)
+[![Pub Version](https://img.shields.io/pub/v/shadcn_flutter?style=for-the-badge&logo=dart&logoColor=white)](https://pub.dev/packages/shadcn_flutter)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/sunarya-thito?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sponsors/sunarya-thito)
+[![GitHub Repo stars](https://img.shields.io/github/stars/sunarya-thito/shadcn_flutter?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sunarya-thito/shadcn_flutter)
+
+**[📚 Widget Catalog](https://sunarya-thito.github.io/shadcn_flutter/)** •
+**[📦 pub.dev](https://pub.dev/packages/shadcn_flutter)** •
+**[💬 Discord](https://discord.gg/ZzfBPQG4sV)**
+
+</div>
+
+---
+
+## Introduction
+
+Welcome to shadcn_flutter, a cohesive UI ecosystem built on the shadcn/ui design
+system for Flutter applications across mobile, web, and desktop. Rather than a
+one‑to‑one design‑system port, this project focuses on delivering a consistent,
+production‑ready experience that feels at home on every platform.
+
+> [!NOTE]
+> Already using Material or Cupertino? You can adopt shadcn_flutter
+> incrementally: mix components inside your existing MaterialApp/CupertinoApp,
+> keep your navigation (e.g., GoRouter), and align visuals with your
+> shadcn_flutter theme. Interop is optional—go all‑in when you're ready.
+
+## Features
+
+- 84 components and growing!
+- Standalone ecosystem: no Material or Cupertino requirement; optional interop
+  when needed.
+- shadcn/ui design tokens and ready-to-use New York theme.
+- Works inside MaterialApp and CupertinoApp; mix and match while you migrate.
+- First-class support across Android, iOS, Web, macOS, Windows, and Linux.
+- Various widget extensions for typography purposes.
+
+## Components Library
 
 ### Animation
+
 [![AnimatedValueBuilder](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/animatedvaluebuilder.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/animated_value_builder)
 [![Number Ticker](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/number_ticker.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/number_ticker)
 [![RepeatedAnimationBuilder](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/repeatedanimationbuilder.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/repeated_animation_builder)
 
 ### Disclosure
+
 [![Accordion](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/accordion.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/accordion)
 [![Collapsible](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/collapsible.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/collapsible)
 
 ### Feedback
+
 [![Alert](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/alert.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/alert)
 [![Alert Dialog](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/alert_dialog.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/alert-dialog)
 [![Circular Progress](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/circular_progress.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/circular-progress)
@@ -30,6 +65,7 @@ This is a port of the shadcn UI package to flutter.
 [![Toast](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/toast.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/toast)
 
 ### Forms
+
 [![Button](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/button.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/button)
 [![Checkbox](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/checkbox.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/checkbox)
 [![Chip Input](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/chip_input.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/chip_input)
@@ -49,6 +85,7 @@ This is a port of the shadcn UI package to flutter.
 [![Toggle](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/toggle.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/toggle)
 
 ### Layout
+
 [![Card](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/card.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/card)
 [![Carousel](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/carousel.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/carousel)
 [![Divider](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/divider.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/divider)
@@ -58,6 +95,7 @@ This is a port of the shadcn UI package to flutter.
 [![Timeline](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/timeline.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/timeline)
 
 ### Navigation
+
 [![Breadcrumb](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/breadcrumb.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/breadcrumb)
 [![Menubar](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/menubar.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/menubar)
 [![Navigation Menu](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/navigation_menu.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/navigation_menu)
@@ -67,6 +105,7 @@ This is a port of the shadcn UI package to flutter.
 [![Tree](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/tree.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/tree)
 
 ### Surfaces
+
 [![Dialog](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/dialog.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/dialog)
 [![Drawer](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/drawer.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/drawer)
 [![Hover Card](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/hover_card.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/hover_card)
@@ -75,74 +114,131 @@ This is a port of the shadcn UI package to flutter.
 [![Tooltip](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/tooltip.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/tooltip)
 
 ### Data Display
+
 [![Avatar](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/avatar.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/avatar)
 [![Avatar Group](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/avatar_group.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/avatar_group)
 [![Code Snippet](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/codesnippet.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/code-snippet)
 [![Tracker](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/tracker.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/tracker)
 
 ### Utilities
+
 [![Badge](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/badge.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/badge)
 [![Calendar](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/calendar.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/calendar)
 [![Command](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/command.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/command)
 [![Context Menu](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/context_menu.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/context_menu)
 [![Dropdown Menu](https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/docs_images/dropdown_menu.png)](https://sunarya-thito.github.io/shadcn_flutter/#/components/dropdown_menu)
 
-## Installation
-### Using CLI
-#### 1. Activate the package
-```bash
-flutter pub global activate shadcn_flutter_cli
-```
-#### 2. Run the command
-```bash
-flutter pub global run shadcn_flutter_cli:setup
-```
+## LLMs Support
 
-### Manual Installation
-#### 1. Create a new Flutter project
-```bash
-flutter create my_app
-cd my_app
-```
-#### 2. Add the dependency
-```bash
-flutter pub add shadcn_flutter
-```
-#### 3. Import the package
-```dart
-import 'package:shadcn_flutter/shadcn_flutter.dart';
-```
-#### 4. Use the widgets
-```dart
-void main() {
-  runApp(
-    VNLookApp(
-      title: 'My App',
-      home: MyHomePage(),
-      theme: ThemeData(
-        colorScheme: ColorSchemes.darkZinc(),
-        radius: 0.5,
-      ),
-    ),
-  );
-}
-```
+This repository includes a prebuilt, machine‑friendly reference file you can
+feed to LLMs and editor assistants:
 
-#### 5. Run the app
-```bash
-flutter run
-```
+- [`llms-full.txt`](https://sunarya-thito.github.io/shadcn_flutter/llms-full.txt) -
+  Full component reference with props, methods, and usage examples
 
-## Development Status
-- Android/iOS: Experimental
-- Windows/Linux/MacOS: Stable
+## FAQ
 
-## Contributing
-The project is funded by the community. If you find this project helpful, consider supporting its development by:
+<details>
+<summary><strong>Does this replace Material/Cupertino?</strong></summary>
 
-- Starring the [GitHub repository](https://github.com/sunarya-thito/shadcn_flutter).
-- Contributing code, documentation, or bug reports.
-- Sponsoring the project via [GitHub Sponsors](https://github.com/sponsors/sunarya-thito).
-- Sharing the project with others who might find it useful.
+Yes. shadcn_flutter is a standalone ecosystem built on the shadcn/ui design
+system. Interop with Material/Cupertino is optional so you can adopt it
+incrementally or go all‑in.
 
-Your support helps ensure the continued development and maintenance of this project. Thank you!
+</details>
+
+<details>
+<summary><strong>Can I use it with my existing MaterialApp/CupertinoApp?</strong></summary>
+
+Yes. Drop shadcn_flutter components into your app, keep your current routing
+(e.g., GoRouter) and state management, and migrate over time.
+
+</details>
+
+<details>
+<summary><strong>Does it support GoRouter?</strong></summary>
+
+Yes.
+
+</details>
+
+<details>
+<summary><strong>Which platforms are supported?</strong></summary>
+
+Android, iOS, Web, macOS, Windows, and Linux.
+
+</details>
+
+<details>
+<summary><strong>Can I use it commercially?</strong></summary>
+
+Yes. Free to use for personal and commercial projects. No attribution required.
+
+</details>
+
+<details>
+<summary><strong>Can I choose between Default and New York styles?</strong></summary>
+
+This package currently supports the New York style. If you need the default
+style of shadcn/ui, consider this package:
+[flutter-shadcn-ui](https://github.com/nank1ro/flutter-shadcn-ui) by
+[@nank1ro](https://x.com/nank1ro).
+
+</details>
+
+## Contributing & Support
+
+We welcome contributions from the community! Here's how you can help make
+shadcn_flutter even better:
+
+### Ways to Contribute
+
+<div align="center">
+
+[![⭐ Star on GitHub](https://img.shields.io/badge/⭐_Star_on_GitHub-black?style=for-the-badge&logo=github)](https://github.com/sunarya-thito/shadcn_flutter)
+[![💖 Sponsor](https://img.shields.io/badge/💖_Sponsor-pink?style=for-the-badge&logo=github-sponsors)](https://github.com/sponsors/sunarya-thito)
+[![🐛 Report Bug](https://img.shields.io/badge/🐛_Report_Bug-red?style=for-the-badge&logo=github)](https://github.com/sunarya-thito/shadcn_flutter/issues)
+[![💡 Request Feature](https://img.shields.io/badge/💡_Request_Feature-blue?style=for-the-badge&logo=github)](https://github.com/sunarya-thito/shadcn_flutter/issues)
+
+</div>
+
+#### Financial Support
+
+- **[GitHub Sponsors](https://github.com/sponsors/sunarya-thito)** - Support
+  ongoing development
+- **[PayPal](https://paypal.me/sunaryathito)** - Support ongoing development
+- **Star the repository** - Help us reach more developers
+- **Share the project** - Spread the word in your community
+
+#### Code Contributions
+
+- **Bug fixes** - Help us squash those pesky bugs
+- **New features** - Add components or enhance existing ones
+- **Documentation** - Improve guides, examples, and API docs
+- **Testing** - Write tests to improve reliability
+
+#### Community Support
+
+- **[Join our Discord](https://discord.gg/ZzfBPQG4sV)** - Get help and connect
+  with other developers
+- **Help others** - Answer questions and share your knowledge
+- **Write tutorials** - Create blog posts or video tutorials
+
+### Recognition
+
+This project is funded and maintained by the community. Every contribution, no
+matter how small, makes a difference and helps ensure the continued development
+of shadcn_flutter.
+
+**Thank you to all our contributors and supporters! 🙏**
+
+---
+
+<div align="center">
+
+**Built with ❤️ by [Thito Yalasatria Sunarya](https://github.com/sunarya-thito)
+and the community**
+
+_Made in Indonesia 🇮🇩_
+
+</div>

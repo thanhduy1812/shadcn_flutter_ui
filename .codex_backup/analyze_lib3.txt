@@ -1,0 +1,1337 @@
+Analyzing lib...                                                
+
+   info • Missing documentation for a public member • lib/src/components/animation.dart:4:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:6:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:8:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:11:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:12:12 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:13:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:14:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:15:34 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:16:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:17:39 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:18:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:19:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:20:41 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:21:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:23:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:36:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:50:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:106:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:138:5 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:214:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:215:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:216:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:217:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:223:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:224:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:225:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:226:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:227:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:228:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:229:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:230:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:231:72 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:233:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:234:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:235:41 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:236:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:238:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:253:34 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:444:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:445:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:446:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:447:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:448:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:450:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:457:31 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:499:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:500:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:528:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:544:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:545:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:546:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:548:38 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:550:9 • public_member_api_docs
+  error • The name 'FocusOutlineTheme' isn't a class • lib/src/components/control/command.dart:364:37 • creation_with_non_type
+  error • The final variable 'debounceDuration' must be initialized • lib/src/components/control/hover.dart:20:19 • final_not_initialized
+  error • The final variable 'hitTestBehavior' must be initialized • lib/src/components/control/hover.dart:25:26 • final_not_initialized
+  error • The final variable 'waitDuration' must be initialized • lib/src/components/control/hover.dart:30:19 • final_not_initialized
+  error • The final variable 'minDuration' must be initialized • lib/src/components/control/hover.dart:35:19 • final_not_initialized
+  error • The final variable 'showDuration' must be initialized • lib/src/components/control/hover.dart:38:19 • final_not_initialized
+  error • 'HoverTheme' must have a method body because 'VNLHoverTheme' isn't abstract • lib/src/components/control/hover.dart:40:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/control/hover.dart:41:3 • const_method
+   info • Missing type annotation • lib/src/components/control/hover.dart:41:9 • strict_top_level_inference
+   info • The variable name 'HoverTheme' isn't a lowerCamelCase identifier • lib/src/components/control/hover.dart:41:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/control/hover.dart:42:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/control/hover.dart:43:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/control/hover.dart:44:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/control/hover.dart:45:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/control/hover.dart:46:5 • field_initializer_outside_constructor
+  error • HoverTheme isn't a type • lib/src/components/control/hover.dart:52:3 • not_a_type
+  error • The name 'HoverTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/control/hover.dart:72:21 • type_test_with_non_type
+  error • The name 'HoverTheme' isn't a type, so it can't be used as a type argument • lib/src/components/control/hover.dart:180:46 • non_type_as_type_argument
+  error • The name 'HoverTheme' isn't a type, so it can't be used as a type argument • lib/src/components/control/hover.dart:328:46 • non_type_as_type_argument
+  error • The final variable 'color' must be initialized • lib/src/components/control/scrollbar.dart:12:16 • final_not_initialized
+  error • The final variable 'thickness' must be initialized • lib/src/components/control/scrollbar.dart:15:17 • final_not_initialized
+  error • The final variable 'radius' must be initialized • lib/src/components/control/scrollbar.dart:18:17 • final_not_initialized
+  error • 'ScrollbarTheme' must have a method body because 'VNLScrollbarTheme' isn't abstract • lib/src/components/control/scrollbar.dart:20:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/control/scrollbar.dart:21:3 • const_method
+   info • Missing type annotation • lib/src/components/control/scrollbar.dart:21:9 • strict_top_level_inference
+   info • The variable name 'ScrollbarTheme' isn't a lowerCamelCase identifier • lib/src/components/control/scrollbar.dart:21:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/control/scrollbar.dart:22:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/control/scrollbar.dart:23:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/control/scrollbar.dart:24:5 • field_initializer_outside_constructor
+  error • ScrollbarTheme isn't a type • lib/src/components/control/scrollbar.dart:28:3 • not_a_type
+  error • The name 'ScrollbarTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/control/scrollbar.dart:43:21 • type_test_with_non_type
+  error • Undefined class 'VNLThemeData' • lib/src/components/control/scrollbar.dart:189:8 • undefined_class
+  error • Undefined name 'VNLTheme' • lib/src/components/control/scrollbar.dart:194:14 • undefined_identifier
+  error • The name 'ScrollbarTheme' isn't a type, so it can't be used as a type argument • lib/src/components/control/scrollbar.dart:211:46 • non_type_as_type_argument
+  error • The final variable 'size' must be initialized • lib/src/components/display/avatar.dart:29:17 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/display/avatar.dart:35:17 • final_not_initialized
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/display/avatar.dart:41:16 • final_not_initialized
+  error • The final variable 'badgeAlignment' must be initialized • lib/src/components/display/avatar.dart:47:28 • final_not_initialized
+  error • The final variable 'badgeGap' must be initialized • lib/src/components/display/avatar.dart:53:17 • final_not_initialized
+  error • The final variable 'textStyle' must be initialized • lib/src/components/display/avatar.dart:59:20 • final_not_initialized
+  error • 'AvatarTheme' must have a method body because 'VNLAvatarTheme' isn't abstract • lib/src/components/display/avatar.dart:61:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/avatar.dart:73:3 • const_method
+   info • Missing type annotation • lib/src/components/display/avatar.dart:73:9 • strict_top_level_inference
+   info • The variable name 'AvatarTheme' isn't a lowerCamelCase identifier • lib/src/components/display/avatar.dart:73:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/avatar.dart:74:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/avatar.dart:75:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/avatar.dart:76:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/avatar.dart:77:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/avatar.dart:78:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/avatar.dart:79:5 • field_initializer_outside_constructor
+  error • AvatarTheme isn't a type • lib/src/components/display/avatar.dart:94:3 • not_a_type
+  error • The name 'AvatarTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/avatar.dart:117:21 • type_test_with_non_type
+  error • The name 'AvatarTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/avatar.dart:387:46 • non_type_as_type_argument
+  error • The name 'AvatarTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/avatar.dart:421:46 • non_type_as_type_argument
+  error • The name 'AvatarTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/avatar.dart:460:46 • non_type_as_type_argument
+  error • The final variable 'arrowIconColor' must be initialized • lib/src/components/display/calendar.dart:10:16 • final_not_initialized
+  error • 'CalendarTheme' must have a method body because 'VNLCalendarTheme' isn't abstract • lib/src/components/display/calendar.dart:12:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/calendar.dart:16:3 • const_method
+   info • Missing type annotation • lib/src/components/display/calendar.dart:16:9 • strict_top_level_inference
+   info • The variable name 'CalendarTheme' isn't a lowerCamelCase identifier • lib/src/components/display/calendar.dart:16:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/calendar.dart:16:24 • field_initializer_outside_constructor
+  error • CalendarTheme isn't a type • lib/src/components/display/calendar.dart:19:3 • not_a_type
+  error • The name 'CalendarTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/calendar.dart:28:21 • type_test_with_non_type
+  error • The name 'CalendarTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/calendar.dart:221:46 • non_type_as_type_argument
+  error • The final variable 'alignment' must be initialized • lib/src/components/display/carousel.dart:387:28 • final_not_initialized
+  error • The final variable 'direction' must be initialized • lib/src/components/display/carousel.dart:390:15 • final_not_initialized
+  error • The final variable 'wrap' must be initialized • lib/src/components/display/carousel.dart:393:15 • final_not_initialized
+  error • The final variable 'pauseOnHover' must be initialized • lib/src/components/display/carousel.dart:396:15 • final_not_initialized
+  error • The final variable 'autoplaySpeed' must be initialized • lib/src/components/display/carousel.dart:399:19 • final_not_initialized
+  error • The final variable 'draggable' must be initialized • lib/src/components/display/carousel.dart:402:15 • final_not_initialized
+  error • The final variable 'speed' must be initialized • lib/src/components/display/carousel.dart:405:19 • final_not_initialized
+  error • The final variable 'curve' must be initialized • lib/src/components/display/carousel.dart:408:16 • final_not_initialized
+  error • 'CarouselTheme' must have a method body because 'VNLCarouselTheme' isn't abstract • lib/src/components/display/carousel.dart:410:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/carousel.dart:411:3 • const_method
+   info • Missing type annotation • lib/src/components/display/carousel.dart:411:9 • strict_top_level_inference
+   info • The variable name 'CarouselTheme' isn't a lowerCamelCase identifier • lib/src/components/display/carousel.dart:411:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/carousel.dart:412:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/carousel.dart:413:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/carousel.dart:414:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/carousel.dart:415:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/carousel.dart:416:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/carousel.dart:417:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/carousel.dart:418:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/carousel.dart:419:5 • field_initializer_outside_constructor
+  error • CarouselTheme isn't a type • lib/src/components/display/carousel.dart:423:3 • not_a_type
+  error • The name 'CarouselTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/carousel.dart:448:21 • type_test_with_non_type
+  error • Undefined class 'CarouselTheme' • lib/src/components/display/carousel.dart:622:3 • undefined_class
+  error • The name 'CarouselTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/carousel.dart:627:37 • non_type_as_type_argument
+  error • The final variable 'padding' must be initialized • lib/src/components/display/chip.dart:6:29 • final_not_initialized
+  error • The final variable 'style' must be initialized • lib/src/components/display/chip.dart:9:33 • final_not_initialized
+  error • 'ChipTheme' must have a method body because 'VNLChipTheme' isn't abstract • lib/src/components/display/chip.dart:11:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/chip.dart:12:3 • const_method
+   info • Missing type annotation • lib/src/components/display/chip.dart:12:9 • strict_top_level_inference
+   info • The variable name 'ChipTheme' isn't a lowerCamelCase identifier • lib/src/components/display/chip.dart:12:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/chip.dart:12:20 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/chip.dart:12:34 • field_initializer_outside_constructor
+  error • ChipTheme isn't a type • lib/src/components/display/chip.dart:15:3 • not_a_type
+  error • The name 'ChipTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/chip.dart:28:21 • type_test_with_non_type
+  error • The name 'ChipTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/chip.dart:67:46 • non_type_as_type_argument
+  error • The name 'ChipTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/chip.dart:188:46 • non_type_as_type_argument
+  error • The final variable 'color' must be initialized • lib/src/components/display/circular_progress_indicator.dart:18:16 • final_not_initialized
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/display/circular_progress_indicator.dart:24:16 • final_not_initialized
+  error • The final variable 'size' must be initialized • lib/src/components/display/circular_progress_indicator.dart:30:17 • final_not_initialized
+  error • The final variable 'strokeWidth' must be initialized • lib/src/components/display/circular_progress_indicator.dart:36:17 • final_not_initialized
+  error • 'CircularProgressIndicatorTheme' must have a method body because 'VNLCircularProgressIndicatorTheme' isn't abstract • lib/src/components/display/circular_progress_indicator.dart:38:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/circular_progress_indicator.dart:52:3 • const_method
+   info • Missing type annotation • lib/src/components/display/circular_progress_indicator.dart:52:9 • strict_top_level_inference
+   info • The variable name 'CircularProgressIndicatorTheme' isn't a lowerCamelCase identifier • lib/src/components/display/circular_progress_indicator.dart:52:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/circular_progress_indicator.dart:53:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/circular_progress_indicator.dart:54:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/circular_progress_indicator.dart:55:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/circular_progress_indicator.dart:56:5 • field_initializer_outside_constructor
+  error • CircularProgressIndicatorTheme isn't a type • lib/src/components/display/circular_progress_indicator.dart:60:3 • not_a_type
+  error • The name 'CircularProgressIndicatorTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/circular_progress_indicator.dart:78:21 • type_test_with_non_type
+  error • The name 'CircularProgressIndicatorTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/circular_progress_indicator.dart:216:32 • non_type_as_type_argument
+  error • The function 'VNLCircularProgressIndicator' isn't defined • lib/src/components/display/circular_progress_indicator.dart:246:22 • undefined_function
+  error • The function 'VNLCircularProgressIndicator' isn't defined • lib/src/components/display/circular_progress_indicator.dart:264:26 • undefined_function
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/display/code_snippet.dart:30:16 • final_not_initialized
+  error • The final variable 'borderColor' must be initialized • lib/src/components/display/code_snippet.dart:36:16 • final_not_initialized
+  error • The final variable 'borderWidth' must be initialized • lib/src/components/display/code_snippet.dart:42:17 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/display/code_snippet.dart:48:31 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/display/code_snippet.dart:54:29 • final_not_initialized
+  error • 'CodeSnippetTheme' must have a method body because 'VNLCodeSnippetTheme' isn't abstract • lib/src/components/display/code_snippet.dart:56:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/code_snippet.dart:76:3 • const_method
+   info • Missing type annotation • lib/src/components/display/code_snippet.dart:76:9 • strict_top_level_inference
+   info • The variable name 'CodeSnippetTheme' isn't a lowerCamelCase identifier • lib/src/components/display/code_snippet.dart:76:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/code_snippet.dart:77:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/code_snippet.dart:78:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/code_snippet.dart:79:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/code_snippet.dart:80:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/code_snippet.dart:81:5 • field_initializer_outside_constructor
+  error • CodeSnippetTheme isn't a type • lib/src/components/display/code_snippet.dart:100:3 • not_a_type
+  error • The name 'CodeSnippetTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/code_snippet.dart:120:21 • type_test_with_non_type
+  error • The name 'CodeSnippetTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/code_snippet.dart:294:46 • non_type_as_type_argument
+  error • The final variable 'color' must be initialized • lib/src/components/display/divider.dart:56:16 • final_not_initialized
+  error • The final variable 'height' must be initialized • lib/src/components/display/divider.dart:59:17 • final_not_initialized
+  error • The final variable 'thickness' must be initialized • lib/src/components/display/divider.dart:62:17 • final_not_initialized
+  error • The final variable 'indent' must be initialized • lib/src/components/display/divider.dart:65:17 • final_not_initialized
+  error • The final variable 'endIndent' must be initialized • lib/src/components/display/divider.dart:68:17 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/display/divider.dart:71:29 • final_not_initialized
+  error • The final variable 'childAlignment' must be initialized • lib/src/components/display/divider.dart:74:32 • final_not_initialized
+  error • 'DividerTheme' must have a method body because 'VNLDividerTheme' isn't abstract • lib/src/components/display/divider.dart:76:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/divider.dart:77:3 • const_method
+   info • Missing type annotation • lib/src/components/display/divider.dart:77:9 • strict_top_level_inference
+   info • The variable name 'DividerTheme' isn't a lowerCamelCase identifier • lib/src/components/display/divider.dart:77:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/divider.dart:78:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/divider.dart:79:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/divider.dart:80:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/divider.dart:81:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/divider.dart:82:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/divider.dart:83:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/divider.dart:84:5 • field_initializer_outside_constructor
+  error • DividerTheme isn't a type • lib/src/components/display/divider.dart:89:3 • not_a_type
+  error • The name 'DividerTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/divider.dart:112:16 • type_test_with_non_type
+  error • The name 'DividerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/divider.dart:215:46 • non_type_as_type_argument
+  error • The final variable 'spacing' must be initialized • lib/src/components/display/dot_indicator.dart:13:17 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/display/dot_indicator.dart:16:29 • final_not_initialized
+  error • The final variable 'dotBuilder' must be initialized • lib/src/components/display/dot_indicator.dart:19:21 • final_not_initialized
+  error • The final variable 'size' must be initialized • lib/src/components/display/dot_indicator.dart:22:17 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/display/dot_indicator.dart:25:17 • final_not_initialized
+  error • The final variable 'activeColor' must be initialized • lib/src/components/display/dot_indicator.dart:28:16 • final_not_initialized
+  error • The final variable 'inactiveColor' must be initialized • lib/src/components/display/dot_indicator.dart:31:16 • final_not_initialized
+  error • The final variable 'inactiveBorderColor' must be initialized • lib/src/components/display/dot_indicator.dart:34:16 • final_not_initialized
+  error • The final variable 'inactiveBorderWidth' must be initialized • lib/src/components/display/dot_indicator.dart:37:17 • final_not_initialized
+  error • 'DotIndicatorTheme' must have a method body because 'VNLDotIndicatorTheme' isn't abstract • lib/src/components/display/dot_indicator.dart:39:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/dot_indicator.dart:40:3 • const_method
+   info • Missing type annotation • lib/src/components/display/dot_indicator.dart:40:9 • strict_top_level_inference
+   info • The variable name 'DotIndicatorTheme' isn't a lowerCamelCase identifier • lib/src/components/display/dot_indicator.dart:40:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/dot_indicator.dart:41:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/dot_indicator.dart:42:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/dot_indicator.dart:43:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/dot_indicator.dart:44:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/dot_indicator.dart:45:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/dot_indicator.dart:46:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/dot_indicator.dart:47:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/dot_indicator.dart:48:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/dot_indicator.dart:49:5 • field_initializer_outside_constructor
+  error • DotIndicatorTheme isn't a type • lib/src/components/display/dot_indicator.dart:53:3 • not_a_type
+  error • The name 'DotIndicatorTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/dot_indicator.dart:85:21 • type_test_with_non_type
+  error • The name 'DotIndicatorTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/dot_indicator.dart:212:46 • non_type_as_type_argument
+  error • The name 'DotIndicatorTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/dot_indicator.dart:339:46 • non_type_as_type_argument
+  error • The name 'DotIndicatorTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/dot_indicator.dart:402:46 • non_type_as_type_argument
+  error • The final variable 'startOffset' must be initialized • lib/src/components/display/fade_scroll.dart:8:17 • final_not_initialized
+  error • The final variable 'endOffset' must be initialized • lib/src/components/display/fade_scroll.dart:11:17 • final_not_initialized
+  error • The final variable 'gradient' must be initialized • lib/src/components/display/fade_scroll.dart:14:22 • final_not_initialized
+  error • 'FadeScrollTheme' must have a method body because 'VNLFadeScrollTheme' isn't abstract • lib/src/components/display/fade_scroll.dart:16:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/fade_scroll.dart:17:3 • const_method
+   info • Missing type annotation • lib/src/components/display/fade_scroll.dart:17:9 • strict_top_level_inference
+   info • The variable name 'FadeScrollTheme' isn't a lowerCamelCase identifier • lib/src/components/display/fade_scroll.dart:17:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/fade_scroll.dart:18:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/fade_scroll.dart:19:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/fade_scroll.dart:20:5 • field_initializer_outside_constructor
+  error • FadeScrollTheme isn't a type • lib/src/components/display/fade_scroll.dart:24:3 • not_a_type
+  error • The name 'FadeScrollTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/fade_scroll.dart:39:21 • type_test_with_non_type
+  error • The name 'FadeScrollTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/fade_scroll.dart:89:46 • non_type_as_type_argument
+  error • The final variable 'duration' must be initialized • lib/src/components/display/number_ticker.dart:43:19 • final_not_initialized
+  error • The final variable 'curve' must be initialized • lib/src/components/display/number_ticker.dart:49:16 • final_not_initialized
+  error • The final variable 'style' must be initialized • lib/src/components/display/number_ticker.dart:55:20 • final_not_initialized
+  error • 'NumberTickerTheme' must have a method body because 'VNLNumberTickerTheme' isn't abstract • lib/src/components/display/number_ticker.dart:57:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/number_ticker.dart:66:3 • const_method
+   info • Missing type annotation • lib/src/components/display/number_ticker.dart:66:9 • strict_top_level_inference
+   info • The variable name 'NumberTickerTheme' isn't a lowerCamelCase identifier • lib/src/components/display/number_ticker.dart:66:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/number_ticker.dart:66:28 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/number_ticker.dart:66:43 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/number_ticker.dart:66:55 • field_initializer_outside_constructor
+  error • NumberTickerTheme isn't a type • lib/src/components/display/number_ticker.dart:85:3 • not_a_type
+  error • The name 'NumberTickerTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/number_ticker.dart:100:21 • type_test_with_non_type
+  error • The name 'NumberTickerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/number_ticker.dart:272:46 • non_type_as_type_argument
+  error • The final variable 'color' must be initialized • lib/src/components/display/spinner.dart:6:16 • final_not_initialized
+  error • The final variable 'size' must be initialized • lib/src/components/display/spinner.dart:9:17 • final_not_initialized
+  error • 'SpinnerTheme' must have a method body because 'VNLSpinnerTheme' isn't abstract • lib/src/components/display/spinner.dart:11:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/display/spinner.dart:12:3 • const_method
+   info • Missing type annotation • lib/src/components/display/spinner.dart:12:9 • strict_top_level_inference
+   info • The variable name 'SpinnerTheme' isn't a lowerCamelCase identifier • lib/src/components/display/spinner.dart:12:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/spinner.dart:12:23 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/display/spinner.dart:12:35 • field_initializer_outside_constructor
+  error • SpinnerTheme isn't a type • lib/src/components/display/spinner.dart:15:3 • not_a_type
+  error • The name 'SpinnerTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/display/spinner.dart:28:21 • type_test_with_non_type
+  error • The name 'SpinnerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/spinner.dart:75:46 • non_type_as_type_argument
+  error • The name 'SpinnerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/display/spinner.dart:82:46 • non_type_as_type_argument
+  error • The final variable 'popoverConstraints' must be initialized • lib/src/components/form/autocomplete.dart:25:25 • final_not_initialized
+  error • The final variable 'popoverWidthConstraint' must be initialized • lib/src/components/form/autocomplete.dart:31:28 • final_not_initialized
+  error • The final variable 'popoverAnchorAlignment' must be initialized • lib/src/components/form/autocomplete.dart:37:31 • final_not_initialized
+  error • The final variable 'popoverAlignment' must be initialized • lib/src/components/form/autocomplete.dart:43:31 • final_not_initialized
+  error • The final variable 'mode' must be initialized • lib/src/components/form/autocomplete.dart:49:27 • final_not_initialized
+  error • 'AutoCompleteTheme' must have a method body because 'VNLAutoCompleteTheme' isn't abstract • lib/src/components/form/autocomplete.dart:51:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/autocomplete.dart:54:3 • const_method
+   info • Missing type annotation • lib/src/components/form/autocomplete.dart:54:9 • strict_top_level_inference
+   info • The variable name 'AutoCompleteTheme' isn't a lowerCamelCase identifier • lib/src/components/form/autocomplete.dart:54:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/autocomplete.dart:55:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/autocomplete.dart:56:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/autocomplete.dart:57:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/autocomplete.dart:58:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/autocomplete.dart:59:5 • field_initializer_outside_constructor
+  error • AutoCompleteTheme isn't a type • lib/src/components/form/autocomplete.dart:66:3 • not_a_type
+  error • The name 'AutoCompleteTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/autocomplete.dart:92:21 • type_test_with_non_type
+  error • The name 'AutoCompleteTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/autocomplete.dart:302:46 • non_type_as_type_argument
+  error • The name 'AutoCompleteTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/autocomplete.dart:331:48 • non_type_as_type_argument
+  error • The name 'AutoCompleteTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/autocomplete.dart:339:52 • non_type_as_type_argument
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/form/checkbox.dart:16:16 • final_not_initialized
+  error • The final variable 'activeColor' must be initialized • lib/src/components/form/checkbox.dart:22:16 • final_not_initialized
+  error • The final variable 'borderColor' must be initialized • lib/src/components/form/checkbox.dart:28:16 • final_not_initialized
+  error • The final variable 'size' must be initialized • lib/src/components/form/checkbox.dart:35:17 • final_not_initialized
+  error • The final variable 'gap' must be initialized • lib/src/components/form/checkbox.dart:42:17 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/form/checkbox.dart:48:31 • final_not_initialized
+  error • 'CheckboxTheme' must have a method body because 'VNLCheckboxTheme' isn't abstract • lib/src/components/form/checkbox.dart:50:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/checkbox.dart:55:3 • const_method
+   info • Missing type annotation • lib/src/components/form/checkbox.dart:55:9 • strict_top_level_inference
+   info • The variable name 'CheckboxTheme' isn't a lowerCamelCase identifier • lib/src/components/form/checkbox.dart:55:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/checkbox.dart:56:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/checkbox.dart:57:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/checkbox.dart:58:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/checkbox.dart:59:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/checkbox.dart:60:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/checkbox.dart:61:5 • field_initializer_outside_constructor
+  error • CheckboxTheme isn't a type • lib/src/components/form/checkbox.dart:76:3 • not_a_type
+  error • The name 'CheckboxTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/checkbox.dart:98:21 • type_test_with_non_type
+  error • The name 'CheckboxTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/checkbox.dart:650:46 • non_type_as_type_argument
+  error • The name 'VNLIntervalDuration' isn't a class • lib/src/components/form/checkbox.dart:719:40 • creation_with_non_type
+  error • The final variable 'showAlpha' must be initialized • lib/src/components/form/color/solid/color_input.dart:17:15 • final_not_initialized
+  error • The final variable 'popoverAlignment' must be initialized • lib/src/components/form/color/solid/color_input.dart:23:28 • final_not_initialized
+  error • The final variable 'popoverAnchorAlignment' must be initialized • lib/src/components/form/color/solid/color_input.dart:29:28 • final_not_initialized
+  error • The final variable 'popoverPadding' must be initialized • lib/src/components/form/color/solid/color_input.dart:35:29 • final_not_initialized
+  error • The final variable 'mode' must be initialized • lib/src/components/form/color/solid/color_input.dart:41:21 • final_not_initialized
+  error • The final variable 'pickerMode' must be initialized • lib/src/components/form/color/solid/color_input.dart:47:26 • final_not_initialized
+  error • The final variable 'enableEyeDropper' must be initialized • lib/src/components/form/color/solid/color_input.dart:53:15 • final_not_initialized
+  error • The final variable 'showLabel' must be initialized • lib/src/components/form/color/solid/color_input.dart:59:15 • final_not_initialized
+  error • The final variable 'orientation' must be initialized • lib/src/components/form/color/solid/color_input.dart:62:15 • final_not_initialized
+  error • The final variable 'showHistory' must be initialized • lib/src/components/form/color/solid/color_input.dart:65:15 • final_not_initialized
+  error • 'ColorInputTheme' must have a method body because 'VNLColorInputTheme' isn't abstract • lib/src/components/form/color/solid/color_input.dart:67:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/color/solid/color_input.dart:71:3 • const_method
+   info • Missing type annotation • lib/src/components/form/color/solid/color_input.dart:71:9 • strict_top_level_inference
+   info • The variable name 'ColorInputTheme' isn't a lowerCamelCase identifier • lib/src/components/form/color/solid/color_input.dart:71:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:72:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:73:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:74:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:75:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:76:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:77:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:78:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:79:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:80:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/color/solid/color_input.dart:81:5 • field_initializer_outside_constructor
+  error • ColorInputTheme isn't a type • lib/src/components/form/color/solid/color_input.dart:88:3 • not_a_type
+  error • The name 'ColorInputTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/color/solid/color_input.dart:122:21 • type_test_with_non_type
+  error • The name 'ColorInputTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/color/solid/color_input.dart:272:51 • non_type_as_type_argument
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:10:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:11:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:14:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:27:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:28:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:29:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:30:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:31:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:32:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:33:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:34:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:35:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:36:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:37:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:39:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:86:8 • public_member_api_docs
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:88:22 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:90:22 • deprecated_member_use
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:94:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:95:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:96:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:97:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:98:13 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:99:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:101:9 • public_member_api_docs
+  error • Undefined class 'VNLThemeData' • lib/src/components/form/color_picker.dart:110:61 • undefined_class
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:140:19 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:24 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:34 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:175:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:176:8 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:177:8 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:178:8 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:179:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:180:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:181:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:186:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:187:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:188:13 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:189:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:190:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:192:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:214:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:279:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:281:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:282:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:283:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:284:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:285:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:286:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:287:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:289:9 • public_member_api_docs
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:417:22 • undefined_identifier
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:430:19 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:546:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:639:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:640:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:641:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:645:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:650:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:651:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:652:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:653:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:655:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:657:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:663:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:664:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:665:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:666:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:667:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:668:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:669:40 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:670:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:671:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:673:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:694:19 • undefined_identifier
+  error • Undefined class 'VNLThemeData' • lib/src/components/form/color_picker.dart:730:46 • undefined_class
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:793:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:794:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:795:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:796:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:797:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:798:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:799:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:801:9 • public_member_api_docs
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:832:42 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:834:42 • deprecated_member_use
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:838:38 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:839:38 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:840:38 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:867:44 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:869:44 • deprecated_member_use
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:873:40 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:874:40 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:875:40 • deprecated_member_use
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:952:19 • undefined_identifier
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:958:19 • undefined_identifier
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:1139:57 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:1141:57 • deprecated_member_use
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1228:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1229:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1230:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1231:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1232:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1233:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1234:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1236:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:1255:19 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1386:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1387:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1388:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1389:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1390:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1391:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1392:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1393:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1394:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1395:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1396:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1397:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1398:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1399:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1400:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1401:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:1422:19 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1514:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1515:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1516:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1517:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1518:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1519:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1520:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1521:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1523:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:40 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:48 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:58 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:63 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:71 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:81 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:86 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:96 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:40 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:48 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:58 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:63 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:71 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:81 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:86 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:96 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1570:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1630:28 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:1739:19 • undefined_identifier
+  error • The getter 'buttonOk' isn't defined for the type 'VNLookLocalizations' • lib/src/components/form/color_picker.dart:1771:37 • undefined_getter
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1835:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1836:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1840:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1841:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1843:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1844:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1845:12 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1846:12 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1847:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1848:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1849:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1850:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1851:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1852:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1853:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1854:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1855:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1856:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1857:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1858:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1859:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1864:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1869:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1874:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1878:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1882:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1886:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1890:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1894:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1898:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1902:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1906:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1910:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1914:22 • public_member_api_docs
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:1990:34 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:1993:36 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:1996:35 • deprecated_member_use
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:2070:34 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:2073:36 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:2076:35 • deprecated_member_use
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2079:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2080:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2081:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2082:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2083:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2084:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2085:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2086:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2088:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:2225:19 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2295:59 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2313:59 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2332:55 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2444:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2445:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2446:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2447:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2448:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2449:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2450:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2451:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2453:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:2579:19 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2649:59 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2667:59 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2686:55 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2798:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2799:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2800:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2801:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2803:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3122:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3123:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3124:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3125:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3127:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3446:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3447:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3448:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3449:23 • public_member_api_docs
+  error • The final variable 'mode' must be initialized • lib/src/components/form/date_picker.dart:16:21 • final_not_initialized
+  error • The final variable 'initialView' must be initialized • lib/src/components/form/date_picker.dart:23:26 • final_not_initialized
+  error • The final variable 'initialViewType' must be initialized • lib/src/components/form/date_picker.dart:29:27 • final_not_initialized
+  error • The final variable 'popoverAlignment' must be initialized • lib/src/components/form/date_picker.dart:35:28 • final_not_initialized
+  error • The final variable 'popoverAnchorAlignment' must be initialized • lib/src/components/form/date_picker.dart:41:28 • final_not_initialized
+  error • The final variable 'popoverPadding' must be initialized • lib/src/components/form/date_picker.dart:47:29 • final_not_initialized
+  error • 'DatePickerTheme' must have a method body because 'VNLDatePickerTheme' isn't abstract • lib/src/components/form/date_picker.dart:49:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/date_picker.dart:53:3 • const_method
+   info • Missing type annotation • lib/src/components/form/date_picker.dart:53:9 • strict_top_level_inference
+   info • The variable name 'DatePickerTheme' isn't a lowerCamelCase identifier • lib/src/components/form/date_picker.dart:53:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/date_picker.dart:54:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/date_picker.dart:55:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/date_picker.dart:56:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/date_picker.dart:57:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/date_picker.dart:58:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/date_picker.dart:59:5 • field_initializer_outside_constructor
+  error • DatePickerTheme isn't a type • lib/src/components/form/date_picker.dart:63:3 • not_a_type
+  error • The name 'DatePickerTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/date_picker.dart:88:21 • type_test_with_non_type
+  error • The name 'DatePickerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/date_picker.dart:306:46 • non_type_as_type_argument
+  error • The name 'VNLEmailValidator' is being referenced through the prefix 'email_validator', but it isn't defined in any of the libraries imported using that prefix • lib/src/components/form/form.dart:1210:26 • undefined_prefixed_name
+  error • The method 'FocusOutlineTheme' isn't defined for the type 'FormField' • lib/src/components/form/form.dart:2850:19 • undefined_method
+  error • The method 'TextFieldTheme' isn't defined for the type 'FormField' • lib/src/components/form/form.dart:2858:21 • undefined_method
+  error • The function 'VNLTable' isn't defined • lib/src/components/form/form.dart:3025:22 • undefined_function
+  error • The function 'VNLTableRow' isn't defined • lib/src/components/form/form.dart:3032:21 • undefined_function
+  error • The method 'FocusOutlineTheme' isn't defined for the type 'VNLFormTableLayout' • lib/src/components/form/form.dart:3051:31 • undefined_method
+  error • The method 'TextFieldTheme' isn't defined for the type 'VNLFormTableLayout' • lib/src/components/form/form.dart:3060:33 • undefined_method
+  error • The final variable 'height' must be initialized • lib/src/components/form/formatted_input.dart:13:17 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/form/formatted_input.dart:16:29 • final_not_initialized
+  error • 'FormattedInputTheme' must have a method body because 'VNLFormattedInputTheme' isn't abstract • lib/src/components/form/formatted_input.dart:18:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/formatted_input.dart:19:3 • const_method
+   info • Missing type annotation • lib/src/components/form/formatted_input.dart:19:9 • strict_top_level_inference
+   info • The variable name 'FormattedInputTheme' isn't a lowerCamelCase identifier • lib/src/components/form/formatted_input.dart:19:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/formatted_input.dart:19:30 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/formatted_input.dart:19:43 • field_initializer_outside_constructor
+  error • FormattedInputTheme isn't a type • lib/src/components/form/formatted_input.dart:22:3 • not_a_type
+  error • The name 'FormattedInputTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/formatted_input.dart:35:21 • type_test_with_non_type
+  error • The name 'FocusOutlineTheme' isn't a class • lib/src/components/form/formatted_input.dart:512:25 • creation_with_non_type
+  error • The name 'FormattedInputTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/formatted_input.dart:919:46 • non_type_as_type_argument
+  error • The final variable 'spacing' must be initialized • lib/src/components/form/input_otp.dart:13:17 • final_not_initialized
+  error • The final variable 'height' must be initialized • lib/src/components/form/input_otp.dart:16:17 • final_not_initialized
+  error • 'InputOTPTheme' must have a method body because 'VNLInputOTPTheme' isn't abstract • lib/src/components/form/input_otp.dart:18:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/input_otp.dart:23:3 • const_method
+   info • Missing type annotation • lib/src/components/form/input_otp.dart:23:9 • strict_top_level_inference
+   info • The variable name 'InputOTPTheme' isn't a lowerCamelCase identifier • lib/src/components/form/input_otp.dart:23:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/input_otp.dart:23:24 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/input_otp.dart:23:38 • field_initializer_outside_constructor
+  error • InputOTPTheme isn't a type • lib/src/components/form/input_otp.dart:32:3 • not_a_type
+  error • The name 'InputOTPTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/input_otp.dart:45:21 • type_test_with_non_type
+  error • The name 'InputOTPTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/input_otp.dart:60:46 • non_type_as_type_argument
+  error • The name 'FocusOutlineTheme' isn't a class • lib/src/components/form/input_otp.dart:544:31 • creation_with_non_type
+  error • The name 'InputOTPTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/input_otp.dart:965:46 • non_type_as_type_argument
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:6:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:8:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:9:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:10:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:11:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:12:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:13:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:14:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:15:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:16:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:17:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:18:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:19:31 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:20:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:21:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:22:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:23:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:25:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/number_input.dart:91:19 • undefined_identifier
+  error • Undefined class 'VNLThemeData' • lib/src/components/form/number_input.dart:99:44 • undefined_class
+  error • Undefined class 'VNLThemeData' • lib/src/components/form/number_input.dart:226:47 • undefined_class
+  error • The argument type 'bool' can't be assigned to the parameter type 'Border?'.  • lib/src/components/form/number_input.dart:231:17 • argument_type_not_assignable
+  error • The named parameter 'leading' isn't defined • lib/src/components/form/number_input.dart:234:9 • undefined_named_parameter
+  error • The named parameter 'trailing' isn't defined • lib/src/components/form/number_input.dart:235:9 • undefined_named_parameter
+  error • The final variable 'activeColor' must be initialized • lib/src/components/form/radio_group.dart:15:16 • final_not_initialized
+  error • The final variable 'borderColor' must be initialized • lib/src/components/form/radio_group.dart:18:16 • final_not_initialized
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/form/radio_group.dart:21:16 • final_not_initialized
+  error • The final variable 'size' must be initialized • lib/src/components/form/radio_group.dart:24:17 • final_not_initialized
+  error • 'RadioTheme' must have a method body because 'VNLRadioTheme' isn't abstract • lib/src/components/form/radio_group.dart:26:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/radio_group.dart:33:3 • const_method
+   info • Missing type annotation • lib/src/components/form/radio_group.dart:33:9 • strict_top_level_inference
+   info • The variable name 'RadioTheme' isn't a lowerCamelCase identifier • lib/src/components/form/radio_group.dart:33:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/radio_group.dart:34:8 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/radio_group.dart:34:26 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/radio_group.dart:34:44 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/radio_group.dart:34:55 • field_initializer_outside_constructor
+  error • RadioTheme isn't a type • lib/src/components/form/radio_group.dart:45:3 • not_a_type
+  error • The name 'RadioTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/radio_group.dart:63:21 • type_test_with_non_type
+  error • The name 'RadioTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/radio_group.dart:171:46 • non_type_as_type_argument
+  error • The name 'FocusOutlineTheme' isn't a class • lib/src/components/form/select.dart:1876:37 • creation_with_non_type
+  error • The final variable 'trackHeight' must be initialized • lib/src/components/form/slider.dart:406:17 • final_not_initialized
+  error • The final variable 'trackColor' must be initialized • lib/src/components/form/slider.dart:409:16 • final_not_initialized
+  error • The final variable 'valueColor' must be initialized • lib/src/components/form/slider.dart:412:16 • final_not_initialized
+  error • The final variable 'disabledTrackColor' must be initialized • lib/src/components/form/slider.dart:415:16 • final_not_initialized
+  error • The final variable 'disabledValueColor' must be initialized • lib/src/components/form/slider.dart:418:16 • final_not_initialized
+  error • The final variable 'thumbColor' must be initialized • lib/src/components/form/slider.dart:421:16 • final_not_initialized
+  error • The final variable 'thumbBorderColor' must be initialized • lib/src/components/form/slider.dart:424:16 • final_not_initialized
+  error • The final variable 'thumbFocusedBorderColor' must be initialized • lib/src/components/form/slider.dart:427:16 • final_not_initialized
+  error • The final variable 'thumbSize' must be initialized • lib/src/components/form/slider.dart:430:17 • final_not_initialized
+  error • 'SliderTheme' must have a method body because 'VNLSliderTheme' isn't abstract • lib/src/components/form/slider.dart:432:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/slider.dart:433:3 • const_method
+   info • Missing type annotation • lib/src/components/form/slider.dart:433:9 • strict_top_level_inference
+   info • The variable name 'SliderTheme' isn't a lowerCamelCase identifier • lib/src/components/form/slider.dart:433:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/slider.dart:434:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/slider.dart:435:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/slider.dart:436:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/slider.dart:437:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/slider.dart:438:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/slider.dart:439:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/slider.dart:440:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/slider.dart:441:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/slider.dart:442:5 • field_initializer_outside_constructor
+  error • SliderTheme isn't a type • lib/src/components/form/slider.dart:446:3 • not_a_type
+  error • The name 'SliderTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/slider.dart:480:21 • type_test_with_non_type
+  error • The name 'SliderTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/slider.dart:1133:46 • non_type_as_type_argument
+  error • The name 'SliderTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/slider.dart:1190:46 • non_type_as_type_argument
+  error • The name 'SliderTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/slider.dart:1222:46 • non_type_as_type_argument
+  error • The final variable 'activeColor' must be initialized • lib/src/components/form/star_rating.dart:12:16 • final_not_initialized
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/form/star_rating.dart:15:16 • final_not_initialized
+  error • The final variable 'starSize' must be initialized • lib/src/components/form/star_rating.dart:18:17 • final_not_initialized
+  error • The final variable 'starSpacing' must be initialized • lib/src/components/form/star_rating.dart:21:17 • final_not_initialized
+  error • 'StarRatingTheme' must have a method body because 'VNLStarRatingTheme' isn't abstract • lib/src/components/form/star_rating.dart:23:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/star_rating.dart:24:3 • const_method
+   info • Missing type annotation • lib/src/components/form/star_rating.dart:24:9 • strict_top_level_inference
+   info • The variable name 'StarRatingTheme' isn't a lowerCamelCase identifier • lib/src/components/form/star_rating.dart:24:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/star_rating.dart:25:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/star_rating.dart:26:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/star_rating.dart:27:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/star_rating.dart:28:5 • field_initializer_outside_constructor
+  error • StarRatingTheme isn't a type • lib/src/components/form/star_rating.dart:32:3 • not_a_type
+  error • The name 'StarRatingTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/star_rating.dart:50:21 • type_test_with_non_type
+  error • The name 'StarRatingTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/star_rating.dart:493:46 • non_type_as_type_argument
+  error • The name 'StarRatingTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/star_rating.dart:538:50 • non_type_as_type_argument
+  error • The final variable 'activeColor' must be initialized • lib/src/components/form/switch.dart:21:16 • final_not_initialized
+  error • The final variable 'inactiveColor' must be initialized • lib/src/components/form/switch.dart:27:16 • final_not_initialized
+  error • The final variable 'activeThumbColor' must be initialized • lib/src/components/form/switch.dart:33:16 • final_not_initialized
+  error • The final variable 'inactiveThumbColor' must be initialized • lib/src/components/form/switch.dart:39:16 • final_not_initialized
+  error • The final variable 'gap' must be initialized • lib/src/components/form/switch.dart:45:17 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/form/switch.dart:51:31 • final_not_initialized
+  error • 'SwitchTheme' must have a method body because 'VNLSwitchTheme' isn't abstract • lib/src/components/form/switch.dart:53:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/switch.dart:58:3 • const_method
+   info • Missing type annotation • lib/src/components/form/switch.dart:58:9 • strict_top_level_inference
+   info • The variable name 'SwitchTheme' isn't a lowerCamelCase identifier • lib/src/components/form/switch.dart:58:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/switch.dart:59:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/switch.dart:60:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/switch.dart:61:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/switch.dart:62:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/switch.dart:63:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/switch.dart:64:5 • field_initializer_outside_constructor
+  error • SwitchTheme isn't a type • lib/src/components/form/switch.dart:68:3 • not_a_type
+  error • The name 'SwitchTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/switch.dart:93:21 • type_test_with_non_type
+  error • The name 'SwitchTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/switch.dart:365:46 • non_type_as_type_argument
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/form/text_field.dart:33:31 • final_not_initialized
+  error • The final variable 'filled' must be initialized • lib/src/components/form/text_field.dart:38:15 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/form/text_field.dart:43:29 • final_not_initialized
+  error • The final variable 'border' must be initialized • lib/src/components/form/text_field.dart:48:17 • final_not_initialized
+  error • 'TextFieldTheme' must have a method body because 'VNLTextFieldTheme' isn't abstract • lib/src/components/form/text_field.dart:50:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/text_field.dart:57:3 • const_method
+   info • Missing type annotation • lib/src/components/form/text_field.dart:57:9 • strict_top_level_inference
+   info • The variable name 'TextFieldTheme' isn't a lowerCamelCase identifier • lib/src/components/form/text_field.dart:57:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/text_field.dart:58:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/text_field.dart:59:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/text_field.dart:60:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/text_field.dart:61:5 • field_initializer_outside_constructor
+  error • TextFieldTheme isn't a type • lib/src/components/form/text_field.dart:67:3 • not_a_type
+  error • The name 'TextFieldTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/text_field.dart:84:21 • type_test_with_non_type
+  error • The name 'TextFieldTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/text_field.dart:2692:46 • non_type_as_type_argument
+  error • The final variable 'mode' must be initialized • lib/src/components/form/time_picker.dart:10:21 • final_not_initialized
+  error • The final variable 'popoverAlignment' must be initialized • lib/src/components/form/time_picker.dart:13:28 • final_not_initialized
+  error • The final variable 'popoverAnchorAlignment' must be initialized • lib/src/components/form/time_picker.dart:16:28 • final_not_initialized
+  error • The final variable 'popoverPadding' must be initialized • lib/src/components/form/time_picker.dart:19:29 • final_not_initialized
+  error • The final variable 'use24HourFormat' must be initialized • lib/src/components/form/time_picker.dart:22:15 • final_not_initialized
+  error • The final variable 'showSeconds' must be initialized • lib/src/components/form/time_picker.dart:25:15 • final_not_initialized
+  error • The final variable 'dialogTitle' must be initialized • lib/src/components/form/time_picker.dart:28:17 • final_not_initialized
+  error • 'TimePickerTheme' must have a method body because 'VNLTimePickerTheme' isn't abstract • lib/src/components/form/time_picker.dart:30:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/form/time_picker.dart:31:3 • const_method
+   info • Missing type annotation • lib/src/components/form/time_picker.dart:31:9 • strict_top_level_inference
+   info • The variable name 'TimePickerTheme' isn't a lowerCamelCase identifier • lib/src/components/form/time_picker.dart:31:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/time_picker.dart:32:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/time_picker.dart:33:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/time_picker.dart:34:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/time_picker.dart:35:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/time_picker.dart:36:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/time_picker.dart:37:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/form/time_picker.dart:38:5 • field_initializer_outside_constructor
+  error • TimePickerTheme isn't a type • lib/src/components/form/time_picker.dart:42:3 • not_a_type
+  error • The name 'TimePickerTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/form/time_picker.dart:70:21 • type_test_with_non_type
+  error • The name 'TimePickerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/form/time_picker.dart:325:46 • non_type_as_type_argument
+  error • The final variable 'padding' must be initialized • lib/src/components/layout/alert.dart:16:29 • final_not_initialized
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/layout/alert.dart:22:16 • final_not_initialized
+  error • The final variable 'borderColor' must be initialized • lib/src/components/layout/alert.dart:28:16 • final_not_initialized
+  error • 'AlertTheme' must have a method body because 'VNLAlertTheme' isn't abstract • lib/src/components/layout/alert.dart:30:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/alert.dart:42:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/alert.dart:42:9 • strict_top_level_inference
+   info • The variable name 'AlertTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/alert.dart:42:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/alert.dart:42:21 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/alert.dart:42:35 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/alert.dart:42:57 • field_initializer_outside_constructor
+  error • AlertTheme isn't a type • lib/src/components/layout/alert.dart:58:3 • not_a_type
+  error • The name 'AlertTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/alert.dart:74:21 • type_test_with_non_type
+  error • The name 'AlertTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/alert.dart:219:46 • non_type_as_type_argument
+  error • The final variable 'leadingAlignment' must be initialized • lib/src/components/layout/basic.dart:10:28 • final_not_initialized
+  error • The final variable 'trailingAlignment' must be initialized • lib/src/components/layout/basic.dart:13:28 • final_not_initialized
+  error • The final variable 'titleAlignment' must be initialized • lib/src/components/layout/basic.dart:16:28 • final_not_initialized
+  error • The final variable 'subtitleAlignment' must be initialized • lib/src/components/layout/basic.dart:19:28 • final_not_initialized
+  error • The final variable 'contentAlignment' must be initialized • lib/src/components/layout/basic.dart:22:28 • final_not_initialized
+  error • The final variable 'contentSpacing' must be initialized • lib/src/components/layout/basic.dart:25:17 • final_not_initialized
+  error • The final variable 'titleSpacing' must be initialized • lib/src/components/layout/basic.dart:28:17 • final_not_initialized
+  error • The final variable 'mainAxisAlignment' must be initialized • lib/src/components/layout/basic.dart:31:28 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/layout/basic.dart:34:29 • final_not_initialized
+  error • 'BasicTheme' must have a method body because 'VNLBasicTheme' isn't abstract • lib/src/components/layout/basic.dart:36:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/basic.dart:37:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/basic.dart:37:9 • strict_top_level_inference
+   info • The variable name 'BasicTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/basic.dart:37:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/basic.dart:38:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/basic.dart:39:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/basic.dart:40:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/basic.dart:41:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/basic.dart:42:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/basic.dart:43:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/basic.dart:44:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/basic.dart:45:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/basic.dart:46:5 • field_initializer_outside_constructor
+  error • BasicTheme isn't a type • lib/src/components/layout/basic.dart:50:3 • not_a_type
+  error • The name 'BasicTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/basic.dart:86:21 • type_test_with_non_type
+  error • The name 'BasicTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/basic.dart:196:46 • non_type_as_type_argument
+  error • The name 'BasicTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/basic.dart:375:46 • non_type_as_type_argument
+  error • The final variable 'separator' must be initialized • lib/src/components/layout/breadcrumb.dart:8:17 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/layout/breadcrumb.dart:11:29 • final_not_initialized
+  error • 'BreadcrumbTheme' must have a method body because 'VNLBreadcrumbTheme' isn't abstract • lib/src/components/layout/breadcrumb.dart:13:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/breadcrumb.dart:14:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/breadcrumb.dart:14:9 • strict_top_level_inference
+   info • The variable name 'BreadcrumbTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/breadcrumb.dart:14:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/breadcrumb.dart:14:26 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/breadcrumb.dart:14:42 • field_initializer_outside_constructor
+  error • BreadcrumbTheme isn't a type • lib/src/components/layout/breadcrumb.dart:17:3 • not_a_type
+  error • The name 'BreadcrumbTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/breadcrumb.dart:30:21 • type_test_with_non_type
+  error • The name 'BreadcrumbTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/breadcrumb.dart:162:46 • non_type_as_type_argument
+  error • The final variable 'padding' must be initialized • lib/src/components/layout/card.dart:14:29 • final_not_initialized
+  error • The final variable 'filled' must be initialized • lib/src/components/layout/card.dart:17:15 • final_not_initialized
+  error • The final variable 'fillColor' must be initialized • lib/src/components/layout/card.dart:20:16 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/layout/card.dart:23:31 • final_not_initialized
+  error • The final variable 'borderColor' must be initialized • lib/src/components/layout/card.dart:26:16 • final_not_initialized
+  error • The final variable 'borderWidth' must be initialized • lib/src/components/layout/card.dart:29:17 • final_not_initialized
+  error • The final variable 'clipBehavior' must be initialized • lib/src/components/layout/card.dart:32:15 • final_not_initialized
+  error • The final variable 'boxShadow' must be initialized • lib/src/components/layout/card.dart:35:26 • final_not_initialized
+  error • The final variable 'surfaceOpacity' must be initialized • lib/src/components/layout/card.dart:38:17 • final_not_initialized
+  error • The final variable 'surfaceBlur' must be initialized • lib/src/components/layout/card.dart:41:17 • final_not_initialized
+  error • The final variable 'duration' must be initialized • lib/src/components/layout/card.dart:44:19 • final_not_initialized
+  error • 'CardTheme' must have a method body because 'VNLCardTheme' isn't abstract • lib/src/components/layout/card.dart:46:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/card.dart:47:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/card.dart:47:9 • strict_top_level_inference
+   info • The variable name 'CardTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/card.dart:47:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:48:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:49:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:50:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:51:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:52:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:53:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:54:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:55:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:56:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:57:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card.dart:58:5 • field_initializer_outside_constructor
+  error • CardTheme isn't a type • lib/src/components/layout/card.dart:62:3 • not_a_type
+  error • The name 'CardTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/card.dart:94:21 • type_test_with_non_type
+  error • The name 'CardTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/card.dart:259:46 • non_type_as_type_argument
+  error • The name 'CardTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/card.dart:433:46 • non_type_as_type_argument
+  error • The final variable 'style' must be initialized • lib/src/components/layout/card_image.dart:22:33 • final_not_initialized
+  error • The final variable 'direction' must be initialized • lib/src/components/layout/card_image.dart:25:15 • final_not_initialized
+  error • The final variable 'hoverScale' must be initialized • lib/src/components/layout/card_image.dart:28:17 • final_not_initialized
+  error • The final variable 'normalScale' must be initialized • lib/src/components/layout/card_image.dart:31:17 • final_not_initialized
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/layout/card_image.dart:34:16 • final_not_initialized
+  error • The final variable 'borderColor' must be initialized • lib/src/components/layout/card_image.dart:37:16 • final_not_initialized
+  error • The final variable 'gap' must be initialized • lib/src/components/layout/card_image.dart:40:17 • final_not_initialized
+  error • 'CardImageTheme' must have a method body because 'VNLCardImageTheme' isn't abstract • lib/src/components/layout/card_image.dart:42:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/card_image.dart:64:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/card_image.dart:64:9 • strict_top_level_inference
+   info • The variable name 'CardImageTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/card_image.dart:64:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card_image.dart:65:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card_image.dart:66:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card_image.dart:67:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card_image.dart:68:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card_image.dart:69:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card_image.dart:70:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/card_image.dart:71:5 • field_initializer_outside_constructor
+  error • CardImageTheme isn't a type • lib/src/components/layout/card_image.dart:85:3 • not_a_type
+  error • The name 'CardImageTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/card_image.dart:108:21 • type_test_with_non_type
+  error • The name 'CardImageTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/card_image.dart:263:46 • non_type_as_type_argument
+  error • The final variable 'align' must be initialized • lib/src/components/layout/focus_outline.dart:12:17 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/layout/focus_outline.dart:15:31 • final_not_initialized
+  error • The final variable 'border' must be initialized • lib/src/components/layout/focus_outline.dart:18:17 • final_not_initialized
+  error • 'FocusOutlineTheme' must have a method body because 'VNLFocusOutlineTheme' isn't abstract • lib/src/components/layout/focus_outline.dart:20:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/focus_outline.dart:26:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/focus_outline.dart:26:9 • strict_top_level_inference
+   info • The variable name 'FocusOutlineTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/focus_outline.dart:26:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/focus_outline.dart:27:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/focus_outline.dart:28:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/focus_outline.dart:29:5 • field_initializer_outside_constructor
+  error • FocusOutlineTheme isn't a type • lib/src/components/layout/focus_outline.dart:40:3 • not_a_type
+  error • The name 'FocusOutlineTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/focus_outline.dart:56:21 • type_test_with_non_type
+  error • The name 'FocusOutlineTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/focus_outline.dart:149:46 • non_type_as_type_argument
+  error • The final variable 'direction' must be initialized • lib/src/components/layout/hidden.dart:7:15 • final_not_initialized
+  error • The final variable 'duration' must be initialized • lib/src/components/layout/hidden.dart:10:19 • final_not_initialized
+  error • The final variable 'curve' must be initialized • lib/src/components/layout/hidden.dart:13:16 • final_not_initialized
+  error • The final variable 'reverse' must be initialized • lib/src/components/layout/hidden.dart:16:15 • final_not_initialized
+  error • The final variable 'keepCrossAxisSize' must be initialized • lib/src/components/layout/hidden.dart:19:15 • final_not_initialized
+  error • The final variable 'keepMainAxisSize' must be initialized • lib/src/components/layout/hidden.dart:22:15 • final_not_initialized
+  error • 'HiddenTheme' must have a method body because 'VNLHiddenTheme' isn't abstract • lib/src/components/layout/hidden.dart:24:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/hidden.dart:25:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/hidden.dart:25:9 • strict_top_level_inference
+   info • The variable name 'HiddenTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/hidden.dart:25:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/hidden.dart:26:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/hidden.dart:27:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/hidden.dart:28:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/hidden.dart:29:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/hidden.dart:30:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/hidden.dart:31:5 • field_initializer_outside_constructor
+  error • HiddenTheme isn't a type • lib/src/components/layout/hidden.dart:35:3 • not_a_type
+  error • The name 'HiddenTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/hidden.dart:59:21 • type_test_with_non_type
+  error • The name 'HiddenTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/hidden.dart:165:46 • non_type_as_type_argument
+  error • The final variable 'minWidth' must be initialized • lib/src/components/layout/media_query.dart:6:17 • final_not_initialized
+  error • The final variable 'maxWidth' must be initialized • lib/src/components/layout/media_query.dart:9:17 • final_not_initialized
+  error • 'MediaQueryVisibilityTheme' must have a method body because 'VNLMediaQueryVisibilityTheme' isn't abstract • lib/src/components/layout/media_query.dart:11:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/media_query.dart:12:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/media_query.dart:12:9 • strict_top_level_inference
+   info • The variable name 'MediaQueryVisibilityTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/media_query.dart:12:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/media_query.dart:12:36 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/media_query.dart:12:51 • field_initializer_outside_constructor
+  error • MediaQueryVisibilityTheme isn't a type • lib/src/components/layout/media_query.dart:15:3 • not_a_type
+  error • The name 'MediaQueryVisibilityTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/media_query.dart:28:21 • type_test_with_non_type
+  error • The name 'MediaQueryVisibilityTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/media_query.dart:90:32 • non_type_as_type_argument
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/layout/outlined_container.dart:82:16 • final_not_initialized
+  error • The final variable 'borderColor' must be initialized • lib/src/components/layout/outlined_container.dart:85:16 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/layout/outlined_container.dart:88:31 • final_not_initialized
+  error • The final variable 'borderStyle' must be initialized • lib/src/components/layout/outlined_container.dart:91:22 • final_not_initialized
+  error • The final variable 'borderWidth' must be initialized • lib/src/components/layout/outlined_container.dart:94:17 • final_not_initialized
+  error • The final variable 'boxShadow' must be initialized • lib/src/components/layout/outlined_container.dart:97:26 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/layout/outlined_container.dart:100:29 • final_not_initialized
+  error • The final variable 'surfaceOpacity' must be initialized • lib/src/components/layout/outlined_container.dart:103:17 • final_not_initialized
+  error • The final variable 'surfaceBlur' must be initialized • lib/src/components/layout/outlined_container.dart:106:17 • final_not_initialized
+  error • 'OutlinedContainerTheme' must have a method body because 'VNLOutlinedContainerTheme' isn't abstract • lib/src/components/layout/outlined_container.dart:108:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/outlined_container.dart:109:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/outlined_container.dart:109:9 • strict_top_level_inference
+   info • The variable name 'OutlinedContainerTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/outlined_container.dart:109:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/outlined_container.dart:110:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/outlined_container.dart:111:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/outlined_container.dart:112:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/outlined_container.dart:113:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/outlined_container.dart:114:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/outlined_container.dart:115:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/outlined_container.dart:116:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/outlined_container.dart:117:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/outlined_container.dart:118:5 • field_initializer_outside_constructor
+  error • OutlinedContainerTheme isn't a type • lib/src/components/layout/outlined_container.dart:122:3 • not_a_type
+  error • The name 'OutlinedContainerTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/outlined_container.dart:151:21 • type_test_with_non_type
+  error • The name 'OutlinedContainerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/outlined_container.dart:290:46 • non_type_as_type_argument
+  error • The final variable 'direction' must be initialized • lib/src/components/layout/overflow_marquee.dart:33:15 • final_not_initialized
+  error • The final variable 'duration' must be initialized • lib/src/components/layout/overflow_marquee.dart:36:19 • final_not_initialized
+  error • The final variable 'delayDuration' must be initialized • lib/src/components/layout/overflow_marquee.dart:39:19 • final_not_initialized
+  error • The final variable 'step' must be initialized • lib/src/components/layout/overflow_marquee.dart:42:17 • final_not_initialized
+  error • The final variable 'fadePortion' must be initialized • lib/src/components/layout/overflow_marquee.dart:45:17 • final_not_initialized
+  error • The final variable 'curve' must be initialized • lib/src/components/layout/overflow_marquee.dart:48:16 • final_not_initialized
+  error • 'OverflowMarqueeTheme' must have a method body because 'VNLOverflowMarqueeTheme' isn't abstract • lib/src/components/layout/overflow_marquee.dart:50:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/overflow_marquee.dart:51:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/overflow_marquee.dart:51:9 • strict_top_level_inference
+   info • The variable name 'OverflowMarqueeTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/overflow_marquee.dart:51:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/overflow_marquee.dart:52:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/overflow_marquee.dart:53:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/overflow_marquee.dart:54:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/overflow_marquee.dart:55:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/overflow_marquee.dart:56:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/overflow_marquee.dart:57:5 • field_initializer_outside_constructor
+  error • OverflowMarqueeTheme isn't a type • lib/src/components/layout/overflow_marquee.dart:61:3 • not_a_type
+  error • The name 'OverflowMarqueeTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/overflow_marquee.dart:83:21 • type_test_with_non_type
+  error • The name 'OverflowMarqueeTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/overflow_marquee.dart:234:46 • non_type_as_type_argument
+  error • The final variable 'diagonalDragBehavior' must be initialized • lib/src/components/layout/scrollable.dart:10:31 • final_not_initialized
+  error • The final variable 'dragStartBehavior' must be initialized • lib/src/components/layout/scrollable.dart:13:28 • final_not_initialized
+  error • The final variable 'keyboardDismissBehavior' must be initialized • lib/src/components/layout/scrollable.dart:16:44 • final_not_initialized
+  error • The final variable 'clipBehavior' must be initialized • lib/src/components/layout/scrollable.dart:19:15 • final_not_initialized
+  error • The final variable 'hitTestBehavior' must be initialized • lib/src/components/layout/scrollable.dart:22:26 • final_not_initialized
+  error • The final variable 'overscroll' must be initialized • lib/src/components/layout/scrollable.dart:25:15 • final_not_initialized
+  error • 'ScrollableClientTheme' must have a method body because 'VNLScrollableClientTheme' isn't abstract • lib/src/components/layout/scrollable.dart:27:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/scrollable.dart:28:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/scrollable.dart:28:9 • strict_top_level_inference
+   info • The variable name 'ScrollableClientTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/scrollable.dart:28:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable.dart:29:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable.dart:30:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable.dart:31:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable.dart:32:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable.dart:33:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable.dart:34:5 • field_initializer_outside_constructor
+  error • ScrollableClientTheme isn't a type • lib/src/components/layout/scrollable.dart:38:3 • not_a_type
+  error • The name 'ScrollableClientTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/scrollable.dart:65:16 • type_test_with_non_type
+  error • The name 'ScrollableClientTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/scrollable.dart:210:46 • non_type_as_type_argument
+  error • The final variable 'diagonalDragBehavior' must be initialized • lib/src/components/layout/scrollable_client.dart:10:31 • final_not_initialized
+  error • The final variable 'dragStartBehavior' must be initialized • lib/src/components/layout/scrollable_client.dart:13:28 • final_not_initialized
+  error • The final variable 'keyboardDismissBehavior' must be initialized • lib/src/components/layout/scrollable_client.dart:16:44 • final_not_initialized
+  error • The final variable 'clipBehavior' must be initialized • lib/src/components/layout/scrollable_client.dart:19:15 • final_not_initialized
+  error • The final variable 'hitTestBehavior' must be initialized • lib/src/components/layout/scrollable_client.dart:22:26 • final_not_initialized
+  error • The final variable 'overscroll' must be initialized • lib/src/components/layout/scrollable_client.dart:25:15 • final_not_initialized
+  error • 'ScrollableClientTheme' must have a method body because 'VNLScrollableClientTheme' isn't abstract • lib/src/components/layout/scrollable_client.dart:27:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/scrollable_client.dart:28:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/scrollable_client.dart:28:9 • strict_top_level_inference
+   info • The variable name 'ScrollableClientTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/scrollable_client.dart:28:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable_client.dart:29:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable_client.dart:30:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable_client.dart:31:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable_client.dart:32:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable_client.dart:33:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/scrollable_client.dart:34:5 • field_initializer_outside_constructor
+  error • ScrollableClientTheme isn't a type • lib/src/components/layout/scrollable_client.dart:38:3 • not_a_type
+  error • The name 'ScrollableClientTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/scrollable_client.dart:65:16 • type_test_with_non_type
+  error • The name 'ScrollableClientTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/scrollable_client.dart:210:46 • non_type_as_type_argument
+  error • The final variable 'breakpoint' must be initialized • lib/src/components/layout/stage_container.dart:140:29 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/layout/stage_container.dart:143:21 • final_not_initialized
+  error • 'StageContainerTheme' must have a method body because 'VNLStageContainerTheme' isn't abstract • lib/src/components/layout/stage_container.dart:145:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/stage_container.dart:146:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/stage_container.dart:146:9 • strict_top_level_inference
+   info • The variable name 'StageContainerTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/stage_container.dart:146:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/stage_container.dart:146:30 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/stage_container.dart:146:47 • field_initializer_outside_constructor
+  error • StageContainerTheme isn't a type • lib/src/components/layout/stage_container.dart:149:3 • not_a_type
+  error • The name 'StageContainerTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/stage_container.dart:162:21 • type_test_with_non_type
+  error • The name 'StageContainerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/stage_container.dart:216:46 • non_type_as_type_argument
+  error • The final variable 'direction' must be initialized • lib/src/components/layout/stepper.dart:23:15 • final_not_initialized
+  error • The final variable 'size' must be initialized • lib/src/components/layout/stepper.dart:26:19 • final_not_initialized
+  error • The final variable 'variant' must be initialized • lib/src/components/layout/stepper.dart:29:25 • final_not_initialized
+  error • 'StepperTheme' must have a method body because 'VNLStepperTheme' isn't abstract • lib/src/components/layout/stepper.dart:31:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/stepper.dart:40:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/stepper.dart:40:9 • strict_top_level_inference
+   info • The variable name 'StepperTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/stepper.dart:40:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/stepper.dart:40:23 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/stepper.dart:40:39 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/stepper.dart:40:50 • field_initializer_outside_constructor
+  error • StepperTheme isn't a type • lib/src/components/layout/stepper.dart:43:3 • not_a_type
+  error • The name 'StepperTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/stepper.dart:58:21 • type_test_with_non_type
+  error • The name 'StepperTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/stepper.dart:1112:46 • non_type_as_type_argument
+  error • The final variable 'indicatorSize' must be initialized • lib/src/components/layout/steps.dart:6:17 • final_not_initialized
+  error • The final variable 'spacing' must be initialized • lib/src/components/layout/steps.dart:9:17 • final_not_initialized
+  error • The final variable 'indicatorColor' must be initialized • lib/src/components/layout/steps.dart:12:16 • final_not_initialized
+  error • The final variable 'connectorThickness' must be initialized • lib/src/components/layout/steps.dart:15:17 • final_not_initialized
+  error • 'StepsTheme' must have a method body because 'VNLStepsTheme' isn't abstract • lib/src/components/layout/steps.dart:17:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/steps.dart:18:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/steps.dart:18:9 • strict_top_level_inference
+   info • The variable name 'StepsTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/steps.dart:18:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/steps.dart:19:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/steps.dart:20:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/steps.dart:21:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/steps.dart:22:5 • field_initializer_outside_constructor
+  error • StepsTheme isn't a type • lib/src/components/layout/steps.dart:26:3 • not_a_type
+  error • The name 'StepsTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/steps.dart:47:21 • type_test_with_non_type
+  error • The name 'StepsTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/steps.dart:142:46 • non_type_as_type_argument
+  error • The final variable 'timeConstraints' must be initialized • lib/src/components/layout/timeline.dart:29:25 • final_not_initialized
+  error • The final variable 'spacing' must be initialized • lib/src/components/layout/timeline.dart:35:17 • final_not_initialized
+  error • The final variable 'dotSize' must be initialized • lib/src/components/layout/timeline.dart:41:17 • final_not_initialized
+  error • The final variable 'connectorThickness' must be initialized • lib/src/components/layout/timeline.dart:47:17 • final_not_initialized
+  error • The final variable 'color' must be initialized • lib/src/components/layout/timeline.dart:53:16 • final_not_initialized
+  error • The final variable 'rowGap' must be initialized • lib/src/components/layout/timeline.dart:59:17 • final_not_initialized
+  error • 'TimelineTheme' must have a method body because 'VNLTimelineTheme' isn't abstract • lib/src/components/layout/timeline.dart:61:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/timeline.dart:73:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/timeline.dart:73:9 • strict_top_level_inference
+   info • The variable name 'TimelineTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/timeline.dart:73:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/timeline.dart:74:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/timeline.dart:75:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/timeline.dart:76:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/timeline.dart:77:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/timeline.dart:78:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/timeline.dart:79:5 • field_initializer_outside_constructor
+  error • TimelineTheme isn't a type • lib/src/components/layout/timeline.dart:94:3 • not_a_type
+  error • The name 'TimelineTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/timeline.dart:118:21 • type_test_with_non_type
+  error • The name 'TimelineTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/timeline.dart:294:46 • non_type_as_type_argument
+  error • The final variable 'titleBarHeight' must be initialized • lib/src/components/layout/window.dart:29:17 • final_not_initialized
+  error • The final variable 'resizeThickness' must be initialized • lib/src/components/layout/window.dart:38:17 • final_not_initialized
+  error • 'WindowTheme' must have a method body because 'VNLWindowTheme' isn't abstract • lib/src/components/layout/window.dart:40:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/layout/window.dart:44:3 • const_method
+   info • Missing type annotation • lib/src/components/layout/window.dart:44:9 • strict_top_level_inference
+   info • The variable name 'WindowTheme' isn't a lowerCamelCase identifier • lib/src/components/layout/window.dart:44:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/window.dart:44:22 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/layout/window.dart:44:43 • field_initializer_outside_constructor
+  error • WindowTheme isn't a type • lib/src/components/layout/window.dart:57:3 • not_a_type
+  error • The name 'WindowTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/layout/window.dart:71:16 • type_test_with_non_type
+  error • The name 'WindowTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/window.dart:1012:52 • non_type_as_type_argument
+  error • The name 'WindowTheme' isn't a type, so it can't be used as a type argument • lib/src/components/layout/window.dart:2385:46 • non_type_as_type_argument
+  error • A value of type 'ShadcnLocalizationsEn' can't be returned from the function 'lookupShadcnLocalizations' because it has a return type of 'VNLookLocalizations' • lib/src/components/locale/shadcn_localizations.dart:750:14 • return_of_invalid_type
+  error • Classes can only extend other classes • lib/src/components/locale/shadcn_localizations_en.dart:8:37 • extends_non_class
+  error • Too many positional arguments: 0 expected, but 1 found • lib/src/components/locale/shadcn_localizations_en.dart:9:57 • extra_positional_arguments
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:12:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:15:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:18:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:21:14 • override_on_non_overriding_member
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:24:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:26:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:33:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:35:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:42:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:44:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:51:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:53:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:60:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:62:42 • undefined_identifier
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:65:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:72:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:74:42 • undefined_identifier
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:77:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:84:10 • override_on_non_overriding_member
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:89:10 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:94:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:97:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:101:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:105:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:109:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:112:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:115:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:118:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:121:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:124:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:127:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:130:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:133:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:136:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:139:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:142:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:145:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:148:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:151:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:154:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:157:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:160:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:163:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:166:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:169:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:172:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:175:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:178:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:181:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:184:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:187:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:190:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:193:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:196:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:199:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:202:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:205:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:208:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:211:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:214:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:217:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:220:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:223:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:226:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:229:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:232:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:235:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:238:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:241:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:244:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:247:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:250:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:253:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:256:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:259:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:262:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:265:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:268:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:271:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:274:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:277:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:280:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:283:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:286:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:289:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:292:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:295:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:298:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:301:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:304:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:307:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:310:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:313:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:316:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:319:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:322:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:325:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:328:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:331:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:334:14 • override_on_non_overriding_member
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:337:10 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:342:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:345:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:348:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:351:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:354:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:357:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:360:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:363:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:366:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:369:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:372:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:375:14 • override_on_non_overriding_member
+  error • The final variable 'surfaceOpacity' must be initialized • lib/src/components/menu/context_menu.dart:8:17 • final_not_initialized
+  error • The final variable 'surfaceBlur' must be initialized • lib/src/components/menu/context_menu.dart:11:17 • final_not_initialized
+  error • 'ContextMenuTheme' must have a method body because 'VNLContextMenuTheme' isn't abstract • lib/src/components/menu/context_menu.dart:13:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/menu/context_menu.dart:14:3 • const_method
+   info • Missing type annotation • lib/src/components/menu/context_menu.dart:14:9 • strict_top_level_inference
+   info • The variable name 'ContextMenuTheme' isn't a lowerCamelCase identifier • lib/src/components/menu/context_menu.dart:14:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/context_menu.dart:14:27 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/context_menu.dart:14:48 • field_initializer_outside_constructor
+  error • ContextMenuTheme isn't a type • lib/src/components/menu/context_menu.dart:17:3 • not_a_type
+  error • The name 'ContextMenuTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/menu/context_menu.dart:31:21 • type_test_with_non_type
+  error • The name 'ContextMenuTheme' isn't a type, so it can't be used as a type argument • lib/src/components/menu/context_menu.dart:664:50 • non_type_as_type_argument
+  error • The name 'ContextMenuTheme' isn't a type, so it can't be used as a type argument • lib/src/components/menu/context_menu.dart:758:46 • non_type_as_type_argument
+  error • The final variable 'surfaceOpacity' must be initialized • lib/src/components/menu/dropdown_menu.dart:142:17 • final_not_initialized
+  error • The final variable 'surfaceBlur' must be initialized • lib/src/components/menu/dropdown_menu.dart:145:17 • final_not_initialized
+  error • 'DropdownMenuTheme' must have a method body because 'VNLDropdownMenuTheme' isn't abstract • lib/src/components/menu/dropdown_menu.dart:147:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/menu/dropdown_menu.dart:148:3 • const_method
+   info • Missing type annotation • lib/src/components/menu/dropdown_menu.dart:148:9 • strict_top_level_inference
+   info • The variable name 'DropdownMenuTheme' isn't a lowerCamelCase identifier • lib/src/components/menu/dropdown_menu.dart:148:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/dropdown_menu.dart:148:28 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/dropdown_menu.dart:148:49 • field_initializer_outside_constructor
+  error • DropdownMenuTheme isn't a type • lib/src/components/menu/dropdown_menu.dart:151:3 • not_a_type
+  error • The name 'DropdownMenuTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/menu/dropdown_menu.dart:165:21 • type_test_with_non_type
+  error • The name 'DropdownMenuTheme' isn't a type, so it can't be used as a type argument • lib/src/components/menu/dropdown_menu.dart:259:46 • non_type_as_type_argument
+  error • The final variable 'border' must be initialized • lib/src/components/menu/menubar.dart:33:15 • final_not_initialized
+  error • The final variable 'subMenuOffset' must be initialized • lib/src/components/menu/menubar.dart:39:17 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/menu/menubar.dart:45:29 • final_not_initialized
+  error • The final variable 'borderColor' must be initialized • lib/src/components/menu/menubar.dart:51:16 • final_not_initialized
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/menu/menubar.dart:57:16 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/menu/menubar.dart:63:31 • final_not_initialized
+  error • 'MenubarTheme' must have a method body because 'VNLMenubarTheme' isn't abstract • lib/src/components/menu/menubar.dart:65:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/menu/menubar.dart:66:3 • const_method
+   info • Missing type annotation • lib/src/components/menu/menubar.dart:66:9 • strict_top_level_inference
+   info • The variable name 'MenubarTheme' isn't a lowerCamelCase identifier • lib/src/components/menu/menubar.dart:66:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/menubar.dart:67:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/menubar.dart:68:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/menubar.dart:69:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/menubar.dart:70:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/menubar.dart:71:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/menubar.dart:72:5 • field_initializer_outside_constructor
+  error • MenubarTheme isn't a type • lib/src/components/menu/menubar.dart:76:3 • not_a_type
+  error • The name 'MenubarTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/menu/menubar.dart:99:21 • type_test_with_non_type
+  error • The name 'MenubarTheme' isn't a type, so it can't be used as a type argument • lib/src/components/menu/menubar.dart:253:46 • non_type_as_type_argument
+  error • The final variable 'surfaceOpacity' must be initialized • lib/src/components/menu/navigation_menu.dart:13:17 • final_not_initialized
+  error • The final variable 'surfaceBlur' must be initialized • lib/src/components/menu/navigation_menu.dart:16:17 • final_not_initialized
+  error • The final variable 'margin' must be initialized • lib/src/components/menu/navigation_menu.dart:19:29 • final_not_initialized
+  error • The final variable 'offset' must be initialized • lib/src/components/menu/navigation_menu.dart:22:17 • final_not_initialized
+  error • 'NavigationMenuTheme' must have a method body because 'VNLNavigationMenuTheme' isn't abstract • lib/src/components/menu/navigation_menu.dart:24:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/menu/navigation_menu.dart:45:3 • const_method
+   info • Missing type annotation • lib/src/components/menu/navigation_menu.dart:45:9 • strict_top_level_inference
+   info • The variable name 'NavigationMenuTheme' isn't a lowerCamelCase identifier • lib/src/components/menu/navigation_menu.dart:45:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/navigation_menu.dart:46:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/navigation_menu.dart:47:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/navigation_menu.dart:48:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/navigation_menu.dart:49:5 • field_initializer_outside_constructor
+  error • NavigationMenuTheme isn't a type • lib/src/components/menu/navigation_menu.dart:53:3 • not_a_type
+  error • The name 'NavigationMenuTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/menu/navigation_menu.dart:71:21 • type_test_with_non_type
+  error • The name 'NavigationMenuTheme' isn't a type, so it can't be used as a type argument • lib/src/components/menu/navigation_menu.dart:627:46 • non_type_as_type_argument
+  error • The name 'NavigationMenuTheme' isn't a type, so it can't be used as a type argument • lib/src/components/menu/navigation_menu.dart:703:46 • non_type_as_type_argument
+  error • The final variable 'surfaceOpacity' must be initialized • lib/src/components/menu/popup.dart:6:17 • final_not_initialized
+  error • The final variable 'surfaceBlur' must be initialized • lib/src/components/menu/popup.dart:9:17 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/menu/popup.dart:12:29 • final_not_initialized
+  error • The final variable 'fillColor' must be initialized • lib/src/components/menu/popup.dart:15:16 • final_not_initialized
+  error • The final variable 'borderColor' must be initialized • lib/src/components/menu/popup.dart:18:16 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/menu/popup.dart:21:31 • final_not_initialized
+  error • 'MenuPopupTheme' must have a method body because 'VNLMenuPopupTheme' isn't abstract • lib/src/components/menu/popup.dart:23:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/menu/popup.dart:24:3 • const_method
+   info • Missing type annotation • lib/src/components/menu/popup.dart:24:9 • strict_top_level_inference
+   info • The variable name 'MenuPopupTheme' isn't a lowerCamelCase identifier • lib/src/components/menu/popup.dart:24:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/popup.dart:25:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/popup.dart:26:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/popup.dart:27:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/popup.dart:28:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/popup.dart:29:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/menu/popup.dart:30:5 • field_initializer_outside_constructor
+  error • MenuPopupTheme isn't a type • lib/src/components/menu/popup.dart:34:3 • not_a_type
+  error • The name 'MenuPopupTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/menu/popup.dart:56:21 • type_test_with_non_type
+  error • The name 'MenuPopupTheme' isn't a type, so it can't be used as a type argument • lib/src/components/menu/popup.dart:186:46 • non_type_as_type_argument
+  error • The final variable 'gap' must be initialized • lib/src/components/navigation/pagination.dart:11:17 • final_not_initialized
+  error • The final variable 'showLabel' must be initialized • lib/src/components/navigation/pagination.dart:14:15 • final_not_initialized
+  error • 'PaginationTheme' must have a method body because 'VNLPaginationTheme' isn't abstract • lib/src/components/navigation/pagination.dart:16:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/navigation/pagination.dart:17:3 • const_method
+   info • Missing type annotation • lib/src/components/navigation/pagination.dart:17:9 • strict_top_level_inference
+   info • The variable name 'PaginationTheme' isn't a lowerCamelCase identifier • lib/src/components/navigation/pagination.dart:17:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/pagination.dart:18:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/pagination.dart:19:5 • field_initializer_outside_constructor
+  error • PaginationTheme isn't a type • lib/src/components/navigation/pagination.dart:23:3 • not_a_type
+  error • The name 'PaginationTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/navigation/pagination.dart:36:21 • type_test_with_non_type
+  error • The name 'PaginationTheme' isn't a type, so it can't be used as a type argument • lib/src/components/navigation/pagination.dart:281:46 • non_type_as_type_argument
+  error • The final variable 'builder' must be initialized • lib/src/components/navigation/tabs/tab_container.dart:8:21 • final_not_initialized
+  error • The final variable 'childBuilder' must be initialized • lib/src/components/navigation/tabs/tab_container.dart:11:26 • final_not_initialized
+  error • 'TabContainerTheme' must have a method body because 'VNLTabContainerTheme' isn't abstract • lib/src/components/navigation/tabs/tab_container.dart:13:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/navigation/tabs/tab_container.dart:14:3 • const_method
+   info • Missing type annotation • lib/src/components/navigation/tabs/tab_container.dart:14:9 • strict_top_level_inference
+   info • The variable name 'TabContainerTheme' isn't a lowerCamelCase identifier • lib/src/components/navigation/tabs/tab_container.dart:14:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tab_container.dart:15:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tab_container.dart:16:5 • field_initializer_outside_constructor
+  error • TabContainerTheme isn't a type • lib/src/components/navigation/tabs/tab_container.dart:20:3 • not_a_type
+  error • The name 'TabContainerTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/navigation/tabs/tab_container.dart:36:21 • type_test_with_non_type
+  error • The name 'TabContainerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/navigation/tabs/tab_container.dart:305:46 • non_type_as_type_argument
+  error • The final variable 'borderColor' must be initialized • lib/src/components/navigation/tabs/tab_list.dart:26:16 • final_not_initialized
+  error • The final variable 'borderWidth' must be initialized • lib/src/components/navigation/tabs/tab_list.dart:32:17 • final_not_initialized
+  error • The final variable 'indicatorColor' must be initialized • lib/src/components/navigation/tabs/tab_list.dart:38:16 • final_not_initialized
+  error • The final variable 'indicatorHeight' must be initialized • lib/src/components/navigation/tabs/tab_list.dart:44:17 • final_not_initialized
+  error • 'TabListTheme' must have a method body because 'VNLTabListTheme' isn't abstract • lib/src/components/navigation/tabs/tab_list.dart:46:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/navigation/tabs/tab_list.dart:65:3 • const_method
+   info • Missing type annotation • lib/src/components/navigation/tabs/tab_list.dart:65:9 • strict_top_level_inference
+   info • The variable name 'TabListTheme' isn't a lowerCamelCase identifier • lib/src/components/navigation/tabs/tab_list.dart:65:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tab_list.dart:66:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tab_list.dart:67:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tab_list.dart:68:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tab_list.dart:69:5 • field_initializer_outside_constructor
+  error • TabListTheme isn't a type • lib/src/components/navigation/tabs/tab_list.dart:81:3 • not_a_type
+  error • The name 'TabListTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/navigation/tabs/tab_list.dart:100:21 • type_test_with_non_type
+  error • The name 'TabListTheme' isn't a type, so it can't be used as a type argument • lib/src/components/navigation/tabs/tab_list.dart:206:46 • non_type_as_type_argument
+  error • The name 'TabListTheme' isn't a type, so it can't be used as a type argument • lib/src/components/navigation/tabs/tab_list.dart:241:46 • non_type_as_type_argument
+  error • The final variable 'containerPadding' must be initialized • lib/src/components/navigation/tabs/tabs.dart:14:29 • final_not_initialized
+  error • The final variable 'tabPadding' must be initialized • lib/src/components/navigation/tabs/tabs.dart:20:29 • final_not_initialized
+  error • The final variable 'backgroundColor' must be initialized • lib/src/components/navigation/tabs/tabs.dart:26:16 • final_not_initialized
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/navigation/tabs/tabs.dart:32:31 • final_not_initialized
+  error • 'TabsTheme' must have a method body because 'VNLTabsTheme' isn't abstract • lib/src/components/navigation/tabs/tabs.dart:34:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/navigation/tabs/tabs.dart:37:3 • const_method
+   info • Missing type annotation • lib/src/components/navigation/tabs/tabs.dart:37:9 • strict_top_level_inference
+   info • The variable name 'TabsTheme' isn't a lowerCamelCase identifier • lib/src/components/navigation/tabs/tabs.dart:37:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tabs.dart:38:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tabs.dart:39:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tabs.dart:40:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/navigation/tabs/tabs.dart:41:5 • field_initializer_outside_constructor
+  error • TabsTheme isn't a type • lib/src/components/navigation/tabs/tabs.dart:56:3 • not_a_type
+  error • The name 'TabsTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/navigation/tabs/tabs.dart:75:21 • type_test_with_non_type
+  error • The name 'TabsTheme' isn't a type, so it can't be used as a type argument • lib/src/components/navigation/tabs/tabs.dart:186:46 • non_type_as_type_argument
+  error • The name 'TabsTheme' isn't a type, so it can't be used as a type argument • lib/src/components/navigation/tabs/tabs.dart:227:46 • non_type_as_type_argument
+  error • The final variable 'borderRadius' must be initialized • lib/src/components/overlay/dialog.dart:24:31 • final_not_initialized
+  error • The final variable 'padding' must be initialized • lib/src/components/overlay/dialog.dart:27:29 • final_not_initialized
+  error • The final variable 'barrierColor' must be initialized • lib/src/components/overlay/dialog.dart:30:16 • final_not_initialized
+  error • The final variable 'modal' must be initialized • lib/src/components/overlay/dialog.dart:33:15 • final_not_initialized
+  error • The final variable 'surfaceClip' must be initialized • lib/src/components/overlay/dialog.dart:36:15 • final_not_initialized
+  error • 'ModalBackdropTheme' must have a method body because 'VNLModalBackdropTheme' isn't abstract • lib/src/components/overlay/dialog.dart:38:3 • concrete_class_with_abstract_member
+  error • Getters, setters and methods can't be declared to be 'const' • lib/src/components/overlay/dialog.dart:57:3 • const_method
+   info • Missing type annotation • lib/src/components/overlay/dialog.dart:57:9 • strict_top_level_inference
+   info • The variable name 'ModalBackdropTheme' isn't a lowerCamelCase identifier • lib/src/components/overlay/dialog.dart:57:9 • non_constant_identifier_names
+  error • Field formal parameters can only be used in a constructor • lib/src/components/overlay/dialog.dart:58:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/overlay/dialog.dart:59:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/overlay/dialog.dart:60:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/overlay/dialog.dart:61:5 • field_initializer_outside_constructor
+  error • Field formal parameters can only be used in a constructor • lib/src/components/overlay/dialog.dart:62:5 • field_initializer_outside_constructor
+  error • ModalBackdropTheme isn't a type • lib/src/components/overlay/dialog.dart:80:3 • not_a_type
+  error • The name 'ModalBackdropTheme' isn't a type and can't be used in an 'is' expression • lib/src/components/overlay/dialog.dart:98:21 • type_test_with_non_type
+  error • The name 'ModalBackdropTheme' isn't a type, so it can't be used as a type argument • lib/src/components/overlay/dialog.dart:206:46 • non_type_as_type_argument
+  error • The name 'HoverCardTheme' isn't a type, so it can't be used as a type argument • lib/src/components/overlay/hover_card.dart:254:46 • non_type_as_type_argument
+  error • The method 'VNLCrossFadedTransition' isn't defined for the type '_DefaultRefreshIndicatorState' • lib/src/components/overlay/refresh_trigger.dart:415:16 • undefined_method
+  error • The name 'RefreshTriggerTheme' isn't a type, so it can't be used as a type argument • lib/src/components/overlay/refresh_trigger.dart:471:46 • non_type_as_type_argument
+   info • Library names are not necessary • lib/vnl_ui_extension.dart:1:9 • unnecessary_library_name
+

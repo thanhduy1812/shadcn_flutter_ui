@@ -1,197 +1,500 @@
 import 'package:flutter/rendering.dart';
-import 'package:flutter/material.dart' as m show SelectableText, TextButton, Colors, ButtonStyle, MaterialTapTargetSize;
 
-import '../../../vnl_ui.dart';
+import '../../../shadcn_flutter.dart';
 
-abstract class VNLTextModifier extends StatelessWidget {
+/// Abstract base class for text modifier widgets.
+///
+/// Text modifiers provide a fluent API for applying text styles and
+/// transformations. They extend [Widget] and can be called as functions
+/// to apply additional style properties.
+///
+/// Use the [TextExtension] methods to create and chain text modifiers.
+abstract class VNLTextModifier extends Widget {
+  /// Creates a [VNLTextModifier].
   const VNLTextModifier({super.key});
 
-  @override
-  Widget build(BuildContext context);
-
-  Widget call() => this;
+  /// Applies additional text style properties to this modifier.
+  ///
+  /// All parameters are optional and can be used to override or extend
+  /// the current text styling.
+  ///
+  /// Parameters:
+  /// - [color] (`Color?`, optional): Text color.
+  /// - [backgroundColor] (`Color?`, optional): Background color for text.
+  /// - [fontSize] (`double?`, optional): Font size in logical pixels.
+  /// - [fontWeight] (`FontWeight?`, optional): Font weight (e.g., bold, normal).
+  /// - [fontStyle] (`FontStyle?`, optional): Font style (e.g., italic, normal).
+  /// - [letterSpacing] (`double?`, optional): Space between letters.
+  /// - [wordSpacing] (`double?`, optional): Space between words.
+  /// - [textBaseline] (`TextBaseline?`, optional): Text baseline alignment.
+  /// - [height] (`double?`, optional): Line height multiplier.
+  /// - [leadingDistribution] (`TextLeadingDistribution?`, optional): How to distribute line height.
+  /// - [locale] (`Locale?`, optional): Locale for font selection.
+  /// - [foreground] (`Paint?`, optional): Custom foreground paint.
+  /// - [background] (`Paint?`, optional): Custom background paint.
+  /// - [shadows] (`List<Shadow>?`, optional): Text shadows.
+  /// - [fontFeatures] (`List<FontFeature>?`, optional): OpenType font features.
+  /// - [fontVariations] (`List<FontVariation>?`, optional): Font variations.
+  /// - [decoration] (`TextDecoration?`, optional): Text decoration (underline, etc.).
+  /// - [decorationColor] (`Color?`, optional): Decoration color.
+  /// - [decorationStyle] (`TextDecorationStyle?`, optional): Decoration style.
+  /// - [decorationThickness] (`double?`, optional): Decoration thickness.
+  /// - [debugLabel] (`String?`, optional): Debug label for text style.
+  /// - [fontFamily] (`String?`, optional): Font family name.
+  /// - [fontFamilyFallback] (`List<String>?`, optional): Fallback font families.
+  /// - [package] (`String?`, optional): Package containing the font.
+  /// - [overflow] (`TextOverflow?`, optional): How to handle text overflow.
+  ///
+  /// Returns: `Widget` — the modified text widget.
+  Widget call({
+    Color? color,
+    Color? backgroundColor,
+    double? fontSize,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
+    double? letterSpacing,
+    double? wordSpacing,
+    TextBaseline? textBaseline,
+    double? height,
+    TextLeadingDistribution? leadingDistribution,
+    Locale? locale,
+    Paint? foreground,
+    Paint? background,
+    List<Shadow>? shadows,
+    List<FontFeature>? fontFeatures,
+    List<FontVariation>? fontVariations,
+    TextDecoration? decoration,
+    Color? decorationColor,
+    TextDecorationStyle? decorationStyle,
+    double? decorationThickness,
+    String? debugLabel,
+    String? fontFamily,
+    List<String>? fontFamilyFallback,
+    String? package,
+    TextOverflow? overflow,
+  });
 }
 
+/// Extension providing text styling modifiers for widgets.
+///
+/// This extension adds a fluent API for applying text styles to widgets.
+/// Each property returns a [VNLTextModifier] that can be further chained.
+///
+/// Example:
+/// ```dart
+/// Text('Hello').sans.large.bold.muted
+/// ```
 extension TextExtension on Widget {
-  VNLTextModifier get sans => VNLWrappedText(style: (context, theme) => theme.typography.sans, child: this);
+  /// Applies sans-serif font family.
+  VNLTextModifier get sans => VNLWrappedText(
+        style: (context, theme) => theme.typography.sans,
+        child: this,
+      );
 
-  VNLTextModifier get mono => VNLWrappedText(style: (context, theme) => theme.typography.mono, child: this);
+  /// Applies monospace font family.
+  VNLTextModifier get mono => VNLWrappedText(
+        style: (context, theme) => theme.typography.mono,
+        child: this,
+      );
 
-  VNLTextModifier get xSmall => VNLWrappedText(style: (context, theme) => theme.typography.xSmall, child: this);
+  /// Applies extra-small font size.
+  VNLTextModifier get xSmall => VNLWrappedText(
+        style: (context, theme) => theme.typography.xSmall,
+        child: this,
+      );
 
-  VNLTextModifier get small => VNLWrappedText(style: (context, theme) => theme.typography.small, child: this);
+  /// Applies small font size.
+  VNLTextModifier get small => VNLWrappedText(
+        style: (context, theme) => theme.typography.small,
+        child: this,
+      );
 
-  VNLTextModifier get base => VNLWrappedText(style: (context, theme) => theme.typography.base, child: this);
+  /// Applies base (default) font size.
+  VNLTextModifier get base => VNLWrappedText(
+        style: (context, theme) => theme.typography.base,
+        child: this,
+      );
 
-  VNLTextModifier get large => VNLWrappedText(style: (context, theme) => theme.typography.large, child: this);
+  /// Applies large font size.
+  VNLTextModifier get large => VNLWrappedText(
+        style: (context, theme) => theme.typography.large,
+        child: this,
+      );
 
-  VNLTextModifier get xLarge => VNLWrappedText(style: (context, theme) => theme.typography.xLarge, child: this);
+  /// Applies extra-large font size.
+  VNLTextModifier get xLarge => VNLWrappedText(
+        style: (context, theme) => theme.typography.xLarge,
+        child: this,
+      );
 
-  VNLTextModifier get x2Large => VNLWrappedText(style: (context, theme) => theme.typography.x2Large, child: this);
+  /// Applies 2x large font size.
+  VNLTextModifier get x2Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x2Large,
+        child: this,
+      );
 
-  VNLTextModifier get x3Large => VNLWrappedText(style: (context, theme) => theme.typography.x3Large, child: this);
+  /// Applies 3x large font size.
+  VNLTextModifier get x3Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x3Large,
+        child: this,
+      );
 
-  VNLTextModifier get x4Large => VNLWrappedText(style: (context, theme) => theme.typography.x4Large, child: this);
+  /// Applies 4x large font size.
+  VNLTextModifier get x4Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x4Large,
+        child: this,
+      );
 
-  VNLTextModifier get x5Large => VNLWrappedText(style: (context, theme) => theme.typography.x5Large, child: this);
+  /// Applies 5x large font size.
+  VNLTextModifier get x5Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x5Large,
+        child: this,
+      );
 
-  VNLTextModifier get x6Large => VNLWrappedText(style: (context, theme) => theme.typography.x6Large, child: this);
+  /// Applies 6x large font size.
+  VNLTextModifier get x6Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x6Large,
+        child: this,
+      );
 
-  VNLTextModifier get x7Large => VNLWrappedText(style: (context, theme) => theme.typography.x7Large, child: this);
+  /// Applies 7x large font size.
+  VNLTextModifier get x7Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x7Large,
+        child: this,
+      );
 
-  VNLTextModifier get x8Large => VNLWrappedText(style: (context, theme) => theme.typography.x8Large, child: this);
+  /// Applies 8x large font size.
+  VNLTextModifier get x8Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x8Large,
+        child: this,
+      );
 
-  VNLTextModifier get x9Large => VNLWrappedText(style: (context, theme) => theme.typography.x9Large, child: this);
+  /// Applies 9x large font size.
+  VNLTextModifier get x9Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x9Large,
+        child: this,
+      );
 
-  VNLTextModifier get thin => VNLWrappedText(style: (context, theme) => theme.typography.thin, child: this);
+  /// Applies thin font weight (100).
+  VNLTextModifier get thin => VNLWrappedText(
+        style: (context, theme) => theme.typography.thin,
+        child: this,
+      );
 
-  VNLTextModifier get extraLight => VNLWrappedText(style: (context, theme) => theme.typography.extraLight, child: this);
+  /// Applies extra-light font weight (200).
+  VNLTextModifier get extraLight => VNLWrappedText(
+        style: (context, theme) => theme.typography.extraLight,
+        child: this,
+      );
 
-  VNLTextModifier get light => VNLWrappedText(style: (context, theme) => theme.typography.light, child: this);
+  /// Applies light font weight (300).
+  VNLTextModifier get light => VNLWrappedText(
+        style: (context, theme) => theme.typography.light,
+        child: this,
+      );
 
-  VNLTextModifier get normal => VNLWrappedText(style: (context, theme) => theme.typography.normal, child: this);
+  /// Applies normal font weight (400).
+  VNLTextModifier get normal => VNLWrappedText(
+        style: (context, theme) => theme.typography.normal,
+        child: this,
+      );
 
-  VNLTextModifier get medium => VNLWrappedText(style: (context, theme) => theme.typography.medium, child: this);
+  /// Applies medium font weight (500).
+  VNLTextModifier get medium => VNLWrappedText(
+        style: (context, theme) => theme.typography.medium,
+        child: this,
+      );
 
-  VNLTextModifier get semiBold => VNLWrappedText(style: (context, theme) => theme.typography.semiBold, child: this);
+  /// Applies semi-bold font weight (600).
+  VNLTextModifier get semiBold => VNLWrappedText(
+        style: (context, theme) => theme.typography.semiBold,
+        child: this,
+      );
 
-  VNLTextModifier get bold => VNLWrappedText(style: (context, theme) => theme.typography.bold, child: this);
+  /// Applies bold font weight (700).
+  VNLTextModifier get bold => VNLWrappedText(
+        style: (context, theme) => theme.typography.bold,
+        child: this,
+      );
 
-  VNLTextModifier get extraBold => VNLWrappedText(style: (context, theme) => theme.typography.extraBold, child: this);
+  /// Applies extra-bold font weight (800).
+  VNLTextModifier get extraBold => VNLWrappedText(
+        style: (context, theme) => theme.typography.extraBold,
+        child: this,
+      );
 
-  VNLTextModifier get black => VNLWrappedText(style: (context, theme) => theme.typography.black, child: this);
+  /// Applies black font weight (900).
+  VNLTextModifier get black => VNLWrappedText(
+        style: (context, theme) => theme.typography.black,
+        child: this,
+      );
 
-  VNLTextModifier get italic => VNLWrappedText(style: (context, theme) => theme.typography.italic, child: this);
+  /// Applies italic font style.
+  VNLTextModifier get italic => VNLWrappedText(
+        style: (context, theme) => theme.typography.italic,
+        child: this,
+      );
 
-  VNLTextModifier get underline =>
-      VNLWrappedText(style: (context, theme) => const TextStyle(decoration: TextDecoration.underline), child: this);
+  /// Applies underline text decoration.
+  VNLTextModifier get underline => VNLWrappedText(
+        style: (context, theme) => const TextStyle(
+          decoration: TextDecoration.underline,
+        ),
+        child: this,
+      );
 
-  VNLTextModifier get muted =>
-      VNLWrappedText(style: (context, theme) => TextStyle(color: theme.colorScheme.mutedForeground), child: this);
+  /// Applies muted foreground color.
+  VNLTextModifier get muted => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.mutedForeground,
+        ),
+        child: this,
+      );
 
-  VNLTextModifier get primaryForeground =>
-      VNLWrappedText(style: (context, theme) => TextStyle(color: theme.colorScheme.primaryForeground), child: this);
+  /// Applies primary foreground color.
+  VNLTextModifier get primaryForeground => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.primaryForeground,
+        ),
+        child: this,
+      );
 
-  VNLTextModifier get secondaryForeground =>
-      VNLWrappedText(style: (context, theme) => TextStyle(color: theme.colorScheme.secondaryForeground), child: this);
+  /// Applies secondary foreground color.
+  VNLTextModifier get secondaryForeground => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.secondaryForeground,
+        ),
+        child: this,
+      );
 
-  VNLTextModifier get h1 => VNLWrappedText(style: (context, theme) => theme.typography.h1, child: this);
+  /// Applies heading 1 style.
+  VNLTextModifier get h1 => VNLWrappedText(
+        style: (context, theme) => theme.typography.h1,
+        child: this,
+      );
 
+  /// Applies heading 2 style with bottom border.
   VNLTextModifier get h2 => VNLWrappedText(
-    style: (context, theme) => theme.typography.h2,
-    wrapper:
-        (context, child) => Container(
+        style: (context, theme) => theme.typography.h2,
+        wrapper: (context, child) => Container(
           margin: const EdgeInsets.only(top: 40),
           padding: const EdgeInsets.only(bottom: 8),
           decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: VNLTheme.of(context).colorScheme.border, width: 1)),
+            border: Border(
+              bottom: BorderSide(
+                color: Theme.of(context).colorScheme.border,
+                width: 1,
+              ),
+            ),
           ),
           child: child,
         ),
-    child: this,
-  );
+        child: this,
+      );
 
-  VNLTextModifier get h3 => VNLWrappedText(style: (context, theme) => theme.typography.h3, child: this);
+  /// Applies heading 3 style.
+  VNLTextModifier get h3 => VNLWrappedText(
+        style: (context, theme) => theme.typography.h3,
+        child: this,
+      );
 
-  VNLTextModifier get h4 => VNLWrappedText(style: (context, theme) => theme.typography.h4, child: this);
+  /// Applies heading 4 style.
+  VNLTextModifier get h4 => VNLWrappedText(
+        style: (context, theme) => theme.typography.h4,
+        child: this,
+      );
 
+  /// Applies paragraph style with top spacing.
   VNLTextModifier get p => VNLWrappedText(
-    style: (context, theme) => theme.typography.p,
-    child: this,
-    wrapper: (context, child) {
-      return Padding(padding: const EdgeInsets.only(top: 24), child: child);
-    },
-  );
+        style: (context, theme) => theme.typography.p,
+        child: this,
+        wrapper: (context, child) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 24),
+            child: child,
+          );
+        },
+      );
 
-  VNLTextModifier get firstP => VNLWrappedText(style: (context, theme) => theme.typography.p, child: this);
+  /// Applies paragraph style for the first paragraph (no top spacing).
+  VNLTextModifier get firstP => VNLWrappedText(
+        style: (context, theme) => theme.typography.p,
+        child: this,
+      );
 
+  /// Applies block quote style with left border.
   VNLTextModifier get blockQuote => VNLWrappedText(
-    style: (context, theme) => theme.typography.blockQuote,
-    wrapper:
-        (context, child) => Container(
+        style: (context, theme) => theme.typography.blockQuote,
+        wrapper: (context, child) => Container(
           decoration: BoxDecoration(
-            border: Border(left: BorderSide(color: VNLTheme.of(context).colorScheme.border, width: 2)),
+            border: Border(
+              left: BorderSide(
+                color: Theme.of(context).colorScheme.border,
+                width: 2,
+              ),
+            ),
           ),
           padding: const EdgeInsets.only(left: 16),
           child: child,
         ),
-    child: this,
-  );
+        child: this,
+      );
 
+  /// Applies list item style with bullet point.
+  ///
+  /// Automatically adds a bullet point and indents nested list items.
   VNLTextModifier get li => VNLWrappedText(
-    wrapper: (context, child) {
-      VNLUnorderedListData? data = Data.maybeOf(context);
-      int depth = data?.depth ?? 0;
-      TextStyle style = DefaultTextStyle.of(context).style;
-      double size = (style.fontSize ?? 12) / 16 * 6;
-      return IntrinsicWidth(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: ((style.fontSize ?? 12) * (style.height ?? 1)) * 1.2,
-              child: getBullet(context, depth, size),
+        wrapper: (context, child) {
+          VNLUnorderedListData? data = Data.maybeOf(context);
+          int depth = data?.depth ?? 0;
+          TextStyle style = DefaultTextStyle.of(context).style;
+          double size = (style.fontSize ?? 12) / 16 * 6;
+          return IntrinsicWidth(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: ((style.fontSize ?? 12) * (style.height ?? 1)) * 1.2,
+                  child: getBullet(context, depth, size),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Data.inherit(
+                      data: VNLUnorderedListData(depth: depth + 1), child: child),
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            Expanded(child: Data.inherit(data: VNLUnorderedListData(depth: depth + 1), child: child)),
-          ],
-        ),
+          );
+        },
+        child: this,
       );
-    },
-    child: this,
-  );
 
+  /// Applies inline code style with background and padding.
   VNLTextModifier get inlineCode => VNLWrappedText(
-    style: (context, theme) => theme.typography.inlineCode,
-    wrapper: (context, child) {
-      final style = DefaultTextStyle.of(context).style;
-      final double paddingVertical = style.fontSize! * 0.2;
-      final double paddingHorizontal = style.fontSize! * 0.3;
-      final VNLThemeData themeData = VNLTheme.of(context);
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: paddingVertical, horizontal: paddingHorizontal),
-        decoration: BoxDecoration(
-          color: VNLTheme.of(context).colorScheme.muted,
-          borderRadius: BorderRadius.circular(themeData.radiusSm),
-        ),
-        child: child,
+        style: (context, theme) => theme.typography.inlineCode,
+        wrapper: (context, child) {
+          final style = DefaultTextStyle.of(context).style;
+          final double paddingVertical = style.fontSize! * 0.2;
+          final double paddingHorizontal = style.fontSize! * 0.3;
+          final ThemeData themeData = Theme.of(context);
+          return Container(
+            padding: EdgeInsets.symmetric(
+              vertical: paddingVertical,
+              horizontal: paddingHorizontal,
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.muted,
+              borderRadius: BorderRadius.circular(themeData.radiusSm),
+            ),
+            child: child,
+          );
+        },
+        child: this,
       );
-    },
-    child: this,
-  );
 
-  VNLTextModifier get lead => VNLWrappedText(style: (context, theme) => theme.typography.lead, child: this).muted;
+  /// Applies lead paragraph style with muted color.
+  VNLTextModifier get lead => VNLWrappedText(
+        style: (context, theme) => theme.typography.lead,
+        child: this,
+      ).muted;
 
-  VNLTextModifier get textLarge => VNLWrappedText(style: (context, theme) => theme.typography.textLarge, child: this);
+  /// Applies large text style.
+  VNLTextModifier get textLarge => VNLWrappedText(
+        style: (context, theme) => theme.typography.textLarge,
+        child: this,
+      );
 
-  VNLTextModifier get textSmall => VNLWrappedText(style: (context, theme) => theme.typography.textSmall, child: this);
+  /// Applies small text style.
+  VNLTextModifier get textSmall => VNLWrappedText(
+        style: (context, theme) => theme.typography.textSmall,
+        child: this,
+      );
 
-  VNLTextModifier get textMuted =>
-      VNLWrappedText(style: (context, theme) => theme.typography.textMuted, child: this).muted;
+  /// Applies muted text style with muted color.
+  VNLTextModifier get textMuted => VNLWrappedText(
+        style: (context, theme) => theme.typography.textMuted,
+        child: this,
+      ).muted;
 
-  VNLTextModifier get singleLine =>
-      VNLWrappedText(softWrap: (context, theme) => false, maxLines: (context, theme) => 1, child: this);
+  /// Constrains text to a single line without wrapping.
+  VNLTextModifier get singleLine => VNLWrappedText(
+        softWrap: (context, theme) => false,
+        maxLines: (context, theme) => 1,
+        child: this,
+      );
 
-  VNLTextModifier get ellipsis => VNLWrappedText(overflow: (context, theme) => TextOverflow.ellipsis, child: this);
+  /// Applies ellipsis overflow to text.
+  VNLTextModifier get ellipsis => VNLWrappedText(
+        overflow: (context, theme) => TextOverflow.ellipsis,
+        child: this,
+      );
 
-  VNLTextModifier get textCenter => VNLWrappedText(textAlign: (context, theme) => TextAlign.center, child: this);
+  /// Centers text horizontally.
+  VNLTextModifier get textCenter => VNLWrappedText(
+        textAlign: (context, theme) => TextAlign.center,
+        child: this,
+      );
 
-  VNLTextModifier get textRight => VNLWrappedText(textAlign: (context, theme) => TextAlign.right, child: this);
+  /// Right-aligns text.
+  VNLTextModifier get textRight => VNLWrappedText(
+        textAlign: (context, theme) => TextAlign.right,
+        child: this,
+      );
 
-  VNLTextModifier get textLeft => VNLWrappedText(textAlign: (context, theme) => TextAlign.left, child: this);
+  /// Left-aligns text.
+  VNLTextModifier get textLeft => VNLWrappedText(
+        textAlign: (context, theme) => TextAlign.left,
+        child: this,
+      );
 
-  VNLTextModifier get textJustify => VNLWrappedText(textAlign: (context, theme) => TextAlign.justify, child: this);
+  /// Justifies text alignment.
+  VNLTextModifier get textJustify => VNLWrappedText(
+        textAlign: (context, theme) => TextAlign.justify,
+        child: this,
+      );
 
-  VNLTextModifier get textStart => VNLWrappedText(textAlign: (context, theme) => TextAlign.start, child: this);
+  /// Aligns text to the start (left in LTR, right in RTL).
+  VNLTextModifier get textStart => VNLWrappedText(
+        textAlign: (context, theme) => TextAlign.start,
+        child: this,
+      );
 
-  VNLTextModifier get textEnd => VNLWrappedText(textAlign: (context, theme) => TextAlign.end, child: this);
+  /// Aligns text to the end (right in LTR, left in RTL).
+  VNLTextModifier get textEnd => VNLWrappedText(
+        textAlign: (context, theme) => TextAlign.end,
+        child: this,
+      );
 
-  VNLTextModifier get modify =>
-      VNLWrappedText(style: (context, theme) => TextStyle(color: theme.colorScheme.primaryForeground), child: this);
+  /// Applies primary foreground color modifier.
+  VNLTextModifier get modify => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.primaryForeground,
+        ),
+        child: this,
+      );
 
-  VNLTextModifier get foreground =>
-      VNLWrappedText(style: (context, theme) => TextStyle(color: theme.colorScheme.foreground), child: this);
+  /// Applies standard foreground color.
+  VNLTextModifier get foreground => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.foreground,
+        ),
+        child: this,
+      );
 
+  /// Appends an inline span to the current text widget.
+  ///
+  /// Allows chaining multiple text spans together. Works with [Text],
+  /// [VNLSelectableText], and [RichText] widgets.
+  ///
+  /// Parameters:
+  /// - [span] (`InlineSpan`, required): The span to append.
+  ///
+  /// Returns: `Widget` — a rich text widget with the appended span.
+  ///
+  /// Example:
+  /// ```dart
+  /// Text('Hello ').then(TextSpan(text: 'World'))
+  /// ```
   Widget then(InlineSpan span) {
     if (this is RichText) {
       final text = this as RichText;
@@ -207,55 +510,124 @@ extension TextExtension on Widget {
     }
     if (this is _RichTextThenWidget) {
       final text = this as _RichTextThenWidget;
-      return _RichTextThenWidget(text: text.text, then: [...text.then, span]);
+      return _RichTextThenWidget(
+        text: text.text,
+        then: [...text.then, span],
+      );
     }
     if (this is _TextThenWidget) {
       final text = this as _TextThenWidget;
-      return _TextThenWidget(text: text.text, then: [...text.then, span]);
+      return _TextThenWidget(
+        text: text.text,
+        then: [...text.then, span],
+      );
     }
     if (this is _SelectableTextThenWidget) {
       final text = this as _SelectableTextThenWidget;
-      return _SelectableTextThenWidget(text: text.text, then: [...text.then, span]);
+      return _SelectableTextThenWidget(
+        text: text.text,
+        then: [...text.then, span],
+      );
     }
-    InlineSpan currentSpan = WidgetSpan(child: this);
-    return RichText(text: TextSpan(children: [currentSpan, span]));
+    InlineSpan currentSpan = WidgetSpan(
+      child: this,
+    );
+    return RichText(
+      text: TextSpan(
+        children: [currentSpan, span],
+      ),
+    );
   }
 
+  /// Appends a text span to the current text widget.
+  ///
+  /// Convenience method for appending plain text.
+  ///
+  /// Parameters:
+  /// - [text] (`String`, required): Text to append.
+  ///
+  /// Returns: `Widget` — a rich text widget with the appended text.
+  ///
+  /// Example:
+  /// ```dart
+  /// Text('Hello ').thenText('World')
+  /// ```
   Widget thenText(String text) {
     return then(TextSpan(text: text));
   }
 
+  /// Appends inline code to the current text widget.
+  ///
+  /// The appended text is styled as inline code with background.
+  ///
+  /// Parameters:
+  /// - [text] (`String`, required): Code text to append.
+  ///
+  /// Returns: `Widget` — a rich text widget with the appended code.
+  ///
+  /// Example:
+  /// ```dart
+  /// Text('Use ').thenInlineCode('myFunction()')
+  /// ```
   Widget thenInlineCode(String text) {
-    return then(WidgetSpan(alignment: PlaceholderAlignment.middle, child: Text(text).inlineCode()));
-  }
-
-  Widget thenButton({required VoidCallback onPressed, required Widget child}) {
     return then(
       WidgetSpan(
         alignment: PlaceholderAlignment.middle,
-        child: Builder(
-          builder: (context) {
-            final defaultTextStyle = DefaultTextStyle.of(context);
-            return LinkButton(
-              onPressed: onPressed,
-              child: Builder(
-                builder: (context) {
-                  final buttonTextStyle = DefaultTextStyle.of(context);
-                  return DefaultTextStyle(
-                    style: defaultTextStyle.style.copyWith(decoration: buttonTextStyle.style.decoration),
-                    overflow: defaultTextStyle.overflow,
-                    maxLines: defaultTextStyle.maxLines,
-                    softWrap: defaultTextStyle.softWrap,
-                    textAlign: defaultTextStyle.textAlign,
-                    textHeightBehavior: defaultTextStyle.textHeightBehavior,
-                    textWidthBasis: defaultTextStyle.textWidthBasis,
-                    child: child,
-                  );
-                },
-              ),
-            );
-          },
-        ),
+        child: Text(text).inlineCode(),
+      ),
+    );
+  }
+
+  /// Appends a button widget to the current text widget.
+  ///
+  /// Creates an inline button within the text flow.
+  ///
+  /// Parameters:
+  /// - [onPressed] (`VoidCallback`, required): VNLButton press handler.
+  /// - [child] (`Widget`, required): VNLButton content.
+  ///
+  /// Returns: `Widget` — a rich text widget with the appended button.
+  ///
+  /// Example:
+  /// ```dart
+  /// Text('Click ').thenButton(
+  ///   onPressed: () => print('clicked'),
+  ///   child: Text('here'),
+  /// )
+  /// ```
+  Widget thenButton({
+    required VoidCallback onPressed,
+    required Widget child,
+  }) {
+    return then(
+      WidgetSpan(
+        alignment: PlaceholderAlignment.middle,
+        child: Builder(builder: (context) {
+          final defaultTextStyle = DefaultTextStyle.of(context);
+          return VNLButton(
+            style: const VNLButtonStyle.link(
+              density: ButtonDensity.compact,
+            ),
+            onPressed: onPressed,
+            child: Builder(
+              builder: (context) {
+                final buttonTextStyle = DefaultTextStyle.of(context);
+                return DefaultTextStyle(
+                  style: defaultTextStyle.style.copyWith(
+                    decoration: buttonTextStyle.style.decoration,
+                  ),
+                  overflow: defaultTextStyle.overflow,
+                  maxLines: defaultTextStyle.maxLines,
+                  softWrap: defaultTextStyle.softWrap,
+                  textAlign: defaultTextStyle.textAlign,
+                  textHeightBehavior: defaultTextStyle.textHeightBehavior,
+                  textWidthBasis: defaultTextStyle.textWidthBasis,
+                  child: child,
+                );
+              },
+            ),
+          );
+        }),
       ),
     );
   }
@@ -265,7 +637,10 @@ class _TextThenWidget extends StatelessWidget {
   final Text text;
   final List<InlineSpan> then;
 
-  const _TextThenWidget({required this.text, required this.then});
+  const _TextThenWidget({
+    required this.text,
+    required this.then,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -275,32 +650,42 @@ class _TextThenWidget extends StatelessWidget {
       effectiveTextStyle = defaultTextStyle.style.merge(text.style);
     }
     if (MediaQuery.boldTextOf(context)) {
-      effectiveTextStyle = effectiveTextStyle!.merge(const TextStyle(fontWeight: FontWeight.bold));
+      effectiveTextStyle = effectiveTextStyle!
+          .merge(const TextStyle(fontWeight: FontWeight.bold));
     }
     final SelectionRegistrar? registrar = SelectionContainer.maybeOf(context);
     Widget result = RichText(
-      textAlign: text.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start,
+      textAlign:
+          text.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start,
       textDirection: text.textDirection,
       locale: text.locale,
       softWrap: text.softWrap ?? defaultTextStyle.softWrap,
-      overflow: text.overflow ?? effectiveTextStyle?.overflow ?? defaultTextStyle.overflow,
+      overflow: text.overflow ??
+          effectiveTextStyle?.overflow ??
+          defaultTextStyle.overflow,
       textScaler: text.textScaler ?? TextScaler.noScaling,
       maxLines: text.maxLines ?? defaultTextStyle.maxLines,
       strutStyle: text.strutStyle,
       textWidthBasis: text.textWidthBasis ?? defaultTextStyle.textWidthBasis,
-      textHeightBehavior:
-          text.textHeightBehavior ?? defaultTextStyle.textHeightBehavior ?? DefaultTextHeightBehavior.maybeOf(context),
+      textHeightBehavior: text.textHeightBehavior ??
+          defaultTextStyle.textHeightBehavior ??
+          DefaultTextHeightBehavior.maybeOf(context),
       selectionRegistrar: registrar,
-      selectionColor:
-          text.selectionColor ?? DefaultSelectionStyle.of(context).selectionColor ?? DefaultSelectionStyle.defaultColor,
+      selectionColor: text.selectionColor ??
+          DefaultSelectionStyle.of(context).selectionColor ??
+          DefaultSelectionStyle.defaultColor,
       text: TextSpan(
         style: effectiveTextStyle,
-        children: [text.data == null ? text.textSpan! : TextSpan(text: text.data), ...then],
+        children: [
+          text.data == null ? text.textSpan! : TextSpan(text: text.data),
+          ...then,
+        ],
       ),
     );
     if (registrar != null) {
       result = MouseRegion(
-        cursor: DefaultSelectionStyle.of(context).mouseCursor ?? SystemMouseCursors.text,
+        cursor: DefaultSelectionStyle.of(context).mouseCursor ??
+            SystemMouseCursors.text,
         child: result,
       );
     }
@@ -308,7 +693,9 @@ class _TextThenWidget extends StatelessWidget {
       result = Semantics(
         textDirection: text.textDirection,
         label: text.semanticsLabel,
-        child: ExcludeSemantics(child: result),
+        child: ExcludeSemantics(
+          child: result,
+        ),
       );
     }
     return result;
@@ -319,7 +706,10 @@ class _RichTextThenWidget extends StatelessWidget {
   final RichText text;
   final List<InlineSpan> then;
 
-  const _RichTextThenWidget({required this.text, required this.then});
+  const _RichTextThenWidget({
+    required this.text,
+    required this.then,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -336,7 +726,12 @@ class _RichTextThenWidget extends StatelessWidget {
       selectionColor: text.selectionColor,
       selectionRegistrar: text.selectionRegistrar,
       textScaler: text.textScaler,
-      text: TextSpan(children: [text.text, ...then]),
+      text: TextSpan(
+        children: [
+          text.text,
+          ...then,
+        ],
+      ),
     );
   }
 }
@@ -345,19 +740,30 @@ class _SelectableTextThenWidget extends StatelessWidget {
   final VNLSelectableText text;
   final List<InlineSpan> then;
 
-  const _SelectableTextThenWidget({required this.text, required this.then});
+  const _SelectableTextThenWidget({
+    required this.text,
+    required this.then,
+  });
 
   @override
   Widget build(BuildContext context) {
     String? stringData = text.data;
     TextSpan? textData = text.textSpan;
-    return m.SelectableText.rich(
-      TextSpan(text: stringData, children: [if (textData != null) textData, ...then]),
+    return VNLSelectableText.rich(
+      TextSpan(
+        text: stringData,
+        children: [
+          if (textData != null) textData,
+          ...then,
+        ],
+      ),
       style: text.style,
+      useNativeContextMenu: text.useNativeContextMenu,
       contextMenuBuilder: text.contextMenuBuilder,
       minLines: text.minLines,
       semanticsLabel: text.semanticsLabel,
       textScaler: text.textScaler,
+      magnifierConfiguration: text.magnifierConfiguration,
       selectionHeightStyle: text.selectionHeightStyle,
       selectionWidthStyle: text.selectionWidthStyle,
       textAlign: text.textAlign,
@@ -366,6 +772,7 @@ class _SelectableTextThenWidget extends StatelessWidget {
       textHeightBehavior: text.textHeightBehavior,
       maxLines: text.maxLines,
       strutStyle: text.strutStyle,
+      selectionControls: text.selectionControls,
       onTap: text.onTap,
       scrollPhysics: text.scrollPhysics,
       showCursor: text.showCursor,
@@ -377,18 +784,40 @@ class _SelectableTextThenWidget extends StatelessWidget {
       enableInteractiveSelection: text.enableInteractiveSelection,
       autofocus: text.autofocus,
       focusNode: text.focusNode,
+      onSelectionChanged: text.onSelectionChanged,
     );
   }
 }
 
+/// Creates a bullet widget for list items based on depth.
+///
+/// Returns different bullet styles for different nesting levels:
+/// - Depth 0: Filled circle
+/// - Depth 1: Hollow circle (stroke only)
+/// - Depth 2+: Filled square
+///
+/// Parameters:
+/// - [context] (`BuildContext`, required): Build context for theme access.
+/// - [depth] (`int`, required): Nesting depth (0 = top level).
+/// - [size] (`double`, required): Size of the bullet in logical pixels.
+///
+/// Returns: `Widget` — a centered bullet widget.
+///
+/// Example:
+/// ```dart
+/// getBullet(context, 0, 6.0) // Filled circle bullet
+/// ```
 Widget getBullet(BuildContext context, int depth, double size) {
-  final themeData = VNLTheme.of(context);
+  final themeData = Theme.of(context);
   if (depth == 0) {
     return Center(
       child: Container(
         width: size,
         height: size,
-        decoration: BoxDecoration(color: themeData.colorScheme.foreground, shape: BoxShape.circle),
+        decoration: BoxDecoration(
+          color: themeData.colorScheme.foreground,
+          shape: BoxShape.circle,
+        ),
       ),
     );
   }
@@ -398,47 +827,102 @@ Widget getBullet(BuildContext context, int depth, double size) {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          border: Border.all(color: themeData.colorScheme.foreground, width: 1),
+          border: Border.all(
+            color: themeData.colorScheme.foreground,
+            width: 1,
+          ),
           shape: BoxShape.circle,
         ),
       ),
     );
   }
   return Center(
-    child: Container(width: size, height: size, decoration: BoxDecoration(color: themeData.colorScheme.foreground)),
+    child: Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: themeData.colorScheme.foreground,
+      ),
+    ),
   );
 }
 
+/// Data class for tracking unordered list nesting depth.
+///
+/// Used internally by the list item modifier to handle bullet points
+/// and indentation for nested lists.
 class VNLUnorderedListData {
-  const VNLUnorderedListData({
-    this.depth = 0,
-    this.items = const [],
-    this.marker,
-    this.markerAlignment = PlaceholderAlignment.middle,
-    this.markerPadding = const EdgeInsets.only(right: 4),
-  });
-
+  /// The nesting depth of the list (0 = top level).
   final int depth;
-  final List<InlineSpan> items;
-  final Widget? marker;
-  final PlaceholderAlignment markerAlignment;
-  final EdgeInsets markerPadding;
+
+  /// Creates an [VNLUnorderedListData].
+  ///
+  /// Parameters:
+  /// - [depth] (`int`, default: 0): Nesting depth.
+  const VNLUnorderedListData({this.depth = 0});
 }
 
-typedef WrappedTextDataBuilder<T> = T Function(BuildContext context, VNLThemeData theme);
-typedef WidgetTextWrapper = Widget Function(BuildContext context, Widget child);
-typedef TextStyleBuilder = TextStyle Function(BuildContext context, VNLThemeData theme);
+/// Function signature for building data from context and theme.
+///
+/// Used by [VNLWrappedText] to compute style properties dynamically.
+///
+/// Type parameter `T` is the return type of the builder function.
+typedef WrappedTextDataBuilder<T> = T Function(
+    BuildContext context, ThemeData theme);
 
+/// Function signature for wrapping widgets with additional structure.
+///
+/// Used by [VNLWrappedText] to add container widgets around text content.
+typedef WidgetTextWrapper = Widget Function(BuildContext context, Widget child);
+
+/// A widget that wraps text with customizable styling and layout.
+///
+/// [VNLWrappedText] provides a declarative way to apply text styles and
+/// transformations using builder functions. It implements [VNLTextModifier]
+/// and is the foundation for the fluent text styling API.
+///
+/// All style properties are computed dynamically using builder functions
+/// that receive the current [BuildContext] and [ThemeData], enabling
+/// theme-aware and responsive text styling.
 class VNLWrappedText extends StatelessWidget implements VNLTextModifier {
+  /// The child widget to wrap with styling.
   final Widget child;
+
+  /// Builder for the text style.
   final WrappedTextDataBuilder<TextStyle?>? style;
+
+  /// Builder for text alignment.
   final WrappedTextDataBuilder<TextAlign?>? textAlign;
+
+  /// Builder for soft wrap behavior.
   final WrappedTextDataBuilder<bool?>? softWrap;
+
+  /// Builder for text overflow handling.
   final WrappedTextDataBuilder<TextOverflow?>? overflow;
+
+  /// Builder for maximum number of lines.
   final WrappedTextDataBuilder<int?>? maxLines;
+
+  /// Builder for text width basis.
   final WrappedTextDataBuilder<TextWidthBasis?>? textWidthBasis;
+
+  /// Optional wrapper function to add container widgets around the child.
   final WidgetTextWrapper? wrapper;
 
+  /// Creates a [VNLWrappedText].
+  ///
+  /// All styling parameters are optional and use builder functions for
+  /// dynamic, theme-aware styling.
+  ///
+  /// Parameters:
+  /// - [child] (`Widget`, required): Widget to apply styling to.
+  /// - [style] (`WrappedTextDataBuilder<TextStyle?>?`, optional): Text style builder.
+  /// - [textAlign] (`WrappedTextDataBuilder<TextAlign?>?`, optional): Text alignment builder.
+  /// - [softWrap] (`WrappedTextDataBuilder<bool?>?`, optional): Soft wrap builder.
+  /// - [overflow] (`WrappedTextDataBuilder<TextOverflow?>?`, optional): Overflow handling builder.
+  /// - [maxLines] (`WrappedTextDataBuilder<int?>?`, optional): Max lines builder.
+  /// - [textWidthBasis] (`WrappedTextDataBuilder<TextWidthBasis?>?`, optional): Text width basis builder.
+  /// - [wrapper] (`WidgetTextWrapper?`, optional): Container wrapper function.
   const VNLWrappedText({
     super.key,
     required this.child,
@@ -452,8 +936,67 @@ class VNLWrappedText extends StatelessWidget implements VNLTextModifier {
   });
 
   @override
+  Widget call({
+    Color? color,
+    Color? backgroundColor,
+    double? fontSize,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
+    double? letterSpacing,
+    double? wordSpacing,
+    TextBaseline? textBaseline,
+    double? height,
+    TextLeadingDistribution? leadingDistribution,
+    Locale? locale,
+    Paint? foreground,
+    Paint? background,
+    List<Shadow>? shadows,
+    List<FontFeature>? fontFeatures,
+    List<FontVariation>? fontVariations,
+    TextDecoration? decoration,
+    Color? decorationColor,
+    TextDecorationStyle? decorationStyle,
+    double? decorationThickness,
+    String? debugLabel,
+    String? fontFamily,
+    List<String>? fontFamilyFallback,
+    String? package,
+    TextOverflow? overflow,
+  }) {
+    return copyWithStyle(
+      (context, theme) => TextStyle(
+        color: color,
+        backgroundColor: backgroundColor,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: fontStyle,
+        letterSpacing: letterSpacing,
+        wordSpacing: wordSpacing,
+        textBaseline: textBaseline,
+        height: height,
+        leadingDistribution: leadingDistribution,
+        locale: locale,
+        foreground: foreground,
+        background: background,
+        shadows: shadows,
+        fontFeatures: fontFeatures,
+        fontVariations: fontVariations,
+        decoration: decoration,
+        decorationColor: decorationColor,
+        decorationStyle: decorationStyle,
+        decorationThickness: decorationThickness,
+        debugLabel: debugLabel,
+        fontFamily: fontFamily,
+        fontFamilyFallback: fontFamilyFallback,
+        package: package,
+        overflow: overflow,
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     return DefaultTextStyle.merge(
       child: wrapper?.call(context, child) ?? child,
       style: style?.call(context, theme),
@@ -465,35 +1008,55 @@ class VNLWrappedText extends StatelessWidget implements VNLTextModifier {
     );
   }
 
-  @override
-  Widget call() => this;
-
+  /// Creates a copy of this [VNLWrappedText] with modified properties.
+  ///
+  /// Each parameter is a builder function that, if provided, will
+  /// replace the corresponding property in the new instance.
+  /// If a parameter is `null`, the existing property value is retained.
+  ///
+  /// Parameters:
+  /// - [style] (`ValueGetter<WrappedTextDataBuilder<TextStyle>?>?`, optional): New style builder.
+  /// - [textAlign] (`ValueGetter<WrappedTextDataBuilder<TextAlign>?>?`, optional): New text alignment builder.
+  /// - [softWrap] (`ValueGetter<WrappedTextDataBuilder<bool>?>?`, optional): New soft wrap builder.
+  /// - [overflow] (`ValueGetter<WrappedTextDataBuilder<TextOverflow>?>?`, optional): New overflow handling builder.
+  /// - [maxLines] (`ValueGetter<WrappedTextDataBuilder<int>?>?`, optional): New max lines builder.
+  /// - [textWidthBasis] (`ValueGetter<WrappedTextDataBuilder<TextWidthBasis>?>?`, optional): New text width basis builder.
+  /// - [wrapper] (`ValueGetter<WidgetTextWrapper?>?`, optional): New container wrapper function.
+  /// - [child] (`ValueGetter<Widget>?`, optional): New child widget.
   VNLWrappedText copyWith({
-    WrappedTextDataBuilder<TextStyle>? style,
-    WrappedTextDataBuilder<TextAlign>? textAlign,
-    WrappedTextDataBuilder<bool>? softWrap,
-    WrappedTextDataBuilder<TextOverflow>? overflow,
-    WrappedTextDataBuilder<int>? maxLines,
-    WrappedTextDataBuilder<TextWidthBasis>? textWidthBasis,
-    WidgetTextWrapper? wrapper,
-    Widget? child,
+    ValueGetter<WrappedTextDataBuilder<TextStyle>?>? style,
+    ValueGetter<WrappedTextDataBuilder<TextAlign>?>? textAlign,
+    ValueGetter<WrappedTextDataBuilder<bool>?>? softWrap,
+    ValueGetter<WrappedTextDataBuilder<TextOverflow>?>? overflow,
+    ValueGetter<WrappedTextDataBuilder<int>?>? maxLines,
+    ValueGetter<WrappedTextDataBuilder<TextWidthBasis>?>? textWidthBasis,
+    ValueGetter<WidgetTextWrapper?>? wrapper,
+    ValueGetter<Widget>? child,
   }) {
     return VNLWrappedText(
-      wrapper: wrapper ?? this.wrapper,
-      style: style ?? this.style,
-      textAlign: textAlign ?? this.textAlign,
-      softWrap: softWrap ?? this.softWrap,
-      overflow: overflow ?? this.overflow,
-      maxLines: maxLines ?? this.maxLines,
-      textWidthBasis: textWidthBasis ?? this.textWidthBasis,
-      child: child ?? this.child,
+      wrapper: wrapper == null ? this.wrapper : wrapper(),
+      style: style == null ? this.style : style(),
+      textAlign: textAlign == null ? this.textAlign : textAlign(),
+      softWrap: softWrap == null ? this.softWrap : softWrap(),
+      overflow: overflow == null ? this.overflow : overflow(),
+      maxLines: maxLines == null ? this.maxLines : maxLines(),
+      textWidthBasis:
+          textWidthBasis == null ? this.textWidthBasis : textWidthBasis(),
+      child: child == null ? this.child : child(),
     );
   }
 
+  /// Creates a copy of this [VNLWrappedText] with an updated style.
+  ///
+  /// The provided [style] builder is merged with the existing style.
+  ///
+  /// Parameters:
+  /// - [style] (`WrappedTextDataBuilder<TextStyle>`, required): New style builder to merge.
   VNLWrappedText copyWithStyle(WrappedTextDataBuilder<TextStyle> style) {
     return VNLWrappedText(
       wrapper: wrapper,
-      style: (context, theme) => style(context, theme).merge(this.style?.call(context, theme)),
+      style: (context, theme) =>
+          style(context, theme).merge(this.style?.call(context, theme)),
       textAlign: textAlign,
       softWrap: softWrap,
       overflow: overflow,
@@ -502,27 +1065,4 @@ class VNLWrappedText extends StatelessWidget implements VNLTextModifier {
       child: child,
     );
   }
-}
-
-class VNLTextModifierImpl extends StatelessWidget implements VNLTextModifier {
-  const VNLTextModifierImpl({super.key, required this.style, required this.child});
-
-  final TextStyleBuilder style;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
-    return DefaultTextStyle.merge(style: style(context, theme), child: child);
-  }
-
-  @override
-  Widget call() => this;
-}
-
-extension VNLTextModifierLinkExtension on Widget {
-  VNLTextModifier get link => VNLTextModifierImpl(
-    style: (context, theme) => const TextStyle(decoration: TextDecoration.underline),
-    child: this,
-  );
 }

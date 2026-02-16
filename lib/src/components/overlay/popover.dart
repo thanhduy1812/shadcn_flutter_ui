@@ -4,10 +4,15 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-class PopoverOverlayHandler extends OverlayHandler {
-  const PopoverOverlayHandler();
+/// Handles overlay presentation for popover components.
+///
+/// Manages the display, positioning, and lifecycle of popover overlays
+/// with support for alignment, constraints, and modal behavior.
+class VNLPopoverOverlayHandler extends VNLOverlayHandler {
+  /// Creates a [VNLPopoverOverlayHandler].
+  const VNLPopoverOverlayHandler();
   @override
   OverlayCompleter<T> show<T>({
     required BuildContext context,
@@ -28,13 +33,13 @@ class PopoverOverlayHandler extends OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
+    ValueChanged<VNLPopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
-    OverlayBarrier? overlayBarrier,
+    VNLOverlayBarrier? overlayBarrier,
     LayerLink? layerLink,
   }) {
     TextDirection textDirection = Directionality.of(context);
@@ -51,8 +56,12 @@ class PopoverOverlayHandler extends OverlayHandler {
       Offset pos = renderBox.localToGlobal(Offset.zero);
       anchorSize ??= renderBox.size;
       position = Offset(
-        pos.dx + anchorSize.width / 2 + anchorSize.width / 2 * resolvedAnchorAlignment.x,
-        pos.dy + anchorSize.height / 2 + anchorSize.height / 2 * resolvedAnchorAlignment.y,
+        pos.dx +
+            anchorSize.width / 2 +
+            anchorSize.width / 2 * resolvedAnchorAlignment.x,
+        pos.dy +
+            anchorSize.height / 2 +
+            anchorSize.height / 2 * resolvedAnchorAlignment.y,
       );
     }
     final OverlayPopoverEntry<T> popoverEntry = OverlayPopoverEntry();
@@ -94,80 +103,80 @@ class PopoverOverlayHandler extends OverlayHandler {
       builder: (innerContext) {
         return RepaintBoundary(
           child: AnimatedBuilder(
-            animation: isClosed,
-            builder: (innerContext, child) {
-              return FocusScope(
-                autofocus: dismissBackdropFocus,
-                canRequestFocus: !isClosed.value,
-                child: AnimatedValueBuilder.animation(
-                  value: isClosed.value ? 0.0 : 1.0,
-                  initialValue: 0.0,
-                  curve: isClosed.value ? const Interval(0, 2 / 3) : Curves.linear,
-                  duration:
-                      isClosed.value
+              animation: isClosed,
+              builder: (innerContext, child) {
+                return FocusScope(
+                  autofocus: dismissBackdropFocus,
+                  canRequestFocus: !isClosed.value,
+                  child: AnimatedValueBuilder.animation(
+                      value: isClosed.value ? 0.0 : 1.0,
+                      initialValue: 0.0,
+                      curve: isClosed.value
+                          ? const Interval(0, 2 / 3)
+                          : Curves.linear,
+                      duration: isClosed.value
                           ? (showDuration ?? kDefaultDuration)
-                          : (dismissDuration ?? const Duration(milliseconds: 100)),
-                  onEnd: (value) {
-                    if (value == 0.0 && isClosed.value) {
-                      popoverEntry.remove();
-                      popoverEntry.dispose();
-                      animationCompleter.complete();
-                    }
-                  },
-                  builder: (innerContext, animation) {
-                    var popoverAnchor = PopoverOverlayWidget(
-                      animation: animation,
-                      onTapOutside: () {
-                        if (isClosed.value) return;
-                        if (!modal) {
-                          isClosed.value = true;
-                          completer.complete();
+                          : (dismissDuration ??
+                              const Duration(milliseconds: 100)),
+                      onEnd: (value) {
+                        if (value == 0.0 && isClosed.value) {
+                          popoverEntry.remove();
+                          popoverEntry.dispose();
+                          animationCompleter.complete();
                         }
                       },
-                      key: key,
-                      anchorContext: context,
-                      position: position!,
-                      alignment: resolvedAlignment,
-                      themes: themes,
-                      builder: builder,
-                      anchorSize: anchorSize,
-                      // anchorAlignment: anchorAlignment ?? alignment * -1,
-                      anchorAlignment: resolvedAnchorAlignment,
-                      widthConstraint: widthConstraint,
-                      heightConstraint: heightConstraint,
-                      regionGroupId: regionGroupId,
-                      offset: offset,
-                      transitionAlignment: transitionAlignment,
-                      margin: margin,
-                      follow: follow,
-                      consumeOutsideTaps: consumeOutsideTaps,
-                      onTickFollow: onTickFollow,
-                      allowInvertHorizontal: allowInvertHorizontal,
-                      allowInvertVertical: allowInvertVertical,
-                      data: data,
-                      onClose: () {
-                        if (isClosed.value) return Future.value();
-                        isClosed.value = true;
-                        completer.complete();
-                        return animationCompleter.future;
-                      },
-                      onImmediateClose: () {
-                        popoverEntry.remove();
-                        completer.complete();
-                      },
-                      onCloseWithResult: (value) {
-                        if (isClosed.value) return Future.value();
-                        isClosed.value = true;
-                        completer.complete(value as T);
-                        return animationCompleter.future;
-                      },
-                    );
-                    return popoverAnchor;
-                  },
-                ),
-              );
-            },
-          ),
+                      builder: (innerContext, animation) {
+                        var popoverAnchor = VNLPopoverOverlayWidget(
+                          animation: animation,
+                          onTapOutside: () {
+                            if (isClosed.value) return;
+                            if (!modal) {
+                              isClosed.value = true;
+                              completer.complete();
+                            }
+                          },
+                          key: key,
+                          anchorContext: context,
+                          position: position!,
+                          alignment: resolvedAlignment,
+                          themes: themes,
+                          builder: builder,
+                          anchorSize: anchorSize,
+                          // anchorAlignment: anchorAlignment ?? alignment * -1,
+                          anchorAlignment: resolvedAnchorAlignment,
+                          widthConstraint: widthConstraint,
+                          heightConstraint: heightConstraint,
+                          regionGroupId: regionGroupId,
+                          offset: offset,
+                          transitionAlignment: transitionAlignment,
+                          margin: margin,
+                          follow: follow,
+                          consumeOutsideTaps: consumeOutsideTaps,
+                          onTickFollow: onTickFollow,
+                          allowInvertHorizontal: allowInvertHorizontal,
+                          allowInvertVertical: allowInvertVertical,
+                          data: data,
+                          onClose: () {
+                            if (isClosed.value) return Future.value();
+                            isClosed.value = true;
+                            completer.complete();
+                            return animationCompleter.future;
+                          },
+                          onImmediateClose: () {
+                            popoverEntry.remove();
+                            completer.complete();
+                          },
+                          onCloseWithResult: (value) {
+                            if (isClosed.value) return Future.value();
+                            isClosed.value = true;
+                            completer.complete(value as T);
+                            return animationCompleter.future;
+                          },
+                        );
+                        return popoverAnchor;
+                      }),
+                );
+              }),
         );
       },
     );
@@ -180,8 +189,13 @@ class PopoverOverlayHandler extends OverlayHandler {
   }
 }
 
-class PopoverOverlayWidget extends StatefulWidget {
-  const PopoverOverlayWidget({
+/// Internal widget for rendering popover overlays.
+///
+/// Manages positioning, constraints, and lifecycle of popover content
+/// relative to an anchor widget.
+class VNLPopoverOverlayWidget extends StatefulWidget {
+  /// Creates a [VNLPopoverOverlayWidget].
+  const VNLPopoverOverlayWidget({
     super.key,
     required this.anchorContext,
     this.position,
@@ -211,42 +225,125 @@ class PopoverOverlayWidget extends StatefulWidget {
     this.layerLink,
   });
 
+  /// Explicit position for the popover.
   final Offset? position;
+
+  /// Alignment of the popover relative to the anchor.
   final AlignmentGeometry alignment;
+
+  /// Alignment point on the anchor widget.
   final AlignmentGeometry anchorAlignment;
+
+  /// Captured theme data from context.
   final CapturedThemes? themes;
+
+  /// Captured inherited data from context.
   final CapturedData? data;
+
+  /// Builder function for popover content.
   final WidgetBuilder builder;
+
+  /// Size of the anchor widget.
   final Size? anchorSize;
+
+  /// Animation controller for show/hide transitions.
   final Animation<double> animation;
+
+  /// Width constraint mode for the popover.
   final PopoverConstraint widthConstraint;
+
+  /// Height constraint mode for the popover.
   final PopoverConstraint heightConstraint;
+
   // final PopoverRoute? route;
+
+  /// Callback when popover is closing.
   final FutureVoidCallback? onClose;
+
+  /// Callback for immediate close without animation.
   final VoidCallback? onImmediateClose;
+
+  /// Callback when user taps outside the popover.
   final VoidCallback? onTapOutside;
+
+  /// Region group identifier for coordinating multiple overlays.
   final Object? regionGroupId;
+
+  /// Additional offset applied to popover position.
   final Offset? offset;
+
+  /// Alignment for transition animations.
   final AlignmentGeometry? transitionAlignment;
+
+  /// Margin around the popover.
   final EdgeInsetsGeometry? margin;
+
+  /// Whether popover follows anchor movement.
   final bool follow;
+
+  /// Build context of the anchor widget.
   final BuildContext anchorContext;
+
+  /// Whether to consume taps outside the popover.
   final bool consumeOutsideTaps;
-  final ValueChanged<PopoverOverlayWidgetState>? onTickFollow;
+
+  /// Callback on each frame when following anchor.
+  final ValueChanged<VNLPopoverOverlayWidgetState>? onTickFollow;
+
+  /// Allow horizontal inversion when constrained.
   final bool allowInvertHorizontal;
+
+  /// Allow vertical inversion when constrained.
   final bool allowInvertVertical;
+
+  /// Callback when closing with a result value.
   final PopoverFutureVoidCallback<Object?>? onCloseWithResult;
+
+  /// Layer link for positioning.
   final LayerLink? layerLink;
 
   @override
-  State<PopoverOverlayWidget> createState() => PopoverOverlayWidgetState();
+  State<VNLPopoverOverlayWidget> createState() => VNLPopoverOverlayWidgetState();
 }
 
+/// Callback type for popover futures with value transformation.
+///
+/// Parameters:
+/// - [value] (T): Input value to transform
+///
+/// Returns a [Future] with the transformed value.
 typedef PopoverFutureVoidCallback<T> = Future<T> Function(T value);
 
-enum PopoverConstraint { flexible, intrinsic, anchorFixedSize, anchorMinSize, anchorMaxSize }
+/// Size constraint strategies for popover overlays.
+///
+/// - `flexible`: Size flexibly based on content and available space
+/// - `intrinsic`: Use intrinsic content size
+/// - `anchorFixedSize`: Match anchor's exact size
+/// - `anchorMinSize`: Use anchor size as minimum
+/// - `anchorMaxSize`: Use anchor size as maximum
+enum PopoverConstraint {
+  /// Size flexibly based on content and available space
+  flexible,
 
-class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
+  /// Use intrinsic content size
+  intrinsic,
+
+  /// Match anchor's exact size
+  anchorFixedSize,
+
+  /// Use anchor size as minimum
+  anchorMinSize,
+
+  /// Use anchor size as maximum
+  anchorMaxSize,
+}
+
+/// State class for [VNLPopoverOverlayWidget] managing popover positioning and lifecycle.
+///
+/// Handles dynamic positioning, anchor tracking, size constraints, and
+/// animation for popover overlays. Implements [OverlayHandlerStateMixin]
+/// for standard overlay lifecycle management.
+class VNLPopoverOverlayWidgetState extends State<VNLPopoverOverlayWidget>
     with SingleTickerProviderStateMixin, OverlayHandlerStateMixin {
   late BuildContext _anchorContext;
   late Offset? _position;
@@ -316,7 +413,7 @@ class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
   }
 
   @override
-  void didUpdateWidget(covariant PopoverOverlayWidget oldWidget) {
+  void didUpdateWidget(covariant VNLPopoverOverlayWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.alignment != widget.alignment) {
       _alignment = widget.alignment;
@@ -372,20 +469,48 @@ class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
     }
   }
 
+  /// Gets the anchor widget's size.
   Size? get anchorSize => _anchorSize;
+
+  /// Gets the anchor alignment for positioning.
   AlignmentGeometry get anchorAlignment => _anchorAlignment;
+
+  /// Gets the explicit position offset.
   Offset? get position => _position;
+
+  /// Gets the popover alignment.
   AlignmentGeometry get alignment => _alignment;
+
+  /// Gets the width constraint strategy.
   PopoverConstraint get widthConstraint => _widthConstraint;
+
+  /// Gets the height constraint strategy.
   PopoverConstraint get heightConstraint => _heightConstraint;
+
+  /// Gets the position offset.
   Offset? get offset => _offset;
+
+  /// Gets the margin around the popover.
   EdgeInsetsGeometry? get margin => _margin;
+
+  /// Gets whether the popover follows the anchor on movement.
   bool get follow => _follow;
+
+  /// Gets the anchor build context.
   BuildContext get anchorContext => _anchorContext;
+
+  /// Gets whether horizontal inversion is allowed.
   bool get allowInvertHorizontal => _allowInvertHorizontal;
+
+  /// Gets whether vertical inversion is allowed.
   bool get allowInvertVertical => _allowInvertVertical;
+
+  /// Gets the layer link for positioning.
   LayerLink? get layerLink => _layerLink;
 
+  /// Sets the layer link for positioning.
+  ///
+  /// Updates the layer link and manages ticker state for anchor tracking.
   set layerLink(LayerLink? value) {
     if (_layerLink != value) {
       setState(() {
@@ -410,6 +535,9 @@ class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
     }
   }
 
+  /// Sets the popover position.
+  ///
+  /// Updates the explicit position and triggers a rebuild.
   set position(Offset? value) {
     if (_position != value) {
       setState(() {
@@ -529,12 +657,11 @@ class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
       data: this,
       child: TapRegion(
         // enabled: widget.consumeOutsideTaps,
-        onTapOutside:
-            widget.onTapOutside != null
-                ? (event) {
-                  widget.onTapOutside?.call();
-                }
-                : null,
+        onTapOutside: widget.onTapOutside != null
+            ? (event) {
+                widget.onTapOutside?.call();
+              }
+            : null,
         groupId: widget.regionGroupId,
         child: MediaQuery.removePadding(
           context: context,
@@ -545,9 +672,10 @@ class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
           child: AnimatedBuilder(
             animation: widget.animation,
             builder: (context, child) {
-              final theme = VNLTheme.of(context);
+              final theme = Theme.of(context);
               final scaling = theme.scaling;
-              return PopoverLayout(
+              final densityGap = theme.density.baseGap * scaling;
+              return VNLPopoverLayout(
                 alignment: _alignment.optionallyResolve(context),
                 position: _position,
                 anchorSize: _anchorSize,
@@ -555,9 +683,11 @@ class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
                 widthConstraint: _widthConstraint,
                 heightConstraint: _heightConstraint,
                 offset: _offset,
-                margin: _margin?.optionallyResolve(context) ?? (const EdgeInsets.all(8) * scaling),
+                margin: _margin?.optionallyResolve(context) ??
+                    EdgeInsets.all(densityGap),
                 scale: tweenValue(0.9, 1.0, widget.animation.value),
-                scaleAlignment: (widget.transitionAlignment ?? _alignment).optionallyResolve(context),
+                scaleAlignment: (widget.transitionAlignment ?? _alignment)
+                    .optionallyResolve(context),
                 allowInvertVertical: _allowInvertVertical,
                 allowInvertHorizontal: _allowInvertHorizontal,
                 child: child!,
@@ -565,11 +695,9 @@ class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
             },
             child: FadeTransition(
               opacity: widget.animation,
-              child: Builder(
-                builder: (context) {
-                  return widget.builder(context);
-                },
-              ),
+              child: Builder(builder: (context) {
+                return widget.builder(context);
+              }),
             ),
           ),
         ),
@@ -590,15 +718,35 @@ class PopoverOverlayWidgetState extends State<PopoverOverlayWidget>
   }
 }
 
+/// Closes the current popover overlay.
+///
+/// Deprecated: Use [closeOverlay] instead.
+///
+/// Parameters:
+/// - [context] (`BuildContext`, required): Widget context.
+/// - [result] (`T?`, optional): Result to return when closing.
+///
+/// Returns: `Future<void>` — completes when popover is closed.
 @Deprecated('Use closeOverlay instead')
 Future<void> closePopover<T>(BuildContext context, [T? result]) {
   return closeOverlay<T>(context, result);
 }
 
+/// Implementation of [OverlayCompleter] for popover overlays.
+///
+/// Manages the lifecycle of a popover overlay entry, tracking completion
+/// state and handling overlay/barrier entry disposal.
 class OverlayPopoverEntry<T> implements OverlayCompleter<T> {
   late OverlayEntry _overlayEntry;
   late OverlayEntry? _barrierEntry;
+
+  /// Completer for the popover's result value.
   final Completer<T?> completer = Completer();
+
+  /// Completer that tracks the popover's animation lifecycle.
+  ///
+  /// Completes when the popover's entry and exit animations finish.
+  /// Used internally to coordinate animation timing and cleanup.
   final Completer<T?> animationCompleter = Completer();
 
   bool _removed = false;
@@ -607,6 +755,13 @@ class OverlayPopoverEntry<T> implements OverlayCompleter<T> {
   @override
   bool get isCompleted => completer.isCompleted;
 
+  /// Initializes the popover entry with overlay entries.
+  ///
+  /// Must be called before the popover can be displayed.
+  ///
+  /// Parameters:
+  /// - [overlayEntry] (OverlayEntry, required): Main overlay entry
+  /// - [barrierEntry] (OverlayEntry?): Optional barrier entry
   void initialize(OverlayEntry overlayEntry, [OverlayEntry? barrierEntry]) {
     _overlayEntry = overlayEntry;
     _barrierEntry = barrierEntry;
@@ -638,6 +793,46 @@ class OverlayPopoverEntry<T> implements OverlayCompleter<T> {
   bool get isAnimationCompleted => animationCompleter.isCompleted;
 }
 
+/// Displays a popover overlay with specified alignment and behavior.
+///
+/// Parameters:
+/// - [context] (`BuildContext`, required): Widget context.
+/// - [alignment] (`AlignmentGeometry`, required): VNLPopover alignment relative to anchor.
+/// - [builder] (`WidgetBuilder`, required): Builds popover content.
+/// - [position] (`Offset?`, optional): Explicit position.
+/// - [anchorAlignment] (`AlignmentGeometry?`, optional): Anchor alignment point.
+/// - [widthConstraint] (`PopoverConstraint`, optional): Width constraint mode. Default: flexible.
+/// - [heightConstraint] (`PopoverConstraint`, optional): Height constraint mode. Default: flexible.
+/// - [key] (`Key?`, optional): Widget key.
+/// - [rootOverlay] (`bool`, optional): Use root overlay. Default: true.
+/// - [modal] (`bool`, optional): Modal behavior. Default: true.
+/// - [barrierDismissable] (`bool`, optional): Tap outside to dismiss. Default: true.
+/// - [clipBehavior] (`Clip`, optional): Clipping behavior. Default: Clip.none.
+/// - [regionGroupId] (`Object?`, optional): Region grouping identifier.
+/// - [offset] (`Offset?`, optional): Additional offset.
+/// - [transitionAlignment] (`AlignmentGeometry?`, optional): Transition origin.
+/// - [margin] (`EdgeInsetsGeometry?`, optional): VNLPopover margin.
+/// - [follow] (`bool`, optional): Follow anchor movement. Default: true.
+/// - [consumeOutsideTaps] (`bool`, optional): Consume outside taps. Default: true.
+/// - [onTickFollow] (`ValueChanged<VNLPopoverOverlayWidgetState>?`, optional): Follow callback.
+/// - [allowInvertHorizontal] (`bool`, optional): Allow horizontal inversion. Default: true.
+/// - [allowInvertVertical] (`bool`, optional): Allow vertical inversion. Default: true.
+/// - [dismissBackdropFocus] (`bool`, optional): Dismiss on backdrop focus. Default: true.
+/// - [showDuration] (`Duration?`, optional): Show animation duration.
+/// - [dismissDuration] (`Duration?`, optional): Dismiss animation duration.
+/// - [overlayBarrier] (`VNLOverlayBarrier?`, optional): Custom barrier configuration.
+/// - [handler] (`VNLOverlayHandler?`, optional): Custom overlay handler.
+///
+/// Returns: `OverlayCompleter<T?>` — handle to control the popover.
+///
+/// Example:
+/// ```dart
+/// showPopover(
+///   context: context,
+///   alignment: Alignment.bottomCenter,
+///   builder: (context) => Text('VNLPopover content'),
+/// );
+/// ```
 OverlayCompleter<T?> showPopover<T>({
   required BuildContext context,
   required AlignmentGeometry alignment,
@@ -657,16 +852,16 @@ OverlayCompleter<T?> showPopover<T>({
   EdgeInsetsGeometry? margin,
   bool follow = true,
   bool consumeOutsideTaps = true,
-  ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
+  ValueChanged<VNLPopoverOverlayWidgetState>? onTickFollow,
   bool allowInvertHorizontal = true,
   bool allowInvertVertical = true,
   bool dismissBackdropFocus = true,
   Duration? showDuration,
   Duration? dismissDuration,
-  OverlayBarrier? overlayBarrier,
-  OverlayHandler? handler,
+  VNLOverlayBarrier? overlayBarrier,
+  VNLOverlayHandler? handler,
 }) {
-  handler ??= OverlayManager.of(context);
+  handler ??= VNLOverlayManager.of(context);
   return handler.show<T>(
     context: context,
     alignment: alignment,
@@ -696,12 +891,81 @@ OverlayCompleter<T?> showPopover<T>({
   );
 }
 
+/// A comprehensive popover overlay system for displaying contextual content.
+///
+/// [VNLPopover] provides a flexible foundation for creating overlay widgets that appear
+/// relative to anchor elements. It handles positioning, layering, and lifecycle
+/// management for temporary content displays such as dropdowns, menus, tooltips,
+/// and dialogs. The system automatically manages positioning constraints and
+/// viewport boundaries.
+///
+/// The popover system consists of:
+/// - [VNLPopover]: Individual popover instances with control methods
+/// - [VNLPopoverController]: Manager for multiple popovers with lifecycle control
+/// - [VNLPopoverLayout]: Positioning and constraint resolution
+/// - Overlay integration for proper z-ordering and event handling
+///
+/// Key features:
+/// - Intelligent positioning with automatic viewport constraint handling
+/// - Multiple attachment points and alignment options
+/// - Modal and non-modal display modes
+/// - Animation and transition support
+/// - Barrier dismissal with configurable behavior
+/// - Follow-anchor behavior for responsive positioning
+/// - Multi-popover management with close coordination
+///
+/// Positioning capabilities:
+/// - Flexible alignment relative to anchor widgets
+/// - Automatic inversion when space is constrained
+/// - Custom offset adjustments
+/// - Margin and padding controls
+/// - Width and height constraint options
+///
+/// Example usage:
+/// ```dart
+/// final controller = VNLPopoverController();
+///
+/// // Show a popover
+/// final popover = await controller.show<String>(
+///   context: context,
+///   alignment: Alignment.bottomStart,
+///   anchorAlignment: Alignment.topStart,
+///   builder: (context) => PopoverMenu(
+///     children: [
+///       PopoverMenuItem(child: Text('Option 1')),
+///       PopoverMenuItem(child: Text('Option 2')),
+///     ],
+///   ),
+/// );
+/// ```
 class VNLPopover {
+  /// Global key for accessing the overlay handler state.
   final GlobalKey<OverlayHandlerStateMixin> key;
+
+  /// The overlay completer that manages this popover's lifecycle.
   final OverlayCompleter entry;
 
+  /// Creates a popover instance with the specified key and entry.
+  ///
+  /// This constructor is typically used internally by the popover system.
+  /// Use [VNLPopoverController.show] to create and display popovers.
   VNLPopover._(this.key, this.entry);
 
+  /// Closes this popover with optional immediate dismissal.
+  ///
+  /// If [immediate] is true, skips closing animations and removes the popover
+  /// immediately. Otherwise, plays the closing animation before removal.
+  ///
+  /// Returns a Future that completes when the popover is fully dismissed.
+  ///
+  /// Parameters:
+  /// - [immediate] (bool, default: false): Whether to skip closing animations
+  ///
+  /// Example:
+  /// ```dart
+  /// await popover.close(); // Animated close
+  /// await popover.close(true); // Immediate close
+  /// ```
   Future<void> close([bool immediate = false]) {
     var currentState = key.currentState;
     if (currentState != null) {
@@ -712,6 +976,10 @@ class VNLPopover {
     return Future.value();
   }
 
+  /// Schedules this popover to close after the current frame.
+  ///
+  /// This method queues the close operation for the next frame, allowing
+  /// any current operations to complete before dismissing the popover.
   void closeLater() {
     var currentState = key.currentState;
     if (currentState != null) {
@@ -721,24 +989,121 @@ class VNLPopover {
     }
   }
 
+  /// Immediately removes this popover from the overlay without animations.
+  ///
+  /// This method bypasses all closing animations and state management,
+  /// directly removing the popover from the overlay stack. Use with caution
+  /// as it may interrupt ongoing operations.
   void remove() {
     entry.remove();
   }
 
+  /// Gets the current overlay handler state if the popover is mounted.
+  ///
+  /// Returns null if the popover has been disposed or is not currently
+  /// in the widget tree. Useful for checking popover status and accessing
+  /// advanced control methods.
   OverlayHandlerStateMixin? get currentState => key.currentState;
 }
 
-class PopoverController extends ChangeNotifier {
+/// A controller for managing multiple popovers and their lifecycle.
+///
+/// [VNLPopoverController] provides centralized management for popover instances,
+/// including creation, lifecycle tracking, and coordination between multiple
+/// popovers. It handles the complexity of overlay management and provides
+/// a clean API for popover operations.
+///
+/// Key responsibilities:
+/// - Creating and showing new popovers
+/// - Tracking active popover instances
+/// - Coordinating close operations across popovers
+/// - Managing popover lifecycle states
+/// - Providing status queries for open/mounted popovers
+///
+/// The controller maintains a list of active popovers and provides methods
+/// to query their status, close them individually or collectively, and
+/// coordinate their display behavior.
+///
+/// Example:
+/// ```dart
+/// class MyWidget extends StatefulWidget {
+///   @override
+///   _MyWidgetState createState() => _MyWidgetState();
+/// }
+///
+/// class _MyWidgetState extends State<MyWidget> {
+///   final VNLPopoverController _popoverController = VNLPopoverController();
+///
+///   @override
+///   void dispose() {
+///     _popoverController.dispose();
+///     super.dispose();
+///   }
+///
+///   void _showMenu() async {
+///     await _popoverController.show(
+///       context: context,
+///       alignment: Alignment.bottomStart,
+///       builder: (context) => MyPopoverContent(),
+///     );
+///   }
+/// }
+/// ```
+class VNLPopoverController extends ChangeNotifier {
   bool _disposed = false;
   final List<VNLPopover> _openPopovers = [];
 
-  bool get hasOpenPopover => _openPopovers.isNotEmpty && _openPopovers.any((element) => !element.entry.isCompleted);
+  /// Whether there are any open popovers that haven't completed.
+  ///
+  /// Returns true if any popover is currently open and not yet completed.
+  bool get hasOpenPopover =>
+      _openPopovers.isNotEmpty &&
+      _openPopovers.any((element) => !element.entry.isCompleted);
 
+  /// Whether there are any mounted popovers with animations in progress.
+  ///
+  /// Returns true if any popover is mounted and its animation hasn't completed.
   bool get hasMountedPopover =>
-      _openPopovers.isNotEmpty && _openPopovers.any((element) => !element.entry.isAnimationCompleted);
+      _openPopovers.isNotEmpty &&
+      _openPopovers.any((element) => !element.entry.isAnimationCompleted);
 
+  /// Gets an unmodifiable view of currently open popovers.
+  ///
+  /// Returns an iterable of [VNLPopover] instances that are currently managed
+  /// by this controller.
   Iterable<VNLPopover> get openPopovers => List.unmodifiable(_openPopovers);
 
+  /// Shows a popover with the specified configuration.
+  ///
+  /// Creates and displays a popover overlay with extensive customization options.
+  /// If [closeOthers] is true, closes existing popovers before showing the new one.
+  ///
+  /// Parameters:
+  /// - [context] (BuildContext, required): Build context
+  /// - [builder] (WidgetBuilder, required): VNLPopover content builder
+  /// - [alignment] (AlignmentGeometry, required): VNLPopover alignment
+  /// - [anchorAlignment] (AlignmentGeometry?): Anchor alignment
+  /// - [widthConstraint] (PopoverConstraint): Width constraint, defaults to flexible
+  /// - [heightConstraint] (PopoverConstraint): Height constraint, defaults to flexible
+  /// - [modal] (bool): Modal behavior, defaults to true
+  /// - [closeOthers] (bool): Close other popovers, defaults to true
+  /// - [offset] (Offset?): Position offset
+  /// - [key] (`GlobalKey<OverlayHandlerStateMixin>?`): Widget key
+  /// - [regionGroupId] (Object?): Region group ID
+  /// - [transitionAlignment] (AlignmentGeometry?): Transition alignment
+  /// - [consumeOutsideTaps] (bool): Consume outside taps, defaults to true
+  /// - [margin] (EdgeInsetsGeometry?): VNLPopover margin
+  /// - [onTickFollow] (`ValueChanged<VNLPopoverOverlayWidgetState>?`): Follow tick callback
+  /// - [follow] (bool): Follow anchor on move, defaults to true
+  /// - [allowInvertHorizontal] (bool): Allow horizontal inversion, defaults to true
+  /// - [allowInvertVertical] (bool): Allow vertical inversion, defaults to true
+  /// - [dismissBackdropFocus] (bool): Dismiss on backdrop focus, defaults to true
+  /// - [showDuration] (Duration?): Show animation duration
+  /// - [hideDuration] (Duration?): Hide animation duration
+  /// - [overlayBarrier] (VNLOverlayBarrier?): Custom barrier configuration
+  /// - [handler] (VNLOverlayHandler?): Custom overlay handler
+  ///
+  /// Returns a [Future] that completes with the popover result when dismissed.
   Future<T?> show<T>({
     required BuildContext context,
     required WidgetBuilder builder,
@@ -754,20 +1119,21 @@ class PopoverController extends ChangeNotifier {
     AlignmentGeometry? transitionAlignment,
     bool consumeOutsideTaps = true,
     EdgeInsetsGeometry? margin,
-    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
+    ValueChanged<VNLPopoverOverlayWidgetState>? onTickFollow,
     bool follow = true,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? hideDuration,
-    OverlayBarrier? overlayBarrier,
-    OverlayHandler? handler,
+    VNLOverlayBarrier? overlayBarrier,
+    VNLOverlayHandler? handler,
   }) async {
     if (closeOthers) {
       close();
     }
-    key ??= GlobalKey<OverlayHandlerStateMixin>(debugLabel: 'PopoverAnchor$hashCode');
+    key ??= GlobalKey<OverlayHandlerStateMixin>(
+        debugLabel: 'PopoverAnchor$hashCode');
 
     OverlayCompleter<T?> res = showPopover<T>(
       context: context,
@@ -793,7 +1159,10 @@ class PopoverController extends ChangeNotifier {
       overlayBarrier: overlayBarrier,
       handler: handler,
     );
-    var popover = VNLPopover._(key, res);
+    var popover = VNLPopover._(
+      key,
+      res,
+    );
     _openPopovers.add(popover);
     notifyListeners();
     await res.future;
@@ -804,6 +1173,13 @@ class PopoverController extends ChangeNotifier {
     return res.future;
   }
 
+  /// Closes all managed popovers.
+  ///
+  /// Closes all popovers managed by this controller. If [immediate] is true,
+  /// closes without animation.
+  ///
+  /// Parameters:
+  /// - [immediate] (bool): Skip animation if true, defaults to false
   void close([bool immediate = false]) {
     for (VNLPopover key in _openPopovers) {
       key.close(immediate);
@@ -812,6 +1188,9 @@ class PopoverController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Schedules closure of all popovers for the next frame.
+  ///
+  /// Defers closing to avoid issues when called during widget builds.
   void closeLater() {
     for (VNLPopover key in _openPopovers) {
       key.closeLater();
@@ -880,6 +1259,10 @@ class PopoverController extends ChangeNotifier {
     }
   }
 
+  /// Disposes all managed popovers.
+  ///
+  /// Schedules closure of all popovers. Called automatically when the
+  /// controller is disposed.
   void disposePopovers() {
     for (VNLPopover key in _openPopovers) {
       key.closeLater();
@@ -895,21 +1278,52 @@ class PopoverController extends ChangeNotifier {
   }
 }
 
-class PopoverLayout extends SingleChildRenderObjectWidget {
+/// Custom layout widget for positioning popover content.
+///
+/// Handles popover positioning with alignment, sizing constraints, and
+/// automatic inversion when content would overflow screen bounds.
+class VNLPopoverLayout extends SingleChildRenderObjectWidget {
+  /// VNLPopover alignment relative to anchor.
   final Alignment alignment;
+
+  /// Anchor alignment for positioning.
   final Alignment anchorAlignment;
+
+  /// Explicit position offset (overrides alignment).
   final Offset? position;
+
+  /// Size of the anchor widget.
   final Size? anchorSize;
+
+  /// Width constraint strategy.
   final PopoverConstraint widthConstraint;
+
+  /// Height constraint strategy.
   final PopoverConstraint heightConstraint;
+
+  /// Additional offset from computed position.
   final Offset? offset;
+
+  /// Margin around the popover.
   final EdgeInsets margin;
+
+  /// Scale factor for the popover.
   final double scale;
+
+  /// Alignment point for scaling transformation.
   final Alignment scaleAlignment;
+
+  /// Filter quality for scaled content.
   final FilterQuality? filterQuality;
+
+  /// Whether to allow horizontal position inversion.
   final bool allowInvertHorizontal;
+
+  /// Whether to allow vertical position inversion.
   final bool allowInvertVertical;
-  const PopoverLayout({
+
+  /// Creates a popover layout widget.
+  const VNLPopoverLayout({
     super.key,
     required this.alignment,
     required this.position,
@@ -929,7 +1343,7 @@ class PopoverLayout extends SingleChildRenderObjectWidget {
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return PopoverLayoutRender(
+    return VNLPopoverLayoutRender(
       alignment: alignment,
       position: position,
       anchorAlignment: anchorAlignment,
@@ -947,7 +1361,8 @@ class PopoverLayout extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, covariant PopoverLayoutRender renderObject) {
+  void updateRenderObject(
+      BuildContext context, covariant VNLPopoverLayoutRender renderObject) {
     bool hasChanged = false;
     if (renderObject._alignment != alignment) {
       renderObject._alignment = alignment;
@@ -1007,7 +1422,12 @@ class PopoverLayout extends SingleChildRenderObjectWidget {
   }
 }
 
-class PopoverLayoutRender extends RenderShiftedBox {
+/// Custom render object for popover layout positioning.
+///
+/// Handles the low-level layout calculations for positioning popover content
+/// relative to an anchor with automatic constraint adjustments and inversion
+/// when the popover would overflow the viewport.
+class VNLPopoverLayoutRender extends RenderShiftedBox {
   Alignment _alignment;
   Alignment _anchorAlignment;
   Offset? _position;
@@ -1025,7 +1445,11 @@ class PopoverLayoutRender extends RenderShiftedBox {
   bool _invertX = false;
   bool _invertY = false;
 
-  PopoverLayoutRender({
+  /// Creates a popover layout render object.
+  ///
+  /// All parameters control how the popover is positioned and sized relative
+  /// to its anchor.
+  VNLPopoverLayoutRender({
     RenderBox? child,
     required Alignment alignment,
     required Offset? position,
@@ -1040,20 +1464,20 @@ class PopoverLayoutRender extends RenderShiftedBox {
     FilterQuality? filterQuality,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
-  }) : _alignment = alignment,
-       _position = position,
-       _anchorAlignment = anchorAlignment,
-       _widthConstraint = widthConstraint,
-       _heightConstraint = heightConstraint,
-       _anchorSize = anchorSize,
-       _offset = offset,
-       _margin = margin,
-       _scale = scale,
-       _scaleAlignment = scaleAlignment,
-       _filterQuality = filterQuality,
-       _allowInvertHorizontal = allowInvertHorizontal,
-       _allowInvertVertical = allowInvertVertical,
-       super(child);
+  })  : _alignment = alignment,
+        _position = position,
+        _anchorAlignment = anchorAlignment,
+        _widthConstraint = widthConstraint,
+        _heightConstraint = heightConstraint,
+        _anchorSize = anchorSize,
+        _offset = offset,
+        _margin = margin,
+        _scale = scale,
+        _scaleAlignment = scaleAlignment,
+        _filterQuality = filterQuality,
+        _allowInvertHorizontal = allowInvertHorizontal,
+        _allowInvertVertical = allowInvertVertical,
+        super(child);
 
   @override
   Size computeDryLayout(covariant BoxConstraints constraints) {
@@ -1077,11 +1501,13 @@ class PopoverLayoutRender extends RenderShiftedBox {
     }
     Matrix4 transform = Matrix4.identity();
     Offset alignmentTranslation = scaleAlignment.alongSize(childSize);
-    transform.translate(childOffset.dx, childOffset.dy);
-    transform.translate(alignmentTranslation.dx, alignmentTranslation.dy);
-    transform.scale(_scale, _scale);
-    transform.translate(-alignmentTranslation.dx, -alignmentTranslation.dy);
-    transform.translate(-childOffset.dx, -childOffset.dy);
+    transform.translateByDouble(childOffset.dx, childOffset.dy, 0, 1);
+    transform.translateByDouble(
+        alignmentTranslation.dx, alignmentTranslation.dy, 0, 1);
+    transform.scaleByDouble(_scale, _scale, 1, 1);
+    transform.translateByDouble(
+        -alignmentTranslation.dx, -alignmentTranslation.dy, 0, 1);
+    transform.translateByDouble(-childOffset.dx, -childOffset.dy, 0, 1);
     return transform;
   }
 
@@ -1133,8 +1559,11 @@ class PopoverLayoutRender extends RenderShiftedBox {
         final Matrix4 effectiveTransform =
             Matrix4.translationValues(offset.dx, offset.dy, 0.0)
               ..multiply(transform)
-              ..translate(-offset.dx, -offset.dy);
-        final ui.ImageFilter filter = ui.ImageFilter.matrix(effectiveTransform.storage, filterQuality: _filterQuality!);
+              ..translateByDouble(-offset.dx, -offset.dy, 0, 1);
+        final ui.ImageFilter filter = ui.ImageFilter.matrix(
+          effectiveTransform.storage,
+          filterQuality: _filterQuality!,
+        );
         if (layer is ImageFilterLayer) {
           final ImageFilterLayer filterLayer = layer! as ImageFilterLayer;
           filterLayer.imageFilter = filter;
@@ -1150,6 +1579,15 @@ class PopoverLayoutRender extends RenderShiftedBox {
     }
   }
 
+  /// Computes appropriate box constraints for the popover child.
+  ///
+  /// Applies width and height constraint strategies to the child based on
+  /// anchor size, viewport constraints, and margin settings.
+  ///
+  /// Parameters:
+  /// - [constraints]: The incoming constraints from parent
+  ///
+  /// Returns box constraints with min/max values for width and height.
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
     double minWidth = 0;
     double maxWidth = constraints.maxWidth;
@@ -1187,7 +1625,12 @@ class PopoverLayoutRender extends RenderShiftedBox {
         maxHeight = max(minHeight, intrinsicHeight);
       }
     }
-    return BoxConstraints(minWidth: minWidth, maxWidth: maxWidth, minHeight: minHeight, maxHeight: maxHeight);
+    return BoxConstraints(
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+      minHeight: minHeight,
+      maxHeight: maxHeight,
+    );
   }
 
   @override
@@ -1202,14 +1645,20 @@ class PopoverLayoutRender extends RenderShiftedBox {
       size.width / 2 + size.width / 2 * _anchorAlignment.x,
       size.height / 2 + size.height / 2 * _anchorAlignment.y,
     );
-    double x = position.dx - childSize.width / 2 - (childSize.width / 2 * _alignment.x);
-    double y = position.dy - childSize.height / 2 - (childSize.height / 2 * _alignment.y);
+    double x = position.dx -
+        childSize.width / 2 -
+        (childSize.width / 2 * _alignment.x);
+    double y = position.dy -
+        childSize.height / 2 -
+        (childSize.height / 2 * _alignment.y);
     double left = x - _margin.left;
     double top = y - _margin.top;
     double right = x + childSize.width + _margin.right;
     double bottom = y + childSize.height + _margin.bottom;
     if ((left < 0 || right > size.width) && _allowInvertHorizontal) {
-      x = position.dx - childSize.width / 2 - (childSize.width / 2 * -_alignment.x);
+      x = position.dx -
+          childSize.width / 2 -
+          (childSize.width / 2 * -_alignment.x);
       if (_anchorSize != null) {
         x -= _anchorSize!.width * _anchorAlignment.x;
       }
@@ -1221,7 +1670,9 @@ class PopoverLayoutRender extends RenderShiftedBox {
       _invertX = false;
     }
     if ((top < 0 || bottom > size.height) && _allowInvertVertical) {
-      y = position.dy - childSize.height / 2 - (childSize.height / 2 * -_alignment.y);
+      y = position.dy -
+          childSize.height / 2 -
+          (childSize.height / 2 * -_alignment.y);
       if (_anchorSize != null) {
         y -= _anchorSize!.height * _anchorAlignment.y;
       }
@@ -1232,16 +1683,14 @@ class PopoverLayoutRender extends RenderShiftedBox {
     } else {
       _invertY = false;
     }
-    final double dx =
-        left < 0
-            ? -left
-            : right > size.width
+    final double dx = left < 0
+        ? -left
+        : right > size.width
             ? size.width - right
             : 0;
-    final double dy =
-        top < 0
-            ? -top
-            : bottom > size.height
+    final double dy = top < 0
+        ? -top
+        : bottom > size.height
             ? size.height - bottom
             : 0;
     Offset result = Offset(x + dx + offsetX, y + dy + offsetY);

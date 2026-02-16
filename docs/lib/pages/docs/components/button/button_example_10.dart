@@ -12,27 +12,27 @@ class ButtonExample10 extends StatelessWidget {
       runAlignment: WrapAlignment.center,
       children: [
         PrimaryButton(
-          size: ButtonSize.xSmall,
+          size: VNLButtonSize.xSmall,
           onPressed: () {},
           child: const Text('Extra Small'),
         ),
         PrimaryButton(
           onPressed: () {},
-          size: ButtonSize.small,
+          size: VNLButtonSize.small,
           child: const Text('Small'),
         ),
         PrimaryButton(
-          size: ButtonSize.normal,
+          size: VNLButtonSize.normal,
           onPressed: () {},
           child: const Text('Normal'),
         ),
         PrimaryButton(
-          size: ButtonSize.large,
+          size: VNLButtonSize.large,
           onPressed: () {},
           child: const Text('Large'),
         ),
         PrimaryButton(
-          size: ButtonSize.xLarge,
+          size: VNLButtonSize.xLarge,
           onPressed: () {},
           child: const Text('Extra Large'),
         ),

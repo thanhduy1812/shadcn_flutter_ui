@@ -12,10 +12,10 @@ class PopoverExample extends StatelessWidget {
     return const ComponentPage(
       name: 'popover',
       description: 'A floating message that appears when a user interacts with a target.',
-      displayName: 'Popover',
+      displayName: 'VNLPopover',
       children: [
         WidgetUsageExample(
-          title: 'Popover Example',
+          title: 'VNLPopover Example',
           path: 'lib/pages/docs/components/popover/popover_example_1.dart',
           child: PopoverExample1(),
         ),

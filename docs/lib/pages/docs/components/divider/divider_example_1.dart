@@ -1,5 +1,8 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+/// Horizontal dividers between list items.
+///
+/// Use [VNLDivider] to visually separate vertically-stacked content.
 class DividerExample1 extends StatelessWidget {
   const DividerExample1({super.key});
 

@@ -1,57 +1,264 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/src/components/control/hover.dart';
 
-import '../control/hover.dart';
+import '../../../shadcn_flutter.dart';
 
-class TooltipContainer extends StatelessWidget {
-  final Widget child;
+/// Theme data for customizing [VNLTooltipContainer] widget appearance.
+///
+/// This class defines the visual properties that can be applied to
+/// tooltip containers, including surface effects, padding, colors,
+/// and border styling. These properties can be set at the theme level
+/// to provide consistent styling across the application.
+class VNLTooltipTheme extends ComponentThemeData {
+  /// Opacity applied to the tooltip surface color.
   final double? surfaceOpacity;
+
+  /// Blur amount for the tooltip surface.
   final double? surfaceBlur;
 
-  const TooltipContainer({super.key, this.surfaceOpacity, this.surfaceBlur, required this.child});
+  /// Padding around the tooltip content.
+  final EdgeInsetsGeometry? padding;
 
+  /// Background color of the tooltip.
+  final Color? backgroundColor;
+
+  /// Border radius of the tooltip container.
+  final BorderRadiusGeometry? borderRadius;
+
+  /// Creates a [VNLTooltipTheme].
+  const VNLTooltipTheme({
+    this.surfaceOpacity,
+    this.surfaceBlur,
+    this.padding,
+    this.backgroundColor,
+    this.borderRadius,
+  });
+
+  /// Creates a copy of this theme but with the given fields replaced.
+  VNLTooltipTheme copyWith({
+    ValueGetter<double?>? surfaceOpacity,
+    ValueGetter<double?>? surfaceBlur,
+    ValueGetter<EdgeInsetsGeometry?>? padding,
+    ValueGetter<Color?>? backgroundColor,
+    ValueGetter<BorderRadiusGeometry?>? borderRadius,
+  }) {
+    return VNLTooltipTheme(
+      surfaceOpacity:
+          surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
+      surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
+      padding: padding == null ? this.padding : padding(),
+      backgroundColor:
+          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is VNLTooltipTheme &&
+        other.surfaceOpacity == surfaceOpacity &&
+        other.surfaceBlur == surfaceBlur &&
+        other.padding == padding &&
+        other.backgroundColor == backgroundColor &&
+        other.borderRadius == borderRadius;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      surfaceOpacity, surfaceBlur, padding, backgroundColor, borderRadius);
+}
+
+/// A styled container widget for tooltip content.
+///
+/// Provides consistent visual styling for tooltip popups with customizable
+/// background, opacity, blur, padding, and border radius. Integrates with
+/// the tooltip theme system while allowing per-instance overrides.
+class VNLTooltipContainer extends StatelessWidget {
+  /// The tooltip content widget.
+  final Widget child;
+
+  /// Opacity applied to the background surface (0.0 to 1.0).
+  final double? surfaceOpacity;
+
+  /// Blur radius applied to the background surface.
+  final double? surfaceBlur;
+
+  /// Padding around the tooltip content.
+  final EdgeInsetsGeometry? padding;
+
+  /// Background color of the tooltip container.
+  final Color? backgroundColor;
+
+  /// Border radius for rounded corners.
+  final BorderRadiusGeometry? borderRadius;
+
+  /// Creates a [VNLTooltipContainer].
+  ///
+  /// All styling parameters are optional and fall back to theme defaults.
+  ///
+  /// Parameters:
+  /// - [child] (`Widget`, required): Content to display in the tooltip.
+  /// - [surfaceOpacity] (`double?`, optional): Background opacity (0.0-1.0).
+  /// - [surfaceBlur] (`double?`, optional): Background blur radius.
+  /// - [padding] (`EdgeInsetsGeometry?`, optional): Content padding.
+  /// - [backgroundColor] (`Color?`, optional): Background color.
+  /// - [borderRadius] (`BorderRadiusGeometry?`, optional): Border radius.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLTooltipContainer(
+  ///   surfaceOpacity: 0.9,
+  ///   padding: EdgeInsets.all(8),
+  ///   backgroundColor: VNLColors.black,
+  ///   borderRadius: BorderRadius.circular(4),
+  ///   child: Text('VNLTooltip text'),
+  /// )
+  /// ```
+  const VNLTooltipContainer({
+    super.key,
+    this.surfaceOpacity,
+    this.surfaceBlur,
+    this.padding,
+    this.backgroundColor,
+    this.borderRadius,
+    required this.child,
+  });
+
+  /// Builds the tooltip container.
+  ///
+  /// This allows using the widget as a builder function.
   Widget call(BuildContext context) {
     return this;
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
-    var backgroundColor = theme.colorScheme.primary;
-    // var surfaceOpacity = this.surfaceOpacity ?? theme.surfaceOpacity;
-    // var surfaceBlur = this.surfaceBlur ?? theme.surfaceBlur;
-    // Do not use the default value of theme.surfaceOpacity and theme.surfaceBlur
-    // but still allow the user to set the value
-    var surfaceOpacity = this.surfaceOpacity;
-    var surfaceBlur = this.surfaceBlur;
+    final densityGap = theme.density.baseGap * scaling;
+    final densityContentPadding = theme.density.baseContentPadding * scaling;
+    final compTheme = ComponentTheme.maybeOf<VNLTooltipTheme>(context);
+    Color backgroundColor = styleValue(
+        widgetValue: this.backgroundColor,
+        themeValue: compTheme?.backgroundColor,
+        defaultValue: theme.colorScheme.primary);
+    var surfaceOpacity = this.surfaceOpacity ?? compTheme?.surfaceOpacity;
+    var surfaceBlur = this.surfaceBlur ?? compTheme?.surfaceBlur;
     if (surfaceOpacity != null) {
       backgroundColor = backgroundColor.scaleAlpha(surfaceOpacity);
     }
+    final padding = styleValue(
+        widgetValue: this.padding,
+        themeValue: compTheme?.padding,
+        defaultValue: EdgeInsets.symmetric(
+          horizontal: densityContentPadding * 0.75,
+          vertical: densityGap * 0.75,
+        ));
+    final resolvedPadding = resolveEdgeInsets(
+      padding,
+      densityContentPadding,
+    ).resolve(Directionality.of(context));
+    final borderRadius = styleValue(
+        widgetValue: this.borderRadius,
+        themeValue: compTheme?.borderRadius,
+        defaultValue: BorderRadius.circular(theme.radiusSm));
     Widget animatedContainer = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6) * scaling,
-      decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(theme.radiusSm)),
+      padding: resolvedPadding,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: borderRadius,
+      ),
       child: child.xSmall().primaryForeground(),
     );
     if (surfaceBlur != null && surfaceBlur > 0) {
-      animatedContainer = SurfaceBlur(
+      animatedContainer = VNLSurfaceBlur(
         surfaceBlur: surfaceBlur,
-        borderRadius: BorderRadius.circular(theme.radiusSm),
+        borderRadius: borderRadius,
         child: animatedContainer,
       );
     }
-    return Padding(padding: const EdgeInsets.all(6) * scaling, child: animatedContainer);
+    return Padding(
+      padding: EdgeInsets.all(densityGap * 0.75),
+      child: animatedContainer,
+    );
   }
 }
 
+/// An interactive tooltip widget that displays contextual information on hover.
+///
+/// [VNLTooltip] provides contextual help and information by displaying a small overlay
+/// when users hover over or interact with the child widget. It supports configurable
+/// positioning, timing, and custom content through builder functions, making it
+/// ideal for providing additional context without cluttering the interface.
+///
+/// Key features:
+/// - VNLHover-activated tooltip display with configurable delays
+/// - Flexible positioning with alignment and anchor point control
+/// - Custom content through builder functions
+/// - Duration controls for show/hide timing and minimum display time
+/// - Smooth animations and transitions
+/// - Integration with the overlay system for proper z-ordering
+/// - Theme support for consistent styling
+/// - Automatic positioning adjustment to stay within screen bounds
+///
+/// Timing behavior:
+/// - Wait duration: Time to wait before showing tooltip on hover
+/// - Show duration: Animation time for tooltip appearance
+/// - Min duration: Minimum time tooltip stays visible once shown
+/// - Auto-hide: VNLTooltip disappears when hover ends (after min duration)
+///
+/// The tooltip uses a popover-based implementation that ensures proper layering
+/// and positioning relative to the trigger widget. The positioning system
+/// automatically adjusts to keep tooltips within the viewport.
+///
+/// Example:
+/// ```dart
+/// VNLTooltip(
+///   tooltip: (context) => VNLTooltipContainer(
+///     child: Text('This button performs a critical action'),
+///   ),
+///   waitDuration: Duration(milliseconds: 800),
+///   showDuration: Duration(milliseconds: 150),
+///   alignment: Alignment.topCenter,
+///   anchorAlignment: Alignment.bottomCenter,
+///   child: VNLIconButton(
+///     icon: Icon(Icons.warning),
+///     onPressed: () => _handleCriticalAction(),
+///   ),
+/// );
+/// ```
 class VNLTooltip extends StatefulWidget {
+  /// The widget that triggers the tooltip on hover.
   final Widget child;
+
+  /// Builder function for the tooltip content.
   final WidgetBuilder tooltip;
+
+  /// Alignment of the tooltip relative to the anchor.
   final AlignmentGeometry alignment;
+
+  /// Alignment point on the child widget where tooltip anchors.
   final AlignmentGeometry anchorAlignment;
+
+  /// Time to wait before showing the tooltip on hover.
   final Duration waitDuration;
+
+  /// Duration of the tooltip show animation.
   final Duration showDuration;
+
+  /// Minimum time the tooltip stays visible once shown.
   final Duration minDuration;
 
+  /// Creates a [VNLTooltip].
+  ///
+  /// Parameters:
+  /// - [child] (`Widget`, required): Widget that triggers the tooltip.
+  /// - [tooltip] (`WidgetBuilder`, required): Builder for tooltip content.
+  /// - [alignment] (`AlignmentGeometry`, default: `Alignment.topCenter`): VNLTooltip position.
+  /// - [anchorAlignment] (`AlignmentGeometry`, default: `Alignment.bottomCenter`): Anchor point on child.
+  /// - [waitDuration] (`Duration`, default: 500ms): Delay before showing.
+  /// - [showDuration] (`Duration`, default: 200ms): Animation duration.
+  /// - [minDuration] (`Duration`, default: 0ms): Minimum visible time.
   const VNLTooltip({
     super.key,
     required this.child,
@@ -68,10 +275,10 @@ class VNLTooltip extends StatefulWidget {
 }
 
 class _TooltipState extends State<VNLTooltip> {
-  final PopoverController _controller = PopoverController();
+  final VNLPopoverController _controller = VNLPopoverController();
   @override
   Widget build(BuildContext context) {
-    return Hover(
+    return VNLHover(
       waitDuration: widget.waitDuration,
       minDuration: widget.minDuration,
       showDuration: widget.showDuration,
@@ -86,8 +293,11 @@ class _TooltipState extends State<VNLTooltip> {
             alignment: widget.alignment,
             anchorAlignment: widget.anchorAlignment,
             dismissBackdropFocus: false,
-            overlayBarrier: const OverlayBarrier(barrierColor: VNLColors.transparent),
-            handler: OverlayManagerAsTooltipOverlayHandler(overlayManager: OverlayManager.of(context)),
+            overlayBarrier: const VNLOverlayBarrier(
+              barrierColor: VNLColors.transparent,
+            ),
+            handler: VNLOverlayManagerAsTooltipOverlayHandler(
+                overlayManager: VNLOverlayManager.of(context)),
           );
         } else {
           _controller.close();
@@ -98,14 +308,47 @@ class _TooltipState extends State<VNLTooltip> {
   }
 }
 
-class InstantTooltip extends StatefulWidget {
+/// A tooltip that shows immediately on hover without delay.
+///
+/// Unlike [VNLTooltip], this widget displays the tooltip instantly when the
+/// mouse enters the child widget area. It's useful for situations where
+/// immediate feedback is desired, such as toolbar buttons or icon-only
+/// controls where labels need to be visible right away.
+///
+/// The tooltip automatically closes when the mouse leaves the widget.
+class VNLInstantTooltip extends StatefulWidget {
+  /// The widget that triggers the tooltip on hover.
   final Widget child;
+
+  /// How to behave during hit testing.
   final HitTestBehavior behavior;
+
+  /// Builder function for the tooltip content.
   final WidgetBuilder tooltipBuilder;
+
+  /// Alignment of the tooltip relative to the anchor.
   final AlignmentGeometry tooltipAlignment;
+
+  /// Alignment point on the child widget where tooltip anchors.
   final AlignmentGeometry? tooltipAnchorAlignment;
 
-  const InstantTooltip({
+  /// Creates an [VNLInstantTooltip].
+  ///
+  /// Parameters:
+  /// - [child] (`Widget`, required): Widget that triggers the tooltip.
+  /// - [tooltipBuilder] (`WidgetBuilder`, required): Builder for tooltip content.
+  /// - [behavior] (`HitTestBehavior`, default: `HitTestBehavior.translucent`): Hit test behavior.
+  /// - [tooltipAlignment] (`AlignmentGeometry`, default: `Alignment.bottomCenter`): VNLTooltip position.
+  /// - [tooltipAnchorAlignment] (`AlignmentGeometry?`, optional): Anchor point on child.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLInstantTooltip(
+  ///   tooltipBuilder: (context) => Text('Help text'),
+  ///   child: Icon(Icons.help),
+  /// )
+  /// ```
+  const VNLInstantTooltip({
     super.key,
     required this.child,
     required this.tooltipBuilder,
@@ -115,11 +358,11 @@ class InstantTooltip extends StatefulWidget {
   });
 
   @override
-  State<InstantTooltip> createState() => _InstantTooltipState();
+  State<VNLInstantTooltip> createState() => _InstantTooltipState();
 }
 
-class _InstantTooltipState extends State<InstantTooltip> {
-  final PopoverController _controller = PopoverController();
+class _InstantTooltipState extends State<VNLInstantTooltip> {
+  final VNLPopoverController _controller = VNLPopoverController();
 
   @override
   void dispose() {
@@ -129,7 +372,7 @@ class _InstantTooltipState extends State<InstantTooltip> {
 
   @override
   Widget build(BuildContext context) {
-    final overlayManager = OverlayManager.of(context);
+    final overlayManager = VNLOverlayManager.of(context);
     return MouseRegion(
       onEnter: (event) {
         _controller.close(true);
@@ -142,8 +385,11 @@ class _InstantTooltipState extends State<InstantTooltip> {
           dismissBackdropFocus: false,
           showDuration: Duration.zero,
           hideDuration: Duration.zero,
-          overlayBarrier: const OverlayBarrier(barrierColor: VNLColors.transparent),
-          handler: OverlayManagerAsTooltipOverlayHandler(overlayManager: overlayManager),
+          overlayBarrier: const VNLOverlayBarrier(
+            barrierColor: VNLColors.transparent,
+          ),
+          handler: VNLOverlayManagerAsTooltipOverlayHandler(
+              overlayManager: overlayManager),
         );
       },
       onExit: (event) {
@@ -155,10 +401,23 @@ class _InstantTooltipState extends State<InstantTooltip> {
   }
 }
 
-class OverlayManagerAsTooltipOverlayHandler extends OverlayHandler {
-  final OverlayManager overlayManager;
+/// Overlay handler that delegates tooltip display to an [VNLOverlayManager].
+///
+/// This handler integrates tooltips with the overlay management system,
+/// allowing tooltips to be displayed through the overlay manager's
+/// tooltip-specific display logic. This ensures proper layering and
+/// lifecycle management within the overlay system.
+class VNLOverlayManagerAsTooltipOverlayHandler extends VNLOverlayHandler {
+  /// The overlay manager instance to use for displaying tooltips.
+  final VNLOverlayManager overlayManager;
 
-  const OverlayManagerAsTooltipOverlayHandler({required this.overlayManager});
+  /// Creates an [VNLOverlayManagerAsTooltipOverlayHandler].
+  ///
+  /// Parameters:
+  /// - [overlayManager] (`VNLOverlayManager`, required): The overlay manager instance.
+  const VNLOverlayManagerAsTooltipOverlayHandler({
+    required this.overlayManager,
+  });
 
   @override
   OverlayCompleter<T?> show<T>({
@@ -180,13 +439,13 @@ class OverlayManagerAsTooltipOverlayHandler extends OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
+    ValueChanged<VNLPopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
-    OverlayBarrier? overlayBarrier,
+    VNLOverlayBarrier? overlayBarrier,
     LayerLink? layerLink,
   }) {
     return overlayManager.showTooltip(
@@ -219,8 +478,18 @@ class OverlayManagerAsTooltipOverlayHandler extends OverlayHandler {
   }
 }
 
-class FixedTooltipOverlayHandler extends OverlayHandler {
-  const FixedTooltipOverlayHandler();
+/// A fixed overlay handler for tooltips using direct overlay entries.
+///
+/// This handler creates tooltips using Flutter's built-in overlay system
+/// without delegating to an overlay manager. Tooltips are positioned
+/// directly in the overlay and use fixed positioning relative to their
+/// anchor widget.
+///
+/// Use this handler when you need direct control over tooltip overlay
+/// entries or when not using an overlay manager.
+class VNLFixedTooltipOverlayHandler extends VNLOverlayHandler {
+  /// Creates a [VNLFixedTooltipOverlayHandler].
+  const VNLFixedTooltipOverlayHandler();
 
   @override
   OverlayCompleter<T> show<T>({
@@ -242,13 +511,13 @@ class FixedTooltipOverlayHandler extends OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
+    ValueChanged<VNLPopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
-    OverlayBarrier? overlayBarrier,
+    VNLOverlayBarrier? overlayBarrier,
     LayerLink? layerLink,
   }) {
     TextDirection textDirection = Directionality.of(context);
@@ -270,75 +539,78 @@ class FixedTooltipOverlayHandler extends OverlayHandler {
           child: FocusScope(
             autofocus: dismissBackdropFocus,
             child: AnimatedBuilder(
-              animation: isClosed,
-              builder: (innerContext, child) {
-                return AnimatedValueBuilder.animation(
-                  value: isClosed.value ? 0.0 : 1.0,
-                  initialValue: 0.0,
-                  curve: isClosed.value ? const Interval(0, 2 / 3) : Curves.linear,
-                  duration:
-                      isClosed.value
+                animation: isClosed,
+                builder: (innerContext, child) {
+                  return AnimatedValueBuilder.animation(
+                      value: isClosed.value ? 0.0 : 1.0,
+                      initialValue: 0.0,
+                      curve: isClosed.value
+                          ? const Interval(0, 2 / 3)
+                          : Curves.linear,
+                      duration: isClosed.value
                           ? (showDuration ?? kDefaultDuration)
-                          : (dismissDuration ?? const Duration(milliseconds: 100)),
-                  onEnd: (value) {
-                    if (value == 0.0 && isClosed.value) {
-                      popoverEntry.remove();
-                      popoverEntry.dispose();
-                      animationCompleter.complete();
-                    }
-                  },
-                  builder: (innerContext, animation) {
-                    final theme = VNLTheme.of(innerContext);
-                    var popoverAnchor = PopoverOverlayWidget(
-                      animation: animation,
-                      onTapOutside: () {
-                        if (isClosed.value) return;
-                        if (!modal) {
-                          isClosed.value = true;
-                          completer.complete();
+                          : (dismissDuration ??
+                              const Duration(milliseconds: 100)),
+                      onEnd: (value) {
+                        if (value == 0.0 && isClosed.value) {
+                          popoverEntry.remove();
+                          popoverEntry.dispose();
+                          animationCompleter.complete();
                         }
                       },
-                      key: key,
-                      anchorContext: context,
-                      position: position,
-                      alignment: resolvedAlignment,
-                      themes: themes,
-                      builder: builder,
-                      // anchorAlignment: anchorAlignment ?? alignment * -1,
-                      anchorAlignment: resolvedAnchorAlignment,
-                      widthConstraint: widthConstraint,
-                      heightConstraint: heightConstraint,
-                      regionGroupId: regionGroupId,
-                      offset: offset,
-                      transitionAlignment: Alignment.center,
-                      margin: const EdgeInsets.all(48) * theme.scaling,
-                      follow: false,
-                      consumeOutsideTaps: consumeOutsideTaps,
-                      allowInvertHorizontal: allowInvertHorizontal,
-                      allowInvertVertical: allowInvertVertical,
-                      data: data,
-                      onClose: () {
-                        if (isClosed.value) return Future.value();
-                        isClosed.value = true;
-                        completer.complete();
-                        return animationCompleter.future;
-                      },
-                      onImmediateClose: () {
-                        popoverEntry.remove();
-                        completer.complete();
-                      },
-                      onCloseWithResult: (value) {
-                        if (isClosed.value) return Future.value();
-                        isClosed.value = true;
-                        completer.complete(value as T);
-                        return animationCompleter.future;
-                      },
-                    );
-                    return popoverAnchor;
-                  },
-                );
-              },
-            ),
+                      builder: (innerContext, animation) {
+                        final theme = Theme.of(innerContext);
+                        var popoverAnchor = VNLPopoverOverlayWidget(
+                          animation: animation,
+                          onTapOutside: () {
+                            if (isClosed.value) return;
+                            if (!modal) {
+                              isClosed.value = true;
+                              completer.complete();
+                            }
+                          },
+                          key: key,
+                          anchorContext: context,
+                          position: position,
+                          alignment: resolvedAlignment,
+                          themes: themes,
+                          builder: builder,
+                          // anchorAlignment: anchorAlignment ?? alignment * -1,
+                          anchorAlignment: resolvedAnchorAlignment,
+                          widthConstraint: widthConstraint,
+                          heightConstraint: heightConstraint,
+                          regionGroupId: regionGroupId,
+                          offset: offset,
+                          transitionAlignment: Alignment.center,
+                          margin: EdgeInsets.all(
+                              theme.density.baseContentPadding *
+                                  theme.scaling *
+                                  3),
+                          follow: false,
+                          consumeOutsideTaps: consumeOutsideTaps,
+                          allowInvertHorizontal: allowInvertHorizontal,
+                          allowInvertVertical: allowInvertVertical,
+                          data: data,
+                          onClose: () {
+                            if (isClosed.value) return Future.value();
+                            isClosed.value = true;
+                            completer.complete();
+                            return animationCompleter.future;
+                          },
+                          onImmediateClose: () {
+                            popoverEntry.remove();
+                            completer.complete();
+                          },
+                          onCloseWithResult: (value) {
+                            if (isClosed.value) return Future.value();
+                            isClosed.value = true;
+                            completer.complete(value as T);
+                            return animationCompleter.future;
+                          },
+                        );
+                        return popoverAnchor;
+                      });
+                }),
           ),
         );
       },

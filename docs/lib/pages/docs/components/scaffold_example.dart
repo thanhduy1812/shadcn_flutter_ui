@@ -16,7 +16,7 @@ class ScaffoldExample extends StatelessWidget {
         WidgetUsageExample(
           title: 'Scaffold Example',
           path: 'lib/pages/docs/components/scaffold/scaffold_example_1.dart',
-          child: OutlinedContainer(
+          child: VNLOutlinedContainer(
             child: const ScaffoldExample1().sized(
               height: 400,
             ),

@@ -1,4 +1,7 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
+
+// Demonstrates a VNLTooltip wrapping a button; shows tooltip content on
+// hover/focus.
 
 class TooltipExample1 extends StatelessWidget {
   const TooltipExample1({super.key});
@@ -6,12 +9,13 @@ class TooltipExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VNLTooltip(
-      tooltip: const TooltipContainer(
+      // VNLTooltip wraps a target widget and shows VNLTooltipContainer on hover/focus.
+      tooltip: const VNLTooltipContainer(
         child: Text('This is a tooltip.'),
       ),
       child: PrimaryButton(
         onPressed: () {},
-        child: const Text('Hover over me'),
+        child: const Text('VNLHover over me'),
       ),
     );
   }

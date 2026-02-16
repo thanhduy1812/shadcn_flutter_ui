@@ -7,12 +7,14 @@ import 'package:docs/pages/docs/components/alert_dialog_example.dart';
 import 'package:docs/pages/docs/components/alert_example.dart';
 import 'package:docs/pages/docs/components/animated_value_builder_example.dart';
 import 'package:docs/pages/docs/components/app_bar_example.dart';
+import 'package:docs/pages/docs/components/app_example.dart';
 import 'package:docs/pages/docs/components/autocomplete_example.dart';
 import 'package:docs/pages/docs/components/avatar_example.dart';
 import 'package:docs/pages/docs/components/avatar_group_example.dart';
 import 'package:docs/pages/docs/components/calendar_example.dart';
 import 'package:docs/pages/docs/components/card_image_example.dart';
 import 'package:docs/pages/docs/components/carousel_example.dart';
+import 'package:docs/pages/docs/components/chat_example.dart';
 import 'package:docs/pages/docs/components/chip_example.dart';
 import 'package:docs/pages/docs/components/chip_input_example.dart';
 import 'package:docs/pages/docs/components/context_menu_example.dart';
@@ -59,6 +61,7 @@ import 'package:docs/pages/docs/components/stepper_example.dart';
 import 'package:docs/pages/docs/components/steps_example.dart';
 import 'package:docs/pages/docs/components/swiper_example.dart';
 import 'package:docs/pages/docs/components/switch_example.dart';
+import 'package:docs/pages/docs/components/switcher_example.dart';
 import 'package:docs/pages/docs/components/tab_list_example.dart';
 import 'package:docs/pages/docs/components/tab_pane_example.dart';
 import 'package:docs/pages/docs/components/table_example.dart';
@@ -73,6 +76,7 @@ import 'package:docs/pages/docs/components/tooltip_example.dart';
 import 'package:docs/pages/docs/components/tracker_example.dart';
 import 'package:docs/pages/docs/components/tree_example.dart';
 import 'package:docs/pages/docs/components/window_example.dart';
+import 'package:docs/pages/docs/components/wrapper_example.dart';
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:docs/pages/docs/icons_page.dart';
 import 'package:docs/pages/docs/installation_page.dart';
@@ -83,10 +87,11 @@ import 'package:docs/pages/docs/theme_page.dart';
 import 'package:docs/pages/docs/typography_page.dart';
 import 'package:docs/pages/docs/web_preloader_page.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:yaml/yaml.dart';
 
 import 'pages/docs/components/badge_example.dart';
@@ -100,6 +105,7 @@ import 'pages/docs/components/collapsible_example.dart';
 import 'pages/docs/components/color_picker_example.dart';
 import 'pages/docs/components/command_example.dart';
 import 'pages/docs/components/form_example.dart';
+import 'pages/docs/components/go_router_app_example.dart';
 import 'pages/docs/components/number_input_example.dart';
 
 const kEnablePersistentPath = false;
@@ -120,46 +126,72 @@ String getReleaseTagName() {
   return latestVersion == null ? 'Release' : 'Release ($latestVersion)';
 }
 
+const bool enableWebSemantics = bool.fromEnvironment(
+  'ENABLE_WEB_SEMANTICS',
+  defaultValue: false,
+);
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // to enable web semantics, use the following command:
+  // flutter run -d chrome --dart-define=ENABLE_WEB_SEMANTICS=true
+  if (kIsWeb && enableWebSemantics) {
+    if (kDebugMode) {
+      print('Enabling web semantics as requested.');
+    }
+    SemanticsBinding.instance.ensureSemantics();
+  }
   _docs = jsonDecode(await rootBundle.loadString('docs.json'));
   String pubspecYml = await rootBundle.loadString('pubspec.lock');
   var dep = loadYaml(pubspecYml)['packages']['vnl_common_ui']['version'];
   if (dep is String) {
     _packageLatestVersion = dep;
   }
-  print('Running app with flavor: $flavor');
+  if (kDebugMode) {
+    print('Running app with flavor: $flavor');
+  }
   GoRouter.optionURLReflectsImperativeAPIs = true;
   final prefs = await SharedPreferences.getInstance();
   var colorScheme = prefs.getString('colorScheme');
-  // ColorScheme? initialColorScheme =
-  //     colorSchemes[colorScheme ?? 'darkZync'];
-  VNLColorScheme? initialColorScheme;
+  ColorScheme? initialColorScheme;
   if (colorScheme != null) {
     if (colorScheme.startsWith('{')) {
-      initialColorScheme = VNLColorScheme.fromMap(jsonDecode(colorScheme));
+      initialColorScheme = ColorScheme.fromMap(jsonDecode(colorScheme));
     } else {
       initialColorScheme = colorSchemes[colorScheme];
     }
   }
+  final densityKey = prefs.getString('density');
+  final densityOptions = <String, Density>{
+    'Compact': Density.compactDensity,
+    'Reduced': Density.reducedDensity,
+    'Default': Density.defaultDensity,
+    'Spacious': Density.spaciousDensity,
+  };
+  final initialDensity = densityOptions[densityKey] ?? Density.defaultDensity;
   double initialRadius = prefs.getDouble('radius') ?? 0.5;
   double initialScaling = prefs.getDouble('scaling') ?? 1.0;
   double initialSurfaceOpacity = prefs.getDouble('surfaceOpacity') ?? 1.0;
   double initialSurfaceBlur = prefs.getDouble('surfaceBlur') ?? 0.0;
   String initialPath = prefs.getString('initialPath') ?? '/';
-  runApp(MyApp(
-    initialColorScheme: initialColorScheme ?? colorSchemes['darkGreen']!,
-    initialRadius: initialRadius,
-    initialScaling: initialScaling,
-    initialSurfaceOpacity: initialSurfaceOpacity,
-    initialSurfaceBlur: initialSurfaceBlur,
-    initialPath: kEnablePersistentPath ? initialPath : '/',
+  runApp(ErrorFilter(
+    child: MyApp(
+      initialColorScheme:
+          initialColorScheme ?? colorSchemes['dark-slate-base']!,
+      initialRadius: initialRadius,
+      initialDensity: initialDensity,
+      initialScaling: initialScaling,
+      initialSurfaceOpacity: initialSurfaceOpacity,
+      initialSurfaceBlur: initialSurfaceBlur,
+      initialPath: kEnablePersistentPath ? initialPath : '/',
+    ),
   ));
 }
 
 class MyApp extends StatefulWidget {
-  final VNLColorScheme initialColorScheme;
+  final ColorScheme initialColorScheme;
   final double initialRadius;
+  final Density initialDensity;
   final double initialScaling;
   final double initialSurfaceOpacity;
   final double initialSurfaceBlur;
@@ -168,6 +200,7 @@ class MyApp extends StatefulWidget {
     super.key,
     required this.initialColorScheme,
     required this.initialRadius,
+    required this.initialDensity,
     required this.initialScaling,
     required this.initialSurfaceOpacity,
     required this.initialSurfaceBlur,
@@ -219,7 +252,10 @@ class MyAppState extends State<MyApp> {
       builder: (context, state) => const LayoutPage(),
       name: 'layout',
     ),
-    GoRoute(path: '/external', builder: (context, state) => const MaterialExample(), name: 'external'),
+    GoRoute(
+        path: '/external',
+        builder: (context, state) => const MaterialExample(),
+        name: 'external'),
     GoRoute(
       path: '/web_preloader',
       name: 'web_preloader',
@@ -228,7 +264,7 @@ class MyAppState extends State<MyApp> {
     GoRoute(
       path: '/colors',
       name: 'colors',
-      builder: (context, state) => const VNLColorsPage(),
+      builder: (context, state) => const ColorsPage(),
     ),
     GoRoute(
       path: '/state',
@@ -741,11 +777,46 @@ class MyAppState extends State<MyApp> {
             builder: (context, state) {
               return const ItemPickerExample();
             },
-          )
+          ),
+          GoRoute(
+              path: 'switcher',
+              name: 'switcher',
+              builder: (context, state) {
+                return const SwitcherExample();
+              }),
+          GoRoute(
+            path: 'app',
+            name: 'app',
+            builder: (context, state) {
+              return const AppExample();
+            },
+          ),
+          GoRoute(
+            path: 'go_router_app_example',
+            name: 'go_router_app_example',
+            builder: (context, state) {
+              return const GoRouterAppExample();
+            },
+          ),
+          GoRoute(
+            path: 'wrapper',
+            name: 'wrapper',
+            builder: (context, state) {
+              return const WrapperExample();
+            },
+          ),
+          GoRoute(
+            path: 'chat',
+            name: 'chat',
+            builder: (context, state) {
+              return const ChatExample();
+            },
+          ),
         ]),
   ];
-  late VNLColorScheme colorScheme;
+  late ColorScheme colorScheme;
   late double radius;
+  late Density density;
   late double scaling;
   late double surfaceOpacity;
   late double surfaceBlur;
@@ -756,23 +827,29 @@ class MyAppState extends State<MyApp> {
     super.initState();
     colorScheme = widget.initialColorScheme;
     radius = widget.initialRadius;
+    density = widget.initialDensity;
     scaling = widget.initialScaling;
     surfaceOpacity = widget.initialSurfaceOpacity;
     surfaceBlur = widget.initialSurfaceBlur;
-    router = GoRouter(routes: routes, initialLocation: widget.initialPath, observers: [
-      if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux) && kEnablePersistentPath)
-        _DesktopNavigatorObserver(
-          onRouteChanged: (path) {
-            SharedPreferences.getInstance().then((prefs) {
-              prefs.setString('initialPath', path);
-            });
-          },
-        ),
-    ]);
+    router = GoRouter(
+        routes: routes,
+        initialLocation: widget.initialPath,
+        observers: [
+          if (!kIsWeb &&
+              (Platform.isMacOS || Platform.isWindows || Platform.isLinux) &&
+              kEnablePersistentPath)
+            _DesktopNavigatorObserver(
+              onRouteChanged: (path) {
+                SharedPreferences.getInstance().then((prefs) {
+                  prefs.setString('initialPath', path);
+                });
+              },
+            ),
+        ]);
   }
   // This widget is the root of your application.
 
-  void changeColorScheme(VNLColorScheme colorScheme) {
+  void changeColorScheme(ColorScheme colorScheme) {
     setState(() {
       this.colorScheme = colorScheme;
       SharedPreferences.getInstance().then((prefs) {
@@ -793,6 +870,15 @@ class MyAppState extends State<MyApp> {
       this.radius = radius;
       SharedPreferences.getInstance().then((prefs) {
         prefs.setDouble('radius', radius);
+      });
+    });
+  }
+
+  void changeDensity(Density density) {
+    setState(() {
+      this.density = density;
+      SharedPreferences.getInstance().then((prefs) {
+        prefs.setString('density', _densityKeyFromValue(density));
       });
     });
   }
@@ -837,18 +923,26 @@ class MyAppState extends State<MyApp> {
       child: VNLookApp.router(
         routerConfig: router,
         debugShowCheckedModeBanner: false,
-        title: 'VNL UI Flutter',
+        title: 'shadcn/ui Flutter',
         scaling: AdaptiveScaling(scaling),
         enableScrollInterception: true,
-        // popoverHandler: DialogOverlayHandler(),
-        theme: VNLThemeData(
+        // popoverHandler: VNLDialogOverlayHandler(),
+        theme: ThemeData(
           colorScheme: colorScheme,
           radius: radius,
+          density: density,
           surfaceBlur: surfaceBlur,
           surfaceOpacity: surfaceOpacity,
         ),
       ),
     );
+  }
+
+  String _densityKeyFromValue(Density density) {
+    if (density == Density.compactDensity) return 'Compact';
+    if (density == Density.reducedDensity) return 'Reduced';
+    if (density == Density.spaciousDensity) return 'Spacious';
+    return 'Default';
   }
 }
 

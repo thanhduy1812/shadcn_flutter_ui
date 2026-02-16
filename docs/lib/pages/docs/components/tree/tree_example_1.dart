@@ -1,4 +1,7 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
+
+// Demonstrates TreeView with expandable items, branch lines (path/line),
+// and optional recursive selection behavior.
 
 class TreeExample1 extends StatefulWidget {
   const TreeExample1({super.key});
@@ -71,16 +74,20 @@ class _TreeExample1State extends State<TreeExample1> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        OutlinedContainer(
+        VNLOutlinedContainer(
           child: SizedBox(
             height: 300,
             width: 250,
             child: TreeView(
+              // Show a separate expand/collapse icon when true; otherwise use row affordance.
               expandIcon: expandIcon,
               shrinkWrap: true,
+              // When true, selecting a parent can affect children (see below toggle).
               recursiveSelection: recursiveSelection,
               nodes: treeItems,
-              branchLine: usePath ? BranchLine.path : BranchLine.line,
+              // Draw connecting lines either as path curves or straight lines.
+              branchLine: usePath ? VNLBranchLine.path : VNLBranchLine.line,
+              // Use a built-in handler to update selection state across nodes.
               onSelectionChanged: TreeView.defaultSelectionHandler(
                 treeItems,
                 (value) {
@@ -90,20 +97,24 @@ class _TreeExample1State extends State<TreeExample1> {
                 },
               ),
               builder: (context, node) {
-                return TreeItemView(
+                return VNLTreeItemView(
                   onPressed: () {},
                   trailing: node.leaf
                       ? Container(
                           width: 16,
                           height: 16,
                           alignment: Alignment.center,
-                          child: const CircularProgressIndicator(),
+                          child: const VNLCircularProgressIndicator(),
                         )
                       : null,
                   leading: node.leaf
                       ? const Icon(BootstrapIcons.fileImage)
-                      : Icon(node.expanded ? BootstrapIcons.folder2Open : BootstrapIcons.folder2),
-                  onExpand: TreeView.defaultItemExpandHandler(treeItems, node, (value) {
+                      : Icon(node.expanded
+                          ? BootstrapIcons.folder2Open
+                          : BootstrapIcons.folder2),
+                  // Expand/collapse handling; updates treeItems with new expanded state.
+                  onExpand: TreeView.defaultItemExpandHandler(treeItems, node,
+                      (value) {
                     setState(() {
                       treeItems = value;
                     });
@@ -159,11 +170,14 @@ class _TreeExample1State extends State<TreeExample1> {
         ),
         const Gap(8),
         VNLCheckbox(
-          state: recursiveSelection ? CheckboxState.checked : CheckboxState.unchecked,
+          state: recursiveSelection
+              ? CheckboxState.checked
+              : CheckboxState.unchecked,
           onChanged: (value) {
             setState(() {
               recursiveSelection = value == CheckboxState.checked;
               if (recursiveSelection) {
+                // Update nodes so parent/child reflect selected state recursively.
                 treeItems = treeItems.updateRecursiveSelection();
               }
             });

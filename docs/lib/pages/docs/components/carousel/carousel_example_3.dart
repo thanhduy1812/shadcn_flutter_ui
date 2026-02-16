@@ -1,7 +1,11 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 import '../carousel_example.dart';
 
+/// VNLCarousel with fading transition and dot indicators.
+///
+/// Items fade in/out instead of sliding. Draggable is disabled and the
+/// [VNLCarouselDotIndicator] syncs with the same [VNLCarouselController].
 class CarouselExample3 extends StatefulWidget {
   const CarouselExample3({super.key});
 
@@ -10,7 +14,7 @@ class CarouselExample3 extends StatefulWidget {
 }
 
 class _CarouselExample3State extends State<CarouselExample3> {
-  final CarouselController controller = CarouselController();
+  final VNLCarouselController controller = VNLCarouselController();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -21,14 +25,18 @@ class _CarouselExample3State extends State<CarouselExample3> {
           SizedBox(
             height: 200,
             child: VNLCarousel(
-              transition: const CarouselTransition.fading(),
+              // Use a fading transition instead of sliding.
+              transition: const VNLCarouselTransition.fading(),
               controller: controller,
+              // Disable gesture dragging; navigation is via controls below.
               draggable: false,
+              // Automatically switch items.
               autoplaySpeed: const Duration(seconds: 1),
               itemCount: 5,
               itemBuilder: (context, index) {
                 return NumberedContainer(index: index);
               },
+              // Fade duration.
               duration: const Duration(seconds: 1),
             ),
           ),
@@ -36,16 +44,18 @@ class _CarouselExample3State extends State<CarouselExample3> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CarouselDotIndicator(itemCount: 5, controller: controller),
+              // Dots reflect and control the current index via controller.
+              VNLCarouselDotIndicator(itemCount: 5, controller: controller),
               const Spacer(),
-              OutlineButton(
+              VNLOutlineButton(
                   shape: ButtonShape.circle,
                   onPressed: () {
-                    controller.animatePrevious(const Duration(milliseconds: 500));
+                    controller
+                        .animatePrevious(const Duration(milliseconds: 500));
                   },
                   child: const Icon(Icons.arrow_back)),
               const Gap(8),
-              OutlineButton(
+              VNLOutlineButton(
                   shape: ButtonShape.circle,
                   onPressed: () {
                     controller.animateNext(const Duration(milliseconds: 500));

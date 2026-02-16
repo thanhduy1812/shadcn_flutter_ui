@@ -9,10 +9,10 @@ class StepperExample6 extends StatefulWidget {
 }
 
 class _StepperExample6State extends State<StepperExample6> {
-  static const List<StepVariant> _variants = [
-    StepVariant.circle,
-    StepVariant.circleAlt,
-    StepVariant.line,
+  static const List<VNLStepVariant> _variants = [
+    VNLStepVariant.circle,
+    VNLStepVariant.circleAlt,
+    VNLStepVariant.line,
   ];
   static const List<String> _variantNames = [
     'Circle',
@@ -25,7 +25,7 @@ class _StepperExample6State extends State<StepperExample6> {
     'Medium',
     'Large',
   ];
-  final StepperController controller = StepperController();
+  final VNLStepperController controller = VNLStepperController();
   int _currentVariant = 0;
   int _currentStepSize = 0;
   Axis direction = Axis.horizontal;
@@ -71,29 +71,31 @@ class _StepperExample6State extends State<StepperExample6> {
               },
               child: const Text('Vertical'),
             ),
-            const VerticalDivider().sized(height: 16),
+            const VNLVerticalDivider().sized(height: 16),
             for (var i = 0; i < _variants.length; i++)
               VNLToggle(
                 value: _currentVariant == i,
                 onChanged: (value) {
                   setState(() {
+                    // Choose among visual variants (circle, alt circle, line).
                     _currentVariant = i;
                   });
                 },
                 child: Text(_variantNames[i]),
               ),
-            const VerticalDivider().sized(height: 16),
+            const VNLVerticalDivider().sized(height: 16),
             for (var i = 0; i < _stepSize.length; i++)
               VNLToggle(
                 value: _currentStepSize == i,
                 onChanged: (value) {
                   setState(() {
+                    // Pick the step size used by the VNLStepper.
                     _currentStepSize = i;
                   });
                 },
                 child: Text(_stepSizeNames[i]),
               ),
-            const VerticalDivider().sized(height: 16),
+            const VNLVerticalDivider().sized(height: 16),
             AnimatedBuilder(
               animation: controller,
               builder: (context, child) {
@@ -101,12 +103,13 @@ class _StepperExample6State extends State<StepperExample6> {
                   value: controller.value.stepStates[1] == StepState.failed,
                   onChanged: (value) {
                     if (value) {
+                      // Mark step 2 as failed to demo error state.
                       controller.setStatus(1, StepState.failed);
                     } else {
                       controller.setStatus(1, null);
                     }
                   },
-                  child: const Text('Toggle Error'),
+                  child: const Text('VNLToggle Error'),
                 );
               },
             ),
@@ -116,15 +119,16 @@ class _StepperExample6State extends State<StepperExample6> {
         VNLStepper(
           controller: controller,
           direction: direction,
+          // Apply the chosen size and visual variant.
           size: _stepSize[_currentStepSize],
           variant: _variants[_currentVariant],
           steps: [
-            Step(
-              title: const Text('Step 1'),
+            VNLStep(
+              title: const Text('VNLStep 1'),
               contentBuilder: (context) {
-                return StepContainer(
+                return VNLStepContainer(
                   actions: [
-                    const SecondaryButton(
+                    const VNLSecondaryButton(
                       child: Text('Prev'),
                     ),
                     PrimaryButton(
@@ -140,15 +144,15 @@ class _StepperExample6State extends State<StepperExample6> {
                 );
               },
             ),
-            Step(
-              title: const StepTitle(
-                title: Text('Step 2'),
-                subtitle: Text('Optional Step'),
+            VNLStep(
+              title: const VNLStepTitle(
+                title: Text('VNLStep 2'),
+                subtitle: Text('Optional VNLStep'),
               ),
               contentBuilder: (context) {
-                return StepContainer(
+                return VNLStepContainer(
                   actions: [
-                    SecondaryButton(
+                    VNLSecondaryButton(
                       child: const Text('Prev'),
                       onPressed: () {
                         controller.previousStep();
@@ -167,12 +171,12 @@ class _StepperExample6State extends State<StepperExample6> {
                 );
               },
             ),
-            Step(
-              title: const Text('Step 3'),
+            VNLStep(
+              title: const Text('VNLStep 3'),
               contentBuilder: (context) {
-                return StepContainer(
+                return VNLStepContainer(
                   actions: [
-                    SecondaryButton(
+                    VNLSecondaryButton(
                       child: const Text('Prev'),
                       onPressed: () {
                         controller.previousStep();

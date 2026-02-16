@@ -1,19 +1,50 @@
 import 'dart:ui';
 
-import '../../../vnl_ui.dart';
+import '../../../shadcn_flutter.dart';
 
-class SurfaceBlur extends StatefulWidget {
+/// A widget that applies a blur effect to its background.
+///
+/// Creates a frosted glass or translucent blur effect behind the child widget
+/// using a backdrop filter. The blur amount is controlled by [surfaceBlur].
+///
+/// Example:
+/// ```dart
+/// VNLSurfaceBlur(
+///   surfaceBlur: 10,
+///   borderRadius: BorderRadius.circular(8),
+///   child: Container(
+///     color: VNLColors.white.withOpacity(0.5),
+///     child: Text('Blurred background'),
+///   ),
+/// )
+/// ```
+class VNLSurfaceBlur extends StatefulWidget {
+  /// The child widget to display with blurred background.
   final Widget child;
+
+  /// The amount of blur to apply (sigma value for blur filter).
+  ///
+  /// If `null` or `<= 0`, no blur is applied.
   final double? surfaceBlur;
+
+  /// Border radius for clipping the blur effect.
+  ///
+  /// If `null`, no rounding is applied.
   final BorderRadiusGeometry? borderRadius;
 
-  const SurfaceBlur({super.key, required this.child, this.surfaceBlur, this.borderRadius});
+  /// Creates a [VNLSurfaceBlur].
+  const VNLSurfaceBlur({
+    super.key,
+    required this.child,
+    this.surfaceBlur,
+    this.borderRadius,
+  });
 
   @override
-  State<SurfaceBlur> createState() => _SurfaceBlurState();
+  State<VNLSurfaceBlur> createState() => _SurfaceBlurState();
 }
 
-class _SurfaceBlurState extends State<SurfaceBlur> {
+class _SurfaceBlurState extends State<VNLSurfaceBlur> {
   final GlobalKey _mainContainerKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -27,7 +58,10 @@ class _SurfaceBlurState extends State<SurfaceBlur> {
           child: ClipRRect(
             borderRadius: widget.borderRadius ?? BorderRadius.zero,
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: widget.surfaceBlur!, sigmaY: widget.surfaceBlur!),
+              filter: ImageFilter.blur(
+                sigmaX: widget.surfaceBlur!,
+                sigmaY: widget.surfaceBlur!,
+              ),
               // had to add SizedBox, otherwise it won't blur
               child: const SizedBox(),
             ),
@@ -39,22 +73,193 @@ class _SurfaceBlurState extends State<SurfaceBlur> {
   }
 }
 
-class OutlinedContainer extends StatefulWidget {
-  final Widget child;
+/// Theme configuration for [VNLOutlinedContainer] appearance.
+///
+/// Defines styling properties including background color, border styles,
+/// shadows, padding, and surface effects for outlined containers.
+class VNLOutlinedContainerTheme extends ComponentThemeData {
+  /// Background color for the container.
   final Color? backgroundColor;
+
+  /// Color of the container's border.
   final Color? borderColor;
-  final Clip clipBehavior;
+
+  /// Border radius for rounded corners.
   final BorderRadiusGeometry? borderRadius;
+
+  /// Style of the border (solid, dotted, etc).
   final BorderStyle? borderStyle;
+
+  /// Width of the border in logical pixels.
   final double? borderWidth;
+
+  /// Box shadows to apply for depth/elevation effects.
   final List<BoxShadow>? boxShadow;
+
+  /// Padding inside the container.
   final EdgeInsetsGeometry? padding;
+
+  /// Opacity for surface overlay effects.
   final double? surfaceOpacity;
+
+  /// Blur amount for surface backdrop effects.
   final double? surfaceBlur;
+
+  /// Creates an [OutlinedContainerTheme].
+  const VNLOutlinedContainerTheme({
+    this.backgroundColor,
+    this.borderColor,
+    this.borderRadius,
+    this.borderStyle,
+    this.borderWidth,
+    this.boxShadow,
+    this.padding,
+    this.surfaceOpacity,
+    this.surfaceBlur,
+  });
+
+  /// Creates a copy of this theme with the given fields replaced.
+  VNLOutlinedContainerTheme copyWith({
+    ValueGetter<Color?>? backgroundColor,
+    ValueGetter<Color?>? borderColor,
+    ValueGetter<BorderRadiusGeometry?>? borderRadius,
+    ValueGetter<BorderStyle?>? borderStyle,
+    ValueGetter<double?>? borderWidth,
+    ValueGetter<List<BoxShadow>?>? boxShadow,
+    ValueGetter<EdgeInsetsGeometry?>? padding,
+    ValueGetter<double?>? surfaceOpacity,
+    ValueGetter<double?>? surfaceBlur,
+  }) {
+    return VNLOutlinedContainerTheme(
+      backgroundColor:
+          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      borderColor: borderColor == null ? this.borderColor : borderColor(),
+      borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
+      borderStyle: borderStyle == null ? this.borderStyle : borderStyle(),
+      borderWidth: borderWidth == null ? this.borderWidth : borderWidth(),
+      boxShadow: boxShadow == null ? this.boxShadow : boxShadow(),
+      padding: padding == null ? this.padding : padding(),
+      surfaceOpacity:
+          surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
+      surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is VNLOutlinedContainerTheme &&
+        other.backgroundColor == backgroundColor &&
+        other.borderColor == borderColor &&
+        other.borderRadius == borderRadius &&
+        other.borderStyle == borderStyle &&
+        other.borderWidth == borderWidth &&
+        other.boxShadow == boxShadow &&
+        other.padding == padding &&
+        other.surfaceOpacity == surfaceOpacity &&
+        other.surfaceBlur == surfaceBlur;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        backgroundColor,
+        borderColor,
+        borderRadius,
+        borderStyle,
+        borderWidth,
+        boxShadow,
+        padding,
+        surfaceOpacity,
+        surfaceBlur,
+      );
+}
+
+/// A container widget with customizable border and surface effects.
+///
+/// Provides a styled container with border, background, shadows, padding,
+/// and optional surface blur effects. Supports theming and animations.
+///
+/// Example:
+/// ```dart
+/// VNLOutlinedContainer(
+///   borderRadius: BorderRadius.circular(12),
+///   borderColor: VNLColors.blue,
+///   backgroundColor: VNLColors.white,
+///   padding: EdgeInsets.all(16),
+///   child: Text('Outlined content'),
+/// )
+/// ```
+class VNLOutlinedContainer extends StatefulWidget {
+  /// The child widget to display inside the container.
+  final Widget child;
+
+  /// Background color of the container.
+  ///
+  /// If `null`, uses theme default.
+  final Color? backgroundColor;
+
+  /// Color of the container's border.
+  ///
+  /// If `null`, uses theme default.
+  final Color? borderColor;
+
+  /// How to clip the container's content.
+  ///
+  /// Defaults to [Clip.antiAlias].
+  final Clip clipBehavior;
+
+  /// Border radius for rounded corners.
+  ///
+  /// If `null`, uses theme default.
+  final BorderRadiusGeometry? borderRadius;
+
+  /// Style of the border.
+  ///
+  /// If `null`, uses [BorderStyle.solid].
+  final BorderStyle? borderStyle;
+
+  /// Width of the border in logical pixels.
+  ///
+  /// If `null`, uses theme default.
+  final double? borderWidth;
+
+  /// Box shadows for elevation effects.
+  ///
+  /// If `null`, no shadows are applied.
+  final List<BoxShadow>? boxShadow;
+
+  /// Padding inside the container.
+  ///
+  /// If `null`, uses theme default.
+  final EdgeInsetsGeometry? padding;
+
+  /// Opacity for surface overlay effects.
+  ///
+  /// If provided, modulates the background color's alpha.
+  final double? surfaceOpacity;
+
+  /// Blur amount for surface backdrop effects.
+  ///
+  /// If `null` or `<= 0`, no blur is applied.
+  final double? surfaceBlur;
+
+  /// Explicit width of the container.
+  ///
+  /// If `null`, size is determined by child and padding.
   final double? width;
+
+  /// Explicit height of the container.
+  ///
+  /// If `null`, size is determined by child and padding.
   final double? height;
+
+  /// Duration for animating property changes.
+  ///
+  /// If `null`, changes are applied immediately without animation.
   final Duration? duration;
-  const OutlinedContainer({
+
+  /// Creates an [VNLOutlinedContainer].
+  const VNLOutlinedContainer({
     super.key,
     required this.child,
     this.borderColor,
@@ -73,21 +278,64 @@ class OutlinedContainer extends StatefulWidget {
   });
 
   @override
-  State<OutlinedContainer> createState() => _OutlinedContainerState();
+  State<VNLOutlinedContainer> createState() => _OutlinedContainerState();
 }
 
-class _OutlinedContainerState extends State<OutlinedContainer> {
+class _OutlinedContainerState extends State<VNLOutlinedContainer> {
   final GlobalKey _mainContainerKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final VNLThemeData theme = VNLTheme.of(context);
+    final ThemeData theme = Theme.of(context);
     final scaling = theme.scaling;
-    var borderRadius =
-        widget.borderRadius?.resolve(Directionality.of(context)) ?? BorderRadius.circular(theme.radiusXl);
-    var backgroundColor = widget.backgroundColor ?? theme.colorScheme.background;
-    if (widget.surfaceOpacity != null) {
-      backgroundColor = backgroundColor.scaleAlpha(widget.surfaceOpacity!);
+    final compTheme = ComponentTheme.maybeOf<VNLOutlinedContainerTheme>(context);
+    var borderRadius = styleValue(
+      defaultValue: theme.borderRadiusXl,
+      themeValue: compTheme?.borderRadius,
+      widgetValue: widget.borderRadius,
+    ).resolve(Directionality.of(context));
+    var backgroundColor = styleValue(
+      defaultValue: theme.colorScheme.background,
+      themeValue: compTheme?.backgroundColor,
+      widgetValue: widget.backgroundColor,
+    );
+    final double? surfaceOpacity = styleValue(
+      themeValue: compTheme?.surfaceOpacity,
+      widgetValue: widget.surfaceOpacity,
+      defaultValue: null,
+    );
+    if (surfaceOpacity != null) {
+      backgroundColor = backgroundColor.scaleAlpha(surfaceOpacity);
     }
+    final borderColor = styleValue(
+      defaultValue: theme.colorScheme.muted,
+      themeValue: compTheme?.borderColor,
+      widgetValue: widget.borderColor,
+    );
+    final borderWidth = styleValue(
+      defaultValue: 1 * scaling,
+      themeValue: compTheme?.borderWidth,
+      widgetValue: widget.borderWidth,
+    );
+    final borderStyle = styleValue<BorderStyle>(
+      defaultValue: BorderStyle.solid,
+      themeValue: compTheme?.borderStyle,
+      widgetValue: widget.borderStyle,
+    );
+    final boxShadow = styleValue<List<BoxShadow>>(
+      themeValue: compTheme?.boxShadow,
+      widgetValue: widget.boxShadow,
+      defaultValue: [],
+    );
+    final padding = styleValue<EdgeInsetsGeometry>(
+      themeValue: compTheme?.padding,
+      widgetValue: widget.padding,
+      defaultValue: EdgeInsets.zero,
+    );
+    final surfaceBlur = styleValue<double?>(
+      themeValue: compTheme?.surfaceBlur,
+      widgetValue: widget.surfaceBlur,
+      defaultValue: null,
+    );
     Widget childWidget = AnimatedContainer(
       duration: widget.duration ?? Duration.zero,
       key: _mainContainerKey,
@@ -96,25 +344,26 @@ class _OutlinedContainerState extends State<OutlinedContainer> {
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border.all(
-          color: widget.borderColor ?? theme.colorScheme.muted,
-          width: widget.borderWidth ?? (1 * scaling),
-          style: widget.borderStyle ?? BorderStyle.solid,
+          color: borderColor,
+          width: borderWidth,
+          style: borderStyle,
         ),
         borderRadius: borderRadius,
-        boxShadow: widget.boxShadow,
+        boxShadow: boxShadow,
       ),
       child: AnimatedContainer(
         duration: widget.duration ?? Duration.zero,
-        padding: widget.padding,
         clipBehavior: widget.clipBehavior,
-        decoration: BoxDecoration(borderRadius: subtractByBorder(borderRadius, widget.borderWidth ?? (1 * scaling))),
-        child: widget.child,
+        decoration: BoxDecoration(
+          borderRadius: subtractByBorder(borderRadius, borderWidth),
+        ),
+        child: DensityContainerPadding(padding: padding, child: widget.child),
       ),
     );
-    if (widget.surfaceBlur != null && widget.surfaceBlur! > 0) {
-      childWidget = SurfaceBlur(
-        surfaceBlur: widget.surfaceBlur!,
-        borderRadius: subtractByBorder(borderRadius, widget.borderWidth ?? (1 * scaling)),
+    if (surfaceBlur != null && surfaceBlur > 0) {
+      childWidget = VNLSurfaceBlur(
+        surfaceBlur: surfaceBlur,
+        borderRadius: subtractByBorder(borderRadius, borderWidth),
         child: childWidget,
       );
     }
@@ -122,16 +371,38 @@ class _OutlinedContainerState extends State<OutlinedContainer> {
   }
 }
 
-class DashedLineProperties {
+/// Properties for defining a dashed line appearance.
+///
+/// Encapsulates the visual properties of a dashed line including dash width,
+/// gap between dashes, thickness, and color. Supports interpolation for animations.
+class VNLDashedLineProperties {
+  /// Width of each dash segment.
   final double width;
+
+  /// Gap between consecutive dash segments.
   final double gap;
+
+  /// Thickness (height) of the line.
   final double thickness;
+
+  /// Color of the dashed line.
   final Color color;
 
-  const DashedLineProperties({required this.width, required this.gap, required this.thickness, required this.color});
+  /// Creates [VNLDashedLineProperties].
+  const VNLDashedLineProperties({
+    required this.width,
+    required this.gap,
+    required this.thickness,
+    required this.color,
+  });
 
-  static DashedLineProperties lerp(DashedLineProperties a, DashedLineProperties b, double t) {
-    return DashedLineProperties(
+  /// Linearly interpolates between two [VNLDashedLineProperties].
+  static VNLDashedLineProperties lerp(
+    VNLDashedLineProperties a,
+    VNLDashedLineProperties b,
+    double t,
+  ) {
+    return VNLDashedLineProperties(
       width: lerpDouble(a.width, b.width, t)!,
       gap: lerpDouble(a.gap, b.gap, t)!,
       thickness: lerpDouble(a.thickness, b.thickness, t)!,
@@ -140,30 +411,66 @@ class DashedLineProperties {
   }
 }
 
-class DashedLine extends StatelessWidget {
+/// A widget that displays a horizontal dashed line.
+///
+/// Renders a customizable dashed line with configurable dash width, gap,
+/// thickness, and color. Animates changes to properties smoothly.
+///
+/// Example:
+/// ```dart
+/// VNLDashedLine(
+///   width: 10,
+///   gap: 5,
+///   thickness: 2,
+///   color: VNLColors.grey,
+/// )
+/// ```
+class VNLDashedLine extends StatelessWidget {
+  /// Width of each dash segment.
+  ///
+  /// If `null`, uses scaled default (8).
   final double? width;
+
+  /// Gap between consecutive dash segments.
+  ///
+  /// If `null`, uses scaled default (5).
   final double? gap;
+
+  /// Thickness (height) of the line.
+  ///
+  /// If `null`, uses scaled default (1).
   final double? thickness;
+
+  /// Color of the dashed line.
+  ///
+  /// If `null`, uses theme border color.
   final Color? color;
 
-  const DashedLine({super.key, this.width, this.gap, this.thickness, this.color});
+  /// Creates a [VNLDashedLine].
+  const VNLDashedLine({
+    super.key,
+    this.width,
+    this.gap,
+    this.thickness,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
     return AnimatedValueBuilder(
-      value: DashedLineProperties(
+      value: VNLDashedLineProperties(
         width: width ?? (8 * scaling),
         gap: gap ?? (5 * scaling),
         thickness: thickness ?? (1 * scaling),
         color: color ?? theme.colorScheme.border,
       ),
       duration: kDefaultDuration,
-      lerp: DashedLineProperties.lerp,
+      lerp: VNLDashedLineProperties.lerp,
       builder: (context, value, child) {
         return CustomPaint(
-          painter: DashedLinePainter(
+          painter: VNLDashedLinePainter(
             width: value.width,
             gap: value.gap,
             thickness: value.thickness,
@@ -175,14 +482,28 @@ class DashedLine extends StatelessWidget {
   }
 }
 
-class DashedContainerProperties {
+/// Properties for defining a dashed container border appearance.
+///
+/// Encapsulates the visual properties of a dashed container border including
+/// dash width, gap, thickness, color, and border radius. Supports interpolation.
+class VNLDashedContainerProperties {
+  /// Width of each dash segment.
   final double width;
+
+  /// Gap between consecutive dash segments.
   final double gap;
+
+  /// Thickness of the border.
   final double thickness;
+
+  /// Color of the dashed border.
   final Color color;
+
+  /// Border radius for rounded corners.
   final BorderRadiusGeometry borderRadius;
 
-  const DashedContainerProperties({
+  /// Creates [VNLDashedContainerProperties].
+  const VNLDashedContainerProperties({
     required this.width,
     required this.gap,
     required this.thickness,
@@ -190,32 +511,76 @@ class DashedContainerProperties {
     required this.borderRadius,
   });
 
-  static DashedContainerProperties lerp(
+  /// Linearly interpolates between two [VNLDashedContainerProperties].
+  static VNLDashedContainerProperties lerp(
     BuildContext context,
-    DashedContainerProperties a,
-    DashedContainerProperties b,
+    VNLDashedContainerProperties a,
+    VNLDashedContainerProperties b,
     double t,
   ) {
-    return DashedContainerProperties(
+    return VNLDashedContainerProperties(
       width: lerpDouble(a.width, b.width, t)!,
       gap: lerpDouble(a.gap, b.gap, t)!,
       thickness: lerpDouble(a.thickness, b.thickness, t)!,
       color: Color.lerp(a.color, b.color, t)!,
-      borderRadius:
-          BorderRadius.lerp(a.borderRadius.optionallyResolve(context), b.borderRadius.optionallyResolve(context), t)!,
+      borderRadius: BorderRadius.lerp(
+        a.borderRadius.optionallyResolve(context),
+        b.borderRadius.optionallyResolve(context),
+        t,
+      )!,
     );
   }
 }
 
-class DashedContainer extends StatelessWidget {
+/// A container with a dashed border outline.
+///
+/// Renders a container with a customizable dashed border that can have rounded
+/// corners. Animates border property changes smoothly.
+///
+/// Example:
+/// ```dart
+/// VNLDashedContainer(
+///   strokeWidth: 10,
+///   gap: 5,
+///   thickness: 2,
+///   borderRadius: BorderRadius.circular(8),
+///   child: Padding(
+///     padding: EdgeInsets.all(16),
+///     child: Text('Dashed border'),
+///   ),
+/// )
+/// ```
+class VNLDashedContainer extends StatelessWidget {
+  /// Width of each dash segment.
+  ///
+  /// If `null`, uses scaled default (8).
   final double? strokeWidth;
+
+  /// Gap between consecutive dash segments.
+  ///
+  /// If `null`, uses scaled default (5).
   final double? gap;
+
+  /// Thickness of the border.
+  ///
+  /// If `null`, uses scaled default (1).
   final double? thickness;
+
+  /// Color of the dashed border.
+  ///
+  /// If `null`, uses theme border color.
   final Color? color;
+
+  /// The child widget inside the container.
   final Widget child;
+
+  /// Border radius for rounded corners.
+  ///
+  /// If `null`, uses theme default border radius.
   final BorderRadiusGeometry? borderRadius;
 
-  const DashedContainer({
+  /// Creates a [VNLDashedContainer].
+  const VNLDashedContainer({
     super.key,
     this.strokeWidth,
     this.gap,
@@ -227,9 +592,9 @@ class DashedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     return AnimatedValueBuilder(
-      value: DashedContainerProperties(
+      value: VNLDashedContainerProperties(
         width: strokeWidth ?? (8 * theme.scaling),
         gap: gap ?? (5 * theme.scaling),
         thickness: thickness ?? (1 * theme.scaling),
@@ -238,11 +603,11 @@ class DashedContainer extends StatelessWidget {
       ),
       duration: kDefaultDuration,
       lerp: (a, b, t) {
-        return DashedContainerProperties.lerp(context, a, b, t);
+        return VNLDashedContainerProperties.lerp(context, a, b, t);
       },
       builder: (context, value, child) {
         return CustomPaint(
-          painter: DashedPainter(
+          painter: VNLDashedPainter(
             width: value.width,
             gap: value.gap,
             thickness: value.thickness,
@@ -257,13 +622,35 @@ class DashedContainer extends StatelessWidget {
   }
 }
 
-class DashedLinePainter extends CustomPainter {
+/// A custom painter that draws a dashed horizontal line.
+///
+/// Paints a line with alternating dashes and gaps.
+class VNLDashedLinePainter extends CustomPainter {
+  /// Width of each dash segment.
   final double width;
+
+  /// Gap between dash segments.
   final double gap;
+
+  /// Thickness of the line.
   final double thickness;
+
+  /// Color of the dashed line.
   final Color color;
 
-  DashedLinePainter({required this.width, required this.gap, required this.thickness, required this.color});
+  /// Creates a [VNLDashedLinePainter].
+  ///
+  /// Parameters:
+  /// - [width] (`double`, required): Dash segment width.
+  /// - [gap] (`double`, required): Gap between dashes.
+  /// - [thickness] (`double`, required): Line thickness.
+  /// - [color] (`Color`, required): Line color.
+  VNLDashedLinePainter({
+    required this.width,
+    required this.gap,
+    required this.thickness,
+    required this.color,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -292,7 +679,7 @@ class DashedLinePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant DashedLinePainter oldDelegate) {
+  bool shouldRepaint(covariant VNLDashedLinePainter oldDelegate) {
     return oldDelegate.width != width ||
         oldDelegate.gap != gap ||
         oldDelegate.thickness != thickness ||
@@ -300,14 +687,34 @@ class DashedLinePainter extends CustomPainter {
   }
 }
 
-class DashedPainter extends CustomPainter {
+/// A custom painter that draws a dashed border around a rectangle.
+///
+/// Paints a dashed border with optional rounded corners.
+class VNLDashedPainter extends CustomPainter {
+  /// Width of each dash segment.
   final double width;
+
+  /// Gap between dash segments.
   final double gap;
+
+  /// Thickness of the border.
   final double thickness;
+
+  /// Color of the dashed border.
   final Color color;
+
+  /// Border radius for rounded corners.
   final BorderRadius? borderRadius;
 
-  DashedPainter({
+  /// Creates a [VNLDashedPainter].
+  ///
+  /// Parameters:
+  /// - [width] (`double`, required): Dash segment width.
+  /// - [gap] (`double`, required): Gap between dashes.
+  /// - [thickness] (`double`, required): Border thickness.
+  /// - [color] (`Color`, required): Border color.
+  /// - [borderRadius] (`BorderRadius?`, optional): Corner radius.
+  VNLDashedPainter({
     required this.width,
     required this.gap,
     required this.thickness,
@@ -354,7 +761,7 @@ class DashedPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant DashedPainter oldDelegate) {
+  bool shouldRepaint(covariant VNLDashedPainter oldDelegate) {
     return oldDelegate.width != width ||
         oldDelegate.gap != gap ||
         oldDelegate.thickness != thickness ||

@@ -11,7 +11,7 @@ class CardImageExample extends StatelessWidget {
     return const ComponentPage(
       name: 'card_image',
       description: 'A card image is an interactive card that displays an image.',
-      displayName: 'Card Image',
+      displayName: 'VNLCard Image',
       children: [
         WidgetUsageExample(
           title: 'Example',

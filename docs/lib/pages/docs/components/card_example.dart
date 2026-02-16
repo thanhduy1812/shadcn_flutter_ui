@@ -12,10 +12,10 @@ class CardExample extends StatelessWidget {
     return const ComponentPage(
       name: 'card',
       description: 'Cards are surfaces that display content and actions on a single topic.',
-      displayName: 'Card',
+      displayName: 'VNLCard',
       children: [
         WidgetUsageExample(
-          title: 'Card Example',
+          title: 'VNLCard Example',
           path: 'lib/pages/docs/components/card/card_example_1.dart',
           child: CardExample1(),
         ),

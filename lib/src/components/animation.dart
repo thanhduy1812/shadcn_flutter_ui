@@ -441,20 +441,20 @@ class _RepeatedAnimationBuilderState<T>
   }
 }
 
-class IntervalDuration extends Curve {
+class VNLIntervalDuration extends Curve {
   final Duration? start;
   final Duration? end;
   final Duration duration;
   final Curve? curve;
 
-  const IntervalDuration({
+  const VNLIntervalDuration({
     this.start,
     this.end,
     required this.duration,
     this.curve,
   });
 
-  factory IntervalDuration.delayed({
+  factory VNLIntervalDuration.delayed({
     Duration? startDelay,
     Duration? endDelay,
     required Duration duration,
@@ -465,7 +465,7 @@ class IntervalDuration extends Curve {
     if (endDelay != null) {
       duration += endDelay;
     }
-    return IntervalDuration(
+    return VNLIntervalDuration(
       start: startDelay,
       end: endDelay == null ? null : duration - endDelay,
       duration: duration,
@@ -496,7 +496,7 @@ class IntervalDuration extends Curve {
   }
 }
 
-class CrossFadedTransition extends StatefulWidget {
+class VNLCrossFadedTransition extends StatefulWidget {
   static Widget lerpOpacity(Widget a, Widget b, double t,
       {AlignmentGeometry alignment = Alignment.center}) {
     if (t == 0) {
@@ -547,7 +547,7 @@ class CrossFadedTransition extends StatefulWidget {
   final Widget Function(Widget a, Widget b, double t,
       {AlignmentGeometry alignment}) lerp;
 
-  const CrossFadedTransition({
+  const VNLCrossFadedTransition({
     super.key,
     required this.child,
     this.duration = kDefaultDuration,
@@ -556,10 +556,10 @@ class CrossFadedTransition extends StatefulWidget {
   });
 
   @override
-  State<CrossFadedTransition> createState() => _CrossFadedTransitionState();
+  State<VNLCrossFadedTransition> createState() => _CrossFadedTransitionState();
 }
 
-class _CrossFadedTransitionState extends State<CrossFadedTransition> {
+class _CrossFadedTransitionState extends State<VNLCrossFadedTransition> {
   late Widget newChild;
 
   @override
@@ -569,7 +569,7 @@ class _CrossFadedTransitionState extends State<CrossFadedTransition> {
   }
 
   @override
-  void didUpdateWidget(covariant CrossFadedTransition oldWidget) {
+  void didUpdateWidget(covariant VNLCrossFadedTransition oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.child != widget.child &&
         oldWidget.child.key != widget.child.key) {

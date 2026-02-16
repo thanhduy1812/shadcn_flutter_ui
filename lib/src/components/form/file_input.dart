@@ -33,20 +33,60 @@ Widget _buildFileIcon(String extension) {
   }
 }
 
+/// A function that builds a file icon widget based on the file extension.
+///
+/// Parameters:
+/// - [extension]: The file extension (without the dot).
+///
+/// Returns: A widget representing the file type icon.
 typedef FileIconBuilder = Widget Function(String extension);
 
-class FileIconProvider extends StatelessWidget {
+/// Provides customizable file icons in the widget tree.
+///
+/// [VNLFileIconProvider] allows applications to define custom file icons based on
+/// file extensions. Icons can be provided either through a builder function or
+/// a static map of extensions to widgets.
+///
+/// Example using builder:
+/// ```dart
+/// VNLFileIconProvider.builder(
+///   builder: (extension) {
+///     if (extension == 'txt') return Icon(Icons.text_snippet);
+///     return Icon(Icons.insert_drive_file);
+///   },
+///   child: MyFileList(),
+/// )
+/// ```
+///
+/// Example using icon map:
+/// ```dart
+/// VNLFileIconProvider(
+///   icons: {
+///     'pdf': Icon(Icons.picture_as_pdf),
+///     'jpg': Icon(Icons.image),
+///   },
+///   child: MyFileList(),
+/// )
+/// ```
+class VNLFileIconProvider extends StatelessWidget {
+  /// Builder function for creating file icons.
   final FileIconBuilder? builder;
+
+  /// Map of file extensions to icon widgets.
   final Map<String, Widget>? icons;
+
+  /// The child widget.
   final Widget child;
 
-  const FileIconProvider.builder({
+  /// Creates a [VNLFileIconProvider] using a builder function.
+  const VNLFileIconProvider.builder({
     super.key,
     FileIconBuilder this.builder = _buildFileIcon,
     required this.child,
   }) : icons = null;
 
-  const FileIconProvider({
+  /// Creates a [VNLFileIconProvider] using a static icon map.
+  const VNLFileIconProvider({
     super.key,
     required this.icons,
     required this.child,
@@ -55,7 +95,7 @@ class FileIconProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Data.inherit(
-      data: FileIconProviderData._(
+      data: VNLFileIconProviderData._(
         builder: builder,
         icons: icons,
       ),
@@ -63,21 +103,40 @@ class FileIconProvider extends StatelessWidget {
     );
   }
 
+  /// Builds a file icon for the given extension using the configured provider.
+  ///
+  /// Parameters:
+  /// - [context]: The build context to find the provider.
+  /// - [extension]: The file extension (without the dot).
+  ///
+  /// Returns: The appropriate icon widget for the file type.
   static Widget buildIcon(BuildContext context, String extension) {
-    final data = Data.of<FileIconProviderData>(context);
+    final data = Data.of<VNLFileIconProviderData>(context);
     return data.buildIcon(extension);
   }
 }
 
-class FileIconProviderData {
+/// Internal data class for [VNLFileIconProvider].
+///
+/// Stores the configuration for file icon provision and provides
+/// a method to build icons based on file extensions.
+class VNLFileIconProviderData {
+  /// Optional builder function for icons.
   final FileIconBuilder? builder;
+
+  /// Optional map of extension to icon widgets.
   final Map<String, Widget>? icons;
 
-  const FileIconProviderData._({
+  /// Creates internal data for file icon provision.
+  const VNLFileIconProviderData._({
     this.builder,
     this.icons,
   });
 
+  /// Builds an icon for the given file extension.
+  ///
+  /// Uses the builder if provided, otherwise checks the icons map,
+  /// and falls back to the default icon builder.
   Widget buildIcon(String extension) {
     if (builder != null) return builder!(extension);
     final icon = icons?[extension];
@@ -87,13 +146,13 @@ class FileIconProviderData {
 }
 
 //
-// class SingleFileInput extends StatelessWidget {
+// class VNLSingleFileInput extends StatelessWidget {
 //   final XFile? file;
 //   final ValueChanged<XFile?>? onChanged;
 //   final bool acceptDrop;
 //   final bool enabled;
 //
-//   const SingleFileInput({
+//   const VNLSingleFileInput({
 //     super.key,
 //     this.file,
 //     this.onChanged,

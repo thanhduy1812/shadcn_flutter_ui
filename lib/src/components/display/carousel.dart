@@ -1,48 +1,53 @@
 import 'dart:math';
 
 import 'package:flutter/scheduler.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 /// Size constraint for the carousel.
-abstract class CarouselSizeConstraint {
+abstract class VNLCarouselSizeConstraint {
   /// Creates a carousel size constraint.
-  const CarouselSizeConstraint();
+  const VNLCarouselSizeConstraint();
 
   /// Creates a fixed carousel size constraint.
-  const factory CarouselSizeConstraint.fixed(double size) = CarouselFixedConstraint;
+  const factory VNLCarouselSizeConstraint.fixed(double size) =
+      VNLCarouselFixedConstraint;
 
   /// Creates a fractional carousel size constraint.
-  const factory CarouselSizeConstraint.fractional(double fraction) = CarouselFractionalConstraint;
+  const factory VNLCarouselSizeConstraint.fractional(double fraction) =
+      VNLCarouselFractionalConstraint;
 }
 
 /// A fixed carousel size constraint.
-class CarouselFixedConstraint extends CarouselSizeConstraint {
+class VNLCarouselFixedConstraint extends VNLCarouselSizeConstraint {
   /// The size of the constraint.
   final double size;
 
   /// Creates a fixed carousel size constraint.
-  const CarouselFixedConstraint(this.size) : assert(size > 0, 'size must be greater than 0');
+  const VNLCarouselFixedConstraint(this.size)
+      : assert(size > 0, 'size must be greater than 0');
 }
 
 /// A fractional carousel size constraint.
-class CarouselFractionalConstraint extends CarouselSizeConstraint {
+class VNLCarouselFractionalConstraint extends VNLCarouselSizeConstraint {
   /// The fraction of the constraint.
   final double fraction;
 
   /// Creates a fractional carousel size constraint.
-  const CarouselFractionalConstraint(this.fraction) : assert(fraction > 0, 'fraction must be greater than 0');
+  const VNLCarouselFractionalConstraint(this.fraction)
+      : assert(fraction > 0, 'fraction must be greater than 0');
 }
 
 /// A carousel layout.
-abstract class CarouselTransition {
+abstract class VNLCarouselTransition {
   /// Creates a carousel layout.
-  const CarouselTransition();
+  const VNLCarouselTransition();
 
   /// Creates a sliding carousel layout.
-  const factory CarouselTransition.sliding({double gap}) = SlidingCarouselTransition;
+  const factory VNLCarouselTransition.sliding({double gap}) =
+      VNLSlidingCarouselTransition;
 
   /// Creates a fading carousel layout.
-  const factory CarouselTransition.fading() = FadingCarouselTransition;
+  const factory VNLCarouselTransition.fading() = VNLFadingCarouselTransition;
 
   /// Layouts the carousel items.
   /// * [context] is the build context.
@@ -62,7 +67,7 @@ abstract class CarouselTransition {
     required BoxConstraints constraints,
     required CarouselAlignment alignment,
     required Axis direction,
-    required CarouselSizeConstraint sizeConstraint,
+    required VNLCarouselSizeConstraint sizeConstraint,
     required double progressedIndex,
     required int? itemCount,
     required CarouselItemBuilder itemBuilder,
@@ -72,14 +77,12 @@ abstract class CarouselTransition {
 }
 
 /// A sliding carousel transition.
-class SlidingCarouselTransition extends CarouselTransition {
+class VNLSlidingCarouselTransition extends VNLCarouselTransition {
   /// The gap between the carousel items.
   final double gap;
 
   /// Creates a sliding carousel transition.
-  const SlidingCarouselTransition({
-    this.gap = 0,
-  });
+  const VNLSlidingCarouselTransition({this.gap = 0});
 
   @override
   List<Widget> layout(
@@ -88,7 +91,7 @@ class SlidingCarouselTransition extends CarouselTransition {
     required BoxConstraints constraints,
     required CarouselAlignment alignment,
     required Axis direction,
-    required CarouselSizeConstraint sizeConstraint,
+    required VNLCarouselSizeConstraint sizeConstraint,
     required double progressedIndex,
     required int? itemCount,
     required CarouselItemBuilder itemBuilder,
@@ -97,11 +100,13 @@ class SlidingCarouselTransition extends CarouselTransition {
   }) {
     int additionalPreviousItems = 1;
     int additionalNextItems = 1;
-    double originalSize = direction == Axis.horizontal ? constraints.maxWidth : constraints.maxHeight;
+    double originalSize = direction == Axis.horizontal
+        ? constraints.maxWidth
+        : constraints.maxHeight;
     double size;
-    if (sizeConstraint is CarouselFixedConstraint) {
+    if (sizeConstraint is VNLCarouselFixedConstraint) {
       size = sizeConstraint.size;
-    } else if (sizeConstraint is CarouselFractionalConstraint) {
+    } else if (sizeConstraint is VNLCarouselFractionalConstraint) {
       size = originalSize * sizeConstraint.fraction;
     } else {
       size = originalSize;
@@ -131,38 +136,46 @@ class SlidingCarouselTransition extends CarouselTransition {
       final item = itemBuilder(context, itemIndex);
       double position = i.toDouble();
       // offset the gap
-      items.add(_PlacedCarouselItem._(
-        relativeIndex: i,
-        child: item,
-        position: position,
-      ));
+      items.add(
+        _PlacedCarouselItem._(
+          relativeIndex: i,
+          child: item,
+          position: position,
+        ),
+      );
     }
     if (direction == Axis.horizontal) {
       return [
         for (var item in items)
           Positioned(
-              left: snapOffsetAlignment + (item.position - currentIndex) * size + (gap * item.relativeIndex),
-              width: size,
-              height: constraints.maxHeight,
-              child: item.child),
+            left: snapOffsetAlignment +
+                (item.position - currentIndex) * size +
+                (gap * item.relativeIndex),
+            width: size,
+            height: constraints.maxHeight,
+            child: item.child,
+          ),
       ];
     } else {
       return [
         for (var item in items)
           Positioned(
-              top: snapOffsetAlignment + (item.position - currentIndex) * size + (gap * item.relativeIndex),
-              width: constraints.maxWidth,
-              height: size,
-              child: item.child),
+            top: snapOffsetAlignment +
+                (item.position - currentIndex) * size +
+                (gap * item.relativeIndex),
+            width: constraints.maxWidth,
+            height: size,
+            child: item.child,
+          ),
       ];
     }
   }
 }
 
 /// A fading carousel transition.
-class FadingCarouselTransition extends CarouselTransition {
+class VNLFadingCarouselTransition extends VNLCarouselTransition {
   /// Creates a fading carousel transition.
-  const FadingCarouselTransition();
+  const VNLFadingCarouselTransition();
 
   @override
   List<Widget> layout(
@@ -171,18 +184,20 @@ class FadingCarouselTransition extends CarouselTransition {
     required BoxConstraints constraints,
     required CarouselAlignment alignment,
     required Axis direction,
-    required CarouselSizeConstraint sizeConstraint,
+    required VNLCarouselSizeConstraint sizeConstraint,
     required double progressedIndex,
     required int? itemCount,
     required CarouselItemBuilder itemBuilder,
     required bool wrap,
     required bool reverse,
   }) {
-    double originalSize = direction == Axis.horizontal ? constraints.maxWidth : constraints.maxHeight;
+    double originalSize = direction == Axis.horizontal
+        ? constraints.maxWidth
+        : constraints.maxHeight;
     double size;
-    if (sizeConstraint is CarouselFixedConstraint) {
+    if (sizeConstraint is VNLCarouselFixedConstraint) {
       size = sizeConstraint.size;
-    } else if (sizeConstraint is CarouselFractionalConstraint) {
+    } else if (sizeConstraint is VNLCarouselFractionalConstraint) {
       size = originalSize * sizeConstraint.fraction;
     } else {
       size = originalSize;
@@ -207,35 +222,39 @@ class FadingCarouselTransition extends CarouselTransition {
       final item = itemBuilder(context, itemIndex);
       double position = i.toDouble();
       // offset the gap
-      items.add(_PlacedCarouselItem._(
-        relativeIndex: i,
-        child: item,
-        position: position,
-      ));
+      items.add(
+        _PlacedCarouselItem._(
+          relativeIndex: i,
+          child: item,
+          position: position,
+        ),
+      );
     }
     if (direction == Axis.horizontal) {
       return [
         for (var item in items)
           Positioned(
-              left: snapOffsetAlignment,
-              width: size,
-              height: constraints.maxHeight,
-              child: Opacity(
-                opacity: (1 - (progress - item.position).abs()).clamp(0.0, 1.0),
-                child: item.child,
-              )),
+            left: snapOffsetAlignment,
+            width: size,
+            height: constraints.maxHeight,
+            child: Opacity(
+              opacity: (1 - (progress - item.position).abs()).clamp(0.0, 1.0),
+              child: item.child,
+            ),
+          ),
       ];
     } else {
       return [
         for (var item in items)
           Positioned(
-              top: snapOffsetAlignment,
-              width: constraints.maxWidth,
-              height: size,
-              child: Opacity(
-                opacity: (1 - (progress - item.position).abs()).clamp(0.0, 1.0),
-                child: item.child,
-              )),
+            top: snapOffsetAlignment,
+            width: constraints.maxWidth,
+            height: size,
+            child: Opacity(
+              opacity: (1 - (progress - item.position).abs()).clamp(0.0, 1.0),
+              child: item.child,
+            ),
+          ),
       ];
     }
   }
@@ -246,7 +265,7 @@ class FadingCarouselTransition extends CarouselTransition {
 typedef CarouselItemBuilder = Widget Function(BuildContext context, int index);
 
 /// A controller for the carousel.
-class CarouselController extends Listenable {
+class VNLCarouselController extends Listenable {
   final AnimationQueueController _controller = AnimationQueueController();
 
   /// Whether the carousel should animate.
@@ -267,12 +286,26 @@ class CarouselController extends Listenable {
 
   /// Animates to the next item.
   void animateNext(Duration duration, [Curve curve = Curves.easeInOut]) {
-    _controller.push(AnimationRequest((_controller.value + 1).roundToDouble(), duration, curve), false);
+    _controller.push(
+      AnimationRequest(
+        (_controller.value + 1).roundToDouble(),
+        duration,
+        curve,
+      ),
+      false,
+    );
   }
 
   /// Animates to the previous item.
   void animatePrevious(Duration duration, [Curve curve = Curves.easeInOut]) {
-    _controller.push(AnimationRequest((_controller.value - 1).roundToDouble(), duration, curve), false);
+    _controller.push(
+      AnimationRequest(
+        (_controller.value - 1).roundToDouble(),
+        duration,
+        curve,
+      ),
+      false,
+    );
   }
 
   /// Snaps the current value to the nearest integer.
@@ -282,7 +315,9 @@ class CarouselController extends Listenable {
 
   /// Animates the current value to the nearest integer.
   void animateSnap(Duration duration, [Curve curve = Curves.easeInOut]) {
-    _controller.push(AnimationRequest(_controller.value.roundToDouble(), duration, curve));
+    _controller.push(
+      AnimationRequest(_controller.value.roundToDouble(), duration, curve),
+    );
   }
 
   /// Jumps to the specified value.
@@ -291,7 +326,11 @@ class CarouselController extends Listenable {
   }
 
   /// Animates to the specified value.
-  void animateTo(double value, Duration duration, [Curve curve = Curves.linear]) {
+  void animateTo(
+    double value,
+    Duration duration, [
+    Curve curve = Curves.linear,
+  ]) {
     _controller.push(AnimationRequest(value, duration, curve), false);
   }
 
@@ -342,11 +381,137 @@ enum CarouselAlignment {
   const CarouselAlignment(this.alignment);
 }
 
-/// A carousel widget.
-/// The carousel widget is used to display a list of items in a carousel view.
+/// Theme data for [VNLCarousel].
+class VNLCarouselTheme extends ComponentThemeData {
+  /// The alignment of carousel items.
+  final CarouselAlignment? alignment;
+
+  /// The scroll direction (horizontal or vertical).
+  final Axis? direction;
+
+  /// Whether to wrap around to the beginning after reaching the end.
+  final bool? wrap;
+
+  /// Whether to pause autoplay on hover.
+  final bool? pauseOnHover;
+
+  /// The duration between automatic slides.
+  final Duration? autoplaySpeed;
+
+  /// Whether the carousel can be dragged.
+  final bool? draggable;
+
+  /// The transition animation speed.
+  final Duration? speed;
+
+  /// The transition animation curve.
+  final Curve? curve;
+
+  /// Creates a carousel theme.
+  const VNLCarouselTheme({
+    this.alignment,
+    this.direction,
+    this.wrap,
+    this.pauseOnHover,
+    this.autoplaySpeed,
+    this.draggable,
+    this.speed,
+    this.curve,
+  });
+
+  /// Creates a copy of this theme with the given fields replaced.
+  VNLCarouselTheme copyWith({
+    ValueGetter<CarouselAlignment?>? alignment,
+    ValueGetter<Axis?>? direction,
+    ValueGetter<bool?>? wrap,
+    ValueGetter<bool?>? pauseOnHover,
+    ValueGetter<Duration?>? autoplaySpeed,
+    ValueGetter<bool?>? draggable,
+    ValueGetter<Duration?>? speed,
+    ValueGetter<Curve?>? curve,
+  }) {
+    return VNLCarouselTheme(
+      alignment: alignment == null ? this.alignment : alignment(),
+      direction: direction == null ? this.direction : direction(),
+      wrap: wrap == null ? this.wrap : wrap(),
+      pauseOnHover: pauseOnHover == null ? this.pauseOnHover : pauseOnHover(),
+      autoplaySpeed:
+          autoplaySpeed == null ? this.autoplaySpeed : autoplaySpeed(),
+      draggable: draggable == null ? this.draggable : draggable(),
+      speed: speed == null ? this.speed : speed(),
+      curve: curve == null ? this.curve : curve(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is VNLCarouselTheme &&
+        other.alignment == alignment &&
+        other.direction == direction &&
+        other.wrap == wrap &&
+        other.pauseOnHover == pauseOnHover &&
+        other.autoplaySpeed == autoplaySpeed &&
+        other.draggable == draggable &&
+        other.speed == speed &&
+        other.curve == curve;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        alignment,
+        direction,
+        wrap,
+        pauseOnHover,
+        autoplaySpeed,
+        draggable,
+        speed,
+        curve,
+      );
+}
+
+/// Interactive carousel widget with automatic transitions and customizable layouts.
+///
+/// A high-level carousel widget that displays a sequence of items with smooth
+/// transitions between them. Supports automatic progression, manual navigation,
+/// multiple transition types, and extensive customization options.
+///
+/// ## Features
+///
+/// - **Multiple transition types**: Sliding and fading transitions with customizable timing
+/// - **Automatic progression**: Optional auto-play with configurable duration per item
+/// - **Manual navigation**: Programmatic control through [VNLCarouselController]
+/// - **Flexible sizing**: Fixed or fractional size constraints for responsive layouts
+/// - **Interactive controls**: Pause on hover, wrap-around navigation, and touch gestures
+/// - **Flexible alignment**: Multiple alignment options for different layout needs
+/// - **Directional support**: Horizontal or vertical carousel orientation
+///
+/// ## Usage Patterns
+///
+/// **VNLBasic automatic carousel:**
+/// ```dart
+/// VNLCarousel(
+///   itemCount: images.length,
+///   duration: Duration(seconds: 3),
+///   itemBuilder: (context, index) => Image.asset(images[index]),
+///   transition: VNLCarouselTransition.sliding(gap: 16),
+/// )
+/// ```
+///
+/// **Controlled carousel with custom navigation:**
+/// ```dart
+/// final controller = VNLCarouselController();
+///
+/// VNLCarousel(
+///   controller: controller,
+///   itemCount: products.length,
+///   itemBuilder: (context, index) => ProductCard(products[index]),
+///   transition: VNLCarouselTransition.fading(),
+///   pauseOnHover: true,
+/// )
+/// ```
 class VNLCarousel extends StatefulWidget {
   /// The carousel transition.
-  final CarouselTransition transition;
+  final VNLCarouselTransition transition;
 
   /// The item builder.
   final Widget Function(BuildContext context, int index) itemBuilder;
@@ -361,7 +526,7 @@ class VNLCarousel extends StatefulWidget {
   final int? itemCount;
 
   /// The carousel controller.
-  final CarouselController? controller;
+  final VNLCarouselController? controller;
 
   /// The carousel alignment.
   final CarouselAlignment alignment;
@@ -391,7 +556,7 @@ class VNLCarousel extends StatefulWidget {
   final bool reverse;
 
   /// The size constraint of the carousel.
-  final CarouselSizeConstraint sizeConstraint;
+  final VNLCarouselSizeConstraint sizeConstraint;
 
   /// The speed of the carousel.
   final Duration speed;
@@ -423,7 +588,7 @@ class VNLCarousel extends StatefulWidget {
     this.draggable = true,
     this.reverse = false,
     this.autoplayReverse = false,
-    this.sizeConstraint = const CarouselFractionalConstraint(1),
+    this.sizeConstraint = const VNLCarouselFractionalConstraint(1),
     this.speed = const Duration(milliseconds: 200),
     this.curve = Curves.easeInOut,
     this.duration,
@@ -432,14 +597,18 @@ class VNLCarousel extends StatefulWidget {
     this.disableOverheadScrolling = true,
     this.disableDraggingVelocity = false,
     required this.transition,
-  }) : assert(wrap || itemCount != null, 'itemCount must be provided if wrap is false');
+  }) : assert(
+          wrap || itemCount != null,
+          'itemCount must be provided if wrap is false',
+        );
 
   @override
   State<VNLCarousel> createState() => _CarouselState();
 }
 
-class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMixin {
-  late CarouselController _controller;
+class _CarouselState extends State<VNLCarousel>
+    with SingleTickerProviderStateMixin {
+  late VNLCarouselController _controller;
   Duration? _startTime;
   late Ticker _ticker;
   bool hovered = false;
@@ -450,12 +619,68 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
 
   late int _currentIndex;
 
+  VNLCarouselTheme? _theme;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _theme = ComponentTheme.maybeOf<VNLCarouselTheme>(context);
+  }
+
+  CarouselAlignment get _alignment => styleValue(
+        widgetValue: widget.alignment,
+        themeValue: _theme?.alignment,
+        defaultValue: CarouselAlignment.center,
+      );
+
+  Axis get _direction => styleValue(
+        widgetValue: widget.direction,
+        themeValue: _theme?.direction,
+        defaultValue: Axis.horizontal,
+      );
+
+  bool get _wrap => styleValue(
+        widgetValue: widget.wrap,
+        themeValue: _theme?.wrap,
+        defaultValue: true,
+      );
+
+  bool get _pauseOnHover => styleValue(
+        widgetValue: widget.pauseOnHover,
+        themeValue: _theme?.pauseOnHover,
+        defaultValue: true,
+      );
+
+  Duration? get _autoplaySpeed => styleValue(
+        widgetValue: widget.autoplaySpeed,
+        themeValue: _theme?.autoplaySpeed,
+        defaultValue: null,
+      );
+
+  bool get _draggable => styleValue(
+        widgetValue: widget.draggable,
+        themeValue: _theme?.draggable,
+        defaultValue: true,
+      );
+
+  Duration get _speed => styleValue(
+        widgetValue: widget.speed,
+        themeValue: _theme?.speed,
+        defaultValue: const Duration(milliseconds: 200),
+      );
+
+  Curve get _curve => styleValue(
+        widgetValue: widget.curve,
+        themeValue: _theme?.curve,
+        defaultValue: Curves.easeInOut,
+      );
+
   Duration? get _currentSlideDuration {
     double currentIndex = _controller.getCurrentIndex(widget.itemCount);
     final int index = currentIndex.floor();
     Duration? duration = widget.durationBuilder?.call(index) ?? widget.duration;
-    if (duration != null && widget.autoplaySpeed != null) {
-      duration += widget.autoplaySpeed!;
+    if (duration != null && _autoplaySpeed != null) {
+      duration += _autoplaySpeed!;
     }
     return duration;
   }
@@ -464,7 +689,7 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
   void initState() {
     super.initState();
     _ticker = createTicker(_tick);
-    _controller = widget.controller ?? CarouselController();
+    _controller = widget.controller ?? VNLCarouselController();
     _controller.addListener(_onControllerChange);
     _currentIndex = _controller.getCurrentIndex(widget.itemCount).round();
     _dispatchControllerChange();
@@ -477,7 +702,7 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
     }
     if (!shouldStart) {
       if (_currentSlideDuration != null) {
-        if (!widget.pauseOnHover || !hovered) {
+        if (!_pauseOnHover || !hovered) {
           shouldStart = true;
         }
       }
@@ -523,14 +748,20 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
       }
     }
     if (shouldAutoPlay) {
-      if (!widget.wrap && widget.itemCount != null && _controller.value >= widget.itemCount! - 1) {
-        _controller.animateTo(0, widget.autoplaySpeed ?? widget.speed, widget.curve);
-      } else if (!widget.wrap && widget.itemCount != null && _controller.value <= 0) {
-        _controller.animateTo(widget.itemCount! - 1, widget.autoplaySpeed ?? widget.speed, widget.curve);
+      if (!_wrap &&
+          widget.itemCount != null &&
+          _controller.value >= widget.itemCount! - 1) {
+        _controller.animateTo(0, _autoplaySpeed ?? _speed, _curve);
+      } else if (!_wrap && widget.itemCount != null && _controller.value <= 0) {
+        _controller.animateTo(
+          widget.itemCount! - 1,
+          _autoplaySpeed ?? _speed,
+          _curve,
+        );
       } else if (widget.autoplayReverse) {
-        _controller.animatePrevious(widget.autoplaySpeed ?? widget.speed, widget.curve);
+        _controller.animatePrevious(_autoplaySpeed ?? _speed, _curve);
       } else {
-        _controller.animateNext(widget.autoplaySpeed ?? widget.speed, widget.curve);
+        _controller.animateNext(_autoplaySpeed ?? _speed, _curve);
       }
     }
     if (_dragVelocity.abs() > 0.01 && !dragging) {
@@ -542,12 +773,20 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
         _dragVelocity = 0;
         if (widget.disableOverheadScrolling) {
           if (_lastDragValue < targetValue) {
-            _controller.animateTo(_lastDragValue.floorToDouble() + 1, widget.speed, widget.curve);
+            _controller.animateTo(
+              _lastDragValue.floorToDouble() + 1,
+              _speed,
+              _curve,
+            );
           } else {
-            _controller.animateTo(_lastDragValue.floorToDouble() - 1, widget.speed, widget.curve);
+            _controller.animateTo(
+              _lastDragValue.floorToDouble() - 1,
+              _speed,
+              _curve,
+            );
           }
         } else {
-          _controller.animateSnap(widget.speed, widget.curve);
+          _controller.animateSnap(_speed, _curve);
         }
       }
     }
@@ -560,7 +799,7 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       oldWidget.controller?.removeListener(_onControllerChange);
-      _controller = widget.controller ?? CarouselController();
+      _controller = widget.controller ?? VNLCarouselController();
       _controller.addListener(_onControllerChange);
       _dispatchControllerChange();
     }
@@ -568,7 +807,7 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
 
   void _onControllerChange() {
     setState(() {});
-    if (!widget.wrap && widget.itemCount != null) {
+    if (!_wrap && widget.itemCount != null) {
       if (_controller.value < 0) {
         _controller._controller.value = 0;
       } else if (_controller.value >= widget.itemCount!) {
@@ -612,11 +851,19 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
       child: LayoutBuilder(
         builder: (context, constraints) {
           var carouselWidget = buildCarousel(context, constraints);
-          if (widget.draggable) {
-            if (widget.direction == Axis.horizontal) {
-              carouselWidget = buildHorizontalDragger(context, carouselWidget, constraints);
+          if (_draggable) {
+            if (_direction == Axis.horizontal) {
+              carouselWidget = buildHorizontalDragger(
+                context,
+                carouselWidget,
+                constraints,
+              );
             } else {
-              carouselWidget = buildVerticalDragger(context, carouselWidget, constraints);
+              carouselWidget = buildVerticalDragger(
+                context,
+                carouselWidget,
+                constraints,
+              );
             }
           }
           return carouselWidget;
@@ -625,12 +872,17 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
     );
   }
 
-  Widget buildHorizontalDragger(BuildContext context, Widget carouselWidget, BoxConstraints constraints) {
+  Widget buildHorizontalDragger(
+    BuildContext context,
+    Widget carouselWidget,
+    BoxConstraints constraints,
+  ) {
     double size;
-    if (widget.sizeConstraint is CarouselFixedConstraint) {
-      size = (widget.sizeConstraint as CarouselFixedConstraint).size;
-    } else if (widget.sizeConstraint is CarouselFractionalConstraint) {
-      size = constraints.maxHeight * (widget.sizeConstraint as CarouselFractionalConstraint).fraction;
+    if (widget.sizeConstraint is VNLCarouselFixedConstraint) {
+      size = (widget.sizeConstraint as VNLCarouselFixedConstraint).size;
+    } else if (widget.sizeConstraint is VNLCarouselFractionalConstraint) {
+      size = constraints.maxHeight *
+          (widget.sizeConstraint as VNLCarouselFractionalConstraint).fraction;
     } else {
       size = constraints.maxHeight;
     }
@@ -643,7 +895,7 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
         _dragVelocity = 0;
       },
       onHorizontalDragUpdate: (details) {
-        if (widget.draggable) {
+        if (_draggable) {
           setState(() {
             var increment = -details.primaryDelta! / size;
             _controller.jumpTo(progressedValue + increment);
@@ -657,18 +909,23 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
         } else {
           _dragVelocity = -details.primaryVelocity! / size / 100.0;
         }
-        _controller.animateSnap(widget.speed, widget.curve);
+        _controller.animateSnap(_speed, _curve);
         _check();
       },
     );
   }
 
-  Widget buildVerticalDragger(BuildContext context, Widget carouselWidget, BoxConstraints constraints) {
+  Widget buildVerticalDragger(
+    BuildContext context,
+    Widget carouselWidget,
+    BoxConstraints constraints,
+  ) {
     double size;
-    if (widget.sizeConstraint is CarouselFixedConstraint) {
-      size = (widget.sizeConstraint as CarouselFixedConstraint).size;
-    } else if (widget.sizeConstraint is CarouselFractionalConstraint) {
-      size = constraints.maxWidth * (widget.sizeConstraint as CarouselFractionalConstraint).fraction;
+    if (widget.sizeConstraint is VNLCarouselFixedConstraint) {
+      size = (widget.sizeConstraint as VNLCarouselFixedConstraint).size;
+    } else if (widget.sizeConstraint is VNLCarouselFractionalConstraint) {
+      size = constraints.maxWidth *
+          (widget.sizeConstraint as VNLCarouselFractionalConstraint).fraction;
     } else {
       size = constraints.maxWidth;
     }
@@ -681,7 +938,7 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
         _dragVelocity = 0;
       },
       onVerticalDragUpdate: (details) {
-        if (widget.draggable) {
+        if (_draggable) {
           setState(() {
             var increment = -details.primaryDelta! / size;
             _controller.jumpTo(progressedValue + increment);
@@ -695,14 +952,14 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
         } else {
           _dragVelocity = -details.primaryVelocity! / size / 100.0;
         }
-        _controller.animateSnap(widget.speed, widget.curve);
+        _controller.animateSnap(_speed, _curve);
         _check();
       },
     );
   }
 
   double get progressedValue {
-    if (!widget.wrap && widget.itemCount != null) {
+    if (!_wrap && widget.itemCount != null) {
       return _controller.value.clamp(0.0, widget.itemCount!.toDouble() - 1);
     } else {
       return _controller.value;
@@ -715,11 +972,11 @@ class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMi
         context,
         progress: progressedValue,
         constraints: constraints,
-        alignment: widget.alignment,
-        direction: widget.direction,
+        alignment: _alignment,
+        direction: _direction,
         sizeConstraint: widget.sizeConstraint,
         progressedIndex: progressedValue,
-        wrap: widget.wrap,
+        wrap: _wrap,
         itemCount: widget.itemCount,
         itemBuilder: widget.itemBuilder,
         reverse: widget.reverse,
@@ -741,12 +998,12 @@ class _PlacedCarouselItem {
 }
 
 /// A dot indicator for the carousel.
-class CarouselDotIndicator extends StatelessWidget {
+class VNLCarouselDotIndicator extends StatelessWidget {
   /// The item count of the carousel.
   final int itemCount;
 
   /// The carousel controller.
-  final CarouselController controller;
+  final VNLCarouselController controller;
 
   /// The speed of the value change.
   final Duration speed;
@@ -755,7 +1012,7 @@ class CarouselDotIndicator extends StatelessWidget {
   final Curve curve;
 
   /// Creates a dot indicator for the carousel.
-  const CarouselDotIndicator({
+  const VNLCarouselDotIndicator({
     super.key,
     required this.itemCount,
     required this.controller,

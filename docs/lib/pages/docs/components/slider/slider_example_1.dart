@@ -8,13 +8,15 @@ class SliderExample1 extends StatefulWidget {
 }
 
 class _SliderExample1State extends State<SliderExample1> {
-  SliderValue value = const SliderValue.single(0.5);
+  // A single-value slider in the 0–1 range (default).
+  VNLSliderValue value = const VNLSliderValue.single(0.5);
   @override
   Widget build(BuildContext context) {
     return VNLSlider(
       value: value,
       onChanged: (value) {
         setState(() {
+          // Update local state when the thumb is dragged.
           this.value = value;
         });
       },

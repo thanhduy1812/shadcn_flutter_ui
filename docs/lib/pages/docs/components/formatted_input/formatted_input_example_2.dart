@@ -13,7 +13,7 @@ class _FormattedInputExample2State extends State<FormattedInputExample2> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DateInput(
+        VNLDateInput(
           onChanged: (value) => setState(() => _selectedDate = value),
         ),
         const Gap(16),

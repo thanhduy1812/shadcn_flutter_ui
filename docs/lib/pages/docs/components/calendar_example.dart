@@ -15,25 +15,25 @@ class CalendarExample extends StatelessWidget {
     return const ComponentPage(
       name: 'calendar',
       description: 'A widget that lets users select dates and date ranges.',
-      displayName: 'Calendar',
+      displayName: 'VNLCalendar',
       children: [
         WidgetUsageExample(
-          title: 'Range Calendar Example',
+          title: 'Range VNLCalendar Example',
           path: 'lib/pages/docs/components/calendar/calendar_example_1.dart',
           child: CalendarExample1(),
         ),
         WidgetUsageExample(
-          title: 'Single Calendar Example',
+          title: 'Single VNLCalendar Example',
           path: 'lib/pages/docs/components/calendar/calendar_example_2.dart',
           child: CalendarExample2(),
         ),
         WidgetUsageExample(
-          title: 'Multiple Calendar Example',
+          title: 'Multiple VNLCalendar Example',
           path: 'lib/pages/docs/components/calendar/calendar_example_3.dart',
           child: CalendarExample3(),
         ),
         WidgetUsageExample(
-          title: 'Calendar Example',
+          title: 'VNLCalendar Example',
           path: 'lib/pages/docs/components/calendar/calendar_example_4.dart',
           child: CalendarExample4(),
         ),

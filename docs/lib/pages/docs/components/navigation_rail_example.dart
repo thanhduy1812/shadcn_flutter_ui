@@ -20,7 +20,7 @@ class NavigationRailExample extends StatelessWidget {
           child: SizedBox(
             width: 500,
             height: 400,
-            child: OutlinedContainer(child: NavigationRailExample1()),
+            child: VNLOutlinedContainer(child: NavigationRailExample1()),
           ),
         ),
       ],

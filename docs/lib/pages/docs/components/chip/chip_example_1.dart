@@ -1,5 +1,9 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
+/// Chips with trailing remove buttons in different styles.
+///
+/// Demonstrates how to compose [VNLChip] with a [VNLChipButton] trailing action,
+/// and how to apply various [VNLButtonStyle] presets.
 class ChipExample1 extends StatelessWidget {
   const ChipExample1({super.key});
 
@@ -10,39 +14,44 @@ class ChipExample1 extends StatelessWidget {
       runSpacing: 8,
       children: [
         VNLChip(
-          trailing: ChipButton(
+          // Trailing action; in real apps you might remove the chip.
+          trailing: VNLChipButton(
             onPressed: () {},
             child: const Icon(Icons.close),
           ),
           child: const Text('Apple'),
         ),
         VNLChip(
-          style: const ButtonStyle.primary(),
-          trailing: ChipButton(
+          // Primary-styled chip.
+          style: const VNLButtonStyle.primary(),
+          trailing: VNLChipButton(
             onPressed: () {},
             child: const Icon(Icons.close),
           ),
           child: const Text('Banana'),
         ),
         VNLChip(
-          style: const ButtonStyle.outline(),
-          trailing: ChipButton(
+          // Outlined chip.
+          style: const VNLButtonStyle.outline(),
+          trailing: VNLChipButton(
             onPressed: () {},
             child: const Icon(Icons.close),
           ),
           child: const Text('Cherry'),
         ),
         VNLChip(
-          style: const ButtonStyle.ghost(),
-          trailing: ChipButton(
+          // Ghost chip (very subtle background).
+          style: const VNLButtonStyle.ghost(),
+          trailing: VNLChipButton(
             onPressed: () {},
             child: const Icon(Icons.close),
           ),
           child: const Text('Durian'),
         ),
         VNLChip(
-          style: const ButtonStyle.destructive(),
-          trailing: ChipButton(
+          // Destructive-styled chip for warning/critical labels.
+          style: const VNLButtonStyle.destructive(),
+          trailing: VNLChipButton(
             onPressed: () {},
             child: const Icon(Icons.close),
           ),

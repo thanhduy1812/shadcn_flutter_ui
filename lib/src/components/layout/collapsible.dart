@@ -1,29 +1,74 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-/// {@template collapsible_theme}
-/// Styling options for [Collapsible], [CollapsibleTrigger].
-/// {@endtemplate}
-class CollapsibleTheme {
-  /// Padding around the [CollapsibleTrigger].
+/// Theme configuration for [VNLCollapsible], [VNLCollapsibleTrigger], and [VNLCollapsibleContent] widgets.
+///
+/// [VNLCollapsibleTheme] provides styling options for collapsible components including
+/// padding, iconography, and layout alignment. It enables consistent collapsible
+/// styling across an application while allowing per-instance customization.
+///
+/// Used with [ComponentTheme] to apply theme values throughout the widget tree.
+///
+/// Example:
+/// ```dart
+/// ComponentTheme<VNLCollapsibleTheme>(
+///   data: VNLCollapsibleTheme(
+///     padding: 12.0,
+///     iconExpanded: Icons.keyboard_arrow_up,
+///     iconCollapsed: Icons.keyboard_arrow_down,
+///     iconGap: 8.0,
+///     crossAxisAlignment: CrossAxisAlignment.start,
+///   ),
+///   child: MyCollapsibleWidget(),
+/// );
+/// ```
+class VNLCollapsibleTheme extends ComponentThemeData {
+  /// Horizontal padding applied around [VNLCollapsibleTrigger] content.
+  ///
+  /// Controls the internal spacing within the trigger area. If null,
+  /// defaults to 16 logical pixels scaled by theme.
   final double? padding;
 
-  /// Icon to display in the [CollapsibleTrigger] when the [Collapsible] is expanded.
+  /// Icon displayed in the trigger when the collapsible is expanded.
+  ///
+  /// If null, defaults to [Icons.unfold_less].
   final IconData? iconExpanded;
 
-  /// Icon to display in the [CollapsibleTrigger] when the [Collapsible] is collapsed.
+  /// Icon displayed in the trigger when the collapsible is collapsed.
+  ///
+  /// If null, defaults to [Icons.unfold_more].
   final IconData? iconCollapsed;
 
-  /// The alignment of the children along the cross axis in the [Collapsible].
+  /// Cross-axis alignment for children in the [VNLCollapsible] column.
+  ///
+  /// Controls how children are aligned perpendicular to the main axis.
+  /// If null, defaults to [CrossAxisAlignment.stretch].
   final CrossAxisAlignment? crossAxisAlignment;
 
-  /// The alignment of the children along the main axis in the [Collapsible].
+  /// Main-axis alignment for children in the [VNLCollapsible] column.
+  ///
+  /// Controls how children are aligned along the main axis.
+  /// If null, defaults to [MainAxisAlignment.start].
   final MainAxisAlignment? mainAxisAlignment;
 
-  /// The gap between the icon and the label in the [CollapsibleTrigger].
+  /// Horizontal spacing between trigger content and expand/collapse icon.
+  ///
+  /// Controls the gap between the trigger child and the action button.
+  /// If null, defaults to 16 logical pixels scaled by theme.
   final double? iconGap;
 
-  /// {@macro collapsible_theme}
-  const CollapsibleTheme({
+  /// Creates a [VNLCollapsibleTheme] with the specified styling options.
+  ///
+  /// All parameters are optional and will fall back to component defaults
+  /// when not specified.
+  ///
+  /// Parameters:
+  /// - [padding] (double?, optional): Horizontal padding for trigger content.
+  /// - [iconExpanded] (IconData?, optional): Icon shown when expanded.
+  /// - [iconCollapsed] (IconData?, optional): Icon shown when collapsed.
+  /// - [crossAxisAlignment] (CrossAxisAlignment?, optional): Cross-axis alignment of children.
+  /// - [mainAxisAlignment] (MainAxisAlignment?, optional): Main-axis alignment of children.
+  /// - [iconGap] (double?, optional): Space between trigger content and icon.
+  const VNLCollapsibleTheme({
     this.padding,
     this.iconExpanded,
     this.iconCollapsed,
@@ -32,22 +77,38 @@ class CollapsibleTheme {
     this.iconGap,
   });
 
-  /// Creates a copy of this [CollapsibleTheme] with the given fields replaced.
-  CollapsibleTheme copyWith({
-    double? padding,
-    IconData? iconExpanded,
-    IconData? iconCollapsed,
-    CrossAxisAlignment? crossAxisAlignment,
-    MainAxisAlignment? mainAxisAlignment,
-    double? iconGap,
+  /// Creates a copy of this theme with the given fields replaced.
+  ///
+  /// Uses [ValueGetter] functions to allow conditional updates where
+  /// null getters preserve the original value.
+  ///
+  /// Example:
+  /// ```dart
+  /// final newTheme = originalTheme.copyWith(
+  ///   padding: () => 20.0,
+  ///   iconGap: () => 12.0,
+  /// );
+  /// ```
+  VNLCollapsibleTheme copyWith({
+    ValueGetter<double?>? padding,
+    ValueGetter<IconData?>? iconExpanded,
+    ValueGetter<IconData?>? iconCollapsed,
+    ValueGetter<CrossAxisAlignment?>? crossAxisAlignment,
+    ValueGetter<MainAxisAlignment?>? mainAxisAlignment,
+    ValueGetter<double?>? iconGap,
   }) {
-    return CollapsibleTheme(
-      padding: padding ?? this.padding,
-      iconExpanded: iconExpanded ?? this.iconExpanded,
-      iconCollapsed: iconCollapsed ?? this.iconCollapsed,
-      crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
-      mainAxisAlignment: mainAxisAlignment ?? this.mainAxisAlignment,
-      iconGap: iconGap ?? this.iconGap,
+    return VNLCollapsibleTheme(
+      padding: padding == null ? this.padding : padding(),
+      iconExpanded: iconExpanded == null ? this.iconExpanded : iconExpanded(),
+      iconCollapsed:
+          iconCollapsed == null ? this.iconCollapsed : iconCollapsed(),
+      crossAxisAlignment: crossAxisAlignment == null
+          ? this.crossAxisAlignment
+          : crossAxisAlignment(),
+      mainAxisAlignment: mainAxisAlignment == null
+          ? this.mainAxisAlignment
+          : mainAxisAlignment(),
+      iconGap: iconGap == null ? this.iconGap : iconGap(),
     );
   }
 
@@ -55,7 +116,7 @@ class CollapsibleTheme {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is CollapsibleTheme &&
+    return other is VNLCollapsibleTheme &&
         other.padding == padding &&
         other.iconExpanded == iconExpanded &&
         other.iconCollapsed == iconCollapsed &&
@@ -74,24 +135,131 @@ class CollapsibleTheme {
       iconGap.hashCode;
 }
 
-/// https://sunarya-thito.github.io/vnl_ui/#/components/collapsible
-class Collapsible extends StatefulWidget {
+/// A container widget that can show or hide its content with a collapsible interface.
+///
+/// [VNLCollapsible] provides a simple expand/collapse pattern where content can be
+/// toggled between visible and hidden states. Unlike [VNLAccordion], multiple
+/// collapsible widgets can be expanded simultaneously, making them ideal for
+/// independent sections that users might want to view concurrently.
+///
+/// ## Key Features
+/// - **Independent State**: Each collapsible manages its own expansion state
+/// - **Flexible Control**: Can be controlled or uncontrolled
+/// - **Custom Layout**: Configurable alignment for trigger and content
+/// - **Instant VNLToggle**: Uses visibility toggling rather than animated transitions
+/// - **Composable**: Works with [VNLCollapsibleTrigger] and [VNLCollapsibleContent]
+///
+/// ## Usage Patterns
+/// The collapsible can operate in two modes:
+/// - **Uncontrolled**: Manages its own state internally
+/// - **Controlled**: State managed externally via [onExpansionChanged]
+///
+/// Example:
+/// ```dart
+/// VNLCollapsible(
+///   isExpanded: false,
+///   children: [
+///     VNLCollapsibleTrigger(
+///       child: Row(
+///         children: [
+///           Icon(Icons.settings),
+///           SizedBox(width: 8),
+///           Text('Advanced Settings'),
+///         ],
+///       ),
+///     ),
+///     VNLCollapsibleContent(
+///       child: Padding(
+///         padding: EdgeInsets.all(16),
+///         child: Column(
+///           children: [
+///             CheckboxListTile(title: Text('Option 1'), value: false, onChanged: null),
+///             CheckboxListTile(title: Text('Option 2'), value: true, onChanged: null),
+///           ],
+///         ),
+///       ),
+///     ),
+///   ],
+/// );
+/// ```
+///
+/// For more information, visit: https://sunarya-thito.github.io/shadcn_flutter/#/components/collapsible
+class VNLCollapsible extends StatefulWidget {
+  /// The child widgets to display in the collapsible container.
+  ///
+  /// Typically includes a [VNLCollapsibleTrigger] as the first child, followed by
+  /// one or more [VNLCollapsibleContent] widgets. The widgets are arranged in
+  /// a vertical column with configurable alignment.
   final List<Widget> children;
 
-  /// Initial expansion state of this widget (if null, defaults to false).
+  /// Initial expansion state when operating in uncontrolled mode.
+  ///
+  /// If null, defaults to false (collapsed). This value is only used when
+  /// [onExpansionChanged] is null, indicating uncontrolled mode.
   final bool? isExpanded;
 
-  /// If overridden, the parent widget is responsible for managing the expansion state.
+  /// Callback invoked when the expansion state should change.
+  ///
+  /// When provided, the collapsible operates in controlled mode and the parent
+  /// widget is responsible for managing the expansion state. Called with the
+  /// current expansion state when the user triggers a state change.
   final ValueChanged<bool>? onExpansionChanged;
 
-  /// https://sunarya-thito.github.io/vnl_ui/#/components/collapsible
-  const Collapsible({super.key, required this.children, this.isExpanded, this.onExpansionChanged});
+  /// Creates a [VNLCollapsible] widget with the specified children.
+  ///
+  /// Parameters:
+  /// - [children] (`List<Widget>`, required): Widgets to display in the collapsible container.
+  /// - [isExpanded] (bool?, optional): Initial expansion state for uncontrolled mode.
+  /// - [onExpansionChanged] (`ValueChanged<bool>?`, optional): Callback for controlled mode.
+  ///
+  /// ## Mode Selection
+  /// - **Uncontrolled Mode**: When [onExpansionChanged] is null, the widget manages
+  ///   its own state using [isExpanded] as the initial value.
+  /// - **Controlled Mode**: When [onExpansionChanged] is provided, the parent must
+  ///   manage state and update [isExpanded] accordingly.
+  ///
+  /// Example (Uncontrolled):
+  /// ```dart
+  /// VNLCollapsible(
+  ///   isExpanded: true,
+  ///   children: [
+  ///     VNLCollapsibleTrigger(child: Text('VNLToggle Me')),
+  ///     VNLCollapsibleContent(child: Text('VNLHidden content')),
+  ///   ],
+  /// );
+  /// ```
+  ///
+  /// Example (Controlled):
+  /// ```dart
+  /// bool _expanded = false;
+  ///
+  /// VNLCollapsible(
+  ///   isExpanded: _expanded,
+  ///   onExpansionChanged: (expanded) => setState(() => _expanded = !_expanded),
+  ///   children: [
+  ///     VNLCollapsibleTrigger(child: Text('VNLToggle Me')),
+  ///     VNLCollapsibleContent(child: Text('VNLHidden content')),
+  ///   ],
+  /// );
+  /// ```
+  ///
+  /// For more information, visit: https://sunarya-thito.github.io/shadcn_flutter/#/components/collapsible
+  const VNLCollapsible({
+    super.key,
+    required this.children,
+    this.isExpanded,
+    this.onExpansionChanged,
+  });
 
   @override
-  State<Collapsible> createState() => CollapsibleState();
+  State<VNLCollapsible> createState() => VNLCollapsibleState();
 }
 
-class CollapsibleState extends State<Collapsible> {
+/// State class for [VNLCollapsible] widget.
+///
+/// Manages the expansion/collapse animation state and handles transitions
+/// between expanded and collapsed states.
+class VNLCollapsibleState extends State<VNLCollapsible> {
   late bool _isExpanded;
 
   @override
@@ -101,7 +269,7 @@ class CollapsibleState extends State<Collapsible> {
   }
 
   @override
-  void didUpdateWidget(covariant Collapsible oldWidget) {
+  void didUpdateWidget(covariant VNLCollapsible oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.isExpanded != null) {
       _isExpanded = widget.isExpanded!;
@@ -120,14 +288,17 @@ class CollapsibleState extends State<Collapsible> {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<CollapsibleTheme>(context);
+    final compTheme = ComponentTheme.maybeOf<VNLCollapsibleTheme>(context);
 
     return Data.inherit(
-      data: CollapsibleStateData(isExpanded: _isExpanded, handleTap: _handleTap),
+      data:
+          VNLCollapsibleStateData(isExpanded: _isExpanded, handleTap: _handleTap),
       child: IntrinsicWidth(
         child: Column(
-          crossAxisAlignment: compTheme?.crossAxisAlignment ?? CrossAxisAlignment.stretch,
-          mainAxisAlignment: compTheme?.mainAxisAlignment ?? MainAxisAlignment.start,
+          crossAxisAlignment:
+              compTheme?.crossAxisAlignment ?? CrossAxisAlignment.stretch,
+          mainAxisAlignment:
+              compTheme?.mainAxisAlignment ?? MainAxisAlignment.start,
           children: widget.children,
         ),
       ),
@@ -135,54 +306,198 @@ class CollapsibleState extends State<Collapsible> {
   }
 }
 
-class CollapsibleStateData {
+/// Internal data structure for sharing collapsible state between child widgets.
+///
+/// [VNLCollapsibleStateData] provides a communication mechanism between the
+/// [VNLCollapsible] parent and its child widgets like [VNLCollapsibleTrigger] and
+/// [VNLCollapsibleContent]. It exposes the current expansion state and a
+/// callback for triggering state changes.
+class VNLCollapsibleStateData {
+  /// Callback to trigger expansion state changes.
+  ///
+  /// When called, triggers the collapsible to toggle its expansion state.
+  /// This function handles both controlled and uncontrolled modes appropriately.
   final VoidCallback handleTap;
+
+  /// Current expansion state of the collapsible.
+  ///
+  /// True when the collapsible is expanded and content should be visible,
+  /// false when collapsed and content should be hidden.
   final bool isExpanded;
 
-  const CollapsibleStateData({required this.isExpanded, required this.handleTap});
+  /// Creates a [VNLCollapsibleStateData] with the specified state and callback.
+  ///
+  /// This constructor is used internally by [VNLCollapsible] to share state
+  /// with its child widgets.
+  const VNLCollapsibleStateData({
+    required this.isExpanded,
+    required this.handleTap,
+  });
 }
 
-class CollapsibleTrigger extends StatelessWidget {
+/// A trigger widget that controls the expansion state of its parent [VNLCollapsible].
+///
+/// [VNLCollapsibleTrigger] provides a consistent interface for toggling collapsible
+/// content. It automatically displays the appropriate expand/collapse icon and
+/// handles user interaction to trigger state changes.
+///
+/// ## Features
+/// - **Automatic Icons**: Shows different icons for expanded/collapsed states
+/// - **Integrated VNLButton**: Uses [VNLGhostButton] for consistent interaction styling
+/// - **Responsive Layout**: Automatically sizes and spaces content and icon
+/// - **Theme Integration**: Respects [VNLCollapsibleTheme] configuration
+///
+/// The trigger must be used as a direct child of a [VNLCollapsible] widget to
+/// function properly, as it relies on inherited state data.
+///
+/// Example:
+/// ```dart
+/// VNLCollapsibleTrigger(
+///   child: Row(
+///     children: [
+///       Icon(Icons.folder),
+///       SizedBox(width: 8),
+///       Text('Project Files'),
+///       Spacer(),
+///       Badge(child: Text('12')),
+///     ],
+///   ),
+/// );
+/// ```
+class VNLCollapsibleTrigger extends StatelessWidget {
+  /// The content widget to display within the trigger.
+  ///
+  /// Typically contains text, icons, or other UI elements that describe what
+  /// will be expanded or collapsed. The child is automatically styled and
+  /// positioned alongside the expand/collapse icon.
   final Widget child;
 
-  const CollapsibleTrigger({super.key, required this.child});
+  /// Creates a [VNLCollapsibleTrigger] with the specified child content.
+  ///
+  /// Parameters:
+  /// - [child] (Widget, required): The content to display in the trigger.
+  ///
+  /// The trigger automatically provides:
+  /// - Expand/collapse icon based on current state
+  /// - Click handling to toggle the parent collapsible
+  /// - Proper spacing and layout with theme-aware styling
+  /// - Integration with parent [VNLCollapsible] state
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLCollapsibleTrigger(
+  ///   child: Text('Click to toggle content'),
+  /// );
+  /// ```
+  const VNLCollapsibleTrigger({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final state = Data.of<CollapsibleStateData>(context);
+    final densityGap = theme.density.baseGap * scaling;
+    final densityContentPadding = theme.density.baseContentPadding * scaling;
+    final state = Data.of<VNLCollapsibleStateData>(context);
 
-    final compTheme = ComponentTheme.maybeOf<CollapsibleTheme>(context);
+    final compTheme = ComponentTheme.maybeOf<VNLCollapsibleTheme>(context);
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(child: child.small().semiBold()),
-        Gap(compTheme?.iconGap ?? 16 * scaling),
-        GhostButton(
-          onPressed: state.handleTap,
-          child:
-              Icon(
-                state.isExpanded
-                    ? compTheme?.iconExpanded ?? Icons.unfold_less
-                    : compTheme?.iconCollapsed ?? Icons.unfold_more,
-              ).iconXSmall(),
-        ),
-      ],
-    ).withPadding(horizontal: compTheme?.padding ?? 16 * scaling);
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      Expanded(child: child.small().semiBold()),
+      Gap(compTheme?.iconGap ?? densityGap * 2),
+      VNLGhostButton(
+        onPressed: state.handleTap,
+        child: Icon(
+          state.isExpanded
+              ? compTheme?.iconExpanded ?? Icons.unfold_less
+              : compTheme?.iconCollapsed ?? Icons.unfold_more,
+        ).iconXSmall(),
+      ),
+    ]).withPadding(
+      horizontal: compTheme?.padding ?? densityContentPadding,
+    );
   }
 }
 
-class CollapsibleContent extends StatelessWidget {
+/// A content widget that shows or hides based on the parent [VNLCollapsible] state.
+///
+/// [VNLCollapsibleContent] automatically manages its visibility based on the
+/// expansion state of its parent [VNLCollapsible]. It uses [Offstage] to
+/// completely remove the content from the layout when collapsed, providing
+/// efficient performance.
+///
+/// ## Key Features
+/// - **Automatic Visibility**: Shows/hides based on parent expansion state
+/// - **Layout Efficiency**: Uses [Offstage] for true layout removal when collapsed
+/// - **Optional Control**: Can be configured to ignore collapsible state
+/// - **Flexible Content**: Supports any widget as child content
+///
+/// Example:
+/// ```dart
+/// VNLCollapsibleContent(
+///   child: Container(
+///     padding: EdgeInsets.all(16),
+///     decoration: BoxDecoration(
+///       border: Border.all(color: VNLColors.grey.shade300),
+///       borderRadius: BorderRadius.circular(8),
+///     ),
+///     child: Column(
+///       crossAxisAlignment: CrossAxisAlignment.start,
+///       children: [
+///         Text('Additional Details'),
+///         SizedBox(height: 8),
+///         Text('This content is only visible when expanded.'),
+///       ],
+///     ),
+///   ),
+/// );
+/// ```
+class VNLCollapsibleContent extends StatelessWidget {
+  /// Whether this content should respond to the collapsible state.
+  ///
+  /// When true (default), the content shows/hides based on the parent
+  /// [VNLCollapsible] expansion state. When false, the content is always visible
+  /// regardless of the collapsible state.
   final bool collapsible;
+
+  /// The widget to show or hide based on expansion state.
+  ///
+  /// This can be any widget content including text, images, forms, or complex
+  /// layouts. The child is completely removed from the layout when collapsed.
   final Widget child;
 
-  const CollapsibleContent({super.key, this.collapsible = true, required this.child});
+  /// Creates a [VNLCollapsibleContent] with the specified child widget.
+  ///
+  /// Parameters:
+  /// - [collapsible] (bool, default: true): Whether to respond to collapsible state.
+  /// - [child] (Widget, required): The content widget to show/hide.
+  ///
+  /// ## Behavior
+  /// - When [collapsible] is true and parent is collapsed: Content is hidden via [Offstage]
+  /// - When [collapsible] is true and parent is expanded: Content is visible
+  /// - When [collapsible] is false: Content is always visible regardless of parent state
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLCollapsibleContent(
+  ///   collapsible: true,
+  ///   child: Padding(
+  ///     padding: EdgeInsets.symmetric(vertical: 16),
+  ///     child: Text('This content can be collapsed'),
+  ///   ),
+  /// );
+  /// ```
+  const VNLCollapsibleContent({
+    super.key,
+    this.collapsible = true,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final state = Data.of<CollapsibleStateData>(context);
-    return Offstage(offstage: !state.isExpanded && collapsible, child: child);
+    final state = Data.of<VNLCollapsibleStateData>(context);
+    return Offstage(
+      offstage: !state.isExpanded && collapsible,
+      child: child,
+    );
   }
 }

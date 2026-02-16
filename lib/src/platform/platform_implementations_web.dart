@@ -1,18 +1,19 @@
 import 'dart:js_interop';
 
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-@JS("Window")
+@JS("VNLWindow")
 extension type _Window(JSObject _) implements JSObject {
   // dispatchEvent method
   external void dispatchEvent(JSObject event);
 
   external _GlobalThis get globalThis;
-  external set vnLookAppLoaded(bool value);
+  external set shadcnAppLoaded(bool value);
 }
 
 @JS()
 extension type _GlobalThis(JSObject _) implements JSObject {
+  // ignore: non_constant_identifier_names
   external JSObject? get VNLookApp;
 }
 
@@ -24,49 +25,53 @@ extension type _Event._(JSObject _) implements JSObject {
 @JS("window")
 external _Window get _window;
 
-@JS('vnLookAppLoaded')
-external bool get vnLookAppLoaded;
-
-@JS('vnLookAppLoaded')
-external set vnLookAppLoaded(bool value);
-
-@JS('VNLookApp')
-external JSObject? get VNLookApp;
-
 @JS("VNLookAppThemeChangedEvent")
-extension type _VNLookAppThemeChangedEvent._(JSObject _) implements JSObject {
-  external _VNLookAppThemeChangedEvent(_VNLookAppTheme theme);
+extension type _ShadcnAppThemeChangedEvent._(JSObject _) implements JSObject {
+  external _ShadcnAppThemeChangedEvent(_ShadcnAppTheme theme);
 }
 
 @JS("VNLookAppTheme")
-extension type _VNLookAppTheme._(JSObject _) implements JSObject {
-  external _VNLookAppTheme(String background, String foreground, String primary);
+extension type _ShadcnAppTheme._(JSObject _) implements JSObject {
+  external _ShadcnAppTheme(
+      String background, String foreground, String primary);
 }
 
+/// Web platform-specific implementations for shadcn_flutter.
+///
+/// This class provides web-specific functionality, including integration
+/// with the JavaScript preloader and theme synchronization.
 class VNLookPlatformImplementations {
   bool get _isPreloaderAvailable {
     return _window.globalThis.VNLookApp != null;
   }
 
+  /// Called when the app is initialized.
+  ///
+  /// Notifies the JavaScript preloader that the Flutter app is ready
+  /// by dispatching a "shadcn_flutter_app_ready" event.
   void onAppInitialized() {
     if (!_isPreloaderAvailable) {
       return;
     }
-    _window.vnLookAppLoaded = true;
-    final event = _Event("vnl_ui_app_ready");
+    _window.shadcnAppLoaded = true;
+    final event = _Event("shadcn_flutter_app_ready");
     _window.dispatchEvent(event);
   }
 
-  void onThemeChanged(VNLThemeData theme) {
+  /// Called when the theme changes.
+  ///
+  /// Synchronizes the Flutter theme with the JavaScript preloader by
+  /// dispatching a theme change event with the new color values.
+  void onThemeChanged(ThemeData theme) {
     if (!_isPreloaderAvailable) {
       return;
     }
-    final vnLookAppTheme = _VNLookAppTheme(
+    final shadcnAppTheme = _ShadcnAppTheme(
       _colorToCssRgba(theme.colorScheme.background),
       _colorToCssRgba(theme.colorScheme.foreground),
       _colorToCssRgba(theme.colorScheme.primary),
     );
-    final event = _VNLookAppThemeChangedEvent(vnLookAppTheme);
+    final event = _ShadcnAppThemeChangedEvent(shadcnAppTheme);
     _window.dispatchEvent(event);
   }
 }

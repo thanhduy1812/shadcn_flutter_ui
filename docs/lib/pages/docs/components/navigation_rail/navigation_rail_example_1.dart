@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class NavigationRailExample1 extends StatefulWidget {
   const NavigationRailExample1({super.key});
@@ -8,18 +8,30 @@ class NavigationRailExample1 extends StatefulWidget {
 }
 
 class _NavigationRailExample1State extends State<NavigationRailExample1> {
-  int selected = 0;
-
   NavigationRailAlignment alignment = NavigationRailAlignment.start;
   NavigationLabelType labelType = NavigationLabelType.none;
   NavigationLabelPosition labelPosition = NavigationLabelPosition.bottom;
   bool customButtonStyle = false;
   bool expanded = true;
 
-  NavigationItem buildButton(String label, IconData icon) {
-    return NavigationItem(
-      style: customButtonStyle ? const ButtonStyle.muted(density: ButtonDensity.icon) : null,
-      selectedStyle: customButtonStyle ? const ButtonStyle.fixed(density: ButtonDensity.icon) : null,
+  String selected = 'Home';
+
+  VNLNavigationItem buildButton(String label, IconData icon) {
+    return VNLNavigationItem(
+      selected: selected == label,
+      style: customButtonStyle
+          ? const VNLButtonStyle.muted(density: ButtonDensity.icon)
+          : null,
+      selectedStyle: customButtonStyle
+          ? const VNLButtonStyle.fixed(density: ButtonDensity.icon)
+          : null,
+      onChanged: (selected) {
+        if (selected) {
+          setState(() {
+            this.selected = label;
+          });
+        }
+      },
       label: Text(label),
       child: Icon(icon),
     );
@@ -27,40 +39,37 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return VNLScaffold(
+    return Scaffold(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           VNLNavigationRail(
             alignment: alignment,
             labelType: labelType,
-            index: selected,
             labelPosition: labelPosition,
             expanded: expanded,
-            onSelected: (index) {
-              setState(() {
-                selected = index;
-              });
-            },
             children: [
               buildButton('Home', BootstrapIcons.house),
               buildButton('Explore', BootstrapIcons.compass),
               buildButton('Library', BootstrapIcons.musicNoteList),
-              const NavigationDivider(),
-              const NavigationLabel(child: Text('Settings')),
-              buildButton('Profile', BootstrapIcons.person),
-              buildButton('App', BootstrapIcons.appIndicator),
-              const NavigationDivider(),
-              const NavigationGap(12),
-              const NavigationWidget(
-                child: FlutterLogo(),
+              const VNLNavigationDivider(),
+              NavigationGroup(
+                label: const Text('Settings'),
+                children: [
+                  buildButton('Profile', BootstrapIcons.person),
+                  buildButton('App', BootstrapIcons.appIndicator),
+                ],
               ),
+              const VNLNavigationDivider(),
+              const VNLNavigationGap(12),
+              const FlutterLogo(),
             ],
           ),
-          const VerticalDivider(),
+          const VNLVerticalDivider(),
           Expanded(
             child: Container(
-              color: VNLColors.primaries[VNLColors.primaries.length - selected - 1],
+              color:
+                  VNLColors.primaries[selected.hashCode % VNLColors.primaries.length],
               padding: const EdgeInsets.all(24),
               child: VNLCard(
                 child: Wrap(
@@ -70,9 +79,11 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                   runSpacing: 8,
                   spacing: 8,
                   children: [
-                    VNLSelect<NavigationRailAlignment>(
+                    // Alignment of items within the rail.
+                    Select<NavigationRailAlignment>(
                       value: alignment,
-                      itemBuilder: (BuildContext context, NavigationRailAlignment item) {
+                      itemBuilder:
+                          (BuildContext context, NavigationRailAlignment item) {
                         return Text(item.name);
                       },
                       popupWidthConstraint: PopoverConstraint.anchorFixedSize,
@@ -84,7 +95,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                         }
                       },
                       popup: SelectPopup(
-                          items: SelectItemList(children: [
+                          items: VNLSelectItemList(children: [
                         for (var value in NavigationRailAlignment.values)
                           SelectItemButton(
                             value: value,
@@ -92,12 +103,15 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                           ),
                       ])),
                     ),
-                    VNLSelect<NavigationLabelType>(
+                    // VNLLabel visibility behavior for each destination.
+                    Select<NavigationLabelType>(
                       value: labelType,
-                      itemBuilder: (BuildContext context, NavigationLabelType item) {
+                      itemBuilder:
+                          (BuildContext context, NavigationLabelType item) {
                         return Text(item.name);
                       },
-                      popupConstraints: BoxConstraints.tight(const Size(200, 200)),
+                      popupConstraints:
+                          BoxConstraints.tight(const Size(200, 200)),
                       onChanged: (value) {
                         if (value != null) {
                           setState(() {
@@ -106,7 +120,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                         }
                       },
                       popup: SelectPopup(
-                        items: SelectItemList(
+                        items: VNLSelectItemList(
                           children: [
                             for (var value in NavigationLabelType.values)
                               SelectItemButton(
@@ -117,9 +131,11 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                         ),
                       ),
                     ),
-                    VNLSelect<NavigationLabelPosition>(
+                    // Where the label appears relative to the icon.
+                    Select<NavigationLabelPosition>(
                       value: labelPosition,
-                      itemBuilder: (BuildContext context, NavigationLabelPosition item) {
+                      itemBuilder:
+                          (BuildContext context, NavigationLabelPosition item) {
                         return Text(item.name);
                       },
                       onChanged: (value) {
@@ -130,7 +146,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                         }
                       },
                       popup: SelectPopup(
-                        items: SelectItemList(
+                        items: VNLSelectItemList(
                           children: [
                             for (var value in NavigationLabelPosition.values)
                               SelectItemButton(
@@ -141,17 +157,23 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                         ),
                       ),
                     ),
+                    // VNLToggle custom vs default button styles for normal/selected.
                     VNLCheckbox(
-                      state: customButtonStyle ? CheckboxState.checked : CheckboxState.unchecked,
+                      state: customButtonStyle
+                          ? CheckboxState.checked
+                          : CheckboxState.unchecked,
                       onChanged: (value) {
                         setState(() {
                           customButtonStyle = value == CheckboxState.checked;
                         });
                       },
-                      trailing: const Text('Custom Button Style'),
+                      trailing: const Text('Custom VNLButton Style'),
                     ),
+                    // Whether the rail is in expanded mode (shows labels, etc.).
                     VNLCheckbox(
-                      state: expanded ? CheckboxState.checked : CheckboxState.unchecked,
+                      state: expanded
+                          ? CheckboxState.checked
+                          : CheckboxState.unchecked,
                       onChanged: (value) {
                         setState(() {
                           expanded = value == CheckboxState.checked;

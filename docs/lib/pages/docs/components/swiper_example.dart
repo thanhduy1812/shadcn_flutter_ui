@@ -12,7 +12,7 @@ class SwiperExample extends StatelessWidget {
     return const ComponentPage(
       name: 'swiper',
       description: 'Enable swiping gestures to open a drawer or a sheet.',
-      displayName: 'Swiper',
+      displayName: 'VNLSwiper',
       children: [
         WidgetUsageExample(
           title: 'Example 1',

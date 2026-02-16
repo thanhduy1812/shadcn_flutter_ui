@@ -14,20 +14,20 @@ class SliderExample extends StatelessWidget {
     return const ComponentPage(
       name: 'slider',
       description: 'A slider is a control for selecting a single value from a range of values.',
-      displayName: 'Slider',
+      displayName: 'VNLSlider',
       children: [
         WidgetUsageExample(
-          title: 'Slider Example',
+          title: 'VNLSlider Example',
           path: 'lib/pages/docs/components/slider/slider_example_1.dart',
           child: SliderExample1(),
         ),
         WidgetUsageExample(
-          title: 'Slider with Range Example',
+          title: 'VNLSlider with Range Example',
           path: 'lib/pages/docs/components/slider/slider_example_2.dart',
           child: SliderExample2(),
         ),
         WidgetUsageExample(
-          title: 'Slider with Divisions Example',
+          title: 'VNLSlider with Divisions Example',
           path: 'lib/pages/docs/components/slider/slider_example_3.dart',
           child: SliderExample3(),
         ),

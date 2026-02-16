@@ -11,12 +11,15 @@ class _MultiSelectExample1State extends State<MultiSelectExample1> {
   Iterable<String>? selectedValues;
   @override
   Widget build(BuildContext context) {
+    // VNLBasic multi-select with a popup list and chips as selected items.
+    // onChanged returns the new iterable of selected values.
     return MultiSelect<String>(
       itemBuilder: (context, item) {
-        return MultiSelectChip(value: item, child: Text(item));
+        // Render each selected value as a chip.
+        return VNLMultiSelectChip(value: item, child: Text(item));
       },
       popup: const SelectPopup(
-          items: SelectItemList(children: [
+          items: VNLSelectItemList(children: [
         SelectItemButton(
           value: 'Apple',
           child: Text('Apple'),

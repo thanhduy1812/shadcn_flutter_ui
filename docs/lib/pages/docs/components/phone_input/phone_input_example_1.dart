@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class PhoneInputExample1 extends StatefulWidget {
   const PhoneInputExample1({super.key});
@@ -8,13 +8,14 @@ class PhoneInputExample1 extends StatefulWidget {
 }
 
 class _PhoneInputExample1State extends State<PhoneInputExample1> {
-  PhoneNumber? _phoneNumber;
+  VNLPhoneNumber? _phoneNumber;
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         VNLPhoneInput(
+          // Preselect a country; phone parsing/formatting adapt accordingly.
           initialCountry: Country.indonesia,
           onChanged: (value) {
             setState(() {

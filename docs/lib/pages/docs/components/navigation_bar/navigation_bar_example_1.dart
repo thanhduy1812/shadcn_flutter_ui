@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class NavigationBarExample1 extends StatefulWidget {
   const NavigationBarExample1({super.key});
@@ -8,18 +8,22 @@ class NavigationBarExample1 extends StatefulWidget {
 }
 
 class _NavigationBarExample1State extends State<NavigationBarExample1> {
-  int selected = 0;
+  Key? selected = const ValueKey(0);
 
   NavigationBarAlignment alignment = NavigationBarAlignment.spaceAround;
-  bool expands = true;
   NavigationLabelType labelType = NavigationLabelType.none;
   bool customButtonStyle = true;
   bool expanded = true;
 
-  NavigationItem buildButton(String label, IconData icon) {
-    return NavigationItem(
-      style: customButtonStyle ? const ButtonStyle.muted(density: ButtonDensity.icon) : null,
-      selectedStyle: customButtonStyle ? const ButtonStyle.fixed(density: ButtonDensity.icon) : null,
+  VNLNavigationItem buildButton(String label, IconData icon, Key key) {
+    return VNLNavigationItem(
+      key: key,
+      style: customButtonStyle
+          ? const VNLButtonStyle.muted(density: ButtonDensity.icon)
+          : null,
+      selectedStyle: customButtonStyle
+          ? const VNLButtonStyle.fixed(density: ButtonDensity.icon)
+          : null,
       label: Text(label),
       child: Icon(icon),
     );
@@ -27,34 +31,36 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedContainer(
+    return VNLOutlinedContainer(
       width: 500,
       height: 400,
-      child: VNLScaffold(
+      child: Scaffold(
         footers: [
           const VNLDivider(),
           VNLNavigationBar(
             alignment: alignment,
             labelType: labelType,
             expanded: expanded,
-            expands: expands,
-            onSelected: (index) {
+            onSelected: (key) {
               setState(() {
-                selected = index;
+                selected = key;
               });
             },
-            index: selected,
+            selectedKey: selected,
             children: [
-              buildButton('Home', BootstrapIcons.house),
-              buildButton('Explore', BootstrapIcons.compass),
-              buildButton('Library', BootstrapIcons.musicNoteList),
-              buildButton('Profile', BootstrapIcons.person),
-              buildButton('App', BootstrapIcons.appIndicator),
+              buildButton('Home', BootstrapIcons.house, const ValueKey(0)),
+              buildButton('Explore', BootstrapIcons.compass, const ValueKey(1)),
+              buildButton(
+                  'Library', BootstrapIcons.musicNoteList, const ValueKey(2)),
+              buildButton('Profile', BootstrapIcons.person, const ValueKey(3)),
+              buildButton(
+                  'App', BootstrapIcons.appIndicator, const ValueKey(4)),
             ],
           ),
         ],
         child: Container(
-          color: VNLColors.primaries[VNLColors.primaries.length - selected - 1],
+          color: VNLColors.primaries[
+              VNLColors.primaries.length - (selected as ValueKey<int>).value - 1],
           padding: const EdgeInsets.all(24),
           child: VNLCard(
             child: Wrap(
@@ -64,9 +70,11 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
               runSpacing: 8,
               spacing: 8,
               children: [
-                VNLSelect<NavigationBarAlignment>(
+                // Configure how the items are distributed across the bar.
+                Select<NavigationBarAlignment>(
                   value: alignment,
-                  itemBuilder: (BuildContext context, NavigationBarAlignment item) {
+                  itemBuilder:
+                      (BuildContext context, NavigationBarAlignment item) {
                     return Text(item.name);
                   },
                   popupWidthConstraint: PopoverConstraint.anchorFixedSize,
@@ -78,7 +86,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                     }
                   },
                   popup: SelectPopup(
-                      items: SelectItemList(children: [
+                      items: VNLSelectItemList(children: [
                     for (var value in NavigationBarAlignment.values)
                       SelectItemButton(
                         value: value,
@@ -86,9 +94,11 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                       ),
                   ])),
                 ),
-                VNLSelect<NavigationLabelType>(
+                // Control how labels are shown for each navigation item.
+                Select<NavigationLabelType>(
                   value: labelType,
-                  itemBuilder: (BuildContext context, NavigationLabelType item) {
+                  itemBuilder:
+                      (BuildContext context, NavigationLabelType item) {
                     return Text(item.name);
                   },
                   popupWidthConstraint: PopoverConstraint.anchorFixedSize,
@@ -100,7 +110,7 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                     }
                   },
                   popup: SelectPopup(
-                      items: SelectItemList(children: [
+                      items: VNLSelectItemList(children: [
                     for (var value in NavigationLabelType.values)
                       SelectItemButton(
                         value: value,
@@ -108,26 +118,23 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                       ),
                   ])),
                 ),
+                // Use custom button styles for normal vs selected states.
                 VNLCheckbox(
-                  state: expands ? CheckboxState.checked : CheckboxState.unchecked,
-                  onChanged: (value) {
-                    setState(() {
-                      expands = value == CheckboxState.checked;
-                    });
-                  },
-                  trailing: const Text('Expands'),
-                ),
-                VNLCheckbox(
-                  state: customButtonStyle ? CheckboxState.checked : CheckboxState.unchecked,
+                  state: customButtonStyle
+                      ? CheckboxState.checked
+                      : CheckboxState.unchecked,
                   onChanged: (value) {
                     setState(() {
                       customButtonStyle = value == CheckboxState.checked;
                     });
                   },
-                  trailing: const Text('Custom Button Style'),
+                  trailing: const Text('Custom VNLButton Style'),
                 ),
+                // VNLToggle the expanded label behavior.
                 VNLCheckbox(
-                  state: expanded ? CheckboxState.checked : CheckboxState.unchecked,
+                  state: expanded
+                      ? CheckboxState.checked
+                      : CheckboxState.unchecked,
                   onChanged: (value) {
                     setState(() {
                       expanded = value == CheckboxState.checked;

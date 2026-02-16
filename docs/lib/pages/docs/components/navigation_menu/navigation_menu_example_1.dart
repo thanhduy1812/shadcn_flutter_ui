@@ -1,34 +1,42 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class NavigationMenuExample1 extends StatelessWidget {
   const NavigationMenuExample1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
+    // VNLNavigationMenu displays a horizontal menu with items that can reveal
+    // rich content on hover/press. Each VNLNavigationMenuItem below demonstrates
+    // different kinds of content lists and grid layouts.
     return VNLNavigationMenu(
       children: [
-        NavigationMenuItem(
-          content: NavigationMenuContentList(
+        VNLNavigationMenuItem(
+          content: VNLNavigationMenuContentList(
+            // Reverse places the text/content list before the hero card.
             reverse: true,
             children: [
-              NavigationMenuContent(
+              VNLNavigationMenuContent(
                 title: const Text('Introduction'),
-                content: const Text('Component library for Flutter based on VNL UI design.'),
+                content: const Text(
+                    'Component library for Flutter based on Shadcn/UI design.'),
                 onPressed: () {},
               ),
-              NavigationMenuContent(
+              VNLNavigationMenuContent(
                 title: const Text('Installation'),
-                content: const Text('How to install this package in your Flutter project.'),
+                content: const Text(
+                    'How to install this package in your Flutter project.'),
                 onPressed: () {},
               ),
-              NavigationMenuContent(
+              VNLNavigationMenuContent(
                 title: const Text('Typography'),
-                content: const Text('Styles and usage of typography in this package.'),
+                content: const Text(
+                    'Styles and usage of typography in this package.'),
                 onPressed: () {},
               ),
-              Clickable(
-                mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
+              VNLClickable(
+                mouseCursor:
+                    const WidgetStatePropertyAll(SystemMouseCursors.click),
                 child: VNLCard(
                   borderRadius: theme.borderRadiusMd,
                   child: Column(
@@ -40,9 +48,11 @@ class NavigationMenuExample1 extends StatelessWidget {
                         size: 32,
                       ),
                       const Gap(16),
-                      const Text('vnl_ui').mono().semiBold().large(),
+                      const Text('shadcn_flutter').mono().semiBold().large(),
                       const Gap(8),
-                      const Text('Beautifully designed components from VNL UI is now available for Flutter').muted(),
+                      const Text(
+                              'Beautifully designed components from Shadcn/UI is now available for Flutter')
+                          .muted(),
                     ],
                   ),
                 ).constrained(maxWidth: 192),
@@ -51,35 +61,35 @@ class NavigationMenuExample1 extends StatelessWidget {
           ),
           child: const Text('Getting started'),
         ),
-        NavigationMenuItem(
-          content: NavigationMenuContentList(
+        VNLNavigationMenuItem(
+          content: VNLNavigationMenuContentList(
             children: [
-              NavigationMenuContent(
-                title: const Text('Accordion'),
-                content: const Text('Accordion component for Flutter.'),
+              VNLNavigationMenuContent(
+                title: const Text('VNLAccordion'),
+                content: const Text('VNLAccordion component for Flutter.'),
                 onPressed: () {},
               ),
-              NavigationMenuContent(
-                title: const Text('Alert'),
-                content: const Text('Alert component for Flutter.'),
+              VNLNavigationMenuContent(
+                title: const Text('VNLAlert'),
+                content: const Text('VNLAlert component for Flutter.'),
                 onPressed: () {},
               ),
-              NavigationMenuContent(
-                title: const Text('Alert Dialog'),
-                content: const Text('Alert Dialog component for Flutter.'),
+              VNLNavigationMenuContent(
+                title: const Text('VNLAlert Dialog'),
+                content: const Text('VNLAlert Dialog component for Flutter.'),
                 onPressed: () {},
               ),
-              NavigationMenuContent(
+              VNLNavigationMenuContent(
                 title: const Text('Animation'),
                 content: const Text('Animation component for Flutter.'),
                 onPressed: () {},
               ),
-              NavigationMenuContent(
-                title: const Text('Avatar'),
-                content: const Text('Avatar component for Flutter.'),
+              VNLNavigationMenuContent(
+                title: const Text('VNLAvatar'),
+                content: const Text('VNLAvatar component for Flutter.'),
                 onPressed: () {},
               ),
-              NavigationMenuContent(
+              VNLNavigationMenuContent(
                 title: const Text('Badge'),
                 content: const Text('Badge component for Flutter.'),
                 onPressed: () {},
@@ -88,22 +98,23 @@ class NavigationMenuExample1 extends StatelessWidget {
           ),
           child: const Text('Components'),
         ),
-        NavigationMenuItem(
-          content: NavigationMenuContentList(
+        VNLNavigationMenuItem(
+          content: VNLNavigationMenuContentList(
+            // Use a simple 2-column grid for a more "news board" feel.
             crossAxisCount: 2,
             children: [
               // latest news
-              NavigationMenuContent(
+              VNLNavigationMenuContent(
                 title: const Text('Latest news'),
                 content: const Text('Stay updated with the latest news.'),
                 onPressed: () {},
               ),
-              NavigationMenuContent(
+              VNLNavigationMenuContent(
                 title: const Text('Change log'),
                 content: const Text('View the change log of this package.'),
                 onPressed: () {},
               ),
-              NavigationMenuContent(
+              VNLNavigationMenuContent(
                 title: const Text('Contributors'),
                 content: const Text('List of contributors to this package.'),
                 onPressed: () {},
@@ -112,7 +123,7 @@ class NavigationMenuExample1 extends StatelessWidget {
           ),
           child: const Text('Blog'),
         ),
-        NavigationMenuItem(
+        VNLNavigationMenuItem(
           onPressed: () {},
           child: const Text('Documentation'),
         ),

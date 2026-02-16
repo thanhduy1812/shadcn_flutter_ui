@@ -1,32 +1,101 @@
+// Components catalog page used by the docs app.
+//
+// Renders the grid/list of component tiles and links to each component's
+// example wrapper page. This is part of the documentation scaffolding rather
+// than a demo unit. Comments added only; behavior unchanged.
 import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:docs/pages/docs/components/breadcrumb/breadcrumb_example_1.dart';
-import 'package:docs/pages/docs/components/calendar/calendar_example_2.dart';
-import 'package:docs/pages/docs/components/card/card_example_1.dart';
-import 'package:docs/pages/docs/components/carousel/carousel_example_1.dart';
-import 'package:docs/pages/docs/components/code_snippet/code_snippet_example_1.dart';
-import 'package:docs/pages/docs/components/command/command_example_1.dart';
-import 'package:docs/pages/docs/components/divider/divider_example_3.dart';
-import 'package:docs/pages/docs/components/pagination/pagination_example_1.dart';
-import 'package:docs/pages/docs/components/resizable/resizable_example_3.dart';
-import 'package:docs/pages/docs/components/stepper/stepper_example_2.dart';
-import 'package:docs/pages/docs/components/text_area/text_area_example_3.dart';
-import 'package:docs/pages/docs/components/timeline/timeline_example_1.dart';
-import 'package:docs/pages/docs/components/toggle/toggle_example_2.dart';
-import 'package:docs/pages/docs/components/tree/tree_example_1.dart';
+import 'package:docs/pages/docs/components/accordion/accordion_tile.dart';
+import 'package:docs/pages/docs/components/alert/alert_tile.dart';
+import 'package:docs/pages/docs/components/alert_dialog/alert_dialog_tile.dart';
+import 'package:docs/pages/docs/components/animated_value_builder/animated_value_builder_tile.dart';
+import 'package:docs/pages/docs/components/avatar/avatar_tile.dart';
+import 'package:docs/pages/docs/components/avatar_group/avatar_group_tile.dart';
+import 'package:docs/pages/docs/components/badge/badge_tile.dart';
+import 'package:docs/pages/docs/components/breadcrumb/breadcrumb_tile.dart';
+import 'package:docs/pages/docs/components/button/button_tile.dart';
+import 'package:docs/pages/docs/components/calendar/calendar_tile.dart';
+import 'package:docs/pages/docs/components/card/card_tile.dart';
+import 'package:docs/pages/docs/components/carousel/carousel_tile.dart';
+import 'package:docs/pages/docs/components/checkbox/checkbox_tile.dart';
+import 'package:docs/pages/docs/components/chip_input/chip_input_tile.dart';
+import 'package:docs/pages/docs/components/circular_progress/circular_progress_tile.dart';
+import 'package:docs/pages/docs/components/code_snippet/code_snippet_tile.dart';
+import 'package:docs/pages/docs/components/collapsible/collapsible_tile.dart';
+import 'package:docs/pages/docs/components/color_picker/color_picker_tile.dart';
+import 'package:docs/pages/docs/components/command/command_tile.dart';
+import 'package:docs/pages/docs/components/context_menu/context_menu_tile.dart';
+import 'package:docs/pages/docs/components/date_picker/date_picker_tile.dart';
+import 'package:docs/pages/docs/components/dialog/dialog_tile.dart';
+import 'package:docs/pages/docs/components/divider/divider_tile.dart';
+import 'package:docs/pages/docs/components/drawer/drawer_tile.dart';
+import 'package:docs/pages/docs/components/dropdown_menu/dropdown_menu_tile.dart';
+import 'package:docs/pages/docs/components/form/form_tile.dart';
+import 'package:docs/pages/docs/components/hover_card/hover_card_tile.dart';
+import 'package:docs/pages/docs/components/input/input_tile.dart';
+import 'package:docs/pages/docs/components/input_otp/input_otp_tile.dart';
+import 'package:docs/pages/docs/components/menubar/menubar_tile.dart';
+import 'package:docs/pages/docs/components/navigation_menu/navigation_menu_tile.dart';
+import 'package:docs/pages/docs/components/number_ticker/number_ticker_tile.dart';
+import 'package:docs/pages/docs/components/pagination/pagination_tile.dart';
+import 'package:docs/pages/docs/components/phone_input/phone_input_tile.dart';
+import 'package:docs/pages/docs/components/popover/popover_tile.dart';
+import 'package:docs/pages/docs/components/progress/progress_tile.dart';
+import 'package:docs/pages/docs/components/radio_group/radio_group_tile.dart';
+import 'package:docs/pages/docs/components/repeated_animation_builder/repeated_animation_builder_tile.dart';
+import 'package:docs/pages/docs/components/resizable/resizable_tile.dart';
+import 'package:docs/pages/docs/components/select/select_tile.dart';
+import 'package:docs/pages/docs/components/sheet/sheet_tile.dart';
+import 'package:docs/pages/docs/components/skeleton/skeleton_tile.dart';
+import 'package:docs/pages/docs/components/slider/slider_tile.dart';
+import 'package:docs/pages/docs/components/star_rating/star_rating_tile.dart';
+import 'package:docs/pages/docs/components/stepper/stepper_tile.dart';
+import 'package:docs/pages/docs/components/steps/steps_tile.dart';
+import 'package:docs/pages/docs/components/switch/switch_tile.dart';
+import 'package:docs/pages/docs/components/tab_list/tab_list_tile.dart';
+import 'package:docs/pages/docs/components/tabs/tabs_tile.dart';
+import 'package:docs/pages/docs/components/text_area/text_area_tile.dart';
+import 'package:docs/pages/docs/components/time_picker/time_picker_tile.dart';
+import 'package:docs/pages/docs/components/timeline/timeline_tile.dart';
+import 'package:docs/pages/docs/components/toast/toast_tile.dart';
+import 'package:docs/pages/docs/components/toggle/toggle_tile.dart';
+import 'package:docs/pages/docs/components/tooltip/tooltip_tile.dart';
+import 'package:docs/pages/docs/components/tracker/tracker_tile.dart';
+import 'package:docs/pages/docs/components/tree/tree_tile.dart';
 import 'package:docs/pages/docs_page.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'components/form/form_example_1.dart';
-import 'components/input_otp/input_otp_example_2.dart';
-import 'components/tracker/tracker_example_1.dart';
+// Missing component tiles
+import 'components/app_bar/app_bar_tile.dart';
+import 'components/autocomplete/autocomplete_tile.dart';
+import 'components/card_image/card_image_tile.dart';
+import 'components/chip/chip_tile.dart';
+import 'components/dot_indicator/dot_indicator_tile.dart';
+import 'components/expandable_sidebar/expandable_sidebar_tile.dart';
+import 'components/formatted_input/formatted_input_tile.dart';
+import 'components/item_picker/item_picker_tile.dart';
+import 'components/keyboard_display/keyboard_display_tile.dart';
+import 'components/linear_progress/linear_progress_tile.dart';
+import 'components/multiselect/multiselect_tile.dart';
+import 'components/navigation_bar/navigation_bar_tile.dart';
+import 'components/navigation_rail/navigation_rail_tile.dart';
+import 'components/navigation_sidebar/navigation_sidebar_tile.dart';
+import 'components/number_input/number_input_tile.dart';
+import 'components/overflow_marquee/overflow_marquee_tile.dart';
+import 'components/radio_card/radio_card_tile.dart';
+import 'components/refresh_trigger/refresh_trigger_tile.dart';
+import 'components/scaffold/scaffold_tile.dart';
+import 'components/sortable/sortable_tile.dart';
+import 'components/swiper/swiper_tile.dart';
+import 'components/tab_pane/tab_pane_tile.dart';
+import 'components/table/table_tile.dart';
+import 'components/timeline_animation/timeline_animation_tile.dart';
+import 'components/window/window_tile.dart';
 
 const kComponentsMode = ComponentsMode.normal;
 
@@ -34,10 +103,10 @@ class ComponentsPage extends StatefulWidget {
   const ComponentsPage({super.key});
 
   @override
-  _ComponentsPageState createState() => _ComponentsPageState();
+  ComponentsPageState createState() => ComponentsPageState();
 }
 
-class _ComponentsPageState extends State<ComponentsPage> {
+class ComponentsPageState extends State<ComponentsPage> {
   final OnThisPage animationKey = OnThisPage();
   final OnThisPage disclosureKey = OnThisPage();
   final OnThisPage feedbackKey = OnThisPage();
@@ -48,20 +117,8 @@ class _ComponentsPageState extends State<ComponentsPage> {
   final OnThisPage dataDisplayKey = OnThisPage();
   final OnThisPage utilitiesKey = OnThisPage();
 
-  Widget _buildToast() {
-    return VNLCard(
-      child: Basic(
-        title: const Text('Event has been created'),
-        subtitle: const Text('Sunday, July 07, 2024 at 12:00 PM'),
-        trailing: PrimaryButton(size: ButtonSize.small, onPressed: () {}, child: const Text('Undo')),
-        trailingAlignment: Alignment.center,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
     return Data.inherit(
       data: kComponentsMode,
       child: DocsPage(
@@ -80,1383 +137,139 @@ class _ComponentsPageState extends State<ComponentsPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text('Components').h1(),
-            const Text('Beautifully designed components from VNL UI is now available for Flutter.').lead(),
+            const Text(
+                    'Beautifully designed components from Shadcn/UI is now available for Flutter.')
+                .lead(),
             const Gap(16),
             const Align(
               alignment: AlignmentDirectional.centerStart,
-              child: PrimaryBadge(
-                child: Text('Work in Progress'),
+              child: VNLPrimaryBadge(
+                child: Text('Work in VNLProgress'),
               ),
             ),
             const Gap(32),
             const Text('Animation').h2().anchored(animationKey),
             const Gap(16),
             wrap(children: [
-              ComponentCard(
-                name: 'animated_value_builder',
-                title: 'Animated Value Builder',
-                scale: 2,
-                example: SizedBox(
-                  height: 200,
-                  width: 200,
-                  child: Stack(
-                    fit: StackFit.passthrough,
-                    children: [
-                      Positioned.fill(
-                        child: RepeatedAnimationBuilder(
-                          start: VNLColors.red,
-                          end: VNLColors.blue,
-                          lerp: Color.lerp,
-                          duration: const Duration(seconds: 1),
-                          mode: RepeatMode.pingPong,
-                          builder: (context, value, child) {
-                            return Container(
-                              color: value,
-                            );
-                          },
-                        ),
-                      ),
-                      Positioned(
-                        top: 8,
-                        left: 16,
-                        child: RepeatedAnimationBuilder(
-                          start: 0.0,
-                          end: 1.0,
-                          mode: RepeatMode.pingPong,
-                          duration: const Duration(seconds: 1),
-                          builder: (context, value, child) {
-                            // 0.0 - 0.5 = 0
-                            // 0.5 - 1.0 = 1
-                            return Text(value.round().toString()).x3Large().bold();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              ComponentCard(
-                name: 'number_ticker',
-                title: 'Number Ticker',
-                scale: 1.2,
-                example: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RepeatedAnimationBuilder(
-                      start: 0.0,
-                      end: 1234567.0,
-                      mode: RepeatMode.pingPong,
-                      duration: const Duration(seconds: 5),
-                      builder: (context, value, child) {
-                        return Text(
-                          NumberFormat.compact().format(value),
-                          style: const TextStyle(
-                            fontSize: 64,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
-                      },
-                    ),
-                    Transform.translate(
-                      offset: const Offset(0, -16),
-                      child: RepeatedAnimationBuilder(
-                        start: 1234567.0,
-                        end: 0.0,
-                        mode: RepeatMode.pingPong,
-                        duration: const Duration(seconds: 5),
-                        builder: (context, value, child) {
-                          return Text(
-                            NumberFormat.compact().format(value),
-                            style: TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                              color: theme.colorScheme.mutedForeground,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ComponentCard(
-                name: 'repeated_animation_builder',
-                title: 'Repeated Animation Builder',
-                scale: 2,
-                horizontalOffset: 80,
-                example: RepeatedAnimationBuilder(
-                  duration: const Duration(seconds: 1),
-                  start: 0.0,
-                  end: 90.0,
-                  builder: (context, value, child) {
-                    return Transform.rotate(
-                      angle: pi / 180 * value,
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        color: VNLColors.red,
-                      ),
-                    );
-                  },
-                ),
-              ),
+              const AnimatedValueBuilderTile(),
+              const NumberTickerTile(),
+              const RepeatedAnimationBuilderTile(),
             ]),
             const Text('Disclosure').h2().anchored(disclosureKey),
             const Gap(16),
             wrap(
               children: [
-                const ComponentCard(
-                  name: 'accordion',
-                  title: 'Accordion',
-                  example: SizedBox(
-                    width: 280,
-                    child: VNLCard(
-                      child: Accordion(
-                        items: [
-                          AccordionItem(
-                            trigger: AccordionTrigger(child: Text('Accordion 1')),
-                            content: Text('Content 1'),
-                          ),
-                          AccordionItem(
-                            trigger: AccordionTrigger(child: Text('Accordion 2')),
-                            content: Text('Content 2'),
-                          ),
-                          AccordionItem(
-                            trigger: AccordionTrigger(child: Text('Accordion 3')),
-                            content: Text('Content 3'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                ComponentCard(
-                  name: 'collapsible',
-                  title: 'Collapsible',
-                  reverse: true,
-                  example: VNLCard(
-                    child: Collapsible(
-                      children: [
-                        const CollapsibleTrigger(
-                          child: Text('@sunarya-thito starred 3 repositories'),
-                        ),
-                        OutlinedContainer(
-                          child: const Text('@sunarya-thito/vnl_ui')
-                              .small()
-                              .mono()
-                              .withPadding(horizontal: 16, vertical: 8),
-                        ).withPadding(top: 8),
-                        CollapsibleContent(
-                          child: OutlinedContainer(
-                            child:
-                                const Text('@flutter/flutter').small().mono().withPadding(horizontal: 16, vertical: 8),
-                          ).withPadding(top: 8),
-                        ),
-                        CollapsibleContent(
-                          child: OutlinedContainer(
-                            child: const Text('@dart-lang/sdk').small().mono().withPadding(horizontal: 16, vertical: 8),
-                          ).withPadding(top: 8),
-                        ),
-                        const CollapsibleTrigger(
-                          child: Text('@flutter starred 1 repository'),
-                        ).withPadding(top: 16),
-                        OutlinedContainer(
-                          child: const Text('@sunarya-thito/vnl_ui')
-                              .small()
-                              .mono()
-                              .withPadding(horizontal: 16, vertical: 8),
-                        ).withPadding(top: 8),
-                        CollapsibleContent(
-                          child: OutlinedContainer(
-                            child:
-                                const Text('@flutter/flutter').small().mono().withPadding(horizontal: 16, vertical: 8),
-                          ).withPadding(top: 8),
-                        ),
-                        CollapsibleContent(
-                          child: OutlinedContainer(
-                            child: const Text('@dart-lang/sdk').small().mono().withPadding(horizontal: 16, vertical: 8),
-                          ).withPadding(top: 8),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                const AccordionTile(),
+                const CollapsibleTile(),
               ],
             ),
             const Text('Feedback').h2().anchored(feedbackKey),
             const Gap(16),
             wrap(children: [
-              const ComponentCard(
-                name: 'alert',
-                title: 'Alert',
-                center: true,
-                example: VNLAlert(
-                  leading: Icon(Icons.info_outline),
-                  title: Text('Alert'),
-                  content: Text('This is an alert.'),
-                ),
-              ),
-              ComponentCard(
-                name: 'alert_dialog',
-                title: 'Alert Dialog',
-                center: true,
-                example: VNLAlertDialog(
-                  title: const Text('Alert Dialog'),
-                  content: const Text('This is an alert dialog.'),
-                  actions: [
-                    SecondaryButton(
-                      onPressed: () {},
-                      child: const Text('Cancel'),
-                    ),
-                    PrimaryButton(
-                      onPressed: () {},
-                      child: const Text('OK'),
-                    ),
-                  ],
-                ),
-              ),
-              ComponentCard(
-                name: 'circular_progress',
-                title: 'Circular Progress',
-                center: true,
-                example: Transform.scale(
-                  scale: 3,
-                  child: const CircularProgressIndicator(),
-                ),
-              ),
-              ComponentCard(
-                title: 'Progress',
-                name: 'progress',
-                example: const VNLProgress(
-                  progress: 0.75,
-                ).sized(width: 200),
-                center: true,
-              ),
-              ComponentCard(
-                title: 'Skeleton',
-                name: 'skeleton',
-                scale: 1,
-                example: VNLCard(
-                  child: Column(
-                    children: [
-                      Basic(
-                        title: const Text('Skeleton Example 1'),
-                        content: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-                        leading: const Avatar(
-                          initials: '',
-                        ).asSkeleton(),
-                        // Note: Avatar and other Image related widget needs its own skeleton
-                        trailing: const Icon(Icons.arrow_forward),
-                      ).asSkeleton(),
-                      const Gap(16),
-                      Basic(
-                        title: const Text('Skeleton Example 1'),
-                        content: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-                        leading: const Avatar(
-                          initials: '',
-                        ).asSkeleton(),
-                        // Note: Avatar and other Image related widget needs its own skeleton
-                        trailing: const Icon(Icons.arrow_forward),
-                      ).asSkeleton(),
-                      const Gap(16),
-                      Basic(
-                        title: const Text('Skeleton Example 1'),
-                        content: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-                        leading: const Avatar(
-                          initials: '',
-                        ).asSkeleton(),
-                        // Note: Avatar and other Image related widget needs its own skeleton
-                        trailing: const Icon(Icons.arrow_forward),
-                      ).asSkeleton(),
-                    ],
-                  ),
-                ).sized(height: 300),
-              ),
-              ComponentCard(
-                title: 'Toast',
-                name: 'toast',
-                scale: 1.3,
-                reverseVertical: true,
-                example: Stack(
-                  children: [
-                    Transform.translate(
-                      offset: const Offset(0, -24),
-                      child: Transform.scale(
-                        scale: 0.9 * 0.9,
-                        child: Opacity(
-                          opacity: 0.5,
-                          child: _buildToast(),
-                        ),
-                      ),
-                    ),
-                    Transform.translate(
-                      offset: const Offset(0, -12),
-                      child: Transform.scale(
-                        scale: 0.9,
-                        child: Opacity(
-                          opacity: 0.75,
-                          child: _buildToast(),
-                        ),
-                      ),
-                    ),
-                    _buildToast(),
-                  ],
-                ),
-              ),
+              const AlertTile(),
+              const AlertDialogTile(),
+              const CircularProgressTile(),
+              const ProgressTile(),
+              const SkeletonTile(),
+              const ToastTile(),
+              const LinearProgressTile(),
             ]),
             const Text('Forms').h2().anchored(formsKey),
             const Gap(16),
             wrap(children: [
-              ComponentCard(
-                name: 'button',
-                title: 'Button',
-                scale: 1.5,
-                example: SizedBox(
-                  width: 250,
-                  child: VNLCard(
-                    child: Wrap(
-                      spacing: 16,
-                      runSpacing: 16,
-                      children: [
-                        PrimaryButton(
-                          onPressed: () {},
-                          child: const Text('Primary'),
-                        ),
-                        SecondaryButton(
-                          onPressed: () {},
-                          child: const Text('Secondary'),
-                        ),
-                        OutlineButton(
-                          onPressed: () {},
-                          child: const Text('Outline'),
-                        ),
-                        GhostButton(
-                          onPressed: () {},
-                          child: const Text('Ghost'),
-                        ),
-                        DestructiveButton(
-                          child: const Text('Destructive'),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              ComponentCard(
-                name: 'checkbox',
-                title: 'Checkbox',
-                scale: 1.8,
-                example: VNLCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      VNLCheckbox(
-                        state: CheckboxState.checked,
-                        trailing: const Text('Checked'),
-                        onChanged: (value) {},
-                      ),
-                      VNLCheckbox(
-                        state: CheckboxState.indeterminate,
-                        trailing: const Text('Indeterminate'),
-                        onChanged: (value) {},
-                      ),
-                      VNLCheckbox(
-                        state: CheckboxState.unchecked,
-                        trailing: const Text('Unchecked'),
-                        onChanged: (value) {},
-                      ),
-                    ],
-                  ).gap(4).sized(width: 300),
-                ),
-              ),
-              ComponentCard(
-                name: 'chip_input',
-                title: 'Chip Input',
-                scale: 1,
-                example: VNLCard(
-                  child: SizedBox(
-                    width: 300,
-                    height: 300,
-                    child: OutlinedContainer(
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            children: [
-                              const Row(
-                                children: [
-                                  VNLChip(
-                                    trailing: ChipButton(child: Icon(Icons.close)),
-                                    child: Text('Chip 1'),
-                                  ),
-                                  VNLChip(
-                                    trailing: ChipButton(child: Icon(Icons.close)),
-                                    child: Text('Chip 2'),
-                                  ),
-                                ],
-                              ).gap(4),
-                              const Gap(4),
-                              Row(
-                                children: [
-                                  const VNLChip(
-                                    trailing: ChipButton(child: Icon(Icons.close)),
-                                    child: Text('Cool Chip'),
-                                  ),
-                                  const Gap(4),
-                                  const Text('Chip 4'),
-                                  VerticalDivider(
-                                    color: theme.colorScheme.primary,
-                                  ).sized(height: 18),
-                                ],
-                              ).gap(4),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              ComponentCard(
-                name: 'color_picker',
-                title: 'Color Picker',
-                reverse: true,
-                reverseVertical: true,
-                example: VNLCard(
-                  child: ColorPickerSet(color: ColorDerivative.fromColor(VNLColors.blue)),
-                ),
-              ),
-              const ComponentCard(
-                name: 'date_picker',
-                title: 'Date Picker',
-                horizontalOffset: 70,
-                example: CalendarExample2(),
-              ),
-              const ComponentCard(
-                name: 'form',
-                title: 'Form',
-                example: VNLCard(child: FormExample1()),
-              ),
-              ComponentCard(
-                name: 'input',
-                title: 'Text Input',
-                scale: 2,
-                example: VNLCard(
-                  child: const VNLTextField(
-                    initialValue: 'Hello World',
-                    leading: Icon(Icons.edit),
-                  ).sized(width: 250, height: 32),
-                ).sized(height: 400),
-              ),
-              ComponentCard(
-                title: 'Input OTP',
-                name: 'input_otp',
-                scale: 1,
-                example: Column(
-                  children: [
-                    const VNLCard(
-                      child: InputOTPExample2(),
-                    ),
-                    const Gap(24),
-                    Transform.translate(
-                      offset: const Offset(-150, 0),
-                      child: VNLCard(
-                        child: VNLInputOTP(
-                          initialValue: '123456'.codeUnits,
-                          children: [
-                            InputOTPChild.character(allowDigit: true, obscured: true),
-                            InputOTPChild.character(allowDigit: true, obscured: true),
-                            InputOTPChild.character(allowDigit: true, obscured: true),
-                            InputOTPChild.separator,
-                            InputOTPChild.character(allowDigit: true, obscured: true),
-                            InputOTPChild.character(allowDigit: true, obscured: true),
-                            InputOTPChild.character(allowDigit: true, obscured: true),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ComponentCard(
-                name: 'phone_input',
-                title: 'Phone Input',
-                scale: 1.5,
-                example: VNLCard(
-                  child: const VNLPhoneInput(
-                    initialValue: PhoneNumber(Country.indonesia, '81234567890'),
-                  ).withAlign(Alignment.topLeft),
-                ).sized(height: 300),
-              ),
-              ComponentCard(
-                name: 'radio_group',
-                title: 'Radio Group',
-                scale: 2,
-                example: VNLCard(
-                  child: RadioGroup<int>(
-                    value: 1,
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        RadioItem<int>(
-                          trailing: Text('Option 1'),
-                          value: 0,
-                        ),
-                        RadioItem<int>(
-                          trailing: Text('Option 2'),
-                          value: 1,
-                        ),
-                        RadioItem<int>(
-                          trailing: Text('Option 3'),
-                          value: 2,
-                        ),
-                      ],
-                    ).gap(4),
-                  ).sized(width: 300),
-                ),
-              ),
-              ComponentCard(
-                name: 'select',
-                title: 'Select',
-                scale: 1.2,
-                example: VNLCard(
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        VNLSelect<String>(
-                          itemBuilder: (context, item) {
-                            return Text(item);
-                          },
-                          placeholder: const Text('Select a fruit'),
-                          value: 'Apple',
-                          enabled: true,
-                          constraints: const BoxConstraints.tightFor(width: 300),
-                          popup: const SelectPopup(),
-                        ),
-                        Gap(8 * theme.scaling),
-                        const SizedBox(
-                          width: 300,
-                          child: SelectPopup(
-                            items: SelectItemList(children: [
-                              SelectItemButton(
-                                value: 'Apple',
-                                child: Text('Apple'),
-                              ),
-                              SelectItemButton(
-                                value: 'Banana',
-                                child: Text('Banana'),
-                              ),
-                              SelectItemButton(
-                                value: 'Lemon',
-                                child: Text('Lemon'),
-                              ),
-                              SelectItemButton(
-                                value: 'Tomato',
-                                child: Text('Tomato'),
-                              ),
-                              SelectItemButton(
-                                value: 'Cucumber',
-                                child: Text('Cucumber'),
-                              ),
-                            ]),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ).sized(height: 300, width: 200),
-              ),
-              ComponentCard(
-                name: 'slider',
-                title: 'Slider',
-                center: true,
-                scale: 2,
-                example: VNLSlider(
-                  value: const SliderValue.single(0.75),
-                  onChanged: (value) {},
-                ).sized(width: 100),
-              ),
-              const ComponentCard(
-                name: 'star_rating',
-                title: 'Star Rating',
-                scale: 1,
-                example: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    VNLStarRating(
-                      starSize: 64,
-                      value: 3.5,
-                    ),
-                    Gap(16),
-                    VNLStarRating(
-                      starSize: 64,
-                      value: 2.5,
-                    ),
-                  ],
-                ),
-              ),
-              ComponentCard(
-                name: 'switch',
-                title: 'Switch',
-                scale: 2,
-                center: true,
-                example: VNLSwitch(
-                  value: true,
-                  onChanged: (value) {},
-                ),
-              ),
-              const ComponentCard(
-                  title: 'Text Area',
-                  name: 'text_area',
-                  scale: 1.2,
-                  example: Column(
-                    children: [
-                      VNLCard(child: TextAreaExample3()),
-                      VNLCard(child: TextAreaExample3()),
-                    ],
-                  )),
-              ComponentCard(
-                name: 'time_picker',
-                title: 'Time Picker',
-                scale: 1.2,
-                example: VNLCard(
-                  child: TimePickerDialog(
-                    use24HourFormat: true,
-                    initialValue: TimeOfDay.now(),
-                  ).withAlign(Alignment.topLeft),
-                ).sized(height: 300),
-              ),
-              ComponentCard(
-                name: 'toggle',
-                title: 'Toggle',
-                scale: 1.2,
-                example: VNLCard(
-                  child: const ToggleExample2().withAlign(Alignment.topLeft),
-                ).sized(height: 300, width: 300),
-              ),
+              const ButtonTile(),
+              const CheckboxTile(),
+              const ChipInputTile(),
+              const ColorPickerTile(),
+              const DatePickerTile(),
+              const FormTile(),
+              const InputTile(),
+              const InputOTPTile(),
+              const PhoneInputTile(),
+              const RadioGroupTile(),
+              const SelectTile(),
+              const SliderTile(),
+              const StarRatingTile(),
+              const SwitchTile(),
+              const TextAreaTile(),
+              const TimePickerTile(),
+              const ToggleTile(),
+              const AutocompleteTile(),
+              const ChipTile(),
+              const FormattedInputTile(),
+              const ItemPickerTile(),
+              const MultiselectTile(),
+              const NumberInputTile(),
+              const RadioCardTile(),
+              const SortableTile(),
             ]),
             const Text('Layout').h2().anchored(layoutKey),
             const Gap(16),
             wrap(children: [
-              const ComponentCard(
-                name: 'card',
-                title: 'Card',
-                example: CardExample1(),
-              ),
-              const ComponentCard(
-                name: 'carousel',
-                title: 'Carousel',
-                fit: true,
-                example: SizedBox(width: 550, height: 200, child: CarouselExample1()),
-              ),
-              const ComponentCard(
-                name: 'divider',
-                title: 'Divider',
-                scale: 1.2,
-                example: VNLCard(child: DividerExample3()),
-              ),
-              const ComponentCard(
-                title: 'Resizable',
-                name: 'resizable',
-                scale: 1,
-                example: ResizableExample3(),
-              ),
-              const ComponentCard(
-                name: 'steps',
-                title: 'Steps',
-                example: VNLCard(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                  child: VNLSteps(children: [
-                    StepItem(
-                      title: Text('Create a project'),
-                      content: [
-                        Text('Create a new flutter project'),
-                      ],
-                    ),
-                    StepItem(
-                      title: Text('Add dependencies'),
-                      content: [
-                        Text('Add dependencies to pubspec.yaml'),
-                      ],
-                    ),
-                    StepItem(
-                      title: Text('Run the project'),
-                      content: [
-                        Text('Run the project using flutter run'),
-                      ],
-                    ),
-                  ]),
-                ),
-              ),
-              ComponentCard(
-                name: 'stepper',
-                title: 'Stepper',
-                scale: 1,
-                example: const StepperExample2().sized(width: 400, height: 500),
-              ),
-              ComponentCard(
-                name: 'timeline',
-                title: 'Timeline',
-                scale: 1,
-                example: const TimelineExample1().sized(width: 700, height: 800),
-              ),
+              const CardTile(),
+              const CarouselTile(),
+              const DividerTile(),
+              const ResizableTile(),
+              const StepsTile(),
+              const StepperTile(),
+              const TimelineTile(),
+              const AppBarTile(),
+              const ExpandableSidebarTile(),
+              const ScaffoldTile(),
+              const SwiperTile(),
+              const WindowTile(),
             ]),
             const Text('Navigation').h2().anchored(navigationKey),
             const Gap(16),
             wrap(children: [
-              ComponentCard(
-                title: 'Breadcrumb',
-                name: 'breadcrumb',
-                // scale: 1,
-                example: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    VNLCard(child: BreadcrumbExample1()),
-                    VNLCard(child: BreadcrumbExample1()),
-                    VNLCard(child: BreadcrumbExample1()),
-                  ],
-                ).gap(16),
-              ),
-              ComponentCard(
-                title: 'Menubar',
-                name: 'menubar',
-                scale: 1,
-                example: VNLCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      OutlinedContainer(
-                        borderColor: theme.colorScheme.border,
-                        backgroundColor: theme.colorScheme.background,
-                        borderRadius: theme.borderRadiusMd,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: IntrinsicHeight(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                VNLButton(
-                                  onPressed: () {},
-                                  style: const ButtonStyle.menubar(),
-                                  child: const Text('File'),
-                                ),
-                                VNLButton(
-                                  onPressed: () {},
-                                  style: const ButtonStyle.menubar().copyWith(
-                                    decoration: (context, states, value) {
-                                      return (value as BoxDecoration).copyWith(
-                                        color: theme.colorScheme.accent,
-                                        borderRadius: BorderRadius.circular(theme.radiusSm),
-                                      );
-                                    },
-                                  ),
-                                  child: const Text('Edit'),
-                                ),
-                                VNLButton(
-                                  onPressed: () {},
-                                  style: const ButtonStyle.menubar(),
-                                  child: const Text('View'),
-                                ),
-                                VNLButton(
-                                  onPressed: () {},
-                                  style: const ButtonStyle.menubar(),
-                                  child: const Text('Help'),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Gap(4),
-                      Container(
-                        width: 192,
-                        margin: const EdgeInsets.only(left: 48),
-                        child: MenuPopup(children: [
-                          VNLButton(
-                            style: const ButtonStyle.menu(),
-                            onPressed: () {},
-                            trailing: const MenuShortcut(
-                              activator: SingleActivator(LogicalKeyboardKey.keyZ, control: true),
-                            ),
-                            child: const Text('Undo'),
-                          ),
-                          VNLButton(
-                            style: const ButtonStyle.menu().copyWith(decoration: (context, states, value) {
-                              return (value as BoxDecoration).copyWith(
-                                color: theme.colorScheme.accent,
-                                borderRadius: BorderRadius.circular(theme.radiusSm),
-                              );
-                            }),
-                            onPressed: () {},
-                            trailing: const MenuShortcut(
-                              activator: SingleActivator(LogicalKeyboardKey.keyY, control: true),
-                            ),
-                            child: const Text('Redo'),
-                          ),
-                          const MenuDivider(),
-                          VNLButton(
-                            style: const ButtonStyle.menu(),
-                            onPressed: () {},
-                            trailing: const MenuShortcut(
-                              activator: SingleActivator(LogicalKeyboardKey.keyX, control: true),
-                            ),
-                            child: const Text('Cut'),
-                          ),
-                          VNLButton(
-                            style: const ButtonStyle.menu(),
-                            onPressed: () {},
-                            trailing: const MenuShortcut(
-                              activator: SingleActivator(LogicalKeyboardKey.keyC, control: true),
-                            ),
-                            child: const Text('Copy'),
-                          ),
-                          VNLButton(
-                            style: const ButtonStyle.menu(),
-                            onPressed: () {},
-                            trailing: const MenuShortcut(
-                              activator: SingleActivator(LogicalKeyboardKey.keyV, control: true),
-                            ),
-                            child: const Text('Paste'),
-                          ),
-                        ]),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              ComponentCard(
-                title: 'Navigation Menu',
-                name: 'navigation_menu',
-                scale: 1,
-                example: VNLCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      VNLNavigationMenu(
-                        children: [
-                          VNLButton(
-                            onPressed: () {},
-                            style: const ButtonStyle.ghost().copyWith(
-                              decoration: (context, states, value) {
-                                return (value as BoxDecoration).copyWith(
-                                  borderRadius: BorderRadius.circular(theme.radiusMd),
-                                  color: theme.colorScheme.muted.scaleAlpha(0.8),
-                                );
-                              },
-                            ),
-                            trailing: const Icon(
-                              RadixIcons.chevronUp,
-                              size: 12,
-                            ),
-                            child: const Text('Getting Started'),
-                          ),
-                          const NavigationMenuItem(
-                            content: SizedBox(),
-                            child: Text('Components'),
-                          ),
-                        ],
-                      ),
-                      const Gap(8),
-                      OutlinedContainer(
-                        borderRadius: theme.borderRadiusMd,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: NavigationMenuContentList(
-                            children: [
-                              VNLButton(
-                                style: ButtonVariance.ghost.copyWith(
-                                  padding: (context, states, value) {
-                                    return const EdgeInsets.all(12);
-                                  },
-                                  decoration: (context, states, value) {
-                                    return (value as BoxDecoration).copyWith(
-                                      borderRadius: BorderRadius.circular(theme.radiusMd),
-                                      color: theme.colorScheme.muted.scaleAlpha(0.8),
-                                    );
-                                  },
-                                ),
-                                onPressed: () {},
-                                alignment: Alignment.topLeft,
-                                child: Basic(
-                                  title: const Text('Installation').medium(),
-                                  content: const Text('How to install VNL UI for Flutter').muted(),
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                ),
-                              ).constrained(maxWidth: 16 * 16),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              ComponentCard(
-                title: 'Pagination',
-                name: 'pagination',
-                reverse: true,
-                example: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const VNLCard(child: PaginationExample1()),
-                    Transform.translate(
-                        offset: const Offset(250, 0), child: const VNLCard(child: PaginationExample1())),
-                  ],
-                ).gap(16),
-              ),
-              ComponentCard(
-                title: 'Tabs',
-                name: 'tabs',
-                scale: 1.2,
-                example: VNLCard(
-                  child: Column(
-                    children: [
-                      VNLTabList(index: 0, onChanged: (value) {}, children: const [
-                        // Text('Tab 1'),
-                        // Text('Tab 2'),
-                        // Text('Tab 3'),
-                        TabItem(child: Text('Tab 1')),
-                        TabItem(child: Text('Tab 2')),
-                        TabItem(child: Text('Tab 3')),
-                      ]),
-                      VNLTabList(index: 1, onChanged: (value) {}, children: const [
-                        TabItem(child: Text('Tab 1')),
-                        TabItem(child: Text('Tab 2')),
-                        TabItem(child: Text('Tab 3')),
-                      ]),
-                      VNLTabList(index: 2, onChanged: (value) {}, children: const [
-                        TabItem(child: Text('Tab 1')),
-                        TabItem(child: Text('Tab 2')),
-                        TabItem(child: Text('Tab 3')),
-                      ]),
-                    ],
-                  ).gap(8),
-                ),
-              ),
-              ComponentCard(
-                name: 'tab_list',
-                title: 'Tab List',
-                scale: 1,
-                reverseVertical: true,
-                verticalOffset: 60,
-                example: VNLTabList(
-                  index: 0,
-                  onChanged: (value) {},
-                  children: const [
-                    TabItem(child: Text('Preview')),
-                    TabItem(child: Text('Code')),
-                    TabItem(child: Text('Design')),
-                    TabItem(child: Text('Settings')),
-                  ],
-                ),
-              ),
-              const ComponentCard(
-                name: 'tree',
-                title: 'Tree',
-                scale: 1.5,
-                example: TreeExample1(),
-              ),
+              const BreadcrumbTile(),
+              const MenubarTile(),
+              const NavigationMenuTile(),
+              const PaginationTile(),
+              const TabsTile(),
+              const TabListTile(),
+              const TreeTile(),
+              const NavigationBarTile(),
+              const NavigationRailTile(),
+              const NavigationSidebarTile(),
+              const TabPaneTile(),
             ]),
             const Text('Surfaces').h2().anchored(surfacesKey),
             const Gap(16),
             wrap(children: [
-              ComponentCard(
-                  title: 'Dialog',
-                  name: 'dialog',
-                  example: VNLAlertDialog(
-                    barrierColor: VNLColors.transparent,
-                    title: const Text('Edit profile'),
-                    content: IntrinsicWidth(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Text('Make changes to your profile here. Click save when you\'re done'),
-                          const Gap(16),
-                          const VNLForm(
-                            child: FormTableLayout(rows: [
-                              FormField<String>(
-                                key: FormKey(#name),
-                                label: Text('Name'),
-                                child: VNLTextField(
-                                  initialValue: 'Thito Yalasatria Sunarya',
-                                ),
-                              ),
-                              FormField<String>(
-                                key: FormKey(#username),
-                                label: Text('Username'),
-                                child: VNLTextField(
-                                  initialValue: '@sunaryathito',
-                                ),
-                              ),
-                            ]),
-                          ).withPadding(vertical: 16),
-                        ],
-                      ),
-                    ),
-                    actions: [
-                      PrimaryButton(
-                        child: const Text('Save changes'),
-                        onPressed: () {},
-                      ),
-                    ],
-                  )),
-              ComponentCard(
-                title: 'Drawer',
-                name: 'drawer',
-                scale: 1,
-                example: DrawerWrapper(
-                  stackIndex: 0,
-                  position: OverlayPosition.bottom,
-                  size: const Size(300, 300),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Drawer!').large().medium(),
-                      const Gap(4),
-                      const Text('This is a drawer that you can use to display content').muted(),
-                    ],
-                  ).withPadding(horizontal: 32),
-                ).sized(width: 300, height: 300),
-              ),
-              ComponentCard(
-                name: 'hover_card',
-                title: 'Hover Card',
-                scale: 1,
-                example: Stack(
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text('@flutter').medium().underline(),
-                        const Gap(16),
-                        const VNLCard(
-                          child: Basic(
-                            leading: FlutterLogo(),
-                            title: Text('@flutter'),
-                            content: Text(
-                                'The Flutter SDK provides the tools to build beautiful apps for mobile, web, and desktop from a single codebase.'),
-                          ),
-                        ).sized(width: 300),
-                      ],
-                    ),
-                    const Positioned(
-                      top: 13,
-                      left: 160,
-                      child: CustomPaint(
-                        painter: CursorPainter(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ComponentCard(
-                title: 'Sheet',
-                name: 'sheet',
-                verticalOffset: 0,
-                scale: 1,
-                example: SheetWrapper(
-                  position: OverlayPosition.right,
-                  stackIndex: 0,
-                  size: const Size(300, 300),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Sheet!').large().medium(),
-                      const Gap(4),
-                      const Text('This is a sheet that you can use to display content').muted(),
-                    ],
-                  ).withPadding(horizontal: 32, vertical: 48),
-                ).sized(width: 300, height: 300),
-              ),
-              ComponentCard(
-                name: 'tooltip',
-                title: 'Tooltip',
-                center: true,
-                scale: 1,
-                example: Stack(
-                  children: [
-                    Column(
-                      children: [
-                        DestructiveButton(
-                          leading: const Icon(Icons.delete),
-                          child: const Text('Delete'),
-                          onPressed: () {},
-                        ),
-                        const Gap(4),
-                        const TooltipContainer(
-                          child: Text('Click to delete this item'),
-                        ),
-                      ],
-                    ),
-                    const Positioned(
-                      top: 25,
-                      left: 100,
-                      child: CustomPaint(
-                        painter: CursorPainter(),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              ComponentCard(
-                name: 'popover',
-                title: 'Popover',
-                scale: 1,
-                example: VNLCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      VNLDatePicker(
-                        value: DateTime.now(),
-                        mode: PromptMode.popover,
-                        stateBuilder: (date) {
-                          if (date.isAfter(DateTime.now())) {
-                            return DateState.disabled;
-                          }
-                          return DateState.enabled;
-                        },
-                        onChanged: (value) {},
-                      ),
-                      const Gap(4),
-                      const CalendarExample2(),
-                    ],
-                  ),
-                ),
-              ),
+              const DialogTile(),
+              const DrawerTile(),
+              const HoverCardTile(),
+              const SheetTile(),
+              const TooltipTile(),
+              const PopoverTile(),
             ]),
             const Text('Data Display').h2().anchored(dataDisplayKey),
             const Gap(16),
             wrap(children: [
-              ComponentCard(
-                name: 'avatar',
-                title: 'Avatar',
-                scale: 1.5,
-                example: VNLCard(
-                  child: Row(
-                    children: [
-                      Avatar(
-                        initials: Avatar.getInitials('sunarya-thito'),
-                        provider: const NetworkImage('https://avatars.githubusercontent.com/u/64018564?v=4'),
-                      ),
-                      const Gap(16),
-                      Avatar(
-                        initials: Avatar.getInitials('sunarya-thito'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              ComponentCard(
-                name: 'avatar_group',
-                title: 'Avatar Group',
-                scale: 1.5,
-                center: true,
-                example: AvatarGroup.toLeft(children: [
-                  Avatar(
-                    initials: Avatar.getInitials('sunarya-thito'),
-                    backgroundColor: VNLColors.red,
-                  ),
-                  Avatar(
-                    initials: Avatar.getInitials('sunarya-thito'),
-                    backgroundColor: VNLColors.green,
-                  ),
-                  Avatar(
-                    initials: Avatar.getInitials('sunarya-thito'),
-                    backgroundColor: VNLColors.blue,
-                  ),
-                  Avatar(
-                    initials: Avatar.getInitials('sunarya-thito'),
-                    backgroundColor: VNLColors.yellow,
-                  ),
-                ]),
-              ),
-              const WIPComponentCard(title: 'Data Table'),
+              const AvatarTile(),
+              const AvatarGroupTile(),
+              const WIPComponentCard(title: 'Data VNLTable'),
               const WIPComponentCard(title: 'Chart'),
-              const ComponentCard(
-                  name: 'code_snippet',
-                  title: 'Code Snippet',
-                  scale: 1.5,
-                  reverse: true,
-                  reverseVertical: true,
-                  example: CodeSnippetExample1()),
-              const WIPComponentCard(title: 'Table'),
-              ComponentCard(
-                name: 'tracker',
-                title: 'Tracker',
-                scale: 2,
-                verticalOffset: 48,
-                example: const TrackerExample1().sized(width: 500),
-              ),
+              const CodeSnippetTile(),
+              const WIPComponentCard(title: 'VNLTable'),
+              const TrackerTile(),
+              const DotIndicatorTile(),
+              const CardImageTile(),
+              const TableTile(),
             ]),
             const Text('Utilities').h2().anchored(utilitiesKey),
             const Gap(16),
             wrap(children: [
-              ComponentCard(
-                name: 'badge',
-                title: 'Badge',
-                center: true,
-                scale: 1.5,
-                example: const Column(
-                  children: [
-                    PrimaryBadge(child: Text('Primary')),
-                    SecondaryBadge(child: Text('Secondary')),
-                    DestructiveBadge(child: Text('Destructive')),
-                  ],
-                ).gap(8),
-              ),
-              ComponentCard(
-                name: 'calendar',
-                title: 'Calendar',
-                scale: 1,
-                example: VNLCalendar(view: CalendarView.now(), selectionMode: CalendarSelectionMode.none),
-              ),
-              const ComponentCard(
-                name: 'command',
-                title: 'Command',
-                scale: 1,
-                example: CommandExample1(),
-              ),
-              ComponentCard(
-                title: 'Context Menu',
-                name: 'context_menu',
-                scale: 1.2,
-                example: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const CustomPaint(
-                      painter: CursorPainter(),
-                    ),
-                    const Gap(24),
-                    SizedBox(
-                      width: 192,
-                      child: MenuPopup(children: [
-                        VNLButton(
-                          style: const ButtonStyle.menu(),
-                          onPressed: () {},
-                          trailing: const MenuShortcut(
-                            activator: SingleActivator(LogicalKeyboardKey.keyX, control: true),
-                          ),
-                          child: const Text('Cut'),
-                        ),
-                        VNLButton(
-                          style: const ButtonStyle.menu(),
-                          onPressed: () {},
-                          trailing: const MenuShortcut(
-                            activator: SingleActivator(LogicalKeyboardKey.keyC, control: true),
-                          ),
-                          child: const Text('Copy'),
-                        ),
-                        VNLButton(
-                          style: const ButtonStyle.menu(),
-                          onPressed: () {},
-                          trailing: const MenuShortcut(
-                            activator: SingleActivator(LogicalKeyboardKey.keyV, control: true),
-                          ),
-                          child: const Text('Paste'),
-                        ),
-                        const MenuDivider(),
-                        VNLButton(
-                          style: const ButtonStyle.menu(),
-                          onPressed: () {},
-                          trailing: const MenuShortcut(
-                            activator: SingleActivator(LogicalKeyboardKey.delete),
-                          ),
-                          child: const Text('Delete'),
-                        ),
-                        VNLButton(
-                          style: const ButtonStyle.menu(),
-                          onPressed: () {},
-                          trailing: const MenuShortcut(
-                            activator: SingleActivator(LogicalKeyboardKey.keyA, control: true),
-                          ),
-                          child: const Text('Select All'),
-                        ),
-                      ]),
-                    ),
-                  ],
-                ),
-              ),
-              ComponentCard(
-                title: 'Dropdown Menu',
-                name: 'dropdown_menu',
-                scale: 1,
-                example: Stack(
-                  children: [
-                    VNLCard(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          OutlineButton(
-                            onPressed: () {},
-                            child: const Text('Options'),
-                          ),
-                          const Gap(8),
-                          SizedBox(
-                            width: 192,
-                            child: MenuPopup(children: [
-                              VNLButton(
-                                style: const ButtonStyle.menu(),
-                                onPressed: () {},
-                                child: const Text('Profile'),
-                              ),
-                              VNLButton(
-                                style: const ButtonStyle.menu().copyWith(decoration: (context, states, value) {
-                                  return (value as BoxDecoration).copyWith(
-                                    color: theme.colorScheme.accent,
-                                    borderRadius: BorderRadius.circular(theme.radiusSm),
-                                  );
-                                }),
-                                onPressed: () {},
-                                child: const Text('Billing'),
-                              ),
-                              const MenuDivider(),
-                              VNLButton(
-                                style: const ButtonStyle.menu(),
-                                onPressed: () {},
-                                child: const Text('Settings'),
-                              ),
-                              VNLButton(
-                                style: const ButtonStyle.menu(),
-                                onPressed: () {},
-                                trailing: const MenuShortcut(
-                                  activator: SingleActivator(LogicalKeyboardKey.keyC, control: true),
-                                ),
-                                child: const Text('Copy'),
-                              ),
-                              VNLButton(
-                                style: const ButtonStyle.menu(),
-                                onPressed: () {},
-                                trailing: const MenuShortcut(
-                                  activator: SingleActivator(LogicalKeyboardKey.keyV, control: true),
-                                ),
-                                child: const Text('Paste'),
-                              ),
-                            ]),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Positioned(
-                      top: 105,
-                      left: 170,
-                      child: CustomPaint(
-                        painter: CursorPainter(),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              const BadgeTile(),
+              const CalendarTile(),
+              const CommandTile(),
+              const ContextMenuTile(),
+              const DropdownMenuTile(),
+              const KeyboardDisplayTile(),
+              const OverflowMarqueeTile(),
+              const RefreshTriggerTile(),
+              const TimelineAnimationTile(),
             ]),
           ],
         ),
@@ -1496,8 +309,8 @@ class WIPComponentCard extends StatelessWidget implements IComponentPage {
         name: '-',
         title: title,
         center: true,
-        example: const PrimaryBadge(
-          child: Text('Work in Progress'),
+        example: const VNLPrimaryBadge(
+          child: Text('Work in VNLProgress'),
         ),
       ),
     );
@@ -1541,27 +354,30 @@ class _ComponentCardState extends State<ComponentCard> {
   final GlobalKey repaintKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final componentsMode = Data.of<ComponentsMode>(context);
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: componentsMode == ComponentsMode.normal
           ? null
           : () {
-              final render = repaintKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+              final render = repaintKey.currentContext!.findRenderObject()
+                  as RenderRepaintBoundary;
               render.toImage().then(
                 (value) async {
-                  var byteData = (await value.toByteData(format: ImageByteFormat.png))!;
+                  var byteData =
+                      (await value.toByteData(format: ImageByteFormat.png))!;
                   value.dispose();
                   final list = byteData.buffer.asUint8List();
                   // convert to base64 image
                   final base64Image = base64.encode(list);
                   final String baseImage = 'data:image/png;base64,$base64Image';
-                  launchUrlString(baseImage, mode: LaunchMode.externalApplication);
+                  launchUrlString(baseImage,
+                      mode: LaunchMode.externalApplication);
                 },
               );
             },
-      child: Clickable(
+      child: VNLClickable(
         enabled: componentsMode == ComponentsMode.normal,
         mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
         onHover: (value) {
@@ -1574,87 +390,118 @@ class _ComponentCardState extends State<ComponentCard> {
                 context.pushNamed(widget.name);
               }
             : null,
-        child: RepaintBoundary(
-          key: repaintKey,
-          child: ExcludeFocus(
-            child: SizedBox(
-              height: 200,
-              width: 250,
-              child: AnimatedValueBuilder(
-                  value: _hovering ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                  builder: (context, value, child) {
-                    final borderColor = Color.lerp(theme.colorScheme.border, theme.colorScheme.ring, value);
-                    return OutlinedContainer(
-                      clipBehavior: Clip.antiAlias,
-                      borderColor: borderColor,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: IgnorePointer(
-                              child: Container(
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    color: theme.colorScheme.accent,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(theme.radiusMd + 3),
-                                      topRight: Radius.circular(theme.radiusMd + 3),
+        child: VNLWidgetStatesProvider.boundary(
+          child: RepaintBoundary(
+            key: repaintKey,
+            child: ExcludeFocus(
+              child: SizedBox(
+                height: 200,
+                width: 250,
+                child: AnimatedValueBuilder(
+                    value: _hovering ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut,
+                    builder: (context, value, child) {
+                      final borderColor = Color.lerp(theme.colorScheme.border,
+                          theme.colorScheme.ring, value);
+                      return VNLOutlinedContainer(
+                        clipBehavior: Clip.antiAlias,
+                        borderColor: borderColor,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: IgnorePointer(
+                                child: Container(
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: theme.colorScheme.accent,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft:
+                                            Radius.circular(theme.radiusMd + 3),
+                                        topRight:
+                                            Radius.circular(theme.radiusMd + 3),
+                                      ),
                                     ),
-                                  ),
-                                  child: Transform.scale(
-                                    scale: 1 + 0.3 * value,
-                                    child: Transform.rotate(
-                                      angle: pi / 180 * 10 * value,
-                                      child: widget.fit
-                                          ? Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: FittedBox(
-                                                fit: BoxFit.contain,
-                                                child: widget.example,
-                                              ),
-                                            )
-                                          : widget.center
-                                              ? Center(
-                                                  child: Transform.scale(
-                                                      scale: widget.scale,
-                                                      child: SingleChildScrollView(
-                                                        clipBehavior: Clip.none,
-                                                        child: widget.example,
-                                                      )),
-                                                ).withPadding(all: 24)
-                                              : Stack(
-                                                  children: [
-                                                    Positioned(
-                                                      top: !widget.reverseVertical ? widget.verticalOffset : null,
-                                                      right: widget.reverse ? widget.horizontalOffset : null,
-                                                      bottom: widget.reverseVertical ? widget.verticalOffset : null,
-                                                      left: !widget.reverse ? widget.horizontalOffset : null,
-                                                      child: Transform.scale(
-                                                        scale: widget.scale,
-                                                        alignment: widget.reverse
-                                                            ? widget.reverseVertical
-                                                                ? Alignment.bottomRight
-                                                                : Alignment.topRight
-                                                            : widget.reverseVertical
-                                                                ? Alignment.bottomLeft
-                                                                : Alignment.topLeft,
-                                                        child: widget.example,
-                                                      ),
-                                                    ),
-                                                  ],
+                                    child: Transform.scale(
+                                      scale: 1 + 0.3 * value,
+                                      child: Transform.rotate(
+                                        angle: pi / 180 * 10 * value,
+                                        child: widget.fit
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: FittedBox(
+                                                  fit: BoxFit.contain,
+                                                  child: widget.example,
                                                 ),
-                                    ),
-                                  )),
+                                              )
+                                            : widget.center
+                                                ? Center(
+                                                    child: Transform.scale(
+                                                        scale: widget.scale,
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          clipBehavior:
+                                                              Clip.none,
+                                                          child: widget.example,
+                                                        )),
+                                                  ).withPadding(all: 24)
+                                                : Stack(
+                                                    children: [
+                                                      Positioned(
+                                                        top: !widget
+                                                                .reverseVertical
+                                                            ? widget
+                                                                .verticalOffset
+                                                            : null,
+                                                        right: widget.reverse
+                                                            ? widget
+                                                                .horizontalOffset
+                                                            : null,
+                                                        bottom: widget
+                                                                .reverseVertical
+                                                            ? widget
+                                                                .verticalOffset
+                                                            : null,
+                                                        left: !widget.reverse
+                                                            ? widget
+                                                                .horizontalOffset
+                                                            : null,
+                                                        child: Transform.scale(
+                                                          scale: widget.scale,
+                                                          alignment: widget
+                                                                  .reverse
+                                                              ? widget
+                                                                      .reverseVertical
+                                                                  ? Alignment
+                                                                      .bottomRight
+                                                                  : Alignment
+                                                                      .topRight
+                                                              : widget
+                                                                      .reverseVertical
+                                                                  ? Alignment
+                                                                      .bottomLeft
+                                                                  : Alignment
+                                                                      .topLeft,
+                                                          child: widget.example,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                      ),
+                                    )),
+                              ),
                             ),
-                          ),
-                          const VNLDivider(),
-                          Text(widget.title).medium().withPadding(vertical: 12, horizontal: 16),
-                        ],
-                      ),
-                    );
-                  }),
+                            const VNLDivider(),
+                            Text(widget.title)
+                                .medium()
+                                .withPadding(vertical: 12, horizontal: 16),
+                          ],
+                        ),
+                      );
+                    }),
+              ),
             ),
           ),
         ),

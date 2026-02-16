@@ -1,4 +1,5 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:flutter/foundation.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class NamedColor {
   final String name;
@@ -38,10 +39,10 @@ class _ItemPickerExample5State extends State<ItemPickerExample5> {
         return ItemPickerOption(
           value: item,
           label: Text(item.name),
-          style: const ButtonStyle.ghostIcon(
+          style: const VNLButtonStyle.ghostIcon(
             shape: ButtonShape.circle,
           ),
-          selectedStyle: const ButtonStyle.primary(
+          selectedStyle: const VNLButtonStyle.primary(
             shape: ButtonShape.circle,
           ),
           child: Container(
@@ -56,7 +57,9 @@ class _ItemPickerExample5State extends State<ItemPickerExample5> {
       value: colors[selectedColor],
       placeholder: const Text('Pick a color'),
       onChanged: (value) {
-        print('You picked $value!');
+        if (kDebugMode) {
+          print('You picked $value!');
+        }
         if (value != null) {
           setState(() {
             selectedColor = colors.indexOf(value);

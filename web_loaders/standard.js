@@ -40,7 +40,6 @@ const shadcn_flutter_config = {
     ]
 };
 
-
 class VNLookAppConfig {
     backgroundColor;
     foregroundColor;

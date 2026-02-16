@@ -1,0 +1,456 @@
+Analyzing lib...                                                
+
+   info • Missing documentation for a public member • lib/src/components/animation.dart:4:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:6:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:8:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:11:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:12:12 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:13:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:14:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:15:34 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:16:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:17:39 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:18:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:19:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:20:41 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:21:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:23:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:36:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:50:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:106:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:138:5 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:214:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:215:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:216:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:217:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:223:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:224:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:225:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:226:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:227:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:228:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:229:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:230:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:231:72 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:233:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:234:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:235:41 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:236:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:238:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:253:34 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:444:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:445:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:446:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:447:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:448:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:450:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:457:31 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:499:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:500:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:528:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:544:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:545:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:546:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:548:38 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/animation.dart:550:9 • public_member_api_docs
+  error • The name 'FocusOutlineTheme' isn't a class • lib/src/components/control/command.dart:364:37 • creation_with_non_type
+  error • Undefined class 'VNLThemeData' • lib/src/components/control/scrollbar.dart:189:8 • undefined_class
+  error • Undefined name 'VNLTheme' • lib/src/components/control/scrollbar.dart:194:14 • undefined_identifier
+  error • Undefined class 'CarouselTheme' • lib/src/components/display/carousel.dart:622:3 • undefined_class
+  error • The function 'VNLCircularProgressIndicator' isn't defined • lib/src/components/display/circular_progress_indicator.dart:246:22 • undefined_function
+  error • The function 'VNLCircularProgressIndicator' isn't defined • lib/src/components/display/circular_progress_indicator.dart:264:26 • undefined_function
+  error • The name 'VNLIntervalDuration' isn't a class • lib/src/components/form/checkbox.dart:719:40 • creation_with_non_type
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:10:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:11:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:14:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:27:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:28:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:29:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:30:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:31:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:32:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:33:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:34:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:35:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:36:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:37:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:39:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:86:8 • public_member_api_docs
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:88:22 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:90:22 • deprecated_member_use
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:94:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:95:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:96:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:97:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:98:13 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:99:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:101:9 • public_member_api_docs
+  error • Undefined class 'VNLThemeData' • lib/src/components/form/color_picker.dart:110:61 • undefined_class
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:140:19 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:24 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:173:34 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:175:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:176:8 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:177:8 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:178:8 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:179:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:180:19 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:181:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:186:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:187:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:188:13 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:189:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:190:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:192:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:214:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:279:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:281:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:282:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:283:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:284:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:285:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:286:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:287:30 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:289:9 • public_member_api_docs
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:417:22 • undefined_identifier
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:430:19 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:546:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:639:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:640:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:641:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:645:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:650:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:651:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:652:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:653:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:655:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:657:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:663:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:664:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:665:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:666:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:667:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:668:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:669:40 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:670:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:671:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:673:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:694:19 • undefined_identifier
+  error • Undefined class 'VNLThemeData' • lib/src/components/form/color_picker.dart:730:46 • undefined_class
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:793:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:794:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:795:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:796:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:797:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:798:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:799:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:801:9 • public_member_api_docs
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:832:42 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:834:42 • deprecated_member_use
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:838:38 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:839:38 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:840:38 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:867:44 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:869:44 • deprecated_member_use
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:873:40 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:874:40 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:875:40 • deprecated_member_use
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:952:19 • undefined_identifier
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:958:19 • undefined_identifier
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:1139:57 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/src/components/form/color_picker.dart:1141:57 • deprecated_member_use
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1228:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1229:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1230:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1231:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1232:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1233:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1234:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1236:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:1255:19 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1386:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1387:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1388:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1389:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1390:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1391:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1392:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1393:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1394:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1395:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1396:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1397:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1398:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1399:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1400:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1401:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:1422:19 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1514:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1515:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1516:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1517:43 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1518:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1519:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1520:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1521:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1523:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:40 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:48 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:58 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:63 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:71 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:81 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:86 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1566:96 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:40 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:48 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:58 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:63 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:71 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:81 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:86 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1568:96 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1570:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1630:28 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:1739:19 • undefined_identifier
+  error • The getter 'buttonOk' isn't defined for the type 'VNLookLocalizations' • lib/src/components/form/color_picker.dart:1771:37 • undefined_getter
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1835:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1836:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1840:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1841:36 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1843:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1844:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1845:12 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1846:12 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1847:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1848:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1849:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1850:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1851:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1852:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1853:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1854:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1855:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1856:11 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1857:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1858:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1859:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1864:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1869:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1874:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1878:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1882:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1886:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1890:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1894:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1898:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1902:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1906:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1910:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:1914:22 • public_member_api_docs
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:1990:34 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:1993:36 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:1996:35 • deprecated_member_use
+   info • 'red' is deprecated and shouldn't be used. Use (*.r * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:2070:34 • deprecated_member_use
+   info • 'green' is deprecated and shouldn't be used. Use (*.g * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:2073:36 • deprecated_member_use
+   info • 'blue' is deprecated and shouldn't be used. Use (*.b * 255.0).round().clamp(0, 255) • lib/src/components/form/color_picker.dart:2076:35 • deprecated_member_use
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2079:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2080:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2081:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2082:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2083:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2084:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2085:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2086:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2088:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:2225:19 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2295:59 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2313:59 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2332:55 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2444:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2445:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2446:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2447:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2448:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2449:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2450:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2451:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2453:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/color_picker.dart:2579:19 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2649:59 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2667:59 • undefined_identifier
+  error • Undefined name 'VNLColors' • lib/src/components/form/color_picker.dart:2686:55 • undefined_identifier
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2798:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2799:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2800:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2801:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:2803:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3122:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3123:28 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3124:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3125:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3127:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3446:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3447:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3448:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/color_picker.dart:3449:23 • public_member_api_docs
+  error • The name 'VNLEmailValidator' is being referenced through the prefix 'email_validator', but it isn't defined in any of the libraries imported using that prefix • lib/src/components/form/form.dart:1210:26 • undefined_prefixed_name
+  error • The method 'FocusOutlineTheme' isn't defined for the type 'FormField' • lib/src/components/form/form.dart:2850:19 • undefined_method
+  error • The method 'TextFieldTheme' isn't defined for the type 'FormField' • lib/src/components/form/form.dart:2858:21 • undefined_method
+  error • The function 'VNLTable' isn't defined • lib/src/components/form/form.dart:3025:22 • undefined_function
+  error • The function 'VNLTableRow' isn't defined • lib/src/components/form/form.dart:3032:21 • undefined_function
+  error • The method 'FocusOutlineTheme' isn't defined for the type 'VNLFormTableLayout' • lib/src/components/form/form.dart:3051:31 • undefined_method
+  error • The method 'TextFieldTheme' isn't defined for the type 'VNLFormTableLayout' • lib/src/components/form/form.dart:3060:33 • undefined_method
+  error • The name 'FocusOutlineTheme' isn't a class • lib/src/components/form/formatted_input.dart:512:25 • creation_with_non_type
+  error • The name 'FocusOutlineTheme' isn't a class • lib/src/components/form/input_otp.dart:544:31 • creation_with_non_type
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:6:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:8:32 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:9:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:10:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:11:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:12:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:13:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:14:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:15:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:16:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:17:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:18:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:19:31 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:20:33 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:21:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:22:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:23:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/src/components/form/number_input.dart:25:9 • public_member_api_docs
+  error • Undefined name 'VNLTheme' • lib/src/components/form/number_input.dart:91:19 • undefined_identifier
+  error • Undefined class 'VNLThemeData' • lib/src/components/form/number_input.dart:99:44 • undefined_class
+  error • Undefined class 'VNLThemeData' • lib/src/components/form/number_input.dart:226:47 • undefined_class
+  error • The argument type 'bool' can't be assigned to the parameter type 'Border?'.  • lib/src/components/form/number_input.dart:231:17 • argument_type_not_assignable
+  error • The named parameter 'leading' isn't defined • lib/src/components/form/number_input.dart:234:9 • undefined_named_parameter
+  error • The named parameter 'trailing' isn't defined • lib/src/components/form/number_input.dart:235:9 • undefined_named_parameter
+  error • The name 'FocusOutlineTheme' isn't a class • lib/src/components/form/select.dart:1876:37 • creation_with_non_type
+  error • A value of type 'ShadcnLocalizationsEn' can't be returned from the function 'lookupShadcnLocalizations' because it has a return type of 'VNLookLocalizations' • lib/src/components/locale/shadcn_localizations.dart:750:14 • return_of_invalid_type
+  error • Classes can only extend other classes • lib/src/components/locale/shadcn_localizations_en.dart:8:37 • extends_non_class
+  error • Too many positional arguments: 0 expected, but 1 found • lib/src/components/locale/shadcn_localizations_en.dart:9:57 • extra_positional_arguments
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:12:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:15:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:18:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:21:14 • override_on_non_overriding_member
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:24:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:26:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:33:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:35:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:42:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:44:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:51:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:53:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:60:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:62:42 • undefined_identifier
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:65:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:72:10 • override_on_non_overriding_member
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:74:42 • undefined_identifier
+  error • Undefined name 'localeName' • lib/src/components/locale/shadcn_localizations_en.dart:77:42 • undefined_identifier
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:84:10 • override_on_non_overriding_member
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:89:10 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:94:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:97:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:101:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:105:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:109:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:112:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:115:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:118:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:121:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:124:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:127:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:130:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:133:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:136:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:139:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:142:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:145:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:148:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:151:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:154:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:157:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:160:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:163:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:166:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:169:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:172:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:175:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:178:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:181:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:184:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:187:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:190:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:193:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:196:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:199:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:202:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:205:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:208:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:211:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:214:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:217:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:220:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:223:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:226:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:229:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:232:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:235:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:238:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:241:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:244:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:247:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:250:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:253:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:256:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:259:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:262:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:265:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:268:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:271:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:274:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:277:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:280:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:283:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:286:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:289:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:292:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:295:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:298:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:301:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:304:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:307:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:310:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:313:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:316:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:319:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:322:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:325:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:328:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:331:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:334:14 • override_on_non_overriding_member
+warning • The method doesn't override an inherited method • lib/src/components/locale/shadcn_localizations_en.dart:337:10 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:342:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:345:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:348:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:351:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:354:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:357:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:360:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:363:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:366:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:369:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:372:14 • override_on_non_overriding_member
+warning • The getter doesn't override an inherited getter • lib/src/components/locale/shadcn_localizations_en.dart:375:14 • override_on_non_overriding_member
+   info • Library names are not necessary • lib/vnl_ui_extension.dart:1:9 • unnecessary_library_name
+

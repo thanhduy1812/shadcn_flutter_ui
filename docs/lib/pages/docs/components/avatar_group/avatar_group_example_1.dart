@@ -1,5 +1,10 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+/// VNLAvatarGroup directions demo.
+///
+/// Displays the same set of avatars grouped in four different stacking
+/// directions: left, right, top, and bottom. Useful for dense displays
+/// where overlapping avatars save space.
 class AvatarGroupExample1 extends StatefulWidget {
   const AvatarGroupExample1({super.key});
 
@@ -8,22 +13,23 @@ class AvatarGroupExample1 extends StatefulWidget {
 }
 
 class _AvatarGroupExample1State extends State<AvatarGroupExample1> {
-  List<AvatarWidget> getAvatars() {
+  /// Helper that returns a few colored avatars to visualize overlap.
+  List<VNLAvatarWidget> getAvatars() {
     return [
-      Avatar(
-        initials: Avatar.getInitials('sunarya-thito'),
+      VNLAvatar(
+        initials: VNLAvatar.getInitials('sunarya-thito'),
         backgroundColor: VNLColors.red,
       ),
-      Avatar(
-        initials: Avatar.getInitials('sunarya-thito'),
+      VNLAvatar(
+        initials: VNLAvatar.getInitials('sunarya-thito'),
         backgroundColor: VNLColors.green,
       ),
-      Avatar(
-        initials: Avatar.getInitials('sunarya-thito'),
+      VNLAvatar(
+        initials: VNLAvatar.getInitials('sunarya-thito'),
         backgroundColor: VNLColors.blue,
       ),
-      Avatar(
-        initials: Avatar.getInitials('sunarya-thito'),
+      VNLAvatar(
+        initials: VNLAvatar.getInitials('sunarya-thito'),
         backgroundColor: VNLColors.yellow,
       ),
     ];
@@ -35,10 +41,14 @@ class _AvatarGroupExample1State extends State<AvatarGroupExample1> {
       spacing: 16,
       runSpacing: 16,
       children: [
-        AvatarGroup.toLeft(children: getAvatars()),
-        AvatarGroup.toRight(children: getAvatars()),
-        AvatarGroup.toTop(children: getAvatars()),
-        AvatarGroup.toBottom(children: getAvatars()),
+        // Overlap avatars towards the left.
+        VNLAvatarGroup.toLeft(children: getAvatars()),
+        // Overlap avatars towards the right.
+        VNLAvatarGroup.toRight(children: getAvatars()),
+        // Stack vertically upwards.
+        VNLAvatarGroup.toTop(children: getAvatars()),
+        // Stack vertically downwards.
+        VNLAvatarGroup.toBottom(children: getAvatars()),
       ],
     );
   }

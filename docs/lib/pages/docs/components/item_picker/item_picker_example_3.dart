@@ -40,10 +40,10 @@ class _ItemPickerExample3State extends State<ItemPickerExample3> {
           builder: (context, item) {
             return ItemPickerOption(
               value: item,
-              selectedStyle: const ButtonStyle.primary(
+              selectedStyle: const VNLButtonStyle.primary(
                 shape: ButtonShape.circle,
               ),
-              style: const ButtonStyle.ghost(
+              style: const VNLButtonStyle.ghost(
                 shape: ButtonShape.circle,
               ),
               label: Text(item.name),
@@ -60,19 +60,21 @@ class _ItemPickerExample3State extends State<ItemPickerExample3> {
           (value) {
             if (value != null) {
               selectedColor = colors.indexOf(value);
+              if (context.mounted) {
+                showToast(
+                  context: context,
+                  builder: (context, overlay) {
+                    return VNLSurfaceCard(
+                      child: Text('You picked ${value.name}!'),
+                    );
+                  },
+                );
+              }
+            } else if (context.mounted) {
               showToast(
                 context: context,
                 builder: (context, overlay) {
-                  return SurfaceCard(
-                    child: Text('You picked ${value.name}!'),
-                  );
-                },
-              );
-            } else {
-              showToast(
-                context: context,
-                builder: (context, overlay) {
-                  return const SurfaceCard(
+                  return const VNLSurfaceCard(
                     child: Text('You picked nothing!'),
                   );
                 },

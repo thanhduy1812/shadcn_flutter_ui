@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class SwiperExample1 extends StatefulWidget {
   const SwiperExample1({super.key});
@@ -8,11 +8,11 @@ class SwiperExample1 extends StatefulWidget {
 }
 
 class _SwiperExample1State extends State<SwiperExample1> {
-  OverlayPosition _position = OverlayPosition.left;
+  OverlayPosition _position = OverlayPosition.end;
   bool _typeDrawer = true;
 
   Widget _buildSelectPosition(OverlayPosition position, String label) {
-    return SelectedButton(
+    return VNLSelectedButton(
       value: _position == position,
       onChanged: (value) {
         if (value) {
@@ -21,8 +21,8 @@ class _SwiperExample1State extends State<SwiperExample1> {
           });
         }
       },
-      style: const ButtonStyle.outline(),
-      selectedStyle: const ButtonStyle.primary(),
+      style: const VNLButtonStyle.outline(),
+      selectedStyle: const VNLButtonStyle.primary(),
       child: Text(label),
     );
   }
@@ -67,8 +67,10 @@ class _SwiperExample1State extends State<SwiperExample1> {
           ),
         );
       },
+      // VNLSwiper displays an overlay (drawer/sheet) that can be swiped in from a chosen edge.
       position: _position,
-      handler: _typeDrawer ? SwiperHandler.drawer : SwiperHandler.sheet,
+      // Choose the overlay type: Drawer slides over content; Sheet peeks up from an edge.
+      handler: _typeDrawer ? VNLSwiperHandler.drawer : VNLSwiperHandler.sheet,
       child: SizedBox(
         height: 500,
         child: VNLCard(
@@ -78,14 +80,14 @@ class _SwiperExample1State extends State<SwiperExample1> {
               children: [
                 const Text('Swipe me!'),
                 const Gap(24),
-                ButtonGroup(children: [
+                VNLButtonGroup(children: [
                   _buildSelectPosition(OverlayPosition.left, 'Left'),
                   _buildSelectPosition(OverlayPosition.right, 'Right'),
                   _buildSelectPosition(OverlayPosition.top, 'Top'),
                   _buildSelectPosition(OverlayPosition.bottom, 'Bottom'),
                 ]),
                 const Gap(24),
-                ButtonGroup(children: [
+                VNLButtonGroup(children: [
                   VNLToggle(
                     value: _typeDrawer,
                     onChanged: (value) {

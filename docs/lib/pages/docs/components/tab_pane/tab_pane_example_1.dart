@@ -1,5 +1,8 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+// Demonstrates TabPane with sortable, closable tabs backed by custom data.
+// Tracks a focused index and renders a content area for the active tab.
+
 class TabPaneExample1 extends StatefulWidget {
   const TabPaneExample1({super.key});
 
@@ -26,21 +29,24 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // Build the initial set of tabs. TabPaneData wraps your custom data type
+    // (here, MyTab) and adds selection/drag metadata.
     tabs = [
       for (int i = 0; i < 3; i++) TabPaneData(MyTab('Tab ${i + 1}', i + 1, 'Content ${i + 1}')),
     ];
   }
 
-  TabItem _buildTabItem(MyTab data) {
-    return TabItem(
+  // Render a single tab header item. It shows a badge-like count and a close button.
+  VNLTabItem _buildTabItem(MyTab data) {
+    return VNLTabItem(
       child: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 150),
-        child: Label(
-          leading: OutlinedContainer(
+        child: VNLLabel(
+          leading: VNLOutlinedContainer(
             backgroundColor: VNLColors.white,
             width: 18,
             height: 18,
-            borderRadius: VNLTheme.of(context).borderRadiusMd,
+            borderRadius: Theme.of(context).borderRadiusMd,
             child: Center(
               child: Text(
                 data.count.toString(),
@@ -48,9 +54,9 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
               ).xSmall().bold(),
             ),
           ),
-          trailing: IconButton.ghost(
+          trailing: VNLIconButton.ghost(
             shape: ButtonShape.circle,
-            size: ButtonSize.xSmall,
+            size: VNLButtonSize.xSmall,
             icon: const Icon(Icons.close),
             onPressed: () {
               setState(() {
@@ -68,33 +74,37 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
   Widget build(BuildContext context) {
     return TabPane<MyTab>(
       // children: tabs.map((e) => _buildTabItem(e)).toList(),
+      // Provide the items and how to render each tab header.
       items: tabs,
       itemBuilder: (context, item, index) {
         return _buildTabItem(item.data);
       },
+      // The currently focused tab index.
       focused: focused,
       onFocused: (value) {
         setState(() {
           focused = value;
         });
       },
+      // Allow reordering via drag-and-drop; update the list with the new order.
       onSort: (value) {
         setState(() {
           tabs = value;
         });
       },
+      // Optional leading/trailing actions for the tab strip.
       leading: [
-        IconButton.secondary(
+        VNLIconButton.secondary(
           icon: const Icon(Icons.arrow_drop_down),
-          size: ButtonSize.small,
+          size: VNLButtonSize.small,
           density: ButtonDensity.iconDense,
           onPressed: () {},
         ),
       ],
       trailing: [
-        IconButton.ghost(
+        VNLIconButton.ghost(
           icon: const Icon(Icons.add),
-          size: ButtonSize.small,
+          size: VNLButtonSize.small,
           density: ButtonDensity.iconDense,
           onPressed: () {
             setState(() {
@@ -106,6 +116,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
           },
         )
       ],
+      // The content area; you can render based on the focused index.
       child: SizedBox(
         height: 400,
         child: Center(

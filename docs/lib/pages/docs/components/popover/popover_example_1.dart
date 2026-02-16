@@ -1,24 +1,30 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:flutter/foundation.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
+
+// Shows how to open a contextual popover anchored to a button, with a custom
+// overlay barrier and a simple form inside. The popover closes via
+// closeOverlay(context) or when the user taps outside the barrier.
 
 class PopoverExample1 extends StatelessWidget {
   const PopoverExample1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     return PrimaryButton(
       onPressed: () {
         showPopover(
           context: context,
+          // Position the popover above the button, shifted by 8px.
           alignment: Alignment.topCenter,
           offset: const Offset(0, 8),
           // Unless you have full opacity surface,
           // you should explicitly set the overlay barrier.
-          overlayBarrier: OverlayBarrier(
+          overlayBarrier: VNLOverlayBarrier(
             borderRadius: theme.borderRadiusLg,
           ),
           builder: (context) {
-            return ModalContainer(
+            return VNLModalContainer(
               child: SizedBox(
                 width: 300,
                 child: Column(
@@ -28,8 +34,9 @@ class PopoverExample1 extends StatelessWidget {
                     const Text('Dimensions').large().medium(),
                     const Text('Set the dimensions for the layer.').muted(),
                     VNLForm(
-                      controller: FormController(),
-                      child: const FormTableLayout(
+                      controller: VNLFormController(),
+                      // Compact grid layout for label/field rows.
+                      child: const VNLFormTableLayout(
                         rows: [
                           FormField<double>(
                             key: FormKey(#width),
@@ -65,6 +72,7 @@ class PopoverExample1 extends StatelessWidget {
                     ).withPadding(vertical: 16),
                     PrimaryButton(
                       onPressed: () {
+                        // Close the popover and resolve the returned future.
                         closeOverlay(context);
                       },
                       child: const Text('Submit'),
@@ -75,7 +83,10 @@ class PopoverExample1 extends StatelessWidget {
             );
           },
         ).future.then((_) {
-          print('Popover closed');
+          // Optional completion hook after the popover is dismissed.
+          if (kDebugMode) {
+            print('VNLPopover closed');
+          }
         });
       },
       child: const Text('Open popover'),

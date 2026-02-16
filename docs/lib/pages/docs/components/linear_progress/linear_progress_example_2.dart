@@ -16,7 +16,8 @@ class _LinearProgressExample2State extends State<LinearProgressExample2> {
       children: [
         SizedBox(
           width: 200,
-          child: LinearProgressIndicator(
+          child: VNLLinearProgressIndicator(
+            // Supplying a value (0.0..1.0) switches the indicator to determinate mode.
             value: value,
           ),
         ),

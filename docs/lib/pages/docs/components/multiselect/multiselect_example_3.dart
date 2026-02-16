@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class MultiSelectExample3 extends StatefulWidget {
   const MultiSelectExample3({super.key});
@@ -18,9 +18,12 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
   };
   Iterable<String>? selectedValues;
 
-  Iterable<MapEntry<String, List<String>>> _filteredFruits(String searchQuery) sync* {
+  Iterable<MapEntry<String, List<String>>> _filteredFruits(
+      String searchQuery) sync* {
     for (final entry in fruits.entries) {
-      final filteredValues = entry.value.where((value) => _filterName(value, searchQuery)).toList();
+      final filteredValues = entry.value
+          .where((value) => _filterName(value, searchQuery))
+          .toList();
       if (filteredValues.isNotEmpty) {
         yield MapEntry(entry.key, filteredValues);
       } else if (_filterName(entry.key, searchQuery)) {
@@ -41,12 +44,14 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
 
   @override
   Widget build(BuildContext context) {
+    // Advanced multi-select with async loading, empty and loading builders,
+    // and dynamic per-item styling.
     return MultiSelect<String>(
       itemBuilder: (context, item) {
         var color = _getColorByChip(item);
-        return MultiSelectChip(
+        return VNLMultiSelectChip(
           value: item,
-          style: const ButtonStyle.primary().withBackgroundColor(
+          style: const VNLButtonStyle.primary().withBackgroundColor(
             color: color,
             hoverColor: color.withLuminance(0.3),
           ),
@@ -62,19 +67,23 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
         },
         loadingBuilder: (context) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: VNLCircularProgressIndicator(),
           );
         },
         builder: (context, searchQuery) async {
-          final filteredFruits = searchQuery == null ? fruits.entries.toList() : _filteredFruits(searchQuery).toList();
+          final filteredFruits = searchQuery == null
+              ? fruits.entries.toList()
+              : _filteredFruits(searchQuery).toList();
+          // Simulate an async load to demonstrate loadingBuilder.
           await Future.delayed(const Duration(milliseconds: 500));
-          return SelectItemBuilder(
+          return VNLSelectItemBuilder(
+            // Use childCount=0 to switch to emptyBuilder when there are no items.
             childCount: filteredFruits.isEmpty ? 0 : null,
             builder: (context, index) {
               final entry = filteredFruits[index % filteredFruits.length];
-              return SelectGroup(
+              return VNLSelectGroup(
                 headers: [
-                  SelectLabel(
+                  VNLSelectLabel(
                     child: Text(entry.key),
                   ),
                 ],
@@ -82,7 +91,7 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
                   for (final value in entry.value)
                     SelectItemButton(
                       value: value,
-                      style: const ButtonStyle.ghost().withBackgroundColor(
+                      style: const VNLButtonStyle.ghost().withBackgroundColor(
                         hoverColor: _getColorByChip(value).withLuminance(0.3),
                       ),
                       child: Text(value),

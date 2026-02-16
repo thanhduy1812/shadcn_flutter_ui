@@ -12,10 +12,10 @@ class TabsExample extends StatelessWidget {
     return const ComponentPage(
       name: 'tabs',
       description: 'A list of tabs for selecting a single item.',
-      displayName: 'Tabs',
+      displayName: 'VNLTabs',
       children: [
         WidgetUsageExample(
-          title: 'Tabs Example',
+          title: 'VNLTabs Example',
           path: 'lib/pages/docs/components/tabs/tabs_example_1.dart',
           child: TabsExample1(),
         ),

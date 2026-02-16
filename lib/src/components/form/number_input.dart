@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-@Deprecated('Use TextField with InputFeature.spinner() instead.')
+@Deprecated('Use VNLTextField with VNLInputFeature.spinner() instead.')
 class VNLNumberInput extends StatefulWidget {
   static final _decimalFormatter = FilteringTextInputFormatter.allow(RegExp(r'^-?[0-9]+\.?[0-9]*$'));
   final TextEditingController? controller;
@@ -17,7 +17,7 @@ class VNLNumberInput extends StatefulWidget {
   final bool? enabled;
   final double step;
   final ValueChanged<double>? onChanged;
-  final AbstractButtonStyle? buttonStyle;
+  final VNLAbstractButtonStyle? buttonStyle;
   final TextStyle? style;
   final EdgeInsetsGeometry? padding;
   final VoidCallback? onEditingComplete;
@@ -88,15 +88,18 @@ class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
-    return OutlinedContainer(borderRadius: theme.borderRadiusMd, child: buildTextField(context, theme));
+    final theme = Theme.of(context);
+    return VNLOutlinedContainer(
+      borderRadius: theme.borderRadiusMd,
+      child: buildTextField(context, theme),
+    );
   }
 
-  AbstractButtonStyle get _buttonStyle {
-    return widget.buttonStyle ?? const ButtonStyle.text(density: ButtonDensity.compact, size: ButtonSize.small);
+  VNLAbstractButtonStyle get _buttonStyle {
+    return widget.buttonStyle ?? const VNLButtonStyle.text(density: ButtonDensity.compact, size: VNLButtonSize.small);
   }
 
-  Widget buildButton(BuildContext context, VNLThemeData theme) {
+  Widget buildButton(BuildContext context, ThemeData theme) {
     return SizedBox(
       width: 24 * theme.scaling,
       height: 32 * theme.scaling,
@@ -223,21 +226,26 @@ class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num
     }
   }
 
-  Widget buildTextField(BuildContext context, VNLThemeData theme) {
+  Widget buildTextField(BuildContext context, ThemeData theme) {
     final scaling = theme.scaling;
     return ConstrainedBox(
       constraints: BoxConstraints(minWidth: 50 * scaling),
       child: VNLTextField(
-        border: false,
+        border: const Border.fromBorderSide(BorderSide.none),
         minLines: 1,
         maxLines: 1,
-        leading: widget.leading,
-        trailing: Row(
-          children: [
-            if (widget.trailing != null) widget.trailing!,
-            if (widget.showButtons) buildButton(context, theme),
-          ],
-        ),
+        features: [
+          if (widget.leading != null) VNLInputFeature.leading(widget.leading!),
+          VNLInputFeature.trailing(
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.trailing != null) widget.trailing!,
+                if (widget.showButtons) buildButton(context, theme),
+              ],
+            ),
+          ),
+        ],
         padding: widget.padding ?? EdgeInsetsDirectional.only(start: 10 * scaling),
         style: widget.style,
         inputFormatters: [

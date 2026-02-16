@@ -12,10 +12,10 @@ class SwitchExample extends StatelessWidget {
     return const ComponentPage(
       name: 'switch',
       description: 'A switch is a visual toggle between two mutually exclusive states — on and off.',
-      displayName: 'Switch',
+      displayName: 'VNLSwitch',
       children: [
         WidgetUsageExample(
-          title: 'Switch Example',
+          title: 'VNLSwitch Example',
           path: 'lib/pages/docs/components/switch/switch_example_1.dart',
           child: SwitchExample1(),
         ),

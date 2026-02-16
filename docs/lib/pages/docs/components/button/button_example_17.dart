@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class ButtonExample17 extends StatelessWidget {
   const ButtonExample17({super.key});
@@ -6,13 +6,13 @@ class ButtonExample17 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VNLButton(
-      style: const ButtonStyle.primary()
+      style: const VNLButtonStyle.primary()
           .withBackgroundColor(color: VNLColors.red, hoverColor: VNLColors.purple)
           .withForegroundColor(color: VNLColors.white)
           .withBorderRadius(hoverBorderRadius: BorderRadius.circular(16)),
       onPressed: () {},
       leading: const Icon(Icons.sunny),
-      child: const Text('Custom Button'),
+      child: const Text('Custom VNLButton'),
     );
   }
 }

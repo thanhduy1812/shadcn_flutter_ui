@@ -5,7 +5,7 @@ class LayoutPageExample9 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Basic(
+    return const VNLBasic(
       title: Text('Title'),
       leading: Icon(Icons.star),
       trailing: Icon(Icons.arrow_forward),

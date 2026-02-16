@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class MenubarExample1 extends StatefulWidget {
   const MenubarExample1({super.key});
@@ -14,13 +14,15 @@ class _MenubarExample1State extends State<MenubarExample1> {
   int _selectedProfile = 1;
   @override
   Widget build(BuildContext context) {
+    // Typical desktop-style menubar with nested submenus, shortcuts,
+    // checkboxes (non-closing), and a radio group.
     return VNLMenubar(
       children: [
-        const MenuButton(
+        const VNLMenuButton(
           subMenu: [
-            MenuButton(
+            VNLMenuButton(
               leading: Icon(RadixIcons.filePlus),
-              trailing: MenuShortcut(
+              trailing: VNLMenuShortcut(
                 activator: SingleActivator(
                   LogicalKeyboardKey.keyT,
                   control: true,
@@ -28,36 +30,36 @@ class _MenubarExample1State extends State<MenubarExample1> {
               ),
               child: Text('New Tab'),
             ),
-            MenuButton(
-              trailing: MenuShortcut(
+            VNLMenuButton(
+              trailing: VNLMenuShortcut(
                 activator: SingleActivator(
                   LogicalKeyboardKey.keyN,
                   control: true,
                 ),
               ),
-              child: Text('New Window'),
+              child: Text('New VNLWindow'),
             ),
-            MenuButton(
+            VNLMenuButton(
               enabled: false,
-              child: Text('New Incognito Window'),
+              child: Text('New Incognito VNLWindow'),
             ),
-            MenuDivider(),
-            MenuButton(
+            VNLMenuDivider(),
+            VNLMenuButton(
               subMenu: [
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Email Link'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Messages'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Notes'),
                 ),
               ],
               child: Text('Share'),
             ),
-            MenuButton(
-              trailing: MenuShortcut(
+            VNLMenuButton(
+              trailing: VNLMenuShortcut(
                 activator: SingleActivator(
                   LogicalKeyboardKey.keyP,
                   control: true,
@@ -65,13 +67,24 @@ class _MenubarExample1State extends State<MenubarExample1> {
               ),
               child: Text('Print'),
             ),
+            VNLMenuButton(
+              subMenu: [
+                VNLMenuButton(
+                  child: Text('Save and Exit'),
+                ),
+                VNLMenuButton(
+                  child: Text('Discard and Exit'),
+                ),
+              ],
+              child: Text('Exit'),
+            ),
           ],
           child: Text('File'),
         ),
-        const MenuButton(
+        const VNLMenuButton(
           subMenu: [
-            MenuButton(
-              trailing: MenuShortcut(
+            VNLMenuButton(
+              trailing: VNLMenuShortcut(
                 activator: SingleActivator(
                   LogicalKeyboardKey.keyZ,
                   control: true,
@@ -79,8 +92,8 @@ class _MenubarExample1State extends State<MenubarExample1> {
               ),
               child: Text('Undo'),
             ),
-            MenuButton(
-              trailing: MenuShortcut(
+            VNLMenuButton(
+              trailing: VNLMenuShortcut(
                 activator: SingleActivator(
                   LogicalKeyboardKey.keyZ,
                   control: true,
@@ -89,63 +102,65 @@ class _MenubarExample1State extends State<MenubarExample1> {
               ),
               child: Text('Redo'),
             ),
-            MenuDivider(),
-            MenuButton(
+            VNLMenuDivider(),
+            VNLMenuButton(
               subMenu: [
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Search the Web'),
                 ),
-                MenuDivider(),
-                MenuButton(
+                VNLMenuDivider(),
+                VNLMenuButton(
                   child: Text('Find...'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Find Next'),
                 ),
-                MenuButton(
+                VNLMenuButton(
                   child: Text('Find Previous'),
                 ),
               ],
               child: Text('Find'),
             ),
-            MenuDivider(),
-            MenuButton(
+            VNLMenuDivider(),
+            VNLMenuButton(
               child: Text('Cut'),
             ),
-            MenuButton(
+            VNLMenuButton(
               child: Text('Copy'),
             ),
-            MenuButton(
+            VNLMenuButton(
               child: Text('Paste'),
             ),
           ],
           child: Text('Edit'),
         ),
-        MenuButton(
+        VNLMenuButton(
           subMenu: [
-            MenuCheckbox(
+            VNLMenuCheckbox(
               value: _showBookmarksBar,
               onChanged: (context, value) {
                 setState(() {
                   _showBookmarksBar = value;
                 });
               },
+              // Keep the submenu open while toggling for quicker multi-actions.
               autoClose: false,
               child: const Text('Always Show Bookmarks Bar'),
             ),
-            MenuCheckbox(
+            VNLMenuCheckbox(
               value: _showFullURLs,
               onChanged: (context, value) {
                 setState(() {
                   _showFullURLs = value;
                 });
               },
+              // Also keep open here to demonstrate autoClose control.
               autoClose: false,
               child: const Text('Always Show Full URLs'),
             ),
-            const MenuDivider(),
-            const MenuButton(
-              trailing: MenuShortcut(
+            const VNLMenuDivider(),
+            const VNLMenuButton(
+              trailing: VNLMenuShortcut(
                 activator: SingleActivator(
                   LogicalKeyboardKey.keyR,
                   control: true,
@@ -153,9 +168,9 @@ class _MenubarExample1State extends State<MenubarExample1> {
               ),
               child: Text('Reload'),
             ),
-            const MenuButton(
+            const VNLMenuButton(
               enabled: false,
-              trailing: MenuShortcut(
+              trailing: VNLMenuShortcut(
                 activator: SingleActivator(
                   LogicalKeyboardKey.keyR,
                   control: true,
@@ -164,18 +179,18 @@ class _MenubarExample1State extends State<MenubarExample1> {
               ),
               child: Text('Force Reload'),
             ),
-            const MenuDivider(),
-            const MenuButton(
-              child: Text('Toggle Full Screen'),
+            const VNLMenuDivider(),
+            const VNLMenuButton(
+              child: Text('VNLToggle Full Screen'),
             ),
-            const MenuDivider(),
-            const MenuButton(
+            const VNLMenuDivider(),
+            const VNLMenuButton(
               child: Text('Hide Sidebar'),
             ),
           ],
           child: const Text('View'),
         ),
-        MenuButton(
+        VNLMenuButton(
           subMenu: [
             MenuRadioGroup<int>(
               value: _selectedProfile,
@@ -187,6 +202,7 @@ class _MenubarExample1State extends State<MenubarExample1> {
               children: const [
                 MenuRadio<int>(
                   value: 0,
+                  // Disable auto-close to let users quickly toggle multiple options.
                   autoClose: false,
                   child: Text('Andy'),
                 ),
@@ -202,12 +218,12 @@ class _MenubarExample1State extends State<MenubarExample1> {
                 ),
               ],
             ),
-            const MenuDivider(),
-            const MenuButton(
+            const VNLMenuDivider(),
+            const VNLMenuButton(
               child: Text('Edit...'),
             ),
-            const MenuDivider(),
-            const MenuButton(
+            const VNLMenuDivider(),
+            const VNLMenuButton(
               child: Text('Add Profile...'),
             ),
           ],

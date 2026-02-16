@@ -14,10 +14,10 @@ class TimelineAnimationExample extends StatelessWidget {
       description: 'A timeline animation is a way of displaying a list of '
           'events in chronological order, sometimes described as a project '
           'artifact with animations.',
-      displayName: 'Timeline Animation',
+      displayName: 'VNLTimeline Animation',
       children: [
         WidgetUsageExample(
-          title: 'Timeline Animation Example',
+          title: 'VNLTimeline Animation Example',
           path: 'lib/pages/docs/components/timeline_animation/timeline_animation_example_1.dart',
           child: TimelineAnimationExample1(),
         ),

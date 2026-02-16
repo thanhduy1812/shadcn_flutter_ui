@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class InputExample3 extends StatelessWidget {
   const InputExample3({super.key});
@@ -10,24 +10,29 @@ class InputExample3 extends StatelessWidget {
         VNLTextField(
           placeholder: const Text('Enter your name'),
           features: [
-            const InputFeature.clear(),
-            InputFeature.hint(
+            const VNLInputFeature.clear(),
+            // Hint shows a small tooltip-like popup for the input field.
+            VNLInputFeature.hint(
               popupBuilder: (context) {
-                return const TooltipContainer(child: Text('This is for your username'));
+                return const VNLTooltipContainer(
+                    child: Text('This is for your username'));
               },
             ),
-            const InputFeature.copy(),
-            const InputFeature.paste(),
+            // Convenience actions for copying/pasting directly from the text field UI.
+            const VNLInputFeature.copy(),
+            const VNLInputFeature.paste(),
           ],
         ),
         const Gap(24),
         const VNLTextField(
           placeholder: Text('Enter your password'),
           features: [
-            InputFeature.clear(
-              visibility: InputFeatureVisibility.textNotEmpty,
+            VNLInputFeature.clear(
+              visibility: VNLInputFeatureVisibility.textNotEmpty,
             ),
-            InputFeature.passwordToggle(mode: PasswordPeekMode.hold),
+            // Password toggle configured with `hold` mode: press-and-hold to peek,
+            // release to hide again.
+            VNLInputFeature.passwordToggle(mode: PasswordPeekMode.hold),
           ],
         ),
       ],

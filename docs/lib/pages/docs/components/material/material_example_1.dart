@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vnl_common_ui/vnl_ui.dart' as vnlui;
+import 'package:vnl_common_ui/shadcn_flutter.dart' as shadcnui;
 
 class MaterialExample1 extends StatefulWidget {
   const MaterialExample1({super.key});
@@ -12,6 +12,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
   int _counter = 0;
 
   void _incrementCounter() {
+    // Demonstrates using a Material SnackBar inside a typical Scaffold app.
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('You have pushed the button $_counter times'),
@@ -40,20 +41,24 @@ class _MaterialExample1State extends State<MaterialExample1> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const vnlui.Gap(64),
-            vnlui.VNLookUI(
-                child: vnlui.VNLCard(
+            const shadcnui.Gap(64),
+            // You can compose shadcn_flutter widgets inside a Material app.
+            // Wrapping with VNLookUI ensures inherited theme/semantics are properly applied.
+            shadcnui.VNLookUI(
+                child: shadcnui.VNLCard(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('You can also use vnl_ui widgets inside Material widgets'),
-                  const vnlui.Gap(16),
-                  vnlui.PrimaryButton(
+                  const Text(
+                      'You can also use shadcn_flutter widgets inside Material widgets'),
+                  const shadcnui.Gap(16),
+                  shadcnui.PrimaryButton(
                     onPressed: () {
+                      // Show a native Material dialog
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return vnlui.VNLAlertDialog(
+                          return AlertDialog(
                             title: const Text('Hello'),
                             content: const Text('This is Material dialog'),
                             actions: [
@@ -70,17 +75,19 @@ class _MaterialExample1State extends State<MaterialExample1> {
                     },
                     child: const Text('Open Material Dialog'),
                   ),
-                  const vnlui.Gap(8),
-                  vnlui.SecondaryButton(
+                  const shadcnui.Gap(8),
+                  shadcnui.VNLSecondaryButton(
                     onPressed: () {
-                      vnlui.showDialog(
+                      // Show a shadcn_flutter dialog side-by-side for comparison
+                      shadcnui.showDialog(
                         context: context,
                         builder: (context) {
-                          return vnlui.VNLAlertDialog(
+                          return shadcnui.VNLAlertDialog(
                             title: const Text('Hello'),
-                            content: const Text('This is vnl_ui dialog'),
+                            content:
+                                const Text('This is shadcn_flutter dialog'),
                             actions: [
-                              vnlui.PrimaryButton(
+                              shadcnui.PrimaryButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
@@ -91,7 +98,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
                         },
                       );
                     },
-                    child: const Text('Open vnl_ui Dialog'),
+                    child: const Text('Open shadcn_flutter Dialog'),
                   ),
                 ],
               ),

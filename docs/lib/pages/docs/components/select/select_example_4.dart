@@ -11,7 +11,7 @@ class _SelectExample4State extends State<SelectExample4> {
   String? selectedValue;
   @override
   Widget build(BuildContext context) {
-    return VNLSelect<String>(
+    return Select<String>(
       itemBuilder: (context, item) {
         return Text(item);
       },
@@ -26,9 +26,11 @@ class _SelectExample4State extends State<SelectExample4> {
       },
       value: selectedValue,
       placeholder: const Text('Select a fruit'),
+      // Constrain popup width to its intrinsic content size (no virtualization in this variant).
       popupWidthConstraint: PopoverConstraint.intrinsic,
+      // Use a simple non-virtualized popup; suitable for small lists.
       popup: const SelectPopup.noVirtualization(
-        items: SelectItemList(
+        items: VNLSelectItemList(
           children: [
             SelectItemButton(
               value: 'Apple',

@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class DotIndicatorExample1 extends StatefulWidget {
   const DotIndicatorExample1({super.key});
@@ -11,6 +11,8 @@ class _DotIndicatorExample1State extends State<DotIndicatorExample1> {
   int _index = 0;
   @override
   Widget build(BuildContext context) {
+    // A simple pager-like dot indicator with 5 steps.
+    // Tap/click updates the current index via onChanged.
     return VNLDotIndicator(
         index: _index,
         length: 5,

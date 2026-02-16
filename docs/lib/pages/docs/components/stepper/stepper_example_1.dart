@@ -9,25 +9,27 @@ class StepperExample1 extends StatefulWidget {
 }
 
 class _StepperExample1State extends State<StepperExample1> {
-  final StepperController controller = StepperController();
+  final VNLStepperController controller = VNLStepperController();
 
   @override
   Widget build(BuildContext context) {
     return VNLStepper(
       controller: controller,
+      // Vertical layout with 3 steps and Next/Prev actions.
       direction: Axis.vertical,
       steps: [
-        Step(
-          title: const Text('Step 1'),
+        VNLStep(
+          title: const Text('VNLStep 1'),
           contentBuilder: (context) {
-            return StepContainer(
+            return VNLStepContainer(
               actions: [
-                const SecondaryButton(
+                const VNLSecondaryButton(
                   child: Text('Prev'),
                 ),
                 PrimaryButton(
                     child: const Text('Next'),
                     onPressed: () {
+                      // Advance to the next step.
                       controller.nextStep();
                     }),
               ],
@@ -38,14 +40,15 @@ class _StepperExample1State extends State<StepperExample1> {
             );
           },
         ),
-        Step(
-          title: const Text('Step 2'),
+        VNLStep(
+          title: const Text('VNLStep 2'),
           contentBuilder: (context) {
-            return StepContainer(
+            return VNLStepContainer(
               actions: [
-                SecondaryButton(
+                VNLSecondaryButton(
                   child: const Text('Prev'),
                   onPressed: () {
+                    // Move back one step.
                     controller.previousStep();
                   },
                 ),
@@ -62,12 +65,12 @@ class _StepperExample1State extends State<StepperExample1> {
             );
           },
         ),
-        Step(
-          title: const Text('Step 3'),
+        VNLStep(
+          title: const Text('VNLStep 3'),
           contentBuilder: (context) {
-            return StepContainer(
+            return VNLStepContainer(
               actions: [
-                SecondaryButton(
+                VNLSecondaryButton(
                   child: const Text('Prev'),
                   onPressed: () {
                     controller.previousStep();

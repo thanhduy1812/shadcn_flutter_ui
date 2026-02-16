@@ -12,10 +12,10 @@ class CollapsibleExample extends StatelessWidget {
     return const ComponentPage(
       name: 'collapsible',
       description: 'A widget that can be expanded or collapsed.',
-      displayName: 'Collapsible',
+      displayName: 'VNLCollapsible',
       children: [
         WidgetUsageExample(
-          title: 'Collapsible Example',
+          title: 'VNLCollapsible Example',
           path: 'lib/pages/docs/components/collapsible/collapsible_example_1.dart',
           child: CollapsibleExample1(),
         ),

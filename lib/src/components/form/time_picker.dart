@@ -1,11 +1,142 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-class TimePickerController extends ValueNotifier<TimeOfDay?> with ComponentController<TimeOfDay?> {
-  TimePickerController([super.value]);
+/// Theme configuration for [VNLTimePicker] widget appearance and behavior.
+///
+/// Defines default settings for time picker components including display
+/// format, popover positioning, and dialog customization.
+class VNLTimePickerTheme extends ComponentThemeData {
+  /// Mode for displaying the time picker (popover or dialog).
+  final PromptMode? mode;
+
+  /// Alignment of the popover relative to its anchor.
+  final AlignmentGeometry? popoverAlignment;
+
+  /// Alignment point on the anchor widget for popover positioning.
+  final AlignmentGeometry? popoverAnchorAlignment;
+
+  /// Padding inside the popover.
+  final EdgeInsetsGeometry? popoverPadding;
+
+  /// Whether to use 24-hour time format.
+  final bool? use24HourFormat;
+
+  /// Whether to show seconds picker.
+  final bool? showSeconds;
+
+  /// Custom title widget for the time picker dialog.
+  final Widget? dialogTitle;
+
+  /// Creates a [TimePickerTheme].
+  const VNLTimePickerTheme({
+    this.mode,
+    this.popoverAlignment,
+    this.popoverAnchorAlignment,
+    this.popoverPadding,
+    this.use24HourFormat,
+    this.showSeconds,
+    this.dialogTitle,
+  });
+
+  /// Creates a copy of this theme with the given fields replaced.
+  VNLTimePickerTheme copyWith({
+    ValueGetter<PromptMode?>? mode,
+    ValueGetter<AlignmentGeometry?>? popoverAlignment,
+    ValueGetter<AlignmentGeometry?>? popoverAnchorAlignment,
+    ValueGetter<EdgeInsetsGeometry?>? popoverPadding,
+    ValueGetter<bool?>? use24HourFormat,
+    ValueGetter<bool?>? showSeconds,
+    ValueGetter<Widget?>? dialogTitle,
+  }) {
+    return VNLTimePickerTheme(
+      mode: mode == null ? this.mode : mode(),
+      popoverAlignment:
+          popoverAlignment == null ? this.popoverAlignment : popoverAlignment(),
+      popoverAnchorAlignment: popoverAnchorAlignment == null
+          ? this.popoverAnchorAlignment
+          : popoverAnchorAlignment(),
+      popoverPadding:
+          popoverPadding == null ? this.popoverPadding : popoverPadding(),
+      use24HourFormat:
+          use24HourFormat == null ? this.use24HourFormat : use24HourFormat(),
+      showSeconds: showSeconds == null ? this.showSeconds : showSeconds(),
+      dialogTitle: dialogTitle == null ? this.dialogTitle : dialogTitle(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is VNLTimePickerTheme &&
+        other.mode == mode &&
+        other.popoverAlignment == popoverAlignment &&
+        other.popoverAnchorAlignment == popoverAnchorAlignment &&
+        other.popoverPadding == popoverPadding &&
+        other.use24HourFormat == use24HourFormat &&
+        other.showSeconds == showSeconds &&
+        other.dialogTitle == dialogTitle;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        mode,
+        popoverAlignment,
+        popoverAnchorAlignment,
+        popoverPadding,
+        use24HourFormat,
+        showSeconds,
+        dialogTitle,
+      );
 }
 
-class ControlledTimePicker extends StatelessWidget with ControlledComponent<TimeOfDay?> {
+/// A controller for managing [VNLControlledTimePicker] values programmatically.
+///
+/// This controller extends `ValueNotifier<TimeOfDay?>` to provide reactive
+/// state management for time picker components. It implements [ComponentController]
+/// to integrate with the controlled component system, allowing external control
+/// and listening to time selection changes.
+///
+/// Example:
+/// ```dart
+/// final controller = VNLTimePickerController(TimeOfDay(hour: 12, minute: 30));
+/// controller.addListener(() {
+///   print('Selected time: ${controller.value}');
+/// });
+/// ```
+class VNLTimePickerController extends ValueNotifier<TimeOfDay?>
+    with ComponentController<TimeOfDay?> {
+  /// Creates a [VNLTimePickerController] with an optional initial value.
+  ///
+  /// Parameters:
+  /// - [value] (TimeOfDay?, optional): Initial time value for the controller
+  VNLTimePickerController([super.value]);
+}
+
+/// A controlled time picker widget for selecting time values with external state management.
+///
+/// This widget provides a time selection interface that can be controlled either through
+/// a [VNLTimePickerController] or through direct property values. It supports multiple
+/// presentation modes (dialog or popover), customizable time formats (12-hour/24-hour),
+/// and optional seconds display.
+///
+/// The time picker integrates with the controlled component system, making it suitable
+/// for form integration, validation, and programmatic control. It presents the selected
+/// time in a readable format and opens an interactive time selection interface when activated.
+///
+/// Example:
+/// ```dart
+/// VNLControlledTimePicker(
+///   initialValue: TimeOfDay(hour: 9, minute: 30),
+///   use24HourFormat: true,
+///   showSeconds: false,
+///   placeholder: Text('Select meeting time'),
+///   onChanged: (time) {
+///     print('Selected time: ${time?.format(context)}');
+///   },
+/// );
+/// ```
+class VNLControlledTimePicker extends StatelessWidget
+    with ControlledComponent<TimeOfDay?> {
   @override
   final TimeOfDay? initialValue;
   @override
@@ -13,18 +144,86 @@ class ControlledTimePicker extends StatelessWidget with ControlledComponent<Time
   @override
   final bool enabled;
   @override
-  final TimePickerController? controller;
+  final VNLTimePickerController? controller;
 
+  /// The presentation mode for the time picker interface.
+  ///
+  /// Determines how the time selection interface is displayed to the user.
+  /// Can be either dialog mode (modal popup) or popover mode (dropdown).
   final PromptMode mode;
+
+  /// Widget displayed when no time is selected.
+  ///
+  /// This placeholder appears in the picker button when [initialValue] is null
+  /// and no time has been selected yet. If null, a default placeholder is used.
   final Widget? placeholder;
+
+  /// Alignment for the popover relative to its anchor widget.
+  ///
+  /// Used only when [mode] is [PromptMode.popover]. Controls where the popover
+  /// appears relative to the picker button.
   final AlignmentGeometry? popoverAlignment;
+
+  /// Alignment of the anchor point on the picker button.
+  ///
+  /// Used only when [mode] is [PromptMode.popover]. Determines which point
+  /// on the picker button the popover aligns to.
   final AlignmentGeometry? popoverAnchorAlignment;
+
+  /// Internal padding for the popover content.
+  ///
+  /// Used only when [mode] is [PromptMode.popover]. Controls spacing inside
+  /// the popover container around the time picker interface.
   final EdgeInsetsGeometry? popoverPadding;
+
+  /// Whether to use 24-hour format for time display and input.
+  ///
+  /// When true, times are displayed in 24-hour format (00:00-23:59).
+  /// When false or null, uses the system default format preference.
   final bool? use24HourFormat;
+
+  /// Whether to include seconds in the time selection.
+  ///
+  /// When true, the time picker allows selection of seconds in addition
+  /// to hours and minutes. When false, only hours and minutes are selectable.
   final bool showSeconds;
+
+  /// Optional title widget for the dialog mode.
+  ///
+  /// Used only when [mode] is [PromptMode.dialog]. Displayed at the top
+  /// of the modal time picker dialog.
   final Widget? dialogTitle;
 
-  const ControlledTimePicker({
+  /// Creates a [VNLControlledTimePicker].
+  ///
+  /// Either [controller] or [initialValue] should be provided to establish
+  /// the initial time state. The picker can be customized with various
+  /// presentation options and time format preferences.
+  ///
+  /// Parameters:
+  /// - [controller] (VNLTimePickerController?, optional): External controller for programmatic control
+  /// - [initialValue] (TimeOfDay?, optional): Initial time when no controller is provided
+  /// - [onChanged] (`ValueChanged<TimeOfDay?>?`, optional): Callback for time selection changes
+  /// - [enabled] (bool, default: true): Whether the picker accepts user interaction
+  /// - [mode] (PromptMode, default: PromptMode.dialog): Presentation style (dialog or popover)
+  /// - [placeholder] (Widget?, optional): Content displayed when no time is selected
+  /// - [popoverAlignment] (AlignmentGeometry?, optional): VNLPopover positioning relative to anchor
+  /// - [popoverAnchorAlignment] (AlignmentGeometry?, optional): Anchor point on picker button
+  /// - [popoverPadding] (EdgeInsetsGeometry?, optional): Internal popover content padding
+  /// - [use24HourFormat] (bool?, optional): Whether to use 24-hour time format
+  /// - [showSeconds] (bool, default: false): Whether to include seconds selection
+  /// - [dialogTitle] (Widget?, optional): Title for dialog mode display
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLControlledTimePicker(
+  ///   initialValue: TimeOfDay(hour: 14, minute: 30),
+  ///   mode: PromptMode.popover,
+  ///   use24HourFormat: true,
+  ///   onChanged: (time) => print('Selected: $time'),
+  /// );
+  /// ```
+  const VNLControlledTimePicker({
     super.key,
     this.controller,
     this.initialValue,
@@ -66,19 +265,45 @@ class ControlledTimePicker extends StatelessWidget with ControlledComponent<Time
   }
 }
 
+/// A time picker widget for selecting time values.
+///
+/// Provides time selection interface with hours, minutes, and optional
+/// seconds in either popover or dialog mode.
 class VNLTimePicker extends StatelessWidget {
+  /// The currently selected time value.
   final TimeOfDay? value;
+
+  /// Callback invoked when the selected time changes.
   final ValueChanged<TimeOfDay?>? onChanged;
+
+  /// The display mode for the time picker (popover or dialog).
   final PromptMode mode;
+
+  /// Placeholder widget shown when no time is selected.
   final Widget? placeholder;
+
+  /// Alignment of the popover relative to the anchor.
   final AlignmentGeometry? popoverAlignment;
+
+  /// Anchor alignment for the popover.
   final AlignmentGeometry? popoverAnchorAlignment;
+
+  /// Padding inside the popover.
   final EdgeInsetsGeometry? popoverPadding;
+
+  /// Whether to use 24-hour format.
   final bool? use24HourFormat;
+
+  /// Whether to show seconds selection.
   final bool showSeconds;
+
+  /// Title widget for the dialog mode.
   final Widget? dialogTitle;
+
+  /// Whether the time picker is enabled.
   final bool? enabled;
 
+  /// Creates a time picker.
   const VNLTimePicker({
     super.key,
     required this.value,
@@ -97,20 +322,29 @@ class VNLTimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     VNLookLocalizations localizations = VNLookLocalizations.of(context);
-    bool use24HourFormat = this.use24HourFormat ?? MediaQuery.of(context).alwaysUse24HourFormat;
+    final compTheme = ComponentTheme.maybeOf<VNLTimePickerTheme>(context);
+    bool use24HourFormat = this.use24HourFormat ??
+        compTheme?.use24HourFormat ??
+        MediaQuery.of(context).alwaysUse24HourFormat;
+    final bool showSeconds = compTheme?.showSeconds ?? this.showSeconds;
     return ObjectFormField(
       value: value,
       placeholder: placeholder ?? Text(localizations.placeholderTimePicker),
       onChanged: onChanged,
       builder: (context, value) {
-        return Text(localizations.formatTimeOfDay(value, use24HourFormat: use24HourFormat, showSeconds: showSeconds));
+        return Text(localizations.formatTimeOfDay(value,
+            use24HourFormat: use24HourFormat, showSeconds: showSeconds));
       },
       enabled: enabled,
-      mode: mode,
-      dialogTitle: dialogTitle,
+      mode: compTheme?.mode ?? mode,
+      dialogTitle: dialogTitle ?? compTheme?.dialogTitle,
+      popoverAlignment: popoverAlignment ?? compTheme?.popoverAlignment,
+      popoverAnchorAlignment:
+          popoverAnchorAlignment ?? compTheme?.popoverAnchorAlignment,
+      popoverPadding: popoverPadding ?? compTheme?.popoverPadding,
       trailing: const Icon(Icons.access_time),
       editorBuilder: (context, handler) {
-        return TimePickerDialog(
+        return VNLTimePickerDialog(
           initialValue: handler.value,
           onChanged: (value) {
             handler.value = value;
@@ -123,13 +357,25 @@ class VNLTimePicker extends StatelessWidget {
   }
 }
 
-class TimePickerDialog extends StatefulWidget {
+/// Dialog widget for interactive time selection.
+///
+/// Displays input fields for hours, minutes, and optional seconds
+/// with AM/PM toggle for 12-hour format.
+class VNLTimePickerDialog extends StatefulWidget {
+  /// The initial time value.
   final TimeOfDay? initialValue;
+
+  /// Callback invoked when the time changes.
   final ValueChanged<TimeOfDay?>? onChanged;
+
+  /// Whether to use 24-hour format.
   final bool use24HourFormat;
+
+  /// Whether to show seconds input.
   final bool showSeconds;
 
-  const TimePickerDialog({
+  /// Creates a time picker dialog.
+  const VNLTimePickerDialog({
     super.key,
     this.initialValue,
     this.onChanged,
@@ -138,10 +384,10 @@ class TimePickerDialog extends StatefulWidget {
   });
 
   @override
-  State<TimePickerDialog> createState() => _TimePickerDialogState();
+  State<VNLTimePickerDialog> createState() => _TimePickerDialogState();
 }
 
-class _TimePickerDialogState extends State<TimePickerDialog> {
+class _TimePickerDialogState extends State<VNLTimePickerDialog> {
   late TextEditingController _hourController;
   late TextEditingController _minuteController;
   late TextEditingController _secondController;
@@ -150,10 +396,12 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
     return value.toString().padLeft(2, '0');
   }
 
-  Widget _buildInput(BuildContext context, TextEditingController controller, String label) {
-    final theme = VNLTheme.of(context);
+  Widget _buildInput(
+      BuildContext context, TextEditingController controller, String label) {
+    final theme = Theme.of(context);
     return ConstrainedBox(
-      constraints: BoxConstraints(minWidth: 72 * theme.scaling, minHeight: 72 * theme.scaling),
+      constraints: BoxConstraints(
+          minWidth: 72 * theme.scaling, minHeight: 72 * theme.scaling),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -163,17 +411,23 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
               textAlignVertical: TextAlignVertical.center,
               controller: controller,
               style: theme.typography.x4Large,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly, const _TimeFormatter()],
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                const _TimeFormatter(),
+              ],
             ),
           ),
-          Positioned(bottom: (-24) * theme.scaling, child: Text(label).muted()),
+          Positioned(
+            bottom: (-24) * theme.scaling,
+            child: Text(label).muted(),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildSeparator(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
     return const Text(':').x5Large().withPadding(horizontal: 8 * scaling);
   }
@@ -187,7 +441,8 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
       minute = minute.clamp(0, 59);
       second = second.clamp(0, 59);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        widget.onChanged?.call(TimeOfDay(hour: hour, minute: minute, second: second));
+        widget.onChanged
+            ?.call(TimeOfDay(hour: hour, minute: minute, second: second));
       });
     } else {
       if (_pm && hour < 12) {
@@ -200,7 +455,8 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
       second = second.clamp(0, 59);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         if (!mounted) return;
-        widget.onChanged?.call(TimeOfDay(hour: hour, minute: minute, second: second));
+        widget.onChanged
+            ?.call(TimeOfDay(hour: hour, minute: minute, second: second));
       });
     }
   }
@@ -224,9 +480,15 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
       initialHour -= 12;
       _pm = true;
     }
-    _hourController = TextEditingController(text: _formatDigits(initialHour));
-    _minuteController = TextEditingController(text: _formatDigits(initialMinute));
-    _secondController = TextEditingController(text: _formatDigits(initialSecond));
+    _hourController = TextEditingController(
+      text: _formatDigits(initialHour),
+    );
+    _minuteController = TextEditingController(
+      text: _formatDigits(initialMinute),
+    );
+    _secondController = TextEditingController(
+      text: _formatDigits(initialSecond),
+    );
     _hourController.addListener(_onChanged);
     _minuteController.addListener(_onChanged);
     _secondController.addListener(_onChanged);
@@ -234,26 +496,47 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
+    final densityGap = theme.density.baseGap * scaling;
+    final densityContainerPadding =
+        theme.density.baseContainerPadding * scaling;
     final localizations = VNLookLocalizations.of(context);
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Padding(
-          padding: EdgeInsets.only(bottom: (16 + 12) * scaling),
+          padding: EdgeInsets.only(bottom: densityContainerPadding * 1.75),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(child: _buildInput(context, _hourController, localizations.timeHour)),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _hourController,
+                  localizations.timeHour,
+                ),
+              ),
               _buildSeparator(context),
-              Expanded(child: _buildInput(context, _minuteController, localizations.timeMinute)),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _minuteController,
+                  localizations.timeMinute,
+                ),
+              ),
               if (widget.showSeconds) ...[
                 _buildSeparator(context),
-                Expanded(child: _buildInput(context, _secondController, localizations.timeSecond)),
+                Expanded(
+                  child: _buildInput(
+                    context,
+                    _secondController,
+                    localizations.timeSecond,
+                  ),
+                ),
               ],
               if (!widget.use24HourFormat) ...[
-                Gap(8 * scaling),
+                Gap(densityGap),
                 IntrinsicWidth(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -285,8 +568,8 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
                       ),
                     ],
                   ),
-                ),
-              ],
+                )
+              ]
             ],
           ),
         ),
@@ -298,7 +581,8 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
 class _TimeFormatter extends TextInputFormatter {
   const _TimeFormatter();
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     // make sure new value has leading zero
     var newText = newValue.text;
     int substringCount = 0;
@@ -316,35 +600,83 @@ class _TimeFormatter extends TextInputFormatter {
     }
     return newValue.copyWith(
       text: newText,
-      composing:
-          newValue.composing.isValid
-              ? TextRange(start: newValue.composing.start.clamp(0, 2), end: newValue.composing.end.clamp(0, 2))
-              : newValue.composing,
-      selection: TextSelection(baseOffset: baseOffset2.clamp(0, 2), extentOffset: extentOffset2.clamp(0, 2)),
+      composing: newValue.composing.isValid
+          ? TextRange(
+              start: newValue.composing.start.clamp(0, 2),
+              end: newValue.composing.end.clamp(0, 2),
+            )
+          : newValue.composing,
+      selection: TextSelection(
+        baseOffset: baseOffset2.clamp(0, 2),
+        extentOffset: extentOffset2.clamp(0, 2),
+      ),
     );
   }
 }
 
-class DurationPickerController extends ValueNotifier<Duration?> with ComponentController<Duration?> {
-  DurationPickerController(super.value);
+/// Controller for managing [VNLDurationPicker] values programmatically.
+///
+/// Extends `ValueNotifier<Duration?>` to provide reactive state management
+/// for duration picker components. Integrates with the controlled component
+/// system for external control and change notifications.
+///
+/// Example:
+/// ```dart
+/// final controller = VNLDurationPickerController(Duration(hours: 2, minutes: 30));
+/// controller.addListener(() {
+///   print('Selected duration: ${controller.value}');
+/// });
+/// ```
+class VNLDurationPickerController extends ValueNotifier<Duration?>
+    with ComponentController<Duration?> {
+  /// Creates a [VNLDurationPickerController] with an initial value.
+  VNLDurationPickerController(super.value);
 }
 
-enum DurationPart { day, hour, minute, second }
-
-enum TimePart { hour, minute, second }
-
-class DurationPicker extends StatelessWidget {
+/// Widget for picking duration values with day, hour, minute, and second components.
+///
+/// Provides an input interface for selecting time durations. Can be controlled
+/// externally via [VNLDurationPickerController] or used with callbacks.
+///
+/// Example:
+/// ```dart
+/// VNLDurationPicker(
+///   value: Duration(hours: 1, minutes: 30),
+///   onChanged: (duration) {
+///     print('Selected: $duration');
+///   },
+/// )
+/// ```
+class VNLDurationPicker extends StatelessWidget {
+  /// The currently selected duration value.
   final Duration? value;
+
+  /// Callback invoked when the selected duration changes.
   final ValueChanged<Duration?>? onChanged;
+
+  /// The display mode for the duration picker (popover or dialog).
   final PromptMode mode;
+
+  /// Placeholder widget shown when no duration is selected.
   final Widget? placeholder;
+
+  /// Alignment of the popover relative to the anchor.
   final AlignmentGeometry? popoverAlignment;
+
+  /// Anchor alignment for the popover.
   final AlignmentGeometry? popoverAnchorAlignment;
+
+  /// Padding inside the popover.
   final EdgeInsetsGeometry? popoverPadding;
+
+  /// Title widget for the dialog mode.
   final Widget? dialogTitle;
+
+  /// Whether the duration picker is enabled.
   final bool? enabled;
 
-  const DurationPicker({
+  /// Creates a duration picker.
+  const VNLDurationPicker({
     super.key,
     required this.value,
     this.onChanged,
@@ -372,7 +704,7 @@ class DurationPicker extends StatelessWidget {
       dialogTitle: dialogTitle,
       trailing: const Icon(Icons.access_time),
       editorBuilder: (context, handler) {
-        return DurationPickerDialog(
+        return VNLDurationPickerDialog(
           initialValue: handler.value,
           onChanged: (value) {
             handler.value = value;
@@ -383,17 +715,29 @@ class DurationPicker extends StatelessWidget {
   }
 }
 
-class DurationPickerDialog extends StatefulWidget {
+/// Dialog widget for interactive duration selection.
+///
+/// Displays input fields for days, hours, minutes, and seconds
+/// for selecting durations.
+class VNLDurationPickerDialog extends StatefulWidget {
+  /// The initial duration value.
   final Duration? initialValue;
+
+  /// Callback invoked when the duration changes.
   final ValueChanged<Duration?>? onChanged;
 
-  const DurationPickerDialog({super.key, this.initialValue, this.onChanged});
+  /// Creates a duration picker dialog.
+  const VNLDurationPickerDialog({
+    super.key,
+    this.initialValue,
+    this.onChanged,
+  });
 
   @override
-  State<DurationPickerDialog> createState() => _DurationPickerDialogState();
+  State<VNLDurationPickerDialog> createState() => _DurationPickerDialogState();
 }
 
-class _DurationPickerDialogState extends State<DurationPickerDialog> {
+class _DurationPickerDialogState extends State<VNLDurationPickerDialog> {
   late TextEditingController _dayController;
   late TextEditingController _hourController;
   late TextEditingController _minuteController;
@@ -403,10 +747,12 @@ class _DurationPickerDialogState extends State<DurationPickerDialog> {
     return value.toString().padLeft(2, '0');
   }
 
-  Widget _buildInput(BuildContext context, TextEditingController controller, String label) {
-    final theme = VNLTheme.of(context);
+  Widget _buildInput(
+      BuildContext context, TextEditingController controller, String label) {
+    final theme = Theme.of(context);
     return ConstrainedBox(
-      constraints: BoxConstraints(minWidth: 72 * theme.scaling, minHeight: 72 * theme.scaling),
+      constraints: BoxConstraints(
+          minWidth: 72 * theme.scaling, minHeight: 72 * theme.scaling),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -415,17 +761,23 @@ class _DurationPickerDialogState extends State<DurationPickerDialog> {
               textAlign: TextAlign.center,
               controller: controller,
               style: theme.typography.x4Large,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly, const _TimeFormatter()],
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                const _TimeFormatter(),
+              ],
             ),
           ),
-          Positioned(bottom: (-24) * theme.scaling, child: Text(label).muted()),
+          Positioned(
+            bottom: (-24) * theme.scaling,
+            child: Text(label).muted(),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildSeparator(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
     return const Text(':').x5Large().withPadding(horizontal: 8 * scaling);
   }
@@ -440,7 +792,12 @@ class _DurationPickerDialogState extends State<DurationPickerDialog> {
     minute = minute.clamp(0, 59);
     second = second.clamp(0, 59);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.onChanged?.call(Duration(days: day, hours: hour, minutes: minute, seconds: second));
+      widget.onChanged?.call(Duration(
+        days: day,
+        hours: hour,
+        minutes: minute,
+        seconds: second,
+      ));
     });
   }
 
@@ -460,10 +817,18 @@ class _DurationPickerDialogState extends State<DurationPickerDialog> {
     int initialHour = widget.initialValue?.inHours ?? 0;
     int initialMinute = widget.initialValue?.inMinutes ?? 0;
     int initialSecond = widget.initialValue?.inSeconds ?? 0;
-    _dayController = TextEditingController(text: _formatDigits(initialDay));
-    _hourController = TextEditingController(text: _formatDigits(initialHour % Duration.hoursPerDay));
-    _minuteController = TextEditingController(text: _formatDigits(initialMinute % Duration.minutesPerHour));
-    _secondController = TextEditingController(text: _formatDigits(initialSecond % Duration.secondsPerMinute));
+    _dayController = TextEditingController(
+      text: _formatDigits(initialDay),
+    );
+    _hourController = TextEditingController(
+      text: _formatDigits(initialHour % Duration.hoursPerDay),
+    );
+    _minuteController = TextEditingController(
+      text: _formatDigits(initialMinute % Duration.minutesPerHour),
+    );
+    _secondController = TextEditingController(
+      text: _formatDigits(initialSecond % Duration.secondsPerMinute),
+    );
     _dayController.addListener(_onChanged);
     _hourController.addListener(_onChanged);
     _minuteController.addListener(_onChanged);
@@ -472,24 +837,50 @@ class _DurationPickerDialogState extends State<DurationPickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
+    final densityContainerPadding =
+        theme.density.baseContainerPadding * scaling;
     final localizations = VNLookLocalizations.of(context);
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Padding(
-          padding: EdgeInsets.only(bottom: (16 + 12) * scaling),
+          padding: EdgeInsets.only(bottom: densityContainerPadding * 1.75),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(child: _buildInput(context, _dayController, localizations.durationDay)),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _dayController,
+                  localizations.durationDay,
+                ),
+              ),
               _buildSeparator(context),
-              Expanded(child: _buildInput(context, _hourController, localizations.durationHour)),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _hourController,
+                  localizations.durationHour,
+                ),
+              ),
               _buildSeparator(context),
-              Expanded(child: _buildInput(context, _minuteController, localizations.durationMinute)),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _minuteController,
+                  localizations.durationMinute,
+                ),
+              ),
               _buildSeparator(context),
-              Expanded(child: _buildInput(context, _secondController, localizations.durationSecond)),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _secondController,
+                  localizations.durationSecond,
+                ),
+              ),
             ],
           ),
         ),
@@ -498,26 +889,55 @@ class _DurationPickerDialogState extends State<DurationPickerDialog> {
   }
 }
 
-class TimeRange {
+/// Represents a range of time with a start and end time.
+///
+/// Used to define time intervals or periods. Both [start] and [end]
+/// are represented as [TimeOfDay] values.
+///
+/// Example:
+/// ```dart
+/// final workHours = VNLTimeRange(
+///   start: TimeOfDay(hour: 9, minute: 0),
+///   end: TimeOfDay(hour: 17, minute: 0),
+/// );
+/// ```
+class VNLTimeRange {
+  /// The start time of the range.
   final TimeOfDay start;
+
+  /// The end time of the range.
   final TimeOfDay end;
 
-  const TimeRange({required this.start, required this.end});
+  /// Creates a [VNLTimeRange] with the specified start and end times.
+  const VNLTimeRange({
+    required this.start,
+    required this.end,
+  });
 
-  TimeRange copyWith({TimeOfDay? start, TimeOfDay? end}) {
-    return TimeRange(start: start ?? this.start, end: end ?? this.end);
+  /// Creates a copy of this range with the given fields replaced.
+  VNLTimeRange copyWith({
+    ValueGetter<TimeOfDay>? start,
+    ValueGetter<TimeOfDay>? end,
+  }) {
+    return VNLTimeRange(
+      start: start == null ? this.start : start(),
+      end: end == null ? this.end : end(),
+    );
   }
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TimeRange && runtimeType == other.runtimeType && start == other.start && end == other.end;
+      other is VNLTimeRange &&
+          runtimeType == other.runtimeType &&
+          start == other.start &&
+          end == other.end;
 
   @override
   int get hashCode => start.hashCode ^ end.hashCode;
 
   @override
   String toString() {
-    return 'TimeRange{start: $start, end: $end}';
+    return 'VNLTimeRange{start: $start, end: $end}';
   }
 }

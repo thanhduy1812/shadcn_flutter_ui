@@ -1,16 +1,16 @@
 import 'package:docs/pages/docs_page.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class IntroductionPage extends StatefulWidget {
   const IntroductionPage({super.key});
 
   @override
-  _IntroductionPageState createState() => _IntroductionPageState();
+  IntroductionPageState createState() => IntroductionPageState();
 }
 
-class _IntroductionPageState extends State<IntroductionPage> {
+class IntroductionPageState extends State<IntroductionPage> {
   final OnThisPage featuresKey = OnThisPage();
   final OnThisPage faqKey = OnThisPage();
   final OnThisPage notesKey = OnThisPage();
@@ -30,24 +30,27 @@ class _IntroductionPageState extends State<IntroductionPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text('Introduction').h1(),
-          const Text('Beautifully designed components from VNL UI is now available for Flutter.').lead(),
           const Text(
-            'Welcome to vnl_ui, a versatile and comprehensive set '
-            'of UI components designed specifically for Flutter desktop and '
-            'web applications. With the growing popularity of Flutter for '
-            'building cross-platform apps, we recognized the need for a '
-            'toolkit that emphasizes the unique design requirements of '
-            'desktop and web interfaces.',
+                  'A cohesive shadcn/ui ecosystem for Flutter—components, theming, and tooling—ready to ditch Material and Cupertino.')
+              .lead(),
+          const Text(
+            'Welcome to shadcn_flutter, a cohesive UI ecosystem built on the shadcn/ui design system '
+            'for Flutter applications across mobile, web, and desktop. Rather than a one‑to‑one '
+            'design‑system port, this project focuses on delivering a consistent, production‑ready '
+            'experience that feels at home on every platform.',
             textAlign: TextAlign.justify,
           ).p(),
           const Text(
-            '\tThis package provides a wide range of customizable '
-            'and responsive components that align with modern desktop and web '
-            'design principles. Whether you'
-            're building a sophisticated business '
-            'application, a sleek dashboard, or a productivity tool, our '
-            'components are designed to help you create professional and '
-            'polished UIs quickly and efficiently.',
+            '\tThis ecosystem provides a wide range of customizable and responsive components, primitives, '
+            'and theming aligned with modern shadcn/ui patterns. Whether you\'re building a mobile app, '
+            'a sleek web dashboard, or a desktop productivity tool, our components are designed to help '
+            'you ship professional, polished UIs quickly—without relying on Material or Cupertino.',
+            textAlign: TextAlign.justify,
+          ).p(),
+          const Text(
+            'Already using Material or Cupertino? You can adopt shadcn_flutter incrementally: mix components inside your '
+            'existing MaterialApp/CupertinoApp, keep your navigation (e.g., GoRouter), and align visuals with '
+            'your shadcn_flutter theme. Interop is optional—go all‑in when you\'re ready.',
             textAlign: TextAlign.justify,
           ).p(),
           const Text('Features').h2().anchored(featuresKey),
@@ -57,54 +60,78 @@ class _IntroductionPageState extends State<IntroductionPage> {
             children: [
               const Text('84 components and growing!').li(),
               const Text(
-                      'Supports both Material and Cupertino Widgets with theme being able to adapt to the current vnl_ui theme.')
+                      'Standalone ecosystem: no Material or Cupertino requirement; optional interop when needed.')
                   .li(),
-              const Text('Pre-made themes from VNL UI.').li(),
-              const Text('Supports mobile, web, and desktop platforms.').li(),
-              const Text('Supports middle drag scrolling.').li(),
-              const Text('Various widget extensions for typography purposes.').li(),
+              const Text(
+                      'shadcn/ui design tokens and ready-to-use New York theme.')
+                  .li(),
+              const Text(
+                      'Works inside MaterialApp and CupertinoApp; mix and match while you migrate.')
+                  .li(),
+              const Text(
+                      'First-class support across Android, iOS, Web, macOS, Windows, and Linux.')
+                  .li(),
+              const Text('Various widget extensions for typography purposes.')
+                  .li(),
               const Text('Supports WebAssembly for better performance.').li(),
             ],
           ).p(),
           const Text('Notes').h2().anchored(notesKey),
-          const Text('This package is still in development and may have breaking changes in the future. '
+          const Text(
+                  'This package is still in development and may have breaking changes in the future. '
                   'Please be cautious when using this package in production.')
               .p(),
           const Text(
-            'This package is not affiliated with VNL UI. This package is a community-driven project.',
+            'This package is not affiliated with Shadcn/UI. This package is a community-driven project.',
           ).p(),
           const Text('Frequently Asked Questions').h2().anchored(faqKey),
-          Accordion(
+          VNLAccordion(
             items: [
-              const AccordionItem(
-                trigger: AccordionTrigger(child: Text('Does this support GoRouter?')),
-                content: Text('Yes, it does. You can use GoRouter with vnl_ui. '),
+              const VNLAccordionItem(
+                trigger: VNLAccordionTrigger(
+                    child: Text('Does this support GoRouter?')),
+                content: Text(
+                    'Yes, it does. You can use GoRouter with shadcn_flutter. '),
               ),
-              const AccordionItem(
-                trigger: AccordionTrigger(
+              const VNLAccordionItem(
+                trigger: VNLAccordionTrigger(
                   child: Text('Can I use this in my project?'),
                 ),
-                content: Text('Yes! Free to use for personal and commercial projects. No attribution required.'),
+                content: Text(
+                    'Yes! Free to use for personal and commercial projects. No attribution required.'),
               ),
-              AccordionItem(
-                trigger: const AccordionTrigger(
-                  child: Text('Can I use this with Material/Cupertino Widgets?'),
+              VNLAccordionItem(
+                trigger: const VNLAccordionTrigger(
+                  child:
+                      Text('Can I use this with Material/Cupertino Widgets?'),
                 ),
-                content: const Text('Sure you can! ').thenButton(
-                    onPressed: () {
-                      context.goNamed('external');
-                    },
-                    child: const Text('See this page!')),
-              ),
-              AccordionItem(
-                trigger: const AccordionTrigger(
-                  child: Text('Can I configure which style i would like to use? (Default/New York)'),
-                ),
-                content: const Text('Unfortunately you can\'t. This package only supports New York style. '
-                        'But if you wish to have default style of VNL UI, i would recommend ')
+                content: const Text(
+                        'Yes. If your app already uses Material or Cupertino, shadcn_flutter plays nicely with both. ')
+                    .thenText('You can:')
+                    .thenText(
+                        '\n• Drop shadcn_flutter components into an existing MaterialApp/CupertinoApp')
+                    .thenText(
+                        '\n• Keep your current routing (e.g., GoRouter) and state management')
+                    .thenText(
+                        '\n• Adopt incrementally and go all‑in when ready for a full ecosystem switch ')
                     .thenButton(
                         onPressed: () {
-                          launchUrlString('https://github.com/nank1ro/flutter-vnl-ui');
+                          context.goNamed('external');
+                        },
+                        child: const Text('See interop guidance')),
+              ),
+              VNLAccordionItem(
+                trigger: const VNLAccordionTrigger(
+                  child: Text(
+                      'Can I configure which style i would like to use? (Default/New York)'),
+                ),
+                content: const Text(
+                        'Unfortunately you can\'t. This package only supports New York style. '
+                        'But if you wish to have default style of Shadcn/UI, i would recommend ')
+                    .thenButton(
+                        onPressed: () {
+                          launchUrlString(
+                              'https://github.com/nank1ro/flutter-shadcn-ui');
                         },
                         child: const Text('this package'))
                     .thenText(' by ')
@@ -125,16 +152,20 @@ class _IntroductionPageState extends State<IntroductionPage> {
               const Text('Github: ')
                   .thenButton(
                       onPressed: () {
-                        launchUrlString('https://github.com/sunarya-thito/vnl_ui');
+                        launchUrlString(
+                            'https://github.com/sunarya-thito/shadcn_flutter');
                       },
-                      child: const Text('https://github.com/sunarya-thito/vnl_ui'))
+                      child: const Text(
+                          'https://github.com/sunarya-thito/shadcn_flutter'))
                   .li(),
               const Text('pub.dev: ')
                   .thenButton(
                       onPressed: () {
-                        launchUrlString('https://pub.dev/packages/vnl_ui');
+                        launchUrlString(
+                            'https://pub.dev/packages/shadcn_flutter');
                       },
-                      child: const Text('https://pub.dev/packages/vnl_ui'))
+                      child:
+                          const Text('https://pub.dev/packages/shadcn_flutter'))
                   .li(),
               const Text('Discord: ')
                   .thenButton(

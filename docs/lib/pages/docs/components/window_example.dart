@@ -11,10 +11,10 @@ class WindowExample extends StatelessWidget {
     return const ComponentPage(
       name: 'window',
       description: 'A window manager that allows you to create and manage windows.',
-      displayName: 'Window',
+      displayName: 'VNLWindow',
       children: [
         WidgetUsageExample(
-          title: 'Window Example',
+          title: 'VNLWindow Example',
           path: 'lib/pages/docs/components/window/window_example_1.dart',
           child: WindowExample1(),
         ),

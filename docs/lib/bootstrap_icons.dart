@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 const Map<String, IconData> kBootstrapIcons = {
   'icon123': BootstrapIcons.icon123,

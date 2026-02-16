@@ -1,5 +1,8 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+/// VNLDateRangePicker in popover and dialog modes.
+///
+/// Similar to the single-date picker, but selects a [VNLDateTimeRange].
 class DatePickerExample2 extends StatefulWidget {
   const DatePickerExample2({super.key});
 
@@ -8,12 +11,12 @@ class DatePickerExample2 extends StatefulWidget {
 }
 
 class _DatePickerExample2State extends State<DatePickerExample2> {
-  DateTimeRange? _value;
+  VNLDateTimeRange? _value;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DateRangePicker(
+        VNLDateRangePicker(
           value: _value,
           mode: PromptMode.popover,
           onChanged: (value) {
@@ -23,9 +26,10 @@ class _DatePickerExample2State extends State<DatePickerExample2> {
           },
         ),
         const Gap(16),
-        DateRangePicker(
+        VNLDateRangePicker(
           value: _value,
           mode: PromptMode.dialog,
+          // Title for the dialog variant.
           dialogTitle: const Text('Select Date Range'),
           onChanged: (value) {
             setState(() {

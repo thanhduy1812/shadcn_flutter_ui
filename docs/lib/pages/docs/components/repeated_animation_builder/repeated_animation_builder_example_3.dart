@@ -1,13 +1,16 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class RepeatedAnimationBuilderExample3 extends StatefulWidget {
   const RepeatedAnimationBuilderExample3({super.key});
 
   @override
-  State<RepeatedAnimationBuilderExample3> createState() => _RepeatedAnimationBuilderExample3State();
+  State<RepeatedAnimationBuilderExample3> createState() =>
+      _RepeatedAnimationBuilderExample3State();
 }
 
-class _RepeatedAnimationBuilderExample3State extends State<RepeatedAnimationBuilderExample3> {
+class _RepeatedAnimationBuilderExample3State
+    extends State<RepeatedAnimationBuilderExample3> {
+  // Whether the animation is currently playing. Toggled by the button below.
   bool play = true;
   @override
   Widget build(BuildContext context) {
@@ -15,14 +18,18 @@ class _RepeatedAnimationBuilderExample3State extends State<RepeatedAnimationBuil
       mainAxisSize: MainAxisSize.min,
       children: [
         RepeatedAnimationBuilder(
+          // Drive play/pause from local state.
           play: play,
           start: const Offset(-100, 0),
           end: const Offset(100, 0),
           duration: const Duration(seconds: 1),
+          // Provide a different reverse duration to show asymmetric timing.
           reverseDuration: const Duration(seconds: 5),
+          // Use separate forward/reverse curves.
           curve: Curves.linear,
           reverseCurve: Curves.easeInOutCubic,
-          mode: RepeatMode.pingPongReverse,
+          // Ping-pong between start and end, reversing the direction each cycle.
+          mode: LoopingMode.pingPongReverse,
           builder: (context, value, child) {
             return Transform.translate(
               offset: value,
@@ -38,6 +45,7 @@ class _RepeatedAnimationBuilderExample3State extends State<RepeatedAnimationBuil
         PrimaryButton(
           onPressed: () {
             setState(() {
+              // VNLToggle the 'play' flag, which starts/stops the animation.
               play = !play;
             });
           },

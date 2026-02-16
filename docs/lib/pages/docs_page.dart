@@ -1,7 +1,17 @@
+// Docs page scaffold and navigation structure.
+//
+// Provides the high-level layout for documentation pages, including:
+// - Sidebar sections and pages (DocsPageState.sections) with routing names.
+// - On-this-page anchors with visibility tracking for in-page nav.
+// - Optional scrollability and per-page navigation items.
+//
+// This is part of the docs framework (a wrapper/renderer), not a component demo.
+// Comments added for clarity; behavior unchanged.
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -71,259 +81,246 @@ class DocsPage extends StatefulWidget {
   DocsPageState createState() => DocsPageState();
 }
 
-enum VNLookFeatureTag {
+enum ShadcnFeatureTag {
   newFeature,
   updated,
   experimental,
   workInProgress;
 
   Widget buildBadge(BuildContext context) {
-    VNLThemeData theme = VNLTheme.of(context);
-    VNLThemeData copy;
+    ThemeData theme = Theme.of(context);
+    ThemeData copy;
     String badgeText;
     switch (this) {
-      case VNLookFeatureTag.newFeature:
+      case ShadcnFeatureTag.newFeature:
         copy = theme.copyWith(
-          colorScheme: theme.colorScheme.copyWith(
-            primary: VNLColors.green,
+          colorScheme: () => theme.colorScheme.copyWith(
+            primary: () => VNLColors.green,
           ),
         );
         badgeText = 'New';
         break;
-      case VNLookFeatureTag.updated:
+      case ShadcnFeatureTag.updated:
         copy = theme.copyWith(
-          colorScheme: theme.colorScheme.copyWith(
-            primary: VNLColors.blue,
+          colorScheme: () => theme.colorScheme.copyWith(
+            primary: () => VNLColors.blue,
           ),
         );
         badgeText = 'Updated';
         break;
-      case VNLookFeatureTag.workInProgress:
+      case ShadcnFeatureTag.workInProgress:
         copy = theme.copyWith(
-          colorScheme: theme.colorScheme.copyWith(
-            primary: VNLColors.orange,
+          colorScheme: () => theme.colorScheme.copyWith(
+            primary: () => VNLColors.orange,
           ),
         );
         badgeText = 'WIP';
         break;
-      case VNLookFeatureTag.experimental:
+      case ShadcnFeatureTag.experimental:
         copy = theme.copyWith(
-          colorScheme: theme.colorScheme.copyWith(
-            primary: VNLColors.purple,
+          colorScheme: () => theme.colorScheme.copyWith(
+            primary: () => VNLColors.purple,
           ),
         );
         badgeText = 'Experimental';
         break;
     }
-    return VNLTheme(
+    return Theme(
       data: copy,
-      child: PrimaryBadge(
+      child: VNLPrimaryBadge(
         child: Text(badgeText),
       ),
     );
   }
 }
 
-class VNLookDocsPage {
+class ShadcnDocsPage {
   final String title;
   final String name; // name for go_router
-  final VNLookFeatureTag? tag;
+  final ShadcnFeatureTag? tag;
 
-  VNLookDocsPage(this.title, this.name, [this.tag]);
+  ShadcnDocsPage(this.title, this.name, [this.tag]);
 }
 
-class VNLookDocsSection {
+class ShadcnDocsSection {
   final String title;
-  final List<VNLookDocsPage> pages;
+  final List<ShadcnDocsPage> pages;
   final IconData icon;
 
-  VNLookDocsSection(this.title, this.pages, [this.icon = Icons.book]);
+  ShadcnDocsSection(this.title, this.pages, [this.icon = Icons.book]);
 }
 
 class DocsPageState extends State<DocsPage> {
-  static final List<VNLookDocsSection> sections = [
-    VNLookDocsSection(
+  static final List<ShadcnDocsSection> sections = [
+    ShadcnDocsSection(
         'Getting Started',
         List.unmodifiable([
-          VNLookDocsPage('Introduction', 'introduction'),
-          VNLookDocsPage('Installation', 'installation'),
-          VNLookDocsPage('Theme', 'theme'),
-          VNLookDocsPage('Typography', 'typography'),
-          VNLookDocsPage('Layout', 'layout'),
-          VNLookDocsPage('Web Preloader', 'web_preloader'),
-          VNLookDocsPage('Components', 'components'),
-          VNLookDocsPage('Icons', 'icons'),
-          VNLookDocsPage('VNLColors', 'colors'),
-          VNLookDocsPage('Material/Cupertino', 'external'),
-          VNLookDocsPage('State Management', 'state'),
+          ShadcnDocsPage('Introduction', 'introduction'),
+          ShadcnDocsPage('Installation', 'installation'),
+          ShadcnDocsPage('Theme', 'theme'),
+          ShadcnDocsPage('Typography', 'typography'),
+          ShadcnDocsPage('Layout', 'layout'),
+          ShadcnDocsPage('Web Preloader', 'web_preloader'),
+          ShadcnDocsPage('Components', 'components'),
+          ShadcnDocsPage('Icons', 'icons'),
+          ShadcnDocsPage('Colors', 'colors'),
+          ShadcnDocsPage('Material/Cupertino', 'external'),
+          ShadcnDocsPage('State Management', 'state'),
         ]),
         Icons.book),
     // COMPONENTS BEGIN
-    VNLookDocsSection(
+    ShadcnDocsSection(
+      'Application',
+      [
+        ShadcnDocsPage('App Example', 'app'),
+        ShadcnDocsPage('GoRouter Example', 'go_router_app_example'),
+        ShadcnDocsPage('VNLookLayer', 'wrapper'),
+      ],
+    ),
+    ShadcnDocsSection(
       'Animation',
       [
-        VNLookDocsPage('Animated Value', 'animated_value_builder'),
+        ShadcnDocsPage('Animated Value', 'animated_value_builder'),
         // https://nyxbui.design/docs/components/number-ticker
-        VNLookDocsPage('Number Ticker', 'number_ticker'),
-        VNLookDocsPage('Repeated Animation', 'repeated_animation_builder'),
-        VNLookDocsPage('Timeline Animation', 'timeline_animation'),
+        ShadcnDocsPage('Number Ticker', 'number_ticker'),
+        ShadcnDocsPage('Repeated Animation', 'repeated_animation_builder'),
+        ShadcnDocsPage('VNLTimeline Animation', 'timeline_animation'),
       ],
     ),
-    VNLookDocsSection('Control', [
-      VNLookDocsPage('Button', 'button'),
-      VNLookDocsPage('Audio Control', 'audio_control', VNLookFeatureTag.workInProgress),
-      VNLookDocsPage('Video Control', 'video_control', VNLookFeatureTag.workInProgress),
+    ShadcnDocsSection('Control', [
+      ShadcnDocsPage('VNLButton', 'button'),
+      ShadcnDocsPage(
+          'Audio Control', 'audio_control', ShadcnFeatureTag.workInProgress),
+      ShadcnDocsPage(
+          'Video Control', 'video_control', ShadcnFeatureTag.workInProgress),
     ]),
-    VNLookDocsSection(
+    ShadcnDocsSection(
       'Disclosure',
       [
-        VNLookDocsPage('Accordion', 'accordion'),
-        VNLookDocsPage('Collapsible', 'collapsible'),
+        ShadcnDocsPage('VNLAccordion', 'accordion'),
+        ShadcnDocsPage('VNLCollapsible', 'collapsible'),
       ],
     ),
-    VNLookDocsSection(
+    ShadcnDocsSection(
       'Display',
       [
-        VNLookDocsPage('Avatar', 'avatar'),
-        VNLookDocsPage('Avatar Group', 'avatar_group'),
-        // VNLookDocsPage(
-        // 'Data Table', 'data_table', VNLookFeatureTag.experimental),
-        // TODO also make it zoomable like: https://zoom-chart-demo.vercel.app/
-        // VNLookDocsPage('Chart', 'chart', VNLookFeatureTag.workInProgress),
-        VNLookDocsPage('Code Snippet', 'code_snippet'),
-        VNLookDocsPage('Table', 'table'),
-        VNLookDocsPage('Tracker', 'tracker'),
+        ShadcnDocsPage('VNLAvatar', 'avatar'),
+        ShadcnDocsPage('VNLAvatar Group', 'avatar_group'),
+        ShadcnDocsPage('Code Snippet', 'code_snippet'),
+        ShadcnDocsPage('Chat Bubble', 'chat', ShadcnFeatureTag.newFeature),
+        ShadcnDocsPage('VNLTable', 'table'),
+        ShadcnDocsPage('VNLTracker', 'tracker'),
       ],
     ),
-    VNLookDocsSection(
+    ShadcnDocsSection(
       'Feedback',
       [
-        VNLookDocsPage('Alert', 'alert'),
-        VNLookDocsPage('Alert Dialog', 'alert_dialog'),
-        VNLookDocsPage('Circular Progress', 'circular_progress'),
-        VNLookDocsPage('Progress', 'progress'),
-        VNLookDocsPage('Linear Progress', 'linear_progress'),
-        VNLookDocsPage('Skeleton', 'skeleton'),
-        VNLookDocsPage('Toast', 'toast'),
+        ShadcnDocsPage('VNLAlert', 'alert'),
+        ShadcnDocsPage('VNLAlert Dialog', 'alert_dialog'),
+        ShadcnDocsPage('Circular VNLProgress', 'circular_progress'),
+        ShadcnDocsPage('VNLProgress', 'progress'),
+        ShadcnDocsPage('Linear VNLProgress', 'linear_progress'),
+        ShadcnDocsPage('Skeleton', 'skeleton'),
+        ShadcnDocsPage('Toast', 'toast'),
       ],
     ),
-    VNLookDocsSection(
-      'Form',
+    ShadcnDocsSection(
+      'VNLForm',
       [
-        // mostly same as file input, except it only accepts audio file
-        // and adds the ability to play the audio
-        // VNLookDocsPage(
-        //     'Audio Input', 'audio_input', VNLookFeatureTag.workInProgress),
-        // update: NVM, merge the component with file input
-        // VNLookDocsPage('Button', 'button'),
-        // moved to control
-        VNLookDocsPage('Checkbox', 'checkbox'),
-        VNLookDocsPage('Chip Input', 'chip_input'),
-        VNLookDocsPage('Color Picker', 'color_picker'),
-        VNLookDocsPage('Date Picker', 'date_picker'),
-        // TODO: https://file-vault-delta.vercel.app/ also https://uploader.sadmn.com/
-        VNLookDocsPage('File Picker', 'file_picker', VNLookFeatureTag.workInProgress),
-        VNLookDocsPage('Form', 'form'),
-        VNLookDocsPage('Formatted Input', 'formatted_input', VNLookFeatureTag.experimental),
-        // TODO: Image Input (with cropper and rotate tool, upload from file or take photo from camera)
-        // VNLookDocsPage(
-        // 'Image Input', 'image_input', VNLookFeatureTag.workInProgress),
-        // replaced with File Input
-        VNLookDocsPage('Text Input', 'input'),
-        // TODO: same as text input, but has dropdown autocomplete like chip input, the difference is, it does not convert
-        // the value into chips
-        VNLookDocsPage('AutoComplete', 'autocomplete'),
-        // TODO: same as input, except it only accepts number, and can be increased or decreased
-        // using scroll, also has increment and decrement button
-        // in between increment and decrement button, theres
-        // a divider that can be dragged to increase or decrease the value
-        VNLookDocsPage('Number Input', 'number_input'),
-        VNLookDocsPage('Input OTP', 'input_otp'),
-        VNLookDocsPage('Phone Input', 'phone_input'),
-        VNLookDocsPage('Radio Group', 'radio_group'),
-        //https://www.radix-ui.com/themes/docs/components/radio-cards
-        VNLookDocsPage('Radio Card', 'radio_card'),
-        VNLookDocsPage('Select', 'select'),
-        VNLookDocsPage('Slider', 'slider'),
-        VNLookDocsPage('Star Rating', 'star_rating'),
-        VNLookDocsPage('Switch', 'switch'),
-        VNLookDocsPage('Text Area', 'text_area'),
-        VNLookDocsPage('Time Picker', 'time_picker'),
-        VNLookDocsPage('Toggle', 'toggle'),
-        VNLookDocsPage('Multi Select', 'multiselect'),
-        VNLookDocsPage('Item Picker', 'item_picker', VNLookFeatureTag.experimental),
+        ShadcnDocsPage('VNLCheckbox', 'checkbox'),
+        ShadcnDocsPage('VNLChip Input', 'chip_input'),
+        ShadcnDocsPage('Color Picker', 'color_picker'),
+        ShadcnDocsPage('Linear Gradient Picker', 'linear_gradient_picker',
+            ShadcnFeatureTag.workInProgress),
+        ShadcnDocsPage('Radial Gradient Picker', 'radial_gradient_picker',
+            ShadcnFeatureTag.workInProgress),
+        ShadcnDocsPage('Sweep Gradient Picker', 'sweep_gradient_picker',
+            ShadcnFeatureTag.workInProgress),
+        ShadcnDocsPage('Date Picker', 'date_picker'),
+        ShadcnDocsPage('VNLForm', 'form'),
+        ShadcnDocsPage('Formatted Input', 'formatted_input'),
+        ShadcnDocsPage('Text Input', 'input'),
+        ShadcnDocsPage('VNLAutoComplete', 'autocomplete'),
+        ShadcnDocsPage('Number Input', 'number_input'),
+        ShadcnDocsPage('Input OTP', 'input_otp'),
+        ShadcnDocsPage('Phone Input', 'phone_input'),
+        ShadcnDocsPage('VNLRadio Group', 'radio_group'),
+        ShadcnDocsPage('VNLRadio VNLCard', 'radio_card'),
+        ShadcnDocsPage('Select', 'select'),
+        ShadcnDocsPage('VNLSlider', 'slider'),
+        ShadcnDocsPage('Star Rating', 'star_rating'),
+        ShadcnDocsPage('VNLSwitch', 'switch'),
+        ShadcnDocsPage('Text Area', 'text_area'),
+        ShadcnDocsPage('Time Picker', 'time_picker'),
+        ShadcnDocsPage('VNLToggle', 'toggle'),
+        ShadcnDocsPage('Multi Select', 'multiselect'),
+        ShadcnDocsPage('Item Picker', 'item_picker'),
       ],
     ),
-    VNLookDocsSection(
+    ShadcnDocsSection(
       'Layout',
       [
-        VNLookDocsPage('Card', 'card'),
-        VNLookDocsPage('Carousel', 'carousel'),
-        VNLookDocsPage('Divider', 'divider'),
-        VNLookDocsPage('Resizable', 'resizable'),
-        // https://nextjs-shadcn-dnd.vercel.app/ (make it headless)
-        VNLookDocsPage('Sortable', 'sortable'),
-        VNLookDocsPage('Steps', 'steps'),
-        VNLookDocsPage('Stepper', 'stepper'),
-        VNLookDocsPage('Timeline', 'timeline'),
-        VNLookDocsPage('Scaffold', 'scaffold'),
-        VNLookDocsPage('App Bar', 'app_bar'),
-        VNLookDocsPage('Card Image', 'card_image'),
+        ShadcnDocsPage('VNLCard', 'card'),
+        ShadcnDocsPage('VNLCarousel', 'carousel'),
+        ShadcnDocsPage('VNLDivider', 'divider'),
+        ShadcnDocsPage('Resizable', 'resizable'),
+        ShadcnDocsPage('Sortable', 'sortable'),
+        ShadcnDocsPage('VNLSteps', 'steps'),
+        ShadcnDocsPage('VNLStepper', 'stepper'),
+        ShadcnDocsPage('VNLTimeline', 'timeline'),
+        ShadcnDocsPage('Scaffold', 'scaffold'),
+        ShadcnDocsPage('App Bar', 'app_bar'),
+        ShadcnDocsPage('VNLCard Image', 'card_image'),
       ],
     ),
-    VNLookDocsSection(
+    ShadcnDocsSection(
       'Navigation',
       [
-        VNLookDocsPage('Breadcrumb', 'breadcrumb'),
-        VNLookDocsPage('Menubar', 'menubar'),
-        VNLookDocsPage('Navigation Menu', 'navigation_menu'),
-        VNLookDocsPage('Pagination', 'pagination'),
-        VNLookDocsPage('Tabs', 'tabs'),
-        VNLookDocsPage('Tab List', 'tab_list'),
-        // TODO: like a chrome tab, complete with its view
-        VNLookDocsPage('Tab Pane', 'tab_pane'),
-        VNLookDocsPage('Tree', 'tree'),
+        ShadcnDocsPage('VNLBreadcrumb', 'breadcrumb'),
+        ShadcnDocsPage('VNLMenubar', 'menubar'),
+        ShadcnDocsPage('Navigation Menu', 'navigation_menu'),
+        ShadcnDocsPage('VNLPagination', 'pagination'),
+        ShadcnDocsPage('VNLTabs', 'tabs'),
+        ShadcnDocsPage('Tab List', 'tab_list'),
+        ShadcnDocsPage('Tab Pane', 'tab_pane'),
+        ShadcnDocsPage('Tree', 'tree'),
         // aka Bottom Navigation Bar
-        VNLookDocsPage('Navigation Bar', 'navigation_bar'),
-        VNLookDocsPage('Navigation Rail', 'navigation_rail'),
-        VNLookDocsPage('Expandable Sidebar', 'expandable_sidebar'),
+        ShadcnDocsPage('Navigation Bar', 'navigation_bar'),
+        ShadcnDocsPage('Navigation Rail', 'navigation_rail'),
+        ShadcnDocsPage('Expandable Sidebar', 'expandable_sidebar'),
         // aka Drawer
-        VNLookDocsPage('Navigation Sidebar', 'navigation_sidebar'),
-        VNLookDocsPage('Dot Indicator', 'dot_indicator'),
+        ShadcnDocsPage('Navigation Sidebar', 'navigation_sidebar'),
+        ShadcnDocsPage('Dot Indicator', 'dot_indicator'),
+        //
+        ShadcnDocsPage('Switcher', 'switcher'),
       ],
     ),
-    VNLookDocsSection(
+    ShadcnDocsSection(
       'Overlay',
       [
-        VNLookDocsPage('Dialog', 'dialog'),
-        VNLookDocsPage('Drawer', 'drawer'),
-        VNLookDocsPage('Hover Card', 'hover_card'),
-        VNLookDocsPage('Popover', 'popover'),
-        VNLookDocsPage('Sheet', 'sheet'),
-        VNLookDocsPage('Swiper', 'swiper', VNLookFeatureTag.newFeature),
-        VNLookDocsPage('Tooltip', 'tooltip'),
-        // TODO: window as in like a window in desktop
-        VNLookDocsPage('Window', 'window', VNLookFeatureTag.experimental),
+        ShadcnDocsPage('Dialog', 'dialog'),
+        ShadcnDocsPage('Drawer', 'drawer'),
+        ShadcnDocsPage('VNLHover VNLCard', 'hover_card'),
+        ShadcnDocsPage('VNLPopover', 'popover'),
+        ShadcnDocsPage('Sheet', 'sheet'),
+        ShadcnDocsPage('VNLSwiper', 'swiper'),
+        ShadcnDocsPage('VNLTooltip', 'tooltip'),
+        ShadcnDocsPage('VNLWindow', 'window', ShadcnFeatureTag.experimental),
       ],
     ),
 
-    VNLookDocsSection(
+    ShadcnDocsSection(
       'Utility',
       [
-        VNLookDocsPage('Badge', 'badge'),
-        VNLookDocsPage('Chip', 'chip'),
-        VNLookDocsPage('Calendar', 'calendar'),
-        VNLookDocsPage('Command', 'command'),
-        VNLookDocsPage('Context Menu', 'context_menu'),
-        VNLookDocsPage('Dropdown Menu', 'dropdown_menu'),
-        // TODO https://www.radix-ui.com/themes/docs/components/kbd
-        VNLookDocsPage('Keyboard Display', 'keyboard_display'),
-        // TODO: Same progress as image input
-        VNLookDocsPage('Image Tools', 'image_tools', VNLookFeatureTag.workInProgress),
-        // TODO: Mostly same as refresh indicator, but it does not provide indicator
-        // the indicator itself is provided by scaffold
-        VNLookDocsPage('Refresh Trigger', 'refresh_trigger'),
-        VNLookDocsPage('Overflow Marquee', 'overflow_marquee'),
+        ShadcnDocsPage('Badge', 'badge'),
+        ShadcnDocsPage('VNLChip', 'chip'),
+        ShadcnDocsPage('VNLCalendar', 'calendar'),
+        ShadcnDocsPage('VNLCommand', 'command'),
+        ShadcnDocsPage('Context Menu', 'context_menu'),
+        ShadcnDocsPage('Dropdown Menu', 'dropdown_menu'),
+        ShadcnDocsPage('Keyboard Display', 'keyboard_display'),
+        ShadcnDocsPage('Refresh Trigger', 'refresh_trigger'),
+        ShadcnDocsPage('Overflow Marquee', 'overflow_marquee'),
       ],
     ),
     // COMPONENTS END
@@ -334,7 +331,7 @@ class DocsPageState extends State<DocsPage> {
     'Disclosure',
     'Feedback',
     'Control',
-    'Form',
+    'VNLForm',
     'Layout',
     'Navigation',
     'Overlay',
@@ -358,7 +355,7 @@ class DocsPageState extends State<DocsPage> {
       if (componentCategories.contains(section.title)) {
         count += section.pages.length;
         for (var page in section.pages) {
-          if (page.tag == VNLookFeatureTag.workInProgress) {
+          if (page.tag == ShadcnFeatureTag.workInProgress) {
             workInProgress++;
           }
         }
@@ -372,7 +369,7 @@ class DocsPageState extends State<DocsPage> {
     }
     if (kDebugMode) {
       print('Total components: $count');
-      print('Work in Progress: $workInProgress');
+      print('Work in VNLProgress: $workInProgress');
     }
   }
 
@@ -397,7 +394,9 @@ class DocsPageState extends State<DocsPage> {
   void _onVisibilityChanged() {
     if (!mounted) return;
     setState(() {
-      currentlyVisible = widget.onThisPage.values.where((element) => element.isVisible.value).toList();
+      currentlyVisible = widget.onThisPage.values
+          .where((element) => element.isVisible.value)
+          .toList();
     });
   }
 
@@ -412,8 +411,9 @@ class DocsPageState extends State<DocsPage> {
         for (final section in sections) {
           final List<Widget> resultItems = [];
           for (final page in section.pages) {
-            if (query == null || page.title.toLowerCase().contains(query.toLowerCase())) {
-              resultItems.add(CommandItem(
+            if (query == null ||
+                page.title.toLowerCase().contains(query.toLowerCase())) {
+              resultItems.add(VNLCommandItem(
                 title: Text(page.title),
                 trailing: Icon(section.icon),
                 onTap: () {
@@ -424,7 +424,7 @@ class DocsPageState extends State<DocsPage> {
           }
           if (resultItems.isNotEmpty) {
             yield [
-              CommandCategory(
+              VNLCommandCategory(
                 title: Text(section.title),
                 children: resultItems,
               ),
@@ -453,24 +453,26 @@ class DocsPageState extends State<DocsPage> {
         break;
     }
     return Builder(builder: (context) {
-      return PrimaryBadge(
+      return VNLPrimaryBadge(
         onPressed: () {
           showDropdown(
             context: context,
-            offset: const Offset(0, 8) * VNLTheme.of(context).scaling,
+            offset: const Offset(0, 8) * Theme.of(context).scaling,
             builder: (context) {
               return VNLDropdownMenu(
                 children: [
-                  MenuButton(
+                  VNLMenuButton(
                     child: Text(getReleaseTagName()),
                     onPressed: (context) {
-                      launchUrlString('https://sunarya-thito.github.io/vnl_ui/');
+                      launchUrlString(
+                          'https://sunarya-thito.github.io/shadcn_flutter/');
                     },
                   ),
-                  MenuButton(
+                  VNLMenuButton(
                     child: const Text('Experimental'),
                     onPressed: (context) {
-                      launchUrlString('https://sunarya-thito.github.io/vnl_ui/experimental/');
+                      launchUrlString(
+                          'https://sunarya-thito.github.io/shadcn_flutter/experimental/');
                     },
                   ),
                 ],
@@ -478,9 +480,9 @@ class DocsPageState extends State<DocsPage> {
             },
           );
         },
-        style: const ButtonStyle.primary(
+        style: const VNLButtonStyle.primary(
           density: ButtonDensity.dense,
-          size: ButtonSize.small,
+          size: VNLButtonSize.small,
         ).copyWith(
           decoration: (context, states, value) {
             return (value as BoxDecoration).copyWith(
@@ -502,238 +504,289 @@ class DocsPageState extends State<DocsPage> {
   @override
   Widget build(BuildContext context) {
     Map<String, OnThisPage> onThisPage = widget.onThisPage;
-    VNLookDocsPage? page = sections.expand((e) => e.pages).where((e) => e.name == widget.name).firstOrNull;
+    ShadcnDocsPage? page = sections
+        .expand((e) => e.pages)
+        .where((e) => e.name == widget.name)
+        .firstOrNull;
 
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
 
     var hasOnThisPage = onThisPage.isNotEmpty;
-    return ClipRect(
-      child: PageStorage(
-        bucket: docsBucket,
-        child: Builder(builder: (context) {
-          return StageContainer(
-            builder: (context, padding) {
-              return VNLScaffold(
-                headers: [
-                  Container(
-                    color: theme.colorScheme.background.scaleAlpha(0.3),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        MediaQueryVisibility(
-                          minWidth: breakpointWidth,
-                          alternateChild: VNLAppBar(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12 * theme.scaling,
-                              horizontal: 18 * theme.scaling,
-                            ),
-                            leading: [
-                              GhostButton(
-                                density: ButtonDensity.icon,
-                                onPressed: () {
-                                  _openDrawer(context);
-                                },
-                                child: const Icon(Icons.menu),
+    return FocusableActionDetector(
+      autofocus: true,
+      actions: {
+        OpenSearchCommandIntent: CallbackAction<OpenSearchCommandIntent>(
+          onInvoke: (intent) {
+            showSearchBar();
+            return null;
+          },
+        ),
+      },
+      shortcuts: const {
+        SingleActivator(LogicalKeyboardKey.keyF, control: true):
+            OpenSearchCommandIntent(),
+      },
+      child: ClipRect(
+        child: PageStorage(
+          bucket: docsBucket,
+          child: Builder(builder: (context) {
+            return VNLStageContainer(
+              builder: (context, padding) {
+                return Scaffold(
+                  headers: [
+                    Container(
+                      color: theme.colorScheme.background.scaleAlpha(0.3),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          VNLMediaQueryVisibility(
+                            minWidth: breakpointWidth,
+                            alternateChild: AppBar(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 12 * theme.scaling,
+                                horizontal: 18 * theme.scaling,
                               ),
-                            ],
-                            trailing: [
-                              GhostButton(
-                                density: ButtonDensity.icon,
-                                onPressed: () {
-                                  openInNewTab('https://github.com/sunarya-thito/vnl_ui');
-                                },
-                                child: FaIcon(
-                                  FontAwesomeIcons.github,
-                                  color: theme.colorScheme.secondaryForeground,
-                                ).iconLarge(),
-                              ),
-                              // pub.dev icon
-                              GhostButton(
+                              leading: [
+                                VNLGhostButton(
                                   density: ButtonDensity.icon,
                                   onPressed: () {
-                                    openInNewTab('https://pub.dev/packages/vnl_ui');
+                                    _openDrawer(context);
                                   },
-                                  child: ColorFiltered(
-                                    // turns into white
-                                    colorFilter: ColorFilter.mode(
-                                      theme.colorScheme.secondaryForeground,
-                                      BlendMode.srcIn,
-                                    ),
-                                    child: FlutterLogo(
-                                      size: 24 * theme.scaling,
-                                    ),
-                                  )),
-                            ],
-                            child: Center(
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: OutlineButton(
-                                  onPressed: () {
-                                    showSearchBar();
-                                  },
-                                  trailing: const Icon(Icons.search).iconSmall().iconMutedForeground(),
-                                  child: const Text('Search documentation...').muted().normal(),
+                                  child: const Icon(Icons.menu),
                                 ),
-                              ),
-                            ),
-                          ),
-                          child: MediaQueryVisibility(
-                            minWidth: breakpointWidth2,
-                            alternateChild: _buildAppBar(
-                                padding.copyWith(
-                                      top: 12,
-                                      bottom: 12,
-                                      right: 32,
-                                    ) *
-                                    theme.scaling,
-                                theme),
-                            child: _buildAppBar(
-                                padding.copyWith(
-                                      top: 12,
-                                      bottom: 12,
-                                    ) *
-                                    theme.scaling,
-                                theme),
-                          ),
-                        ),
-                        const VNLDivider(),
-                      ],
-                    ),
-                  ),
-                ],
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    MediaQueryVisibility(
-                      minWidth: breakpointWidth,
-                      child: FocusTraversalGroup(
-                        child: SingleChildScrollView(
-                          key: const PageStorageKey('sidebar'),
-                          padding: EdgeInsets.only(top: 32, left: 24 + padding.left, bottom: 32) * theme.scaling,
-                          child: _DocsSidebar(sections: sections, pageName: widget.name),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: FocusTraversalGroup(
-                        child: widget.scrollable
-                            ? Builder(builder: (context) {
-                                var mq = MediaQuery.of(context);
-                                return SingleChildScrollView(
-                                  controller: scrollController,
-                                  clipBehavior: Clip.none,
-                                  padding: !hasOnThisPage
-                                      ? const EdgeInsets.symmetric(
-                                                horizontal: 40,
-                                                vertical: 32,
-                                              ).copyWith(
-                                                right: padding.right + 32,
-                                              ) *
-                                              theme.scaling +
-                                          mq.padding
-                                      : const EdgeInsets.symmetric(
-                                                horizontal: 40,
-                                                vertical: 32,
-                                              ).copyWith(right: 24) *
-                                              theme.scaling +
-                                          mq.padding,
-                                  child: MediaQuery(
-                                    data: mq.copyWith(
-                                      padding: EdgeInsets.zero,
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                              ],
+                              trailing: [
+                                Semantics(
+                                  link: true,
+                                  linkUrl: Uri.tryParse(
+                                    'https://github.com/sunarya-thito/shadcn_flutter',
+                                  ),
+                                  child: VNLGhostButton(
+                                    density: ButtonDensity.icon,
+                                    onPressed: () {
+                                      openInNewTab(
+                                          'https://github.com/sunarya-thito/shadcn_flutter');
+                                    },
+                                    child: FaIcon(
+                                      FontAwesomeIcons.github,
+                                      color:
+                                          theme.colorScheme.secondaryForeground,
+                                    ).iconLarge(),
+                                  ),
+                                ),
+                                // pub.dev icon
+                                VNLGhostButton(
+                                    density: ButtonDensity.icon,
+                                    onPressed: () {
+                                      openInNewTab(
+                                          'https://pub.dev/packages/shadcn_flutter');
+                                    },
+                                    child: ColorFiltered(
+                                      // turns into white
+                                      colorFilter: ColorFilter.mode(
+                                        theme.colorScheme.secondaryForeground,
+                                        BlendMode.srcIn,
+                                      ),
+                                      child: FlutterLogo(
+                                        size: 24 * theme.scaling,
+                                      ),
+                                    )),
+                              ],
+                              child: Center(
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: VNLOutlineButton(
+                                    onPressed: () {
+                                      showSearchBar();
+                                    },
+                                    trailing: const Icon(Icons.search)
+                                        .iconSmall()
+                                        .iconMutedForeground(),
+                                    child: Row(
+                                      spacing: 8,
                                       children: [
-                                        VNLBreadcrumb(
-                                          separator: VNLBreadcrumb.arrowSeparator,
-                                          children: [
-                                            TextButton(
-                                              onPressed: () {
-                                                context.goNamed('introduction');
-                                              },
-                                              density: ButtonDensity.compact,
-                                              child: const Text('Docs'),
-                                            ),
-                                            ...widget.navigationItems,
-                                            if (page != null) Text(page.title),
-                                          ],
-                                        ),
-                                        Gap(16 * theme.scaling),
-                                        widget.child,
+                                        const Text('Search documentation...')
+                                            .muted()
+                                            .normal(),
+                                        const VNLKeyboardDisplay.fromActivator(
+                                          activator: SingleActivator(
+                                              LogicalKeyboardKey.keyF,
+                                              control: true),
+                                        ).xSmall.withOpacity(0.8),
                                       ],
                                     ),
                                   ),
-                                );
-                              })
-                            : Container(
-                                clipBehavior: Clip.none,
-                                padding: !hasOnThisPage
-                                    ? const EdgeInsets.symmetric(
-                                          horizontal: 40,
-                                          vertical: 32,
-                                        ).copyWith(
-                                          right: padding.right + 32,
-                                          bottom: 0,
-                                        ) *
-                                        theme.scaling
-                                    : const EdgeInsets.symmetric(
-                                          horizontal: 40,
-                                          vertical: 32,
-                                        ).copyWith(
-                                          right: 24,
-                                          bottom: 0,
-                                        ) *
-                                        theme.scaling,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    VNLBreadcrumb(
-                                      separator: VNLBreadcrumb.arrowSeparator,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            context.goNamed('introduction');
-                                          },
-                                          density: ButtonDensity.compact,
-                                          child: const Text('Docs'),
-                                        ),
-                                        ...widget.navigationItems,
-                                        if (page != null) Text(page.title),
-                                      ],
-                                    ),
-                                    Gap(16 * theme.scaling),
-                                    Expanded(child: widget.child),
-                                  ],
                                 ),
                               ),
+                            ),
+                            child: VNLMediaQueryVisibility(
+                              minWidth: breakpointWidth2,
+                              alternateChild: _buildAppBar(
+                                  padding.copyWith(
+                                        top: 12,
+                                        bottom: 12,
+                                        right: 32,
+                                      ) *
+                                      theme.scaling,
+                                  theme),
+                              child: _buildAppBar(
+                                  padding.copyWith(
+                                        top: 12,
+                                        bottom: 12,
+                                      ) *
+                                      theme.scaling,
+                                  theme),
+                            ),
+                          ),
+                          const VNLDivider(),
+                        ],
                       ),
                     ),
-                    if (hasOnThisPage)
-                      MediaQueryVisibility(
-                        minWidth: breakpointWidth2,
-                        child: _DocsSecondarySidebar(
-                          onThisPage: onThisPage,
-                          isVisible: isVisible,
-                          padding: padding,
+                  ],
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      VNLMediaQueryVisibility(
+                        minWidth: breakpointWidth,
+                        child: FocusTraversalGroup(
+                          child: SingleChildScrollView(
+                            key: const PageStorageKey('sidebar'),
+                            padding: EdgeInsets.only(
+                                    top: 32,
+                                    left: 24 + padding.left,
+                                    bottom: 32) *
+                                theme.scaling,
+                            child: _DocsSidebar(
+                                sections: sections, pageName: widget.name),
+                          ),
                         ),
                       ),
-                  ],
-                ),
-              );
-            },
-          );
-        }),
+                      Expanded(
+                        child: FocusTraversalGroup(
+                          child: widget.scrollable
+                              ? Builder(builder: (context) {
+                                  var mq = MediaQuery.of(context);
+                                  return SingleChildScrollView(
+                                    controller: scrollController,
+                                    clipBehavior: Clip.none,
+                                    padding: !hasOnThisPage
+                                        ? const EdgeInsets.symmetric(
+                                                  horizontal: 40,
+                                                  vertical: 32,
+                                                ).copyWith(
+                                                  right: padding.right + 32,
+                                                ) *
+                                                theme.scaling +
+                                            mq.padding
+                                        : const EdgeInsets.symmetric(
+                                                  horizontal: 40,
+                                                  vertical: 32,
+                                                ).copyWith(right: 24) *
+                                                theme.scaling +
+                                            mq.padding,
+                                    child: MediaQuery(
+                                      data: mq.copyWith(
+                                        padding: EdgeInsets.zero,
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          VNLBreadcrumb(
+                                            separator:
+                                                VNLBreadcrumb.arrowSeparator,
+                                            children: [
+                                              VNLTextButton(
+                                                onPressed: () {
+                                                  context
+                                                      .goNamed('introduction');
+                                                },
+                                                density: ButtonDensity.compact,
+                                                child: const Text('Docs'),
+                                              ),
+                                              ...widget.navigationItems,
+                                              if (page != null)
+                                                Text(page.title),
+                                            ],
+                                          ),
+                                          Gap(16 * theme.scaling),
+                                          widget.child,
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                })
+                              : Container(
+                                  clipBehavior: Clip.none,
+                                  padding: !hasOnThisPage
+                                      ? const EdgeInsets.symmetric(
+                                            horizontal: 40,
+                                            vertical: 32,
+                                          ).copyWith(
+                                            right: padding.right + 32,
+                                            bottom: 0,
+                                          ) *
+                                          theme.scaling
+                                      : const EdgeInsets.symmetric(
+                                            horizontal: 40,
+                                            vertical: 32,
+                                          ).copyWith(
+                                            right: 24,
+                                            bottom: 0,
+                                          ) *
+                                          theme.scaling,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      VNLBreadcrumb(
+                                        separator: VNLBreadcrumb.arrowSeparator,
+                                        children: [
+                                          VNLTextButton(
+                                            onPressed: () {
+                                              context.goNamed('introduction');
+                                            },
+                                            density: ButtonDensity.compact,
+                                            child: const Text('Docs'),
+                                          ),
+                                          ...widget.navigationItems,
+                                          if (page != null) Text(page.title),
+                                        ],
+                                      ),
+                                      Gap(16 * theme.scaling),
+                                      Expanded(child: widget.child),
+                                    ],
+                                  ),
+                                ),
+                        ),
+                      ),
+                      if (hasOnThisPage)
+                        VNLMediaQueryVisibility(
+                          minWidth: breakpointWidth2,
+                          child: _DocsSecondarySidebar(
+                            onThisPage: onThisPage,
+                            isVisible: isVisible,
+                            padding: padding,
+                          ),
+                        ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }),
+        ),
       ),
     );
   }
 
-  VNLAppBar _buildAppBar(EdgeInsets padding, VNLThemeData theme) {
-    return VNLAppBar(
+  AppBar _buildAppBar(EdgeInsets padding, ThemeData theme) {
+    return AppBar(
       // padding: (breakpointWidth2 < mediaQuerySize.width
       //         ? padding * theme.scaling
       //         : padding.copyWith(
@@ -745,17 +798,16 @@ class DocsPageState extends State<DocsPage> {
       //   bottom: 12 * theme.scaling,
       // ),
       padding: padding,
-      title: Basic(
-        // leading: FlutterLogo(
-        //   size: 32 * theme.scaling,
-        // ),
-        leading: Image.asset("assets/icon/icon.png", width: 32 * theme.scaling),
+      title: VNLBasic(
+        leading: FlutterLogo(
+          size: 32 * theme.scaling,
+        ),
         content: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              'VNLook UI',
+              'shadcn_flutter',
             ).textLarge().mono(),
             Gap(16 * theme.scaling),
             buildFlavorTag(),
@@ -767,28 +819,40 @@ class DocsPageState extends State<DocsPage> {
           alignment: AlignmentDirectional.centerEnd,
           child: SizedBox(
             width: 320 - 18,
-            child: OutlineButton(
+            child: VNLOutlineButton(
               onPressed: () {
                 showSearchBar();
               },
-              trailing: const Icon(Icons.search).iconSmall().iconMutedForeground(),
-              child: const Text('Search documentation...').muted().normal(),
+              trailing:
+                  const Icon(Icons.search).iconSmall().iconMutedForeground(),
+              child: Row(
+                spacing: 16,
+                children: [
+                  const Text('Search documentation...').muted().normal(),
+                  const VNLKeyboardDisplay.fromActivator(
+                    activator:
+                        SingleActivator(LogicalKeyboardKey.keyF, control: true),
+                  ).xSmall.withOpacity(0.8),
+                ],
+              ),
             ),
           ),
         ),
         Gap(8 * theme.scaling),
-        GhostButton(
+        VNLGhostButton(
           density: ButtonDensity.icon,
           onPressed: () {
-            openInNewTab('https://github.com/vnlook');
+            openInNewTab('https://github.com/sunarya-thito/shadcn_flutter');
           },
-          child: FaIcon(FontAwesomeIcons.github, color: theme.colorScheme.secondaryForeground).iconLarge(),
+          child: FaIcon(FontAwesomeIcons.github,
+                  color: theme.colorScheme.secondaryForeground)
+              .iconLarge(),
         ),
         // pub.dev icon
-        GhostButton(
+        VNLGhostButton(
             density: ButtonDensity.icon,
             onPressed: () {
-              openInNewTab('https://vnlook.com/');
+              openInNewTab('https://pub.dev/packages/shadcn_flutter');
             },
             child: ColorFiltered(
               // turns into white
@@ -805,7 +869,7 @@ class DocsPageState extends State<DocsPage> {
   }
 
   void _openDrawer(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
     openSheet(
       context: context,
@@ -825,14 +889,14 @@ class DocsPageState extends State<DocsPage> {
                   ),
                   Gap(18 * scaling),
                   const Text(
-                    'vnl_ui',
+                    'shadcn_flutter',
                   ).medium().mono(),
                   Gap(12 * scaling),
                   buildFlavorTag(),
                   const Spacer(),
-                  TextButton(
+                  VNLTextButton(
                     density: ButtonDensity.icon,
-                    size: ButtonSize.small,
+                    size: VNLButtonSize.small,
                     onPressed: () {
                       closeDrawer(context);
                     },
@@ -844,7 +908,9 @@ class DocsPageState extends State<DocsPage> {
               Expanded(
                 child: FocusTraversalGroup(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(left: 32, right: 32, bottom: 48) * scaling,
+                    padding:
+                        const EdgeInsets.only(left: 32, right: 32, bottom: 48) *
+                            scaling,
                     key: const PageStorageKey('sidebar'),
                     child: SidebarNav(children: [
                       for (var section in sections)
@@ -852,35 +918,44 @@ class DocsPageState extends State<DocsPage> {
                           header: Text(section.title),
                           children: [
                             for (var page in section.pages)
-                              DocsNavigationButton(
-                                onPressed: () {
-                                  if (page.tag == VNLookFeatureTag.workInProgress) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return VNLAlertDialog(
-                                          title: const Text('Work in Progress'),
-                                          content: const Text(
-                                              'This page is still under development. Please come back later.'),
-                                          actions: [
-                                            PrimaryButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('Close')),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    return;
-                                  }
-                                  context.goNamed(page.name);
-                                },
-                                selected: page.name == widget.name,
-                                child: Basic(
-                                  trailing: page.tag?.buildBadge(context),
-                                  trailingAlignment: AlignmentDirectional.centerStart,
-                                  content: Text(page.title),
+                              Semantics(
+                                link: true,
+                                linkUrl: Uri.tryParse(
+                                  'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, page.name)}',
+                                ),
+                                child: DocsNavigationButton(
+                                  onPressed: () {
+                                    if (page.tag ==
+                                        ShadcnFeatureTag.workInProgress) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return VNLAlertDialog(
+                                            title:
+                                                const Text('Work in VNLProgress'),
+                                            content: const Text(
+                                                'This page is still under development. Please come back later.'),
+                                            actions: [
+                                              PrimaryButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text('Close')),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    }
+                                    context.goNamed(page.name);
+                                  },
+                                  selected: page.name == widget.name,
+                                  child: VNLBasic(
+                                    trailing: page.tag?.buildBadge(context),
+                                    trailingAlignment:
+                                        AlignmentDirectional.centerStart,
+                                    content: Text(page.title),
+                                  ),
                                 ),
                               ),
                           ],
@@ -898,13 +973,17 @@ class DocsPageState extends State<DocsPage> {
   }
 }
 
+class OpenSearchCommandIntent extends Intent {
+  const OpenSearchCommandIntent();
+}
+
 class _DocsSidebar extends StatefulWidget {
   const _DocsSidebar({
     required this.sections,
     required this.pageName,
   });
 
-  final List<VNLookDocsSection> sections;
+  final List<ShadcnDocsSection> sections;
   final String pageName;
 
   @override
@@ -918,7 +997,8 @@ class _DocsSidebarState extends State<_DocsSidebar> {
   void initState() {
     super.initState();
     children = [
-      for (var section in widget.sections) _DocsSidebarSection(section: section, pageName: widget.pageName),
+      for (var section in widget.sections)
+        _DocsSidebarSection(section: section, pageName: widget.pageName),
     ];
     // do we need didUpdateWidget? nope
     // we don't update the children anyway
@@ -955,7 +1035,8 @@ class _DocsSecondarySidebarState extends State<_DocsSecondarySidebar> {
       side.add(SidebarButton(
         onPressed: () {
           Scrollable.ensureVisible(widget.onThisPage[key]!.currentContext!,
-              duration: kDefaultDuration, alignmentPolicy: ScrollPositionAlignmentPolicy.explicit);
+              duration: kDefaultDuration,
+              alignmentPolicy: ScrollPositionAlignmentPolicy.explicit);
         },
         selected: widget.isVisible(widget.onThisPage[key]!),
         child: Text(key),
@@ -969,7 +1050,7 @@ class _DocsSecondarySidebarState extends State<_DocsSecondarySidebar> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     return Container(
       width: (widget.padding.right + 180) * theme.scaling,
       alignment: Alignment.topLeft,
@@ -995,7 +1076,7 @@ class _DocsSidebarSection extends StatefulWidget {
     required this.pageName,
   });
 
-  final VNLookDocsSection section;
+  final ShadcnDocsSection section;
   final String pageName;
 
   @override
@@ -1009,7 +1090,8 @@ class _DocsSidebarSectionState extends State<_DocsSidebarSection> {
   void initState() {
     super.initState();
     pages = [
-      for (var page in widget.section.pages) _DocsSidebarButton(page: page, pageName: widget.pageName),
+      for (var page in widget.section.pages)
+        _DocsSidebarButton(page: page, pageName: widget.pageName),
     ];
     // do we need didUpdateWidget? nope
     // we don't update the pages anyway
@@ -1030,37 +1112,53 @@ class _DocsSidebarButton extends StatefulWidget {
     required this.pageName,
   });
 
-  final VNLookDocsPage page;
+  final ShadcnDocsPage page;
   final String pageName;
 
   @override
   State<_DocsSidebarButton> createState() => _DocsSidebarButtonState();
 }
 
+String? _goRouterNamedLocation(BuildContext context, String name) {
+  try {
+    return '/#${GoRouter.of(context).namedLocation(name)}';
+  } catch (e) {
+    return null;
+  }
+}
+
 class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
   @override
   Widget build(BuildContext context) {
-    return DocsNavigationButton(
-      onPressed: _onPressed,
-      selected: widget.page.name == widget.pageName,
-      trailing: DefaultTextStyle.merge(
-        style: const TextStyle(
-          decoration: TextDecoration.none,
-        ),
-        child: widget.page.tag?.buildBadge(context) ?? const SizedBox(),
+    return Semantics(
+      link: true,
+      label: widget.page.title,
+      linkUrl: Uri.tryParse(
+        'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, widget.page.name)}',
       ),
-      child: Text(widget.page.title),
+      child: DocsNavigationButton(
+        onPressed: _onPressed,
+        selected: widget.page.name == widget.pageName,
+        trailing: DefaultTextStyle.merge(
+          style: const TextStyle(
+            decoration: TextDecoration.none,
+          ),
+          child: widget.page.tag?.buildBadge(context) ?? const SizedBox(),
+        ),
+        child: Text(widget.page.title),
+      ),
     );
   }
 
   void _onPressed() {
-    if (widget.page.tag == VNLookFeatureTag.workInProgress) {
+    if (widget.page.tag == ShadcnFeatureTag.workInProgress) {
       showDialog(
         context: context,
         builder: (context) {
           return VNLAlertDialog(
-            title: const Text('Work in Progress'),
-            content: const Text('This page is still under development. Please come back later.'),
+            title: const Text('Work in VNLProgress'),
+            content: const Text(
+                'This page is still under development. Please come back later.'),
             actions: [
               PrimaryButton(
                   onPressed: () {

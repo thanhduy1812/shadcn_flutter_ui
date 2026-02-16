@@ -18,9 +18,10 @@ class _SortableExample5State extends State<SortableExample5> {
 
   @override
   Widget build(BuildContext context) {
-    return SortableLayer(
+    return VNLSortableLayer(
       lock: true,
       child: SortableDropFallback<int>(
+        // Dropping outside edge targets appends the item to the end.
         onAccept: (value) {
           setState(() {
             names.add(names.removeAt(value.data));
@@ -46,11 +47,12 @@ class _SortableExample5State extends State<SortableExample5> {
                     names.swapItem(value, i + 1);
                   });
                 },
-                child: OutlinedContainer(
+                child: VNLOutlinedContainer(
                   padding: const EdgeInsets.all(12),
                   child: Row(
                     children: [
-                      const SortableDragHandle(child: Icon(Icons.drag_handle)),
+                      // Only this handle starts the drag; the rest of the row is inert.
+                      const VNLSortableDragHandle(child: Icon(Icons.drag_handle)),
                       const SizedBox(width: 8),
                       Expanded(child: Text(names[i].data)),
                     ],

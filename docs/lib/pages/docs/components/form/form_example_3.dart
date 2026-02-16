@@ -29,7 +29,7 @@ class _FormExample3State extends State<FormExample3> {
             context: context,
             builder: (context) {
               return VNLAlertDialog(
-                title: const Text('Form Values'),
+                title: const Text('VNLForm Values'),
                 content: Text(jsonEncode(values.map(
                   (key, value) {
                     return MapEntry(key.key, value);
@@ -49,13 +49,15 @@ class _FormExample3State extends State<FormExample3> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            FormTableLayout(
+            VNLFormTableLayout(
               rows: [
                 FormField(
                   key: _usernameKey,
                   label: const Text('Username'),
                   hint: const Text('This is your public display name'),
-                  validator: const LengthValidator(min: 4) &
+                  // Combine validators: length + async availability check,
+                  // but only run the async validator on submit.
+                  validator: const VNLLengthValidator(min: 4) &
                       ValidationMode(
                         ConditionalValidator((value) async {
                           // simulate a network delay for example purpose
@@ -72,7 +74,7 @@ class _FormExample3State extends State<FormExample3> {
                 FormField(
                   key: _passwordKey,
                   label: const Text('Password'),
-                  validator: const LengthValidator(min: 8),
+                  validator: const VNLLengthValidator(min: 8),
                   showErrors: const {FormValidationMode.submitted, FormValidationMode.changed},
                   child: const VNLTextField(
                     obscureText: true,
@@ -90,10 +92,10 @@ class _FormExample3State extends State<FormExample3> {
               ],
             ),
             const Gap(24),
-            const SubmitButton(
+            const VNLSubmitButton(
               loadingTrailing: AspectRatio(
                 aspectRatio: 1,
-                child: CircularProgressIndicator(
+                child: VNLCircularProgressIndicator(
                   onSurface: true,
                 ),
               ),

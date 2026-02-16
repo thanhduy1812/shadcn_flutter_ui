@@ -2,25 +2,152 @@ import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-typedef ScrollableBuilder = Widget Function(BuildContext context, Offset offset, Size viewportSize, Widget? child);
+/// Theme data for [VNLScrollableClient].
+class VNLScrollableClientTheme extends ComponentThemeData {
+  /// Behavior for diagonal drag gestures.
+  final DiagonalDragBehavior? diagonalDragBehavior;
 
-class ScrollableClient extends StatelessWidget {
+  /// When drag gestures should start.
+  final DragStartBehavior? dragStartBehavior;
+
+  /// How the keyboard dismissal should behave.
+  final ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior;
+
+  /// How to clip the scrollable content.
+  final Clip? clipBehavior;
+
+  /// How hit testing should behave for the scrollable.
+  final HitTestBehavior? hitTestBehavior;
+
+  /// Whether overscroll effects are enabled.
+  final bool? overscroll;
+
+  /// Creates a [ScrollableClientTheme].
+  const VNLScrollableClientTheme({
+    this.diagonalDragBehavior,
+    this.dragStartBehavior,
+    this.keyboardDismissBehavior,
+    this.clipBehavior,
+    this.hitTestBehavior,
+    this.overscroll,
+  });
+
+  /// Creates a copy of this theme with the given fields replaced.
+  VNLScrollableClientTheme copyWith({
+    ValueGetter<DiagonalDragBehavior?>? diagonalDragBehavior,
+    ValueGetter<DragStartBehavior?>? dragStartBehavior,
+    ValueGetter<ScrollViewKeyboardDismissBehavior?>? keyboardDismissBehavior,
+    ValueGetter<Clip?>? clipBehavior,
+    ValueGetter<HitTestBehavior?>? hitTestBehavior,
+    ValueGetter<bool?>? overscroll,
+  }) {
+    return VNLScrollableClientTheme(
+      diagonalDragBehavior: diagonalDragBehavior == null
+          ? this.diagonalDragBehavior
+          : diagonalDragBehavior(),
+      dragStartBehavior: dragStartBehavior == null
+          ? this.dragStartBehavior
+          : dragStartBehavior(),
+      keyboardDismissBehavior: keyboardDismissBehavior == null
+          ? this.keyboardDismissBehavior
+          : keyboardDismissBehavior(),
+      clipBehavior: clipBehavior == null ? this.clipBehavior : clipBehavior(),
+      hitTestBehavior:
+          hitTestBehavior == null ? this.hitTestBehavior : hitTestBehavior(),
+      overscroll: overscroll == null ? this.overscroll : overscroll(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      other is VNLScrollableClientTheme &&
+      other.diagonalDragBehavior == diagonalDragBehavior &&
+      other.dragStartBehavior == dragStartBehavior &&
+      other.keyboardDismissBehavior == keyboardDismissBehavior &&
+      other.clipBehavior == clipBehavior &&
+      other.hitTestBehavior == hitTestBehavior &&
+      other.overscroll == overscroll;
+
+  @override
+  int get hashCode => Object.hash(diagonalDragBehavior, dragStartBehavior,
+      keyboardDismissBehavior, clipBehavior, hitTestBehavior, overscroll);
+
+  @override
+  String toString() =>
+      'VNLScrollableClientTheme(diagonalDragBehavior: $diagonalDragBehavior, dragStartBehavior: $dragStartBehavior, keyboardDismissBehavior: $keyboardDismissBehavior, clipBehavior: $clipBehavior, hitTestBehavior: $hitTestBehavior, overscroll: $overscroll)';
+}
+
+/// Builder function for creating scrollable content with viewport information.
+///
+/// Parameters:
+/// - [context] (`BuildContext`): Build context.
+/// - [offset] (`Offset`): Current scroll offset.
+/// - [viewportSize] (`Size`): Size of the visible viewport.
+/// - [child] (`Widget?`): Optional child widget.
+typedef ScrollableBuilder = Widget Function(
+    BuildContext context, Offset offset, Size viewportSize, Widget? child);
+
+/// A customizable scrollable widget with two-axis scrolling support.
+///
+/// Provides fine-grained control over scrolling behavior for both vertical
+/// and horizontal axes. Supports custom scroll physics, drag behaviors,
+/// and viewport-aware content building.
+///
+/// Example:
+/// ```dart
+/// VNLScrollableClient(
+///   mainAxis: Axis.vertical,
+///   verticalDetails: ScrollableDetails.vertical(),
+///   builder: (context, offset, viewportSize, child) {
+///     return CustomPaint(
+///       painter: MyPainter(offset),
+///       child: child,
+///     );
+///   },
+///   child: MyContent(),
+/// )
+/// ```
+class VNLScrollableClient extends StatelessWidget {
+  /// Whether this is the primary scrollable in the widget tree.
   final bool? primary;
-  final Axis mainAxis;
-  final ScrollableDetails verticalDetails;
-  final ScrollableDetails horizontalDetails;
-  final ScrollableBuilder builder;
-  final Widget? child;
-  final DiagonalDragBehavior diagonalDragBehavior;
-  final DragStartBehavior dragStartBehavior;
-  final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
-  final Clip clipBehavior;
-  final HitTestBehavior hitTestBehavior;
-  final bool overscroll;
 
-  const ScrollableClient({
+  /// Primary scrolling axis.
+  final Axis mainAxis;
+
+  /// Scroll configuration for vertical axis.
+  final ScrollableDetails verticalDetails;
+
+  /// Scroll configuration for horizontal axis.
+  final ScrollableDetails horizontalDetails;
+
+  /// Builder for creating content with viewport info.
+  final ScrollableBuilder builder;
+
+  /// Optional child widget.
+  final Widget? child;
+
+  /// Behavior for diagonal drag gestures.
+  final DiagonalDragBehavior? diagonalDragBehavior;
+
+  /// When drag gestures should start.
+  final DragStartBehavior? dragStartBehavior;
+
+  /// How keyboard dismissal should behave.
+  final ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior;
+
+  /// How to clip content.
+  final Clip? clipBehavior;
+
+  /// Hit test behavior.
+  final HitTestBehavior? hitTestBehavior;
+
+  /// Whether overscroll effects are enabled.
+  final bool? overscroll;
+
+  /// Creates a [VNLScrollableClient].
+  const VNLScrollableClient({
     super.key,
     this.primary,
     this.mainAxis = Axis.vertical,
@@ -28,20 +155,22 @@ class ScrollableClient extends StatelessWidget {
     this.horizontalDetails = const ScrollableDetails.horizontal(),
     required this.builder,
     this.child,
-    this.diagonalDragBehavior = DiagonalDragBehavior.none,
-    this.dragStartBehavior = DragStartBehavior.start,
-    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
-    this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
-    this.overscroll = false,
+    this.diagonalDragBehavior,
+    this.dragStartBehavior,
+    this.keyboardDismissBehavior,
+    this.clipBehavior,
+    this.hitTestBehavior,
+    this.overscroll,
   });
 
   Widget _buildViewport(
     BuildContext context,
     ViewportOffset verticalOffset,
     ViewportOffset horizontalOffset,
+    bool overscroll,
+    Clip clipBehavior,
   ) {
-    return ScrollableClientViewport(
+    return VNLScrollableClientViewport(
         overscroll: overscroll,
         verticalOffset: verticalOffset,
         verticalAxisDirection: verticalDetails.direction,
@@ -58,8 +187,11 @@ class ScrollableClient extends StatelessWidget {
               builder: (context, child) {
                 var horizontalPixels = horizontalOffset.pixels;
                 var verticalPixels = verticalOffset.pixels;
-                return builder(context, Offset(horizontalPixels, verticalPixels),
-                    (vicinity as _ScrollableClientChildVicinity).viewportSize, child);
+                return builder(
+                    context,
+                    Offset(horizontalPixels, verticalPixels),
+                    (vicinity as _ScrollableClientChildVicinity).viewportSize,
+                    child);
               },
               child: child,
             );
@@ -74,6 +206,21 @@ class ScrollableClient extends StatelessWidget {
         'TwoDimensionalScrollView.verticalDetails are not Axis.vertical.');
     assert(axisDirectionToAxis(horizontalDetails.direction) == Axis.horizontal,
         'TwoDimensionalScrollView.horizontalDetails are not Axis.horizontal.');
+
+    final compTheme = ComponentTheme.maybeOf<VNLScrollableClientTheme>(context);
+    final diag = diagonalDragBehavior ??
+        compTheme?.diagonalDragBehavior ??
+        DiagonalDragBehavior.none;
+    final dragStart = dragStartBehavior ??
+        compTheme?.dragStartBehavior ??
+        DragStartBehavior.start;
+    final keyboardDismiss = keyboardDismissBehavior ??
+        compTheme?.keyboardDismissBehavior ??
+        ScrollViewKeyboardDismissBehavior.manual;
+    final clip = clipBehavior ?? compTheme?.clipBehavior ?? Clip.hardEdge;
+    final hitTest =
+        hitTestBehavior ?? compTheme?.hitTestBehavior ?? HitTestBehavior.opaque;
+    final bool overscroll = this.overscroll ?? compTheme?.overscroll ?? false;
 
     ScrollableDetails mainAxisDetails = switch (mainAxis) {
       Axis.vertical => verticalDetails,
@@ -108,10 +255,11 @@ class ScrollableClient extends StatelessWidget {
         Axis.vertical => mainAxisDetails,
         Axis.horizontal => verticalDetails,
       },
-      diagonalDragBehavior: diagonalDragBehavior,
-      viewportBuilder: _buildViewport,
-      dragStartBehavior: dragStartBehavior,
-      hitTestBehavior: hitTestBehavior,
+      diagonalDragBehavior: diag,
+      viewportBuilder: (context, vOffset, hOffset) =>
+          _buildViewport(context, vOffset, hOffset, overscroll, clip),
+      dragStartBehavior: dragStart,
+      hitTestBehavior: hitTest,
     );
 
     final Widget scrollableResult = effectivePrimary
@@ -119,12 +267,14 @@ class ScrollableClient extends StatelessWidget {
         ? PrimaryScrollController.none(child: scrollable)
         : scrollable;
 
-    if (keyboardDismissBehavior == ScrollViewKeyboardDismissBehavior.onDrag) {
+    if (keyboardDismiss == ScrollViewKeyboardDismissBehavior.onDrag) {
       return NotificationListener<ScrollUpdateNotification>(
         child: scrollableResult,
         onNotification: (ScrollUpdateNotification notification) {
           final FocusScopeNode currentScope = FocusScope.of(context);
-          if (notification.dragDetails != null && !currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+          if (notification.dragDetails != null &&
+              !currentScope.hasPrimaryFocus &&
+              currentScope.hasFocus) {
             FocusManager.instance.primaryFocus?.unfocus();
           }
           return false;
@@ -135,9 +285,16 @@ class ScrollableClient extends StatelessWidget {
   }
 }
 
-class ScrollableClientViewport extends TwoDimensionalViewport {
+/// Viewport widget for [VNLScrollableClient] with two-dimensional scrolling.
+///
+/// Handles rendering and layout of scrollable content with both horizontal
+/// and vertical scroll axes.
+class VNLScrollableClientViewport extends TwoDimensionalViewport {
+  /// Whether overscroll effects are enabled.
   final bool overscroll;
-  const ScrollableClientViewport({
+
+  /// Creates a [VNLScrollableClientViewport].
+  const VNLScrollableClientViewport({
     super.key,
     required super.verticalOffset,
     required super.verticalAxisDirection,
@@ -152,7 +309,7 @@ class ScrollableClientViewport extends TwoDimensionalViewport {
 
   @override
   RenderTwoDimensionalViewport createRenderObject(BuildContext context) {
-    return RenderScrollableClientViewport(
+    return VNLRenderScrollableClientViewport(
       horizontalOffset: horizontalOffset,
       horizontalAxisDirection: horizontalAxisDirection,
       verticalOffset: verticalOffset,
@@ -167,9 +324,15 @@ class ScrollableClientViewport extends TwoDimensionalViewport {
   }
 }
 
-class RenderScrollableClientViewport extends RenderTwoDimensionalViewport {
+/// Render object for [VNLScrollableClientViewport].
+///
+/// Manages the two-dimensional viewport rendering with overscroll support.
+class VNLRenderScrollableClientViewport extends RenderTwoDimensionalViewport {
+  /// Whether overscroll effects are enabled.
   final bool overscroll;
-  RenderScrollableClientViewport({
+
+  /// Creates a [VNLRenderScrollableClientViewport].
+  VNLRenderScrollableClientViewport({
     required super.horizontalOffset,
     required super.horizontalAxisDirection,
     required super.verticalOffset,
@@ -207,11 +370,16 @@ class RenderScrollableClientViewport extends RenderTwoDimensionalViewport {
       horizontalPixels = min(horizontalPixels, maxHorizontalPixels);
       verticalPixels = min(verticalPixels, maxVerticalPixels);
     }
-    parentDataOf(child).layoutOffset = Offset(-horizontalPixels, -verticalPixels);
+    parentDataOf(child).layoutOffset =
+        Offset(-horizontalPixels, -verticalPixels);
     horizontalOffset.applyContentDimensions(
-        0, (child.size.width - viewportDimension.width).clamp(0.0, double.infinity));
+        0,
+        (child.size.width - viewportDimension.width)
+            .clamp(0.0, double.infinity));
     verticalOffset.applyContentDimensions(
-        0, (child.size.height - viewportDimension.height).clamp(0.0, double.infinity));
+        0,
+        (child.size.height - viewportDimension.height)
+            .clamp(0.0, double.infinity));
     horizontalOffset.applyViewportDimension(viewportDimension.width);
     verticalOffset.applyViewportDimension(viewportDimension.height);
   }

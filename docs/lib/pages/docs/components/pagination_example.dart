@@ -13,10 +13,10 @@ class PaginationExample extends StatelessWidget {
       name: 'pagination',
       description:
           'A pagination component is used to navigate through a series of pages.',
-      displayName: 'Pagination',
+      displayName: 'VNLPagination',
       children: [
         WidgetUsageExample(
-          title: 'Pagination Example',
+          title: 'VNLPagination Example',
           path:
               'lib/pages/docs/components/pagination/pagination_example_1.dart',
           child: PaginationExample1(),

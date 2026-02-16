@@ -12,19 +12,19 @@ class ButtonExample7 extends StatelessWidget {
         PrimaryButton(
           child: Text('Disabled'),
         ),
-        SecondaryButton(
+        VNLSecondaryButton(
           child: Text('Disabled'),
         ),
-        OutlineButton(
+        VNLOutlineButton(
           child: Text('Disabled'),
         ),
-        GhostButton(
+        VNLGhostButton(
           child: Text('Disabled'),
         ),
-        TextButton(
+        VNLTextButton(
           child: Text('Disabled'),
         ),
-        DestructiveButton(
+        VNLDestructiveButton(
           child: Text('Disabled'),
         ),
       ],

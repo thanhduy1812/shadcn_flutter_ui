@@ -1,25 +1,28 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
+
+// Demonstrates a basic boolean VNLToggle that flips its value when pressed.
 
 class ToggleExample1 extends StatefulWidget {
   const ToggleExample1({super.key});
 
   @override
-  _ToggleExample1State createState() => _ToggleExample1State();
+  ToggleExample1State createState() => ToggleExample1State();
 }
 
-class _ToggleExample1State extends State<ToggleExample1> {
+class ToggleExample1State extends State<ToggleExample1> {
   bool value = false;
 
   @override
   Widget build(BuildContext context) {
     return VNLToggle(
+      // Simple boolean toggle; style/semantics similar to a ToggleButton.
       value: value,
       onChanged: (v) {
         setState(() {
           value = v;
         });
       },
-      child: const Text('Toggle'),
+      child: const Text('VNLToggle'),
     );
   }
 }

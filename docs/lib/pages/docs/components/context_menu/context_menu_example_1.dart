@@ -1,6 +1,14 @@
 import 'package:flutter/services.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+/// Context menu with shortcuts, submenu, checkboxes, and radio group.
+///
+/// Right-click (or long-press) the dashed area to open the menu. This
+/// demonstrates:
+/// - [VNLMenuButton] items with keyboard [VNLMenuShortcut]s.
+/// - Nested submenu via [VNLMenuButton.subMenu].
+/// - [VNLMenuCheckbox] with `autoClose: false` to keep menu open while toggling.
+/// - [MenuRadioGroup] for mutually exclusive choices.
 class ContextMenuExample1 extends StatefulWidget {
   const ContextMenuExample1({super.key});
 
@@ -14,11 +22,12 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
   bool showFullUrls = true;
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     return VNLContextMenu(
         items: [
-          const MenuButton(
-            trailing: MenuShortcut(
+          // Simple command with Ctrl+[ shortcut.
+          const VNLMenuButton(
+            trailing: VNLMenuShortcut(
               activator: SingleActivator(
                 LogicalKeyboardKey.bracketLeft,
                 control: true,
@@ -26,8 +35,9 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
             ),
             child: Text('Back'),
           ),
-          const MenuButton(
-            trailing: MenuShortcut(
+          // Disabled command example with Ctrl+] shortcut.
+          const VNLMenuButton(
+            trailing: VNLMenuShortcut(
               activator: SingleActivator(
                 LogicalKeyboardKey.bracketRight,
                 control: true,
@@ -36,8 +46,9 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
             enabled: false,
             child: Text('Forward'),
           ),
-          const MenuButton(
-            trailing: MenuShortcut(
+          // Enabled command with Ctrl+R shortcut.
+          const VNLMenuButton(
+            trailing: VNLMenuShortcut(
               activator: SingleActivator(
                 LogicalKeyboardKey.keyR,
                 control: true,
@@ -45,10 +56,11 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
             ),
             child: Text('Reload'),
           ),
-          const MenuButton(
+          // Submenu with additional tools and a divider.
+          const VNLMenuButton(
             subMenu: [
-              MenuButton(
-                trailing: MenuShortcut(
+              VNLMenuButton(
+                trailing: VNLMenuShortcut(
                   activator: SingleActivator(
                     LogicalKeyboardKey.keyS,
                     control: true,
@@ -56,21 +68,22 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
                 ),
                 child: Text('Save Page As...'),
               ),
-              MenuButton(
+              VNLMenuButton(
                 child: Text('Create Shortcut...'),
               ),
-              MenuButton(
-                child: Text('Name Window...'),
+              VNLMenuButton(
+                child: Text('Name VNLWindow...'),
               ),
-              MenuDivider(),
-              MenuButton(
+              VNLMenuDivider(),
+              VNLMenuButton(
                 child: Text('Developer Tools'),
               ),
             ],
             child: Text('More Tools'),
           ),
-          const MenuDivider(),
-          MenuCheckbox(
+          const VNLMenuDivider(),
+          // VNLCheckbox item; keep menu open while toggling for quick changes.
+          VNLMenuCheckbox(
             value: showBookmarksBar,
             onChanged: (context, value) {
               setState(() {
@@ -78,7 +91,7 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
               });
             },
             autoClose: false,
-            trailing: const MenuShortcut(
+            trailing: const VNLMenuShortcut(
               activator: SingleActivator(
                 LogicalKeyboardKey.keyB,
                 control: true,
@@ -87,7 +100,7 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
             ),
             child: const Text('Show Bookmarks Bar'),
           ),
-          MenuCheckbox(
+          VNLMenuCheckbox(
             value: showFullUrls,
             onChanged: (context, value) {
               setState(() {
@@ -97,9 +110,10 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
             autoClose: false,
             child: const Text('Show Full URLs'),
           ),
-          const MenuDivider(),
-          const MenuLabel(child: Text('People')),
-          const MenuDivider(),
+          const VNLMenuDivider(),
+          const VNLMenuLabel(child: Text('People')),
+          const VNLMenuDivider(),
+          // VNLRadio group; only one person can be selected at a time.
           MenuRadioGroup(
             value: people,
             onChanged: (context, value) {
@@ -121,7 +135,8 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
             ],
           ),
         ],
-        child: DashedContainer(
+        child: VNLDashedContainer(
+          // Right-click target with a dashed border and rounded corners.
           borderRadius: BorderRadius.circular(theme.radiusMd),
           strokeWidth: 2,
           gap: 2,

@@ -1,32 +1,53 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class InputOTPExample4 extends StatelessWidget {
   const InputOTPExample4({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // OTP comprised of uppercase alphabet characters only, split into
+    // multiple groups with separators. Each VNLInputOTPChild.character controls
+    // what kinds of characters are permitted.
     return VNLInputOTP(
       children: [
-        InputOTPChild.character(
-            allowLowercaseAlphabet: true, allowUppercaseAlphabet: true, onlyUppercaseAlphabet: true),
-        InputOTPChild.character(
-            allowLowercaseAlphabet: true, allowUppercaseAlphabet: true, onlyUppercaseAlphabet: true),
-        InputOTPChild.character(
-            allowLowercaseAlphabet: true, allowUppercaseAlphabet: true, onlyUppercaseAlphabet: true),
-        InputOTPChild.separator,
-        InputOTPChild.character(
-            allowLowercaseAlphabet: true, allowUppercaseAlphabet: true, onlyUppercaseAlphabet: true),
-        InputOTPChild.character(
-            allowLowercaseAlphabet: true, allowUppercaseAlphabet: true, onlyUppercaseAlphabet: true),
-        InputOTPChild.character(
-            allowLowercaseAlphabet: true, allowUppercaseAlphabet: true, onlyUppercaseAlphabet: true),
-        InputOTPChild.separator,
-        InputOTPChild.character(
-            allowLowercaseAlphabet: true, allowUppercaseAlphabet: true, onlyUppercaseAlphabet: true),
-        InputOTPChild.character(
-            allowLowercaseAlphabet: true, allowUppercaseAlphabet: true, onlyUppercaseAlphabet: true),
-        InputOTPChild.character(
-            allowLowercaseAlphabet: true, allowUppercaseAlphabet: true, onlyUppercaseAlphabet: true),
+        VNLInputOTPChild.character(
+            allowLowercaseAlphabet: true,
+            allowUppercaseAlphabet: true,
+            onlyUppercaseAlphabet: true),
+        VNLInputOTPChild.character(
+            allowLowercaseAlphabet: true,
+            allowUppercaseAlphabet: true,
+            onlyUppercaseAlphabet: true),
+        VNLInputOTPChild.character(
+            allowLowercaseAlphabet: true,
+            allowUppercaseAlphabet: true,
+            onlyUppercaseAlphabet: true),
+        VNLInputOTPChild.separator,
+        VNLInputOTPChild.character(
+            allowLowercaseAlphabet: true,
+            allowUppercaseAlphabet: true,
+            onlyUppercaseAlphabet: true),
+        VNLInputOTPChild.character(
+            allowLowercaseAlphabet: true,
+            allowUppercaseAlphabet: true,
+            onlyUppercaseAlphabet: true),
+        VNLInputOTPChild.character(
+            allowLowercaseAlphabet: true,
+            allowUppercaseAlphabet: true,
+            onlyUppercaseAlphabet: true),
+        VNLInputOTPChild.separator,
+        VNLInputOTPChild.character(
+            allowLowercaseAlphabet: true,
+            allowUppercaseAlphabet: true,
+            onlyUppercaseAlphabet: true),
+        VNLInputOTPChild.character(
+            allowLowercaseAlphabet: true,
+            allowUppercaseAlphabet: true,
+            onlyUppercaseAlphabet: true),
+        VNLInputOTPChild.character(
+            allowLowercaseAlphabet: true,
+            allowUppercaseAlphabet: true,
+            onlyUppercaseAlphabet: true),
       ],
     );
   }

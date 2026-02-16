@@ -12,7 +12,7 @@ class ChipInputExample extends StatelessWidget {
     return const ComponentPage(
       name: 'chip_input',
       description: 'A chip input is a text input that allows users to input multiple chips.',
-      displayName: 'Chip Input',
+      displayName: 'VNLChip Input',
       children: [
         WidgetUsageExample(
           title: 'Example',

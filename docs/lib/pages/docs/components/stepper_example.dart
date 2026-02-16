@@ -17,7 +17,7 @@ class StepperExample extends StatelessWidget {
       name: 'stepper',
       description: 'A stepper is a fundamental part of material design '
           'guidelines. Steppers convey progress through numbered steps.',
-      displayName: 'Stepper',
+      displayName: 'VNLStepper',
       children: [
         WidgetUsageExample(
           title: 'Vertical Example',
@@ -30,12 +30,12 @@ class StepperExample extends StatelessWidget {
           child: StepperExample2(),
         ),
         WidgetUsageExample(
-          title: 'Failed Step Example',
+          title: 'Failed VNLStep Example',
           path: 'lib/pages/docs/components/stepper/stepper_example_3.dart',
           child: StepperExample3(),
         ),
         WidgetUsageExample(
-          title: 'Clickable Step Example',
+          title: 'VNLClickable VNLStep Example',
           path: 'lib/pages/docs/components/stepper/stepper_example_4.dart',
           child: StepperExample4(),
         ),

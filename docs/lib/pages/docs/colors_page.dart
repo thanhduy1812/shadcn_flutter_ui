@@ -1,14 +1,15 @@
+import 'package:docs/code_highlighter.dart';
 import 'package:docs/pages/docs_page.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-class VNLColorsPage extends StatefulWidget {
-  const VNLColorsPage({super.key});
+class ColorsPage extends StatefulWidget {
+  const ColorsPage({super.key});
 
   @override
-  _VNLColorsPageState createState() => _VNLColorsPageState();
+  ColorsPageState createState() => ColorsPageState();
 }
 
-class _VNLColorsPageState extends State<VNLColorsPage> {
+class ColorsPageState extends State<ColorsPage> {
   Map<String, ColorShades> shadeMap = {
     'Slate': VNLColors.slate,
     'Gray': VNLColors.gray,
@@ -34,7 +35,7 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
     'Rose': VNLColors.rose,
   };
 
-  final OnThisPage _predefinedVNLColorsKey = OnThisPage();
+  final OnThisPage _predefinedColorsKey = OnThisPage();
   final OnThisPage _customColorKey = OnThisPage();
 
   HSLColor _customColor = VNLColors.red.toHSL();
@@ -57,7 +58,7 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
     showDialog(
       context: context,
       builder: (context) {
-        final theme = VNLTheme.of(context);
+        final theme = Theme.of(context);
         return VNLAlertDialog(
           title: Text(name),
           leading: Container(
@@ -74,8 +75,10 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
               children: [
                 const Text('Use this code to display this color:'),
                 const Gap(8),
-                CodeSnippet(
-                  code: shade == 500 ? 'VNLColors.${name.toLowerCase()}' : 'VNLColors.${name.toLowerCase()}[$shade]',
+                CodeBlock(
+                  code: shade == 500
+                      ? 'VNLColors.${name.toLowerCase()}'
+                      : 'VNLColors.${name.toLowerCase()}[$shade]',
                   mode: 'dart',
                 ),
               ],
@@ -94,8 +97,9 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
     );
   }
 
-  Widget buildColorRow(BuildContext context, String name, ColorShades swatch, [bool clickable = true]) {
-    final theme = VNLTheme.of(context);
+  Widget buildColorRow(BuildContext context, String name, ColorShades swatch,
+      [bool clickable = true]) {
+    final theme = Theme.of(context);
     List<Widget> children = [];
     for (int shade in ColorShades.shadeValues) {
       children.add(
@@ -105,9 +109,10 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
             children: [
               AspectRatio(
                 aspectRatio: 16 / 19,
-                child: Clickable(
+                child: VNLClickable(
                   enabled: clickable,
-                  mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
+                  mouseCursor:
+                      const WidgetStatePropertyAll(SystemMouseCursors.click),
                   onPressed: () {
                     _onTap(name, swatch, shade);
                   },
@@ -117,7 +122,9 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                       borderRadius: theme.borderRadiusMd,
                       border: shade == 500
                           ? Border.all(
-                              width: 3, color: theme.colorScheme.foreground, strokeAlign: BorderSide.strokeAlignOutside)
+                              width: 3,
+                              color: theme.colorScheme.foreground,
+                              strokeAlign: BorderSide.strokeAlignOutside)
                           : null,
                     ),
                   ),
@@ -139,8 +146,9 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
     ).gap(8);
   }
 
-  Widget buildEditableColorRow(BuildContext context, String name, ColorShades swatch) {
-    final theme = VNLTheme.of(context);
+  Widget buildEditableColorRow(
+      BuildContext context, String name, ColorShades swatch) {
+    final theme = Theme.of(context);
     List<Widget> children = [];
     var shadeValues = ColorShades.shadeValues;
     for (int i = 0; i < shadeValues.length; i++) {
@@ -153,22 +161,34 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
               AspectRatio(
                 aspectRatio: 16 / 19,
                 child: Builder(builder: (context) {
-                  return Clickable(
-                    mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
+                  return VNLClickable(
+                    mouseCursor:
+                        const WidgetStatePropertyAll(SystemMouseCursors.click),
                     onPressed: () {
-                      showColorPicker(
+                      showPopover(
                         context: context,
-                        color: ColorDerivative.fromColor(swatch[shade]),
+                        alignment: Alignment.topCenter,
+                        anchorAlignment: Alignment.bottomCenter,
                         offset: const Offset(0, 8),
-                        showAlpha: false,
-                        onColorChanged: (value) {
-                          setState(() {
-                            _customColor = ColorShades.shiftHSL(
-                              value.toHSLColor(),
-                              base: shade,
-                              500,
-                            );
-                          });
+                        widthConstraint: PopoverConstraint.intrinsic,
+                        heightConstraint: PopoverConstraint.intrinsic,
+                        builder: (context) {
+                          return VNLSurfaceCard(
+                            child: ColorPicker(
+                              value: VNLColorDerivative.fromColor(swatch[shade]),
+                              showAlpha: false,
+                              onChanged: (value) {
+                                setState(() {
+                                  _customColor = ColorShades.shiftHSL(
+                                    value.toHSLColor(),
+                                    base: shade,
+                                    500,
+                                  );
+                                });
+                                Navigator.pop(context);
+                              },
+                            ),
+                          );
                         },
                       );
                     },
@@ -224,7 +244,7 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
   }
 
   Widget buildCode() {
-    return CodeSnippet(
+    return CodeBlock(
       code: generateCode(ColorShades.fromAccentHSL(
         _customColor,
         hueShift: _hueShift,
@@ -269,15 +289,15 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
     return DocsPage(
       name: 'colors',
       onThisPage: {
-        'Predefined VNLColors': _predefinedVNLColorsKey,
+        'Predefined Colors': _predefinedColorsKey,
         'Generate Color': _customColorKey,
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('VNLColors').h1(),
+          const Text('Colors').h1(),
           const Text('Color and ColorShades/ColorSwatch constants').lead(),
-          const Text('Predefined VNLColors').h2().anchored(_predefinedVNLColorsKey),
+          const Text('Predefined Colors').h2().anchored(_predefinedColorsKey),
           for (final color in shadeMap.entries)
             VNLCard(
               padding: const EdgeInsets.all(8),
@@ -287,15 +307,18 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                   Row(
                     children: [
                       Expanded(child: Text(color.key).medium().small()),
-                      OutlineButton(
+                      VNLOutlineButton(
                         onPressed: () {
                           setState(() {
                             _customColor = color.value[500].toHSL();
-                            Scrollable.ensureVisible(_customColorKey.currentContext!,
-                                duration: kDefaultDuration, alignmentPolicy: ScrollPositionAlignmentPolicy.explicit);
+                            Scrollable.ensureVisible(
+                                _customColorKey.currentContext!,
+                                duration: kDefaultDuration,
+                                alignmentPolicy:
+                                    ScrollPositionAlignmentPolicy.explicit);
                           });
                         },
-                        size: ButtonSize.xSmall,
+                        size: VNLButtonSize.xSmall,
                         density: ButtonDensity.icon,
                         child: const Icon(Icons.edit),
                       ),
@@ -305,7 +328,7 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                   buildColorRow(context, color.key, color.value),
                 ],
               ),
-            ).withMargin(
+            ).withPadding(
               top: 32,
             ),
           const Text('Generate Color').h2().anchored(_customColorKey),
@@ -318,8 +341,8 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
               });
             },
             children: const [
-              TabItem(child: Text('Color')),
-              TabItem(child: Text('Code')),
+              VNLTabItem(child: Text('Color')),
+              VNLTabItem(child: Text('Code')),
             ],
           ),
           const Gap(12),
@@ -373,11 +396,11 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            FormField<SliderValue>(
+            FormField<VNLSliderValue>(
               key: const FormKey(#hueShift),
               label: const Text('Hue Shift'),
               child: VNLSlider(
-                value: SliderValue.single(_hueShift.toDouble()),
+                value: VNLSliderValue.single(_hueShift.toDouble()),
                 min: -360,
                 max: 360,
                 divisions: 100,
@@ -388,11 +411,11 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                 },
               ),
             ),
-            FormField<SliderValue>(
+            FormField<VNLSliderValue>(
               key: const FormKey(#saturationStepUp),
-              label: const Text('Saturation Step Up'),
+              label: const Text('Saturation VNLStep Up'),
               child: VNLSlider(
-                value: SliderValue.single(_saturationStepUp.toDouble()),
+                value: VNLSliderValue.single(_saturationStepUp.toDouble()),
                 min: 0,
                 max: 20,
                 divisions: 20,
@@ -403,11 +426,11 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                 },
               ),
             ),
-            FormField<SliderValue>(
+            FormField<VNLSliderValue>(
               key: const FormKey(#saturationStepDown),
-              label: const Text('Saturation Step Down'),
+              label: const Text('Saturation VNLStep Down'),
               child: VNLSlider(
-                value: SliderValue.single(_saturationStepDown.toDouble()),
+                value: VNLSliderValue.single(_saturationStepDown.toDouble()),
                 min: 0,
                 max: 20,
                 divisions: 20,
@@ -418,11 +441,11 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                 },
               ),
             ),
-            FormField<SliderValue>(
+            FormField<VNLSliderValue>(
               key: const FormKey(#lightnessStepUp),
-              label: const Text('Lightness Step Up'),
+              label: const Text('Lightness VNLStep Up'),
               child: VNLSlider(
-                value: SliderValue.single(_lightnessStepUp.toDouble()),
+                value: VNLSliderValue.single(_lightnessStepUp.toDouble()),
                 min: 0,
                 max: 20,
                 divisions: 20,
@@ -433,11 +456,11 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                 },
               ),
             ),
-            FormField<SliderValue>(
+            FormField<VNLSliderValue>(
               key: const FormKey(#lightnessStepDown),
-              label: const Text('Lightness Step Down'),
+              label: const Text('Lightness VNLStep Down'),
               child: VNLSlider(
-                value: SliderValue.single(_lightnessStepDown.toDouble()),
+                value: VNLSliderValue.single(_lightnessStepDown.toDouble()),
                 min: 0,
                 max: 20,
                 divisions: 20,
@@ -452,29 +475,32 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                DestructiveButton(
+                VNLDestructiveButton(
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (context) {
                         return VNLAlertDialog(
                           title: const Text('Reset Options'),
-                          content: const Text('Are you sure you want to reset the options?'),
+                          content: const Text(
+                              'Are you sure you want to reset the options?'),
                           actions: [
                             PrimaryButton(
                               onPressed: () {
                                 setState(() {
                                   _hueShift = _defaultHueShift;
                                   _saturationStepUp = _defaultSaturationStepUp;
-                                  _saturationStepDown = _defaultSaturationStepDown;
+                                  _saturationStepDown =
+                                      _defaultSaturationStepDown;
                                   _lightnessStepUp = _defaultLightnessStepUp;
-                                  _lightnessStepDown = _defaultLightnessStepDown;
+                                  _lightnessStepDown =
+                                      _defaultLightnessStepDown;
                                 });
                                 Navigator.of(context).pop();
                               },
                               child: const Text('Reset'),
                             ),
-                            SecondaryButton(
+                            VNLSecondaryButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },

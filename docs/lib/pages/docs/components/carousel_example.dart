@@ -15,25 +15,25 @@ class CarouselExample extends StatelessWidget {
     return const ComponentPage(
       name: 'carousel',
       description: 'A carousel slider widget, support infinite scroll and custom child widget.',
-      displayName: 'Carousel',
+      displayName: 'VNLCarousel',
       children: [
         WidgetUsageExample(
-          title: 'Horizontal Carousel Example',
+          title: 'Horizontal VNLCarousel Example',
           path: 'lib/pages/docs/components/carousel/carousel_example_1.dart',
           child: CarouselExample1(),
         ),
         WidgetUsageExample(
-          title: 'Vertical Carousel Example',
+          title: 'Vertical VNLCarousel Example',
           path: 'lib/pages/docs/components/carousel/carousel_example_2.dart',
           child: CarouselExample2(),
         ),
         WidgetUsageExample(
-          title: 'Fading Carousel Example',
+          title: 'Fading VNLCarousel Example',
           path: 'lib/pages/docs/components/carousel/carousel_example_3.dart',
           child: CarouselExample3(),
         ),
         WidgetUsageExample(
-          title: 'Continuous Sliding Carousel Example',
+          title: 'Continuous Sliding VNLCarousel Example',
           path: 'lib/pages/docs/components/carousel/carousel_example_4.dart',
           child: CarouselExample4(),
         ),
@@ -57,7 +57,7 @@ class NumberedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     return Container(
       width: width,
       height: height,

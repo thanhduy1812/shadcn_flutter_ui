@@ -1,6 +1,7 @@
 import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/docs/components/input/input_example_3.dart';
 import 'package:docs/pages/docs/components/input/input_example_4.dart';
+import 'package:docs/pages/docs/components/input/input_example_5.dart';
 import 'package:docs/pages/widget_usage_example.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
@@ -33,9 +34,14 @@ class InputExample extends StatelessWidget {
           child: InputExample3(),
         ),
         WidgetUsageExample(
-          title: 'Revalidate Form Feature Example',
+          title: 'Revalidate VNLForm Feature Example',
           path: 'lib/pages/docs/components/input/input_example_4.dart',
           child: InputExample4(),
+        ),
+        WidgetUsageExample(
+          title: 'Grouped Inputs Example',
+          path: 'lib/pages/docs/components/input/input_example_5.dart',
+          child: InputExample5(),
         ),
       ],
     );

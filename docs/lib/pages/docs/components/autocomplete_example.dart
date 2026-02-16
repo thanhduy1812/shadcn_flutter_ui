@@ -12,7 +12,7 @@ class AutoCompleteExample extends StatelessWidget {
     return const ComponentPage(
       name: 'autocomplete',
       description: 'A text input with suggestions.',
-      displayName: 'AutoComplete',
+      displayName: 'VNLAutoComplete',
       children: [
         WidgetUsageExample(
           title: 'Example',

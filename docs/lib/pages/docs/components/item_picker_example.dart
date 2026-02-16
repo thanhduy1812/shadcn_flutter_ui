@@ -38,7 +38,7 @@ class ItemPickerExample extends StatelessWidget {
           child: ItemPickerExample4(),
         ),
         WidgetUsageExample(
-          title: 'Form Example',
+          title: 'VNLForm Example',
           path: 'lib/pages/docs/components/item_picker/item_picker_example_5.dart',
           child: ItemPickerExample5(),
         ),

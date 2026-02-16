@@ -14,7 +14,7 @@ class _DatePickerExample3State extends State<DatePickerExample3> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        DateInput(
+        VNLDateInput(
           initialValue: DateTime.now(),
           onChanged: (value) {
             setState(() {

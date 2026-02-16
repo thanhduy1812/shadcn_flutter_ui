@@ -13,7 +13,8 @@ class _FormattedInputExample3State extends State<FormattedInputExample3> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TimeInput(
+        VNLTimeInput(
+          // Built-in formatted control for time-of-day values.
           onChanged: (value) => setState(() => _selected = value),
         ),
         const Gap(16),

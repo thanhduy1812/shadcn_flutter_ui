@@ -19,7 +19,7 @@ class _LayoutPageExample6State extends State<LayoutPageExample6> {
           Text(' Item 2 '),
           Text(' Item 3 '),
         ],
-      ).separator(const VerticalDivider()),
+      ).separator(const VNLVerticalDivider()),
     );
   }
 }

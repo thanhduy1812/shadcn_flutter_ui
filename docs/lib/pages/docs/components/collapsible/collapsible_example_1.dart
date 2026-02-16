@@ -1,25 +1,29 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+/// VNLCollapsible list with a trigger and multiple content sections.
+///
+/// The first item is a [VNLCollapsibleTrigger] that toggles visibility of
+/// subsequent [VNLCollapsibleContent] sections.
 class CollapsibleExample1 extends StatelessWidget {
   const CollapsibleExample1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Collapsible(
+    return VNLCollapsible(
       children: [
-        const CollapsibleTrigger(
+        const VNLCollapsibleTrigger(
           child: Text('@sunarya-thito starred 3 repositories'),
         ),
-        OutlinedContainer(
+        VNLOutlinedContainer(
           child: const Text('@sunarya-thito/vnl_ui').small().mono().withPadding(horizontal: 16, vertical: 8),
         ).withPadding(top: 8),
-        CollapsibleContent(
-          child: OutlinedContainer(
+        VNLCollapsibleContent(
+          child: VNLOutlinedContainer(
             child: const Text('@flutter/flutter').small().mono().withPadding(horizontal: 16, vertical: 8),
           ).withPadding(top: 8),
         ),
-        CollapsibleContent(
-          child: OutlinedContainer(
+        VNLCollapsibleContent(
+          child: VNLOutlinedContainer(
             child: const Text('@dart-lang/sdk').small().mono().withPadding(horizontal: 16, vertical: 8),
           ).withPadding(top: 8),
         ),

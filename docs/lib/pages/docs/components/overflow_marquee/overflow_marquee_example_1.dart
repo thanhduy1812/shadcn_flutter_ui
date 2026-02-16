@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class OverflowMarqueeExample1 extends StatelessWidget {
   const OverflowMarqueeExample1({super.key});
@@ -8,6 +8,7 @@ class OverflowMarqueeExample1 extends StatelessWidget {
     return const SizedBox(
       width: 200,
       child: VNLOverflowMarquee(
+        // When the text exceeds the available width, it smoothly scrolls horizontally.
         child: Text(
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         ),

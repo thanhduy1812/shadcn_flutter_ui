@@ -1,36 +1,165 @@
 import 'dart:math';
 
-import '../../../vnl_ui.dart';
+import '../../../shadcn_flutter.dart';
 
-class ToggleController extends ValueNotifier<bool> with ComponentController<bool> {
-  ToggleController([super.value = false]);
+/// A controller for managing toggle state in toggle buttons and switches.
+///
+/// [VNLToggleController] extends [ValueNotifier] to provide reactive state management
+/// for boolean toggle values. It implements [ComponentController] to integrate
+/// with the shadcn_flutter form system and provides convenient methods for
+/// programmatic state changes.
+///
+/// The controller maintains a boolean value representing the toggle state and
+/// notifies listeners when the state changes, making it suitable for use with
+/// toggle buttons, switches, and other binary state controls.
+///
+/// Example:
+/// ```dart
+/// final toggleController = VNLToggleController(false);
+///
+/// // Listen to changes
+/// toggleController.addListener(() {
+///   print('VNLToggle state: ${toggleController.value}');
+/// });
+///
+/// // VNLToggle the state programmatically
+/// toggleController.toggle();
+///
+/// // Set specific value
+/// toggleController.value = true;
+/// ```
+class VNLToggleController extends ValueNotifier<bool>
+    with ComponentController<bool> {
+  /// Creates a [VNLToggleController] with an initial toggle state.
+  ///
+  /// Parameters:
+  /// - [value] (bool, default: false): The initial toggle state.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Create controller starting in off state
+  /// final controller = VNLToggleController();
+  ///
+  /// // Create controller starting in on state
+  /// final controller = VNLToggleController(true);
+  /// ```
+  VNLToggleController([super.value = false]);
 
+  /// Toggles the current boolean state.
+  ///
+  /// Changes `true` to `false` and `false` to `true`, then notifies all listeners
+  /// of the change. This is equivalent to setting `value = !value` but provides
+  /// a more semantic API for toggle operations.
+  ///
+  /// Example:
+  /// ```dart
+  /// final controller = VNLToggleController(false);
+  /// controller.toggle(); // value is now true
+  /// controller.toggle(); // value is now false
+  /// ```
   void toggle() {
     value = !value;
   }
 }
 
-class ControlledToggle extends StatelessWidget with ControlledComponent<bool> {
+/// A controlled version of [VNLToggle] that integrates with form state management.
+///
+/// [VNLControlledToggle] implements the [ControlledComponent] mixin to provide
+/// automatic form integration, validation, and state management. It serves as
+/// a bridge between external state management (via [VNLToggleController] or
+/// [onChanged] callbacks) and the underlying [VNLToggle] widget.
+///
+/// This widget is ideal for use in forms where the toggle state needs to be
+/// managed externally, validated, or persisted. It automatically handles the
+/// conversion between controlled and uncontrolled modes based on the provided
+/// parameters.
+///
+/// Example:
+/// ```dart
+/// final controller = VNLToggleController(false);
+///
+/// VNLControlledToggle(
+///   controller: controller,
+///   child: Row(
+///     children: [
+///       Icon(Icons.notifications),
+///       Text('Enable notifications'),
+///     ],
+///   ),
+/// );
+/// ```
+class VNLControlledToggle extends StatelessWidget with ControlledComponent<bool> {
+  /// The initial toggle state when no controller is provided.
+  ///
+  /// Used only in uncontrolled mode. If both [controller] and [initialValue]
+  /// are provided, [controller] takes precedence.
   @override
   final bool? initialValue;
+
+  /// Callback invoked when the toggle state changes.
+  ///
+  /// Called with the new boolean value whenever the user toggles the button.
+  /// If null, the toggle becomes read-only (though it can still be controlled
+  /// via [controller] if provided).
   @override
   final ValueChanged<bool>? onChanged;
+
+  /// Whether the toggle is interactive.
+  ///
+  /// When false, the toggle appears disabled and doesn't respond to user input.
+  /// The toggle can still be changed programmatically via [controller].
   @override
   final bool enabled;
+
+  /// Controller for managing toggle state externally.
+  ///
+  /// When provided, the toggle operates in controlled mode and its state is
+  /// managed entirely by this controller. Changes are reflected immediately
+  /// and [onChanged] is called when the user interacts with the toggle.
   @override
-  final ToggleController? controller;
+  final VNLToggleController? controller;
 
+  /// The child widget to display inside the toggle button.
+  ///
+  /// Typically contains text, icons, or a combination of both. The child
+  /// receives the visual styling and interaction behavior of the toggle button.
   final Widget child;
-  final ButtonStyle style;
 
-  const ControlledToggle({
+  /// Visual styling for the toggle button.
+  ///
+  /// Defines the appearance, colors, padding, and other visual characteristics
+  /// of the toggle. Defaults to ghost button style with subtle appearance changes
+  /// between toggled and untoggled states.
+  final VNLButtonStyle style;
+
+  /// Creates a [VNLControlledToggle] widget.
+  ///
+  /// Parameters:
+  /// - [controller] (VNLToggleController?, optional): External state controller.
+  /// - [initialValue] (bool?, optional): Initial state for uncontrolled mode.
+  /// - [onChanged] (`ValueChanged<bool>?`, optional): State change callback.
+  /// - [enabled] (bool, default: true): Whether the toggle is interactive.
+  /// - [child] (Widget, required): Content to display in the toggle button.
+  /// - [style] (VNLButtonStyle, default: VNLButtonStyle.ghost()): Visual styling.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLControlledToggle(
+  ///   initialValue: false,
+  ///   onChanged: (value) => print('Toggled: $value'),
+  ///   enabled: true,
+  ///   style: VNLButtonStyle.secondary(),
+  ///   child: Text('VNLToggle Me'),
+  /// );
+  /// ```
+  const VNLControlledToggle({
     super.key,
     this.controller,
     this.initialValue,
     this.onChanged,
     this.enabled = true,
     required this.child,
-    this.style = const ButtonStyle.ghost(),
+    this.style = const VNLButtonStyle.ghost(),
   });
 
   @override
@@ -53,28 +182,102 @@ class ControlledToggle extends StatelessWidget with ControlledComponent<bool> {
   }
 }
 
+/// Simple toggle button with stateful on/off behavior.
+///
+/// A basic toggle button widget that maintains its own internal state for
+/// on/off toggling. Provides a simplified interface compared to [VNLControlledToggle]
+/// for cases where external state management is not required.
+///
+/// ## Features
+///
+/// - **Stateful toggling**: Built-in state management for simple use cases
+/// - **Ghost button styling**: Default ghost button appearance
+/// - **VNLForm integration**: Automatic form field registration with boolean values
+/// - **Accessibility**: Full screen reader and keyboard support
+/// - **Custom styling**: Configurable button style and appearance
+///
+/// The widget automatically cycles between true/false states when pressed
+/// and calls the [onChanged] callback with the new state.
+///
+/// Example:
+/// ```dart
+/// bool isEnabled = false;
+///
+/// VNLToggle(
+///   value: isEnabled,
+///   onChanged: (enabled) => setState(() => isEnabled = enabled),
+///   child: Text('Enable notifications'),
+/// );
+/// ```
 class VNLToggle extends StatefulWidget {
+  /// The current toggle state (on/off).
   final bool value;
+
+  /// Called when the toggle state changes.
+  ///
+  /// If `null`, the toggle is considered disabled and won't respond to user input.
   final ValueChanged<bool>? onChanged;
+
+  /// The widget displayed inside the toggle button.
   final Widget child;
-  final ButtonStyle style;
+
+  /// The visual style for the button.
+  ///
+  /// Defaults to ghost style for a subtle appearance.
+  final VNLButtonStyle style;
+
+  /// Whether the toggle button is enabled.
+  ///
+  /// If `null`, the button is enabled only when [onChanged] is not `null`.
   final bool? enabled;
 
+  /// Creates a [VNLToggle].
+  ///
+  /// The toggle button maintains its own state and calls [onChanged] when
+  /// the state changes. Uses ghost button styling by default.
+  ///
+  /// Parameters:
+  /// - [value] (bool, required): current toggle state
+  /// - [onChanged] (`ValueChanged<bool>?`, optional): callback when state changes
+  /// - [child] (Widget, required): content displayed inside the button
+  /// - [enabled] (bool?, optional): whether button is interactive
+  /// - [style] (VNLButtonStyle, default: ghost): button styling
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLToggle(
+  ///   value: isToggled,
+  ///   onChanged: (value) => setState(() => isToggled = value),
+  ///   child: Row(
+  ///     children: [
+  ///       Icon(Icons.notifications),
+  ///       Text('Notifications'),
+  ///     ],
+  ///   ),
+  /// )
+  /// ```
   const VNLToggle({
     super.key,
     required this.value,
     this.onChanged,
     required this.child,
     this.enabled,
-    this.style = const ButtonStyle.ghost(),
+    this.style = const VNLButtonStyle.ghost(),
   });
 
   @override
-  ToggleState createState() => ToggleState();
+  VNLToggleState createState() => VNLToggleState();
 }
 
 // toggle button is just ghost button
-class ToggleState extends State<VNLToggle> with FormValueSupplier<bool, VNLToggle> {
+/// State class for [VNLToggle] that manages the toggle behavior and form integration.
+///
+/// This state class handles:
+/// - Maintaining widget states (selected, pressed, hovered, etc.)
+/// - VNLForm value integration via [FormValueSupplier]
+/// - Updating the selected state based on the toggle value
+class VNLToggleState extends State<VNLToggle> with FormValueSupplier<bool, VNLToggle> {
+  /// Controller for managing widget interaction states.
   final WidgetStatesController statesController = WidgetStatesController();
 
   @override
@@ -103,76 +306,208 @@ class ToggleState extends State<VNLToggle> with FormValueSupplier<bool, VNLToggl
   @override
   Widget build(BuildContext context) {
     return VNLButton(
-      statesController: statesController,
-      enabled: widget.enabled,
-      style:
-          widget.value
-              ? ButtonStyle.secondary(density: widget.style.density, shape: widget.style.shape, size: widget.style.size)
-              : widget.style.copyWith(
-                textStyle: (context, states, value) {
-                  final theme = VNLTheme.of(context);
-                  return value.copyWith(
-                    color: states.contains(WidgetState.hovered) ? theme.colorScheme.mutedForeground : null,
-                  );
-                },
-                iconTheme: (context, states, value) {
-                  final theme = VNLTheme.of(context);
-                  return value.copyWith(
-                    color: states.contains(WidgetState.hovered) ? theme.colorScheme.mutedForeground : null,
-                  );
-                },
-              ),
-      onPressed:
-          widget.onChanged != null
-              ? () {
+        statesController: statesController,
+        enabled: widget.enabled,
+        style: widget.value
+            ? VNLButtonStyle.secondary(
+                density: widget.style.density,
+                shape: widget.style.shape,
+                size: widget.style.size,
+              )
+            : widget.style.copyWith(textStyle: (context, states, value) {
+                final theme = Theme.of(context);
+                return value.copyWith(
+                  color: states.contains(WidgetState.hovered)
+                      ? theme.colorScheme.mutedForeground
+                      : null,
+                );
+              }, iconTheme: (context, states, value) {
+                final theme = Theme.of(context);
+                return value.copyWith(
+                  color: states.contains(WidgetState.hovered)
+                      ? theme.colorScheme.mutedForeground
+                      : null,
+                );
+              }),
+        onPressed: widget.onChanged != null
+            ? () {
                 widget.onChanged!(!widget.value);
               }
-              : null,
-      child: widget.child,
-    );
+            : null,
+        child: widget.child);
   }
 }
 
-class SelectedButton extends StatefulWidget {
+/// A button that changes style based on its selected state.
+///
+/// [VNLSelectedButton] provides a stateful button that displays different styles
+/// when selected versus unselected. It supports all standard button gestures
+/// including tap, long press, and hover interactions.
+///
+/// ## Overview
+///
+/// Use [VNLSelectedButton] when you need a button that visually indicates selection
+/// state, such as in tab bars, segmented controls, or toggle groups. The button
+/// automatically switches between [style] (unselected) and [selectedStyle] (selected)
+/// based on the [value] parameter.
+///
+/// ## Example
+///
+/// ```dart
+/// VNLSelectedButton(
+///   value: isSelected,
+///   onChanged: (selected) => setState(() => isSelected = selected),
+///   style: const VNLButtonStyle.ghost(),
+///   selectedStyle: const VNLButtonStyle.secondary(),
+///   child: Text('Option A'),
+/// )
+/// ```
+class VNLSelectedButton extends StatefulWidget {
+  /// The current selection state of the button.
   final bool value;
+
+  /// Called when the selection state changes.
+  ///
+  /// If `null`, the button is disabled.
   final ValueChanged<bool>? onChanged;
+
+  /// The widget displayed inside the button.
   final Widget child;
-  final AbstractButtonStyle style;
-  final AbstractButtonStyle selectedStyle;
+
+  /// The button style when not selected.
+  ///
+  /// Defaults to ghost style.
+  final VNLAbstractButtonStyle style;
+
+  /// The button style when selected.
+  ///
+  /// Defaults to secondary style.
+  final VNLAbstractButtonStyle selectedStyle;
+
+  /// Whether the button is enabled.
+  ///
+  /// If `null`, enabled state is determined by whether [onChanged] is non-null.
   final bool? enabled;
+
+  /// The alignment of the child within the button.
   final AlignmentGeometry? alignment;
+
+  /// The margin alignment for the button.
   final AlignmentGeometry? marginAlignment;
+
+  /// Whether to disable style transition animations.
+  ///
+  /// Defaults to `false`. When `true`, style changes are instant.
   final bool disableTransition;
+
+  /// Called when the hover state changes.
   final ValueChanged<bool>? onHover;
+
+  /// Called when the focus state changes.
   final ValueChanged<bool>? onFocus;
+
+  /// Whether to enable haptic/audio feedback.
   final bool? enableFeedback;
+
+  /// Called when a primary tap down event occurs.
   final GestureTapDownCallback? onTapDown;
+
+  /// Called when a primary tap up event occurs.
   final GestureTapUpCallback? onTapUp;
+
+  /// Called when a primary tap is cancelled.
   final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when a secondary tap down event occurs.
   final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when a secondary tap up event occurs.
   final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when a secondary tap is cancelled.
   final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when a tertiary tap down event occurs.
   final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when a tertiary tap up event occurs.
   final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when a tertiary tap is cancelled.
   final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when a long press starts.
   final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when a long press is released.
   final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when a long press moves.
   final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when a long press ends.
   final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when a secondary long press completes.
   final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when a tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
+
+  /// Whether to disable the hover effect.
+  ///
+  /// Defaults to `false`.
   final bool disableHoverEffect;
+
+  /// Optional controller for programmatic state management.
   final WidgetStatesController? statesController;
+
+  /// Called when the button is pressed (tapped).
   final VoidCallback? onPressed;
 
-  const SelectedButton({
+  /// Creates a [VNLSelectedButton] widget.
+  ///
+  /// A button that toggles between selected and unselected states, applying
+  /// different styles based on the current [value].
+  ///
+  /// Parameters:
+  /// - [value] (required): The current selection state (`true` for selected).
+  /// - [onChanged]: Callback invoked when the selection state changes. If `null`, the button is disabled.
+  /// - [child] (required): The widget displayed inside the button.
+  /// - [enabled]: Whether the button is enabled. Defaults to checking if [onChanged] is non-null.
+  /// - [style]: Style applied when unselected. Defaults to [VNLButtonStyle.ghost].
+  /// - [selectedStyle]: Style applied when selected. Defaults to [VNLButtonStyle.secondary].
+  /// - [alignment]: Alignment of the child within the button.
+  /// - [marginAlignment]: Margin alignment for the button.
+  /// - [disableTransition]: If `true`, disables style transition animations. Defaults to `false`.
+  /// - [onHover]: Called when the hover state changes.
+  /// - [onFocus]: Called when the focus state changes.
+  /// - [enableFeedback]: Whether to enable haptic/audio feedback.
+  /// - [onTapDown], [onTapUp], [onTapCancel]: Primary tap gesture callbacks.
+  /// - [onSecondaryTapDown], [onSecondaryTapUp], [onSecondaryTapCancel]: Secondary tap gesture callbacks.
+  /// - [onTertiaryTapDown], [onTertiaryTapUp], [onTertiaryTapCancel]: Tertiary tap gesture callbacks.
+  /// - [onLongPressStart], [onLongPressUp], [onLongPressMoveUpdate], [onLongPressEnd]: Long press gesture callbacks.
+  /// - [onSecondaryLongPress], [onTertiaryLongPress]: Secondary and tertiary long press callbacks.
+  /// - [disableHoverEffect]: If `true`, disables the hover effect. Defaults to `false`.
+  /// - [statesController]: Optional controller for programmatic state management.
+  /// - [onPressed]: Called when the button is tapped.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLSelectedButton(
+  ///   value: isSelected,
+  ///   onChanged: (selected) => setState(() => isSelected = selected),
+  ///   child: Text('VNLToggle Me'),
+  /// )
+  /// ```
+  const VNLSelectedButton({
     super.key,
     required this.value,
     this.onChanged,
     required this.child,
     this.enabled,
-    this.style = const ButtonStyle.ghost(),
-    this.selectedStyle = const ButtonStyle.secondary(),
+    this.style = const VNLButtonStyle.ghost(),
+    this.selectedStyle = const VNLButtonStyle.secondary(),
     this.alignment,
     this.marginAlignment,
     this.disableTransition = false,
@@ -200,12 +535,22 @@ class SelectedButton extends StatefulWidget {
   });
 
   @override
-  SelectedButtonState createState() => SelectedButtonState();
+  VNLSelectedButtonState createState() => VNLSelectedButtonState();
 }
 
 // toggle button is just ghost button
-class SelectedButtonState extends State<SelectedButton> {
+/// State class for [VNLSelectedButton] managing selection and interaction states.
+///
+/// Handles widget state controller lifecycle and synchronizes the selected state
+/// with the button's value.
+class VNLSelectedButtonState extends State<VNLSelectedButton> {
+  /// The controller managing widget states (selected, hovered, focused, etc.).
+  ///
+  /// This controller is either provided via [VNLSelectedButton.statesController]
+  /// or created automatically. It tracks and manages the button's interactive
+  /// states and updates them based on user interactions and the selection value.
   late WidgetStatesController statesController;
+
   @override
   void initState() {
     super.initState();
@@ -214,7 +559,7 @@ class SelectedButtonState extends State<SelectedButton> {
   }
 
   @override
-  void didUpdateWidget(SelectedButton oldWidget) {
+  void didUpdateWidget(VNLSelectedButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.statesController != widget.statesController) {
       statesController = widget.statesController ?? WidgetStatesController();
@@ -228,82 +573,306 @@ class SelectedButtonState extends State<SelectedButton> {
   @override
   Widget build(BuildContext context) {
     return VNLButton(
-      statesController: statesController,
-      enabled: widget.enabled,
-      style: widget.value ? widget.selectedStyle : widget.style,
-      alignment: widget.alignment,
-      marginAlignment: widget.marginAlignment,
-      disableTransition: widget.disableTransition,
-      onHover: widget.onHover,
-      onFocus: widget.onFocus,
-      enableFeedback: widget.enableFeedback,
-      onTapDown: widget.onTapDown,
-      onTapUp: widget.onTapUp,
-      onTapCancel: widget.onTapCancel,
-      onSecondaryTapDown: widget.onSecondaryTapDown,
-      onSecondaryTapUp: widget.onSecondaryTapUp,
-      onSecondaryTapCancel: widget.onSecondaryTapCancel,
-      onTertiaryTapDown: widget.onTertiaryTapDown,
-      onTertiaryTapUp: widget.onTertiaryTapUp,
-      onTertiaryTapCancel: widget.onTertiaryTapCancel,
-      onLongPressStart: widget.onLongPressStart,
-      onLongPressUp: widget.onLongPressUp,
-      onLongPressMoveUpdate: widget.onLongPressMoveUpdate,
-      onLongPressEnd: widget.onLongPressEnd,
-      onSecondaryLongPress: widget.onSecondaryLongPress,
-      onTertiaryLongPress: widget.onTertiaryLongPress,
-      disableHoverEffect: widget.disableHoverEffect,
-      onPressed: () {
-        if (widget.onChanged != null) {
-          widget.onChanged!(!widget.value);
-        }
-        if (widget.onPressed != null) {
-          widget.onPressed!();
-        }
-      },
-      child: widget.child,
-    );
+        statesController: statesController,
+        enabled: widget.enabled,
+        style: widget.value ? widget.selectedStyle : widget.style,
+        alignment: widget.alignment,
+        marginAlignment: widget.marginAlignment,
+        disableTransition: widget.disableTransition,
+        onHover: widget.onHover,
+        onFocus: widget.onFocus,
+        enableFeedback: widget.enableFeedback,
+        onTapDown: widget.onTapDown,
+        onTapUp: widget.onTapUp,
+        onTapCancel: widget.onTapCancel,
+        onSecondaryTapDown: widget.onSecondaryTapDown,
+        onSecondaryTapUp: widget.onSecondaryTapUp,
+        onSecondaryTapCancel: widget.onSecondaryTapCancel,
+        onTertiaryTapDown: widget.onTertiaryTapDown,
+        onTertiaryTapUp: widget.onTertiaryTapUp,
+        onTertiaryTapCancel: widget.onTertiaryTapCancel,
+        onLongPressStart: widget.onLongPressStart,
+        onLongPressUp: widget.onLongPressUp,
+        onLongPressMoveUpdate: widget.onLongPressMoveUpdate,
+        onLongPressEnd: widget.onLongPressEnd,
+        onSecondaryLongPress: widget.onSecondaryLongPress,
+        onTertiaryLongPress: widget.onTertiaryLongPress,
+        disableHoverEffect: widget.disableHoverEffect,
+        onPressed: () {
+          if (widget.onChanged != null) {
+            widget.onChanged!(!widget.value);
+          }
+          if (widget.onPressed != null) {
+            widget.onPressed!();
+          }
+        },
+        child: widget.child);
   }
 }
 
+/// A versatile, customizable button widget with comprehensive styling and interaction support.
+///
+/// [VNLButton] is the foundational interactive widget in the shadcn_flutter design system,
+/// providing a consistent and accessible button implementation with extensive customization
+/// options. It supports multiple visual variants, sizes, shapes, and interaction patterns
+/// while maintaining design system consistency.
+///
+/// ## Key Features
+/// - **Multiple Variants**: Primary, secondary, outline, ghost, link, text, destructive, and more
+/// - **Flexible Sizing**: From extra small to extra large with custom scaling
+/// - **Shape Options**: Rectangle and circle shapes with customizable borders
+/// - **Rich Interactions**: VNLHover, focus, press, and long press support
+/// - **Accessibility**: Full keyboard navigation and screen reader support
+/// - **Theming**: Deep integration with the design system theme
+/// - **VNLForm Integration**: Works seamlessly with form validation and state management
+///
+/// ## Visual Variants
+/// The button supports various visual styles through named constructors:
+/// - [VNLButton.primary]: Prominent primary actions with filled background
+/// - [VNLButton.secondary]: Secondary actions with muted background
+/// - [VNLButton.outline]: Actions with outline border and transparent background
+/// - [VNLButton.ghost]: Subtle actions with minimal visual weight
+/// - [VNLButton.link]: Text-only actions that appear as links
+/// - [VNLButton.text]: Plain text actions with hover effects
+/// - [VNLButton.destructive]: Dangerous actions with destructive styling
+/// - [VNLButton.card]: VNLCard-like appearance for container buttons
+///
+/// ## Layout and Content
+/// Buttons can contain text, icons, or a combination of both using [leading] and [trailing]
+/// widgets. The [child] widget is automatically aligned and sized according to the button's
+/// style and density settings.
+///
+/// ## Interaction Handling
+/// The button provides comprehensive gesture support including tap, long press, secondary
+/// clicks, and tertiary clicks. All interactions respect the [enabled] state and provide
+/// appropriate visual and haptic feedback.
+///
+/// Example:
+/// ```dart
+/// VNLButton.primary(
+///   onPressed: () => print('Primary action'),
+///   leading: Icon(Icons.add),
+///   trailing: Icon(Icons.arrow_forward),
+///   child: Text('Create New'),
+/// );
+/// ```
 class VNLButton extends StatefulWidget {
+  /// Whether the button is interactive.
+  ///
+  /// If null, the button is enabled when [onPressed] is not null. When false,
+  /// the button appears disabled and doesn't respond to user input or fire callbacks.
   final bool? enabled;
+
+  /// Whether to disable visual state transition animations.
+  ///
+  /// When true, the button immediately snaps between visual states instead of
+  /// smoothly animating. Useful for performance optimization in lists or when
+  /// animations would be distracting.
   final bool disableTransition;
+
+  /// Widget displayed to the left of the main child content.
+  ///
+  /// Commonly used for icons that provide additional context about the button's
+  /// action. Automatically spaced from the [child] with appropriate gaps.
   final Widget? leading;
+
+  /// Widget displayed to the right of the main child content.
+  ///
+  /// Often used for icons indicating direction (arrows) or additional actions.
+  /// Automatically spaced from the [child] with appropriate gaps.
   final Widget? trailing;
+
+  /// Custom gap between [leading] and [child].
+  ///
+  /// When null, defaults to the scaled density gap. Set to override the
+  /// default spacing between the leading widget and the main content.
+  final double? leadingGap;
+
+  /// Custom gap between [child] and [trailing].
+  ///
+  /// When null, defaults to the scaled density gap. Set to override the
+  /// default spacing between the main content and the trailing widget.
+  final double? trailingGap;
+
+  /// The primary content displayed in the button.
+  ///
+  /// Typically contains text, icons, or other widgets that describe the button's
+  /// action. Automatically aligned according to [alignment] and styled according
+  /// to the button's [style].
   final Widget child;
+
+  /// Callback invoked when the button is pressed.
+  ///
+  /// The primary interaction callback for the button. When null, the button becomes
+  /// disabled unless [enabled] is explicitly set to true. The button automatically
+  /// handles loading states, disabled states, and provides haptic feedback.
   final VoidCallback? onPressed;
+
+  /// Focus node for keyboard navigation and focus management.
+  ///
+  /// If null, a focus node is automatically created. Useful for controlling focus
+  /// programmatically or integrating with form focus traversal.
   final FocusNode? focusNode;
+
+  /// Alignment of the child content within the button.
+  ///
+  /// Controls how the [child] is positioned within the button's bounds. Defaults
+  /// to center alignment for most button types. When [leading] or [trailing] are
+  /// provided, defaults to start alignment.
   final AlignmentGeometry? alignment;
-  final AbstractButtonStyle style;
+
+  /// Visual styling configuration for the button.
+  ///
+  /// Defines the button's appearance including colors, padding, borders, and text
+  /// styles. The [VNLAbstractButtonStyle] provides state-aware styling that responds
+  /// to hover, press, focus, and disabled states.
+  final VNLAbstractButtonStyle style;
+
+  /// Callback invoked when the button's hover state changes.
+  ///
+  /// Called with true when the pointer enters the button area and false when it
+  /// leaves. Useful for implementing custom hover effects or updating external state.
   final ValueChanged<bool>? onHover;
+
+  /// Callback invoked when the button's focus state changes.
+  ///
+  /// Called with true when the button gains focus and false when it loses focus.
+  /// Useful for accessibility features or coordinating focus with other widgets.
   final ValueChanged<bool>? onFocus;
 
+  /// Whether to enable haptic feedback on press.
+  ///
+  /// If null, haptic feedback is automatically enabled on mobile platforms.
+  /// When true, provides tactile feedback when the button is pressed. When false,
+  /// no haptic feedback is provided regardless of platform.
   final bool? enableFeedback;
+
+  /// Callback invoked when a tap down gesture begins.
+  ///
+  /// Provides the position and details of the initial touch/click. Useful for
+  /// implementing custom press animations or tracking interaction start points.
   final GestureTapDownCallback? onTapDown;
+
+  /// Callback invoked when a tap up gesture completes.
+  ///
+  /// Called after a successful tap gesture, providing the position details.
+  /// Note that [onPressed] is typically preferred for button actions.
   final GestureTapUpCallback? onTapUp;
+
+  /// Callback invoked when a tap gesture is canceled.
+  ///
+  /// Called when a tap gesture starts but is interrupted before completion,
+  /// such as when the pointer moves outside the button area.
   final GestureTapCancelCallback? onTapCancel;
+
+  /// Callback invoked when a secondary button (right-click) tap down begins.
+  ///
+  /// Useful for implementing context menus or alternative actions.
   final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Callback invoked when a secondary button tap up completes.
   final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Callback invoked when a secondary button tap is canceled.
   final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Callback invoked when a tertiary button (middle-click) tap down begins.
   final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Callback invoked when a tertiary button tap up completes.
   final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Callback invoked when a tertiary button tap is canceled.
   final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Callback invoked when a long press gesture begins.
+  ///
+  /// Provides the position where the long press started. Useful for implementing
+  /// press-and-hold actions or showing additional options.
   final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Callback invoked when a long press gesture completes.
   final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Callback invoked when a long press gesture moves.
+  ///
+  /// Provides position updates during an active long press. Useful for
+  /// implementing drag-from-long-press behaviors.
   final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Callback invoked when a long press gesture ends.
   final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Callback invoked when a secondary button long press completes.
   final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Callback invoked when a tertiary button long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
+
+  /// Whether to disable hover visual effects.
+  ///
+  /// When true, the button doesn't show visual changes on hover, though [onHover]
+  /// callbacks are still called. Useful for custom hover implementations.
   final bool disableHoverEffect;
+
+  /// Controller for managing button widget states externally.
+  ///
+  /// Allows external control over hover, pressed, focused, and other widget states.
+  /// Useful for implementing custom state logic or coordinating with other widgets.
   final WidgetStatesController? statesController;
+
+  /// Alignment for the button's margin within its allocated space.
+  ///
+  /// Controls how the button positions itself within its parent's constraints
+  /// when the button is smaller than the available space.
   final AlignmentGeometry? marginAlignment;
+
+  /// Whether to disable the focus outline.
+  ///
+  /// When true, removes the visual focus indicator that appears when the button
+  /// is focused via keyboard navigation. Use carefully as this affects accessibility.
   final bool disableFocusOutline;
+
+  /// Creates a [VNLButton] with custom styling.
+  ///
+  /// This is the base constructor that allows complete customization of the button's
+  /// appearance and behavior through the [style] parameter. For common use cases,
+  /// consider using the named constructors like [VNLButton.primary] or [VNLButton.secondary].
+  ///
+  /// Parameters:
+  /// - [statesController] (WidgetStatesController?, optional): External state management.
+  /// - [leading] (Widget?, optional): Widget displayed before the main content.
+  /// - [trailing] (Widget?, optional): Widget displayed after the main content.
+  /// - [child] (Widget, required): Main content of the button.
+  /// - [onPressed] (VoidCallback?, optional): Primary action callback.
+  /// - [focusNode] (FocusNode?, optional): Focus management node.
+  /// - [alignment] (AlignmentGeometry?, optional): Content alignment within button.
+  /// - [style] (VNLAbstractButtonStyle, required): Visual styling configuration.
+  /// - [enabled] (bool?, optional): Whether button responds to interactions.
+  /// - [disableTransition] (bool, default: false): Whether to disable state animations.
+  /// - [onFocus] (`ValueChanged<bool>?`, optional): Focus state change callback.
+  /// - [onHover] (`ValueChanged<bool>?`, optional): VNLHover state change callback.
+  /// - [disableHoverEffect] (bool, default: false): Whether to disable hover visuals.
+  /// - [enableFeedback] (bool?, optional): Whether to provide haptic feedback.
+  /// - [marginAlignment] (AlignmentGeometry?, optional): Margin positioning.
+  /// - [disableFocusOutline] (bool, default: false): Whether to hide focus outline.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton(
+  ///   style: VNLButtonStyle.primary(),
+  ///   leading: Icon(Icons.save),
+  ///   onPressed: () => saveDocument(),
+  ///   child: Text('Save Document'),
+  /// );
+  /// ```
   const VNLButton({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
@@ -334,17 +903,37 @@ class VNLButton extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
+  /// Creates a primary button with prominent styling for main actions.
+  ///
+  /// Primary buttons use a filled background with high contrast text, making them
+  /// suitable for the most important action on a screen or in a section. They have
+  /// the highest visual weight and should be used sparingly.
+  ///
+  /// The button uses the primary color from the theme and provides clear visual
+  /// feedback for hover, focus, and press states.
+  ///
+  /// Parameters: Same as [VNLButton] constructor, with [style] preset to [VNLButtonVariance.primary].
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton.primary(
+  ///   onPressed: () => submitForm(),
+  ///   child: Text('Submit'),
+  /// );
+  /// ```
   const VNLButton.primary({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
     this.alignment,
     this.enabled,
-    this.style = ButtonVariance.primary,
+    this.style = VNLButtonVariance.primary,
     this.disableTransition = false,
     this.onFocus,
     this.onHover,
@@ -369,17 +958,32 @@ class VNLButton extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
+  /// Creates a secondary button with muted styling for supporting actions.
+  ///
+  /// Secondary buttons use a subtle background color with medium contrast text,
+  /// making them suitable for actions that are important but not primary. They have
+  /// less visual weight than primary buttons and can be used more frequently.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton.secondary(
+  ///   onPressed: () => cancelAction(),
+  ///   child: Text('Cancel'),
+  /// );
+  /// ```
   const VNLButton.secondary({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
     this.alignment,
     this.enabled,
-    this.style = ButtonVariance.secondary,
+    this.style = VNLButtonVariance.secondary,
     this.disableTransition = false,
     this.onFocus,
     this.onHover,
@@ -404,17 +1008,33 @@ class VNLButton extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
+  /// Creates an outline button with a border and transparent background.
+  ///
+  /// Outline buttons feature a visible border and transparent background, providing
+  /// a minimal yet distinct appearance. They're ideal for secondary actions that need
+  /// to stand out more than ghost buttons but less than filled buttons. The outline
+  /// style works well in layouts where visual hierarchy matters.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton.outline(
+  ///   onPressed: () => showMore(),
+  ///   child: Text('Learn More'),
+  /// );
+  /// ```
   const VNLButton.outline({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
     this.alignment,
     this.enabled,
-    this.style = ButtonVariance.outline,
+    this.style = VNLButtonVariance.outline,
     this.disableTransition = false,
     this.onFocus,
     this.onHover,
@@ -439,17 +1059,33 @@ class VNLButton extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
+  /// Creates a ghost button with minimal styling for subtle actions.
+  ///
+  /// Ghost buttons have no background by default and only show subtle hover effects.
+  /// They're perfect for actions that need to be available but shouldn't draw attention
+  /// away from more important content.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton.ghost(
+  ///   onPressed: () => showHelp(),
+  ///   leading: Icon(Icons.help_outline),
+  ///   child: Text('Help'),
+  /// );
+  /// ```
   const VNLButton.ghost({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
     this.alignment,
     this.enabled,
-    this.style = ButtonVariance.ghost,
+    this.style = VNLButtonVariance.ghost,
     this.disableTransition = false,
     this.onFocus,
     this.onHover,
@@ -474,17 +1110,32 @@ class VNLButton extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
+  /// Creates a link-styled button with underline decoration.
+  ///
+  /// Link buttons appear as inline text links, typically underlined on hover,
+  /// making them suitable for navigation or inline actions within text. They have
+  /// minimal visual presence and work well for tertiary actions or embedded links.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton.link(
+  ///   onPressed: () => openUrl(),
+  ///   child: Text('View Documentation'),
+  /// );
+  /// ```
   const VNLButton.link({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
     this.alignment,
     this.enabled,
-    this.style = ButtonVariance.link,
+    this.style = VNLButtonVariance.link,
     this.disableTransition = false,
     this.onFocus,
     this.onHover,
@@ -509,17 +1160,32 @@ class VNLButton extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
+  /// Creates a text-only button with no background or border.
+  ///
+  /// Text buttons display only their text content without any background fill or
+  /// border decoration. They're the most minimal button style, useful for actions
+  /// that should be accessible but not visually prominent, such as "Skip" or "Not now".
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton.text(
+  ///   onPressed: () => skipStep(),
+  ///   child: Text('Skip'),
+  /// );
+  /// ```
   const VNLButton.text({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
     this.alignment,
     this.enabled,
-    this.style = ButtonVariance.text,
+    this.style = VNLButtonVariance.text,
     this.disableTransition = false,
     this.onFocus,
     this.onHover,
@@ -544,17 +1210,33 @@ class VNLButton extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
+  /// Creates a destructive button for actions that delete or destroy data.
+  ///
+  /// Destructive buttons use red/warning colors to clearly indicate that the action
+  /// will remove, delete, or otherwise negatively affect user data. They should be
+  /// used sparingly and typically require confirmation dialogs.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton.destructive(
+  ///   onPressed: () => deleteItem(),
+  ///   leading: Icon(Icons.delete),
+  ///   child: Text('Delete'),
+  /// );
+  /// ```
   const VNLButton.destructive({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
     this.alignment,
     this.enabled,
-    this.style = ButtonVariance.destructive,
+    this.style = VNLButtonVariance.destructive,
     this.disableTransition = false,
     this.onFocus,
     this.onHover,
@@ -579,17 +1261,32 @@ class VNLButton extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
+  /// Creates a fixed-style button with consistent dimensions.
+  ///
+  /// Fixed buttons maintain specific dimensions regardless of content, making them
+  /// ideal for grids, toolbars, or layouts where uniform button sizing is required.
+  /// They're commonly used in icon-heavy interfaces or when precise spacing matters.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton.fixed(
+  ///   onPressed: () => performAction(),
+  ///   child: Icon(Icons.add),
+  /// );
+  /// ```
   const VNLButton.fixed({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
     this.alignment,
     this.enabled,
-    this.style = ButtonVariance.fixed,
+    this.style = VNLButtonVariance.fixed,
     this.disableTransition = false,
     this.onFocus,
     this.onHover,
@@ -614,17 +1311,37 @@ class VNLButton extends StatefulWidget {
     this.disableFocusOutline = false,
   });
 
+  /// Creates a card-style button with elevated appearance.
+  ///
+  /// VNLCard buttons feature subtle shadows and borders to create a card-like elevated
+  /// appearance. They work well in content-heavy layouts where buttons need to stand
+  /// out from surrounding content, such as feature cards or call-to-action sections.
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButton.card(
+  ///   onPressed: () => selectOption(),
+  ///   child: Column(
+  ///     children: [
+  ///       Icon(Icons.star),
+  ///       Text('Premium'),
+  ///     ],
+  ///   ),
+  /// );
+  /// ```
   const VNLButton.card({
     super.key,
     this.statesController,
     this.leading,
     this.trailing,
+    this.leadingGap,
+    this.trailingGap,
     required this.child,
     this.onPressed,
     this.focusNode,
     this.alignment,
     this.enabled,
-    this.style = ButtonVariance.card,
+    this.style = VNLButtonVariance.card,
     this.disableTransition = false,
     this.onFocus,
     this.onHover,
@@ -653,24 +1370,49 @@ class VNLButton extends StatefulWidget {
   ButtonState createState() => ButtonState();
 }
 
+/// State class for [VNLButton] widgets managing interactive state and rendering.
+///
+/// [ButtonState] handles the button's lifecycle, manages the [WidgetStatesController]
+/// for tracking interactive states (pressed, hovered, focused, disabled), and
+/// coordinates with the button's style system to apply appropriate visual changes
+/// based on the current state.
+///
+/// This class is generic, allowing it to manage state for various button types
+/// (primary, secondary, outline, etc.) through the type parameter [T].
+///
+/// The state class automatically:
+/// - Creates or uses a provided [WidgetStatesController]
+/// - Updates the disabled state based on [onPressed] availability
+/// - Manages focus and hover interactions
+/// - Applies style transitions and animations
 class ButtonState<T extends VNLButton> extends State<T> {
   bool get _shouldEnableFeedback {
-    final platform = VNLTheme.of(context).platform;
-    return isMobile(platform);
+    final theme = Theme.of(context);
+    // Use theme setting if provided, otherwise default to platform-specific behavior
+    if (theme.enableFeedback != null) {
+      return theme.enableFeedback!;
+    }
+    // Default: enable feedback on mobile platforms
+    return isMobile(theme.platform);
   }
 
-  AbstractButtonStyle? _style;
-  ButtonStyleOverrideData? _overrideData;
+  VNLAbstractButtonStyle? _style;
+  VNLButtonStyleOverrideData? _overrideData;
+
+  @override
+  void initState() {
+    super.initState();
+    _style = widget.style;
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    var style = widget.style;
-    var overrideData = Data.maybeOf<ButtonStyleOverrideData>(context);
+    var overrideData = Data.maybeOf<VNLButtonStyleOverrideData>(context);
     if (overrideData != _overrideData) {
       _overrideData = overrideData;
       if (overrideData != null) {
-        style = style.copyWith(
+        _style = widget.style.copyWith(
           decoration: overrideData.decoration,
           mouseCursor: overrideData.mouseCursor,
           padding: overrideData.padding,
@@ -678,19 +1420,19 @@ class ButtonState<T extends VNLButton> extends State<T> {
           iconTheme: overrideData.iconTheme,
           margin: overrideData.margin,
         );
+      } else {
+        _style = widget.style;
       }
     }
-    _style = style;
   }
 
   @override
   void didUpdateWidget(T oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.style != oldWidget.style) {
-      var style = widget.style;
       var overrideData = _overrideData;
       if (overrideData != null) {
-        style = style.copyWith(
+        _style = widget.style.copyWith(
           decoration: overrideData.decoration,
           mouseCursor: overrideData.mouseCursor,
           padding: overrideData.padding,
@@ -698,8 +1440,9 @@ class ButtonState<T extends VNLButton> extends State<T> {
           iconTheme: overrideData.iconTheme,
           margin: overrideData.margin,
         );
+      } else {
+        _style = widget.style;
       }
-      _style = style;
     }
   }
 
@@ -729,10 +1472,11 @@ class ButtonState<T extends VNLButton> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
+    final densityGap = theme.density.baseGap * scaling;
     bool enableFeedback = widget.enableFeedback ?? _shouldEnableFeedback;
-    return Clickable(
+    return VNLClickable(
       disableFocusOutline: widget.disableFocusOutline,
       statesController: widget.statesController,
       focusNode: widget.focusNode,
@@ -749,16 +1493,15 @@ class ButtonState<T extends VNLButton> extends State<T> {
       padding: WidgetStateProperty.resolveWith(_resolvePadding),
       textStyle: WidgetStateProperty.resolveWith(_resolveTextStyle),
       iconTheme: WidgetStateProperty.resolveWith(_resolveIconTheme),
-      transform:
-          enableFeedback
-              ? WidgetStateProperty.resolveWith((states) {
-                if (states.contains(WidgetState.pressed)) {
-                  // scale down to 95% with alignment at center
-                  return Matrix4.identity()..scale(0.95);
-                }
-                return null;
-              })
-              : null,
+      transform: enableFeedback
+          ? WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.pressed)) {
+                // scale down to 95% with alignment at center
+                return Matrix4.identity()..scaleByDouble(0.95, 0.95, 0.95, 1);
+              }
+              return null;
+            })
+          : null,
       onPressed: widget.onPressed,
       onTapDown: widget.onTapDown,
       onTapUp: widget.onTapUp,
@@ -775,61 +1518,130 @@ class ButtonState<T extends VNLButton> extends State<T> {
       onLongPressEnd: widget.onLongPressEnd,
       onSecondaryLongPress: widget.onSecondaryLongPress,
       onTertiaryLongPress: widget.onTertiaryLongPress,
-      child:
-          widget.leading == null && widget.trailing == null
-              ? Align(
-                heightFactor: 1,
-                widthFactor: 1,
-                alignment: widget.alignment ?? Alignment.center,
-                child: widget.child,
-              )
-              : IntrinsicWidth(
-                child: IntrinsicHeight(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (widget.leading != null) widget.leading!,
-                      if (widget.leading != null) Gap(8 * scaling),
-                      Expanded(
-                        child: Align(
-                          widthFactor: 1,
-                          heightFactor: 1,
-                          alignment: widget.alignment ?? AlignmentDirectional.centerStart,
-                          child: widget.child,
-                        ),
-                      ),
-                      if (widget.trailing != null) Gap(8 * scaling),
-                      if (widget.trailing != null) widget.trailing!,
-                    ],
-                  ),
+      child: widget.leading == null && widget.trailing == null
+          ? _buildAligned()
+          : IntrinsicWidth(
+              child: IntrinsicHeight(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (widget.leading != null) widget.leading!,
+                    if (widget.leading != null)
+                      Gap(widget.leadingGap ?? densityGap),
+                    Expanded(
+                      child: _buildAligned(),
+                    ),
+                    if (widget.trailing != null)
+                      Gap(widget.trailingGap ?? densityGap),
+                    if (widget.trailing != null) widget.trailing!,
+                  ],
                 ),
               ),
+            ),
     );
+  }
+
+  Widget _buildAligned() {
+    if (widget.alignment != null) {
+      return AnimatedAlign(
+        duration: kDefaultDuration,
+        curve: Curves.easeInOut,
+        widthFactor: 1,
+        heightFactor: 1,
+        alignment: widget.alignment!,
+        child: widget.child,
+      );
+    }
+    return widget.child;
   }
 }
 
-class ButtonSize {
+/// Defines the relative size scaling for button components.
+///
+/// [VNLButtonSize] controls the overall scale of buttons, affecting text size,
+/// icon size, and proportional padding. The scaling factor is applied to
+/// all dimensional properties to maintain visual consistency.
+///
+/// Example:
+/// ```dart
+/// VNLButton.primary(
+///   style: VNLButtonStyle.primary().copyWith(size: VNLButtonSize.large),
+///   child: Text('Large VNLButton'),
+/// );
+/// ```
+class VNLButtonSize {
+  /// The scaling factor applied to button dimensions.
+  ///
+  /// A value of 1.0 represents normal size, values less than 1.0 create smaller
+  /// buttons, and values greater than 1.0 create larger buttons.
   final double scale;
-  const ButtonSize(this.scale);
-  static const ButtonSize normal = ButtonSize(1);
-  static const ButtonSize xSmall = ButtonSize(1 / 2);
-  static const ButtonSize small = ButtonSize(3 / 4);
-  static const ButtonSize large = ButtonSize(2);
-  static const ButtonSize xLarge = ButtonSize(3);
+
+  /// Creates a [VNLButtonSize] with the specified scaling factor.
+  const VNLButtonSize(this.scale);
+
+  /// Standard button size (scale: 1.0).
+  static const VNLButtonSize normal = VNLButtonSize(1);
+
+  /// Extra small button size (scale: 0.5).
+  static const VNLButtonSize xSmall = VNLButtonSize(1 / 2);
+
+  /// Small button size (scale: 0.75).
+  static const VNLButtonSize small = VNLButtonSize(3 / 4);
+
+  /// Large button size (scale: 2.0).
+  static const VNLButtonSize large = VNLButtonSize(2);
+
+  /// Extra large button size (scale: 3.0).
+  static const VNLButtonSize xLarge = VNLButtonSize(3);
 }
 
+/// A function that modifies button padding based on density requirements.
+///
+/// Takes the base padding and returns modified padding appropriate for the
+/// desired button density level.
 typedef DensityModifier = EdgeInsets Function(EdgeInsets padding);
 
+/// Defines the padding density for button components.
+///
+/// [ButtonDensity] controls how much internal padding buttons have, affecting
+/// their overall size and touch target area. Different density levels are
+/// appropriate for different use cases and layout constraints.
+///
+/// Example:
+/// ```dart
+/// VNLButton.primary(
+///   style: VNLButtonStyle.primary().copyWith(density: ButtonDensity.compact),
+///   child: Text('Compact VNLButton'),
+/// );
+/// ```
 class ButtonDensity {
+  /// Function that modifies base padding to achieve the desired density.
   final DensityModifier modifier;
+
+  /// Creates a [ButtonDensity] with the specified padding modifier.
   const ButtonDensity(this.modifier);
+
+  /// Standard padding density (no modification).
   static const ButtonDensity normal = ButtonDensity(_densityNormal);
+
+  /// Increased padding for more comfortable touch targets.
   static const ButtonDensity comfortable = ButtonDensity(_densityComfortable);
+
+  /// Square padding suitable for icon-only buttons.
   static const ButtonDensity icon = ButtonDensity(_densityIcon);
-  static const ButtonDensity iconComfortable = ButtonDensity(_densityIconComfortable);
+
+  /// Comfortable square padding for icon-only buttons.
+  static const ButtonDensity iconComfortable =
+      ButtonDensity(_densityIconComfortable);
+
+  /// Dense square padding for compact icon buttons.
   static const ButtonDensity iconDense = ButtonDensity(_densityIconDense);
+
+  /// Reduced padding for tighter layouts (50% of normal).
   static const ButtonDensity dense = ButtonDensity(_densityDense);
+
+  /// Minimal padding for very compact layouts (zero padding).
   static const ButtonDensity compact = ButtonDensity(_densityCompact);
 }
 
@@ -846,166 +1658,323 @@ EdgeInsets _densityCompact(EdgeInsets padding) {
 }
 
 EdgeInsets _densityIcon(EdgeInsets padding) {
-  return EdgeInsets.all(min(padding.top, min(padding.bottom, min(padding.left, padding.right))));
+  return EdgeInsets.all(
+      min(padding.top, min(padding.bottom, min(padding.left, padding.right))));
 }
 
 EdgeInsets _densityIconComfortable(EdgeInsets padding) {
-  return EdgeInsets.all(max(padding.top, max(padding.bottom, max(padding.left, padding.right))));
+  return EdgeInsets.all(
+      max(padding.top, max(padding.bottom, max(padding.left, padding.right))));
 }
 
 EdgeInsets _densityIconDense(EdgeInsets padding) {
-  return EdgeInsets.all(min(padding.top, min(padding.bottom, min(padding.left, padding.right))) * 0.5);
+  return EdgeInsets.all(
+      min(padding.top, min(padding.bottom, min(padding.left, padding.right))) *
+          0.5);
 }
 
 EdgeInsets _densityComfortable(EdgeInsets padding) {
   return padding * 2;
 }
 
-enum ButtonShape { rectangle, circle }
+/// Defines the shape style for button components.
+///
+/// [ButtonShape] determines the border radius and overall shape of buttons,
+/// allowing for rectangular buttons with rounded corners or fully circular buttons.
+enum ButtonShape {
+  /// Rectangular button with theme-appropriate rounded corners.
+  rectangle,
 
-typedef ButtonStateProperty<T> = T Function(BuildContext context, Set<WidgetState> states);
+  /// Circular button with equal width and height.
+  circle,
+}
 
-abstract class AbstractButtonStyle {
+/// Function signature for button state-dependent properties.
+///
+/// [ButtonStateProperty] is a function type that resolves a property value based
+/// on the current widget states (hovered, pressed, focused, disabled, etc.) and
+/// build context. This allows button styles to dynamically adapt their appearance
+/// based on user interactions.
+///
+/// Parameters:
+/// - [context]: The build context for accessing theme data
+/// - [states]: Set of current widget states (e.g., `{WidgetState.hovered, WidgetState.pressed}`)
+///
+/// Returns the property value of type [T] appropriate for the current states.
+///
+/// Example:
+/// ```dart
+/// ButtonStateProperty<Color> backgroundColor = (context, states) {
+///   if (states.contains(WidgetState.disabled)) return VNLColors.grey;
+///   if (states.contains(WidgetState.pressed)) return VNLColors.blue.shade700;
+///   if (states.contains(WidgetState.hovered)) return VNLColors.blue.shade400;
+///   return VNLColors.blue;
+/// };
+/// ```
+typedef ButtonStateProperty<T> = T Function(
+    BuildContext context, Set<WidgetState> states);
+
+/// Abstract interface defining the style properties for button components.
+///
+/// [VNLAbstractButtonStyle] specifies the contract for button styling, requiring
+/// implementations to provide state-dependent values for decoration, cursor,
+/// padding, text style, icon theme, and margin. This abstraction allows for
+/// flexible button theming while maintaining a consistent API.
+///
+/// All properties return [ButtonStateProperty] functions that resolve values
+/// based on the button's current interactive state (hovered, pressed, focused, etc.).
+///
+/// Implementations include [VNLButtonStyle] and [VNLButtonVariance], which provide
+/// concrete styling configurations for different button types.
+abstract class VNLAbstractButtonStyle {
+  /// Returns the decoration (background, border, shadows) based on button state.
   ButtonStateProperty<Decoration> get decoration;
+
+  /// Returns the mouse cursor appearance based on button state.
   ButtonStateProperty<MouseCursor> get mouseCursor;
+
+  /// Returns the internal padding based on button state.
   ButtonStateProperty<EdgeInsetsGeometry> get padding;
+
+  /// Returns the text style based on button state.
   ButtonStateProperty<TextStyle> get textStyle;
+
+  /// Returns the icon theme based on button state.
   ButtonStateProperty<IconThemeData> get iconTheme;
+
+  /// Returns the external margin based on button state.
   ButtonStateProperty<EdgeInsetsGeometry> get margin;
 }
 
-class ButtonStyle implements AbstractButtonStyle {
-  final AbstractButtonStyle variance;
-  final ButtonSize size;
+/// Configurable button style combining variance, size, density, and shape.
+///
+/// [VNLButtonStyle] implements [VNLAbstractButtonStyle] and provides a composable way
+/// to create button styles by combining a base variance (primary, secondary, outline,
+/// etc.) with size, density, and shape modifiers. This allows for flexible button
+/// customization while maintaining consistency.
+///
+/// The class provides named constructors for common button variants (primary,
+/// secondary, outline, etc.) and can be further customized with size and density options.
+///
+/// Example:
+/// ```dart
+/// // Create a large primary button
+/// const VNLButtonStyle.primary(
+///   size: VNLButtonSize.large,
+///   density: ButtonDensity.comfortable,
+/// )
+///
+/// // Create a small outline button with circular shape
+/// const VNLButtonStyle.outline(
+///   size: VNLButtonSize.small,
+///   shape: ButtonShape.circle,
+/// )
+/// ```
+class VNLButtonStyle implements VNLAbstractButtonStyle {
+  /// The base style variance (primary, secondary, outline, etc.).
+  final VNLAbstractButtonStyle variance;
+
+  /// The size configuration affecting padding and minimum dimensions.
+  final VNLButtonSize size;
+
+  /// The density configuration affecting spacing and compactness.
   final ButtonDensity density;
+
+  /// The shape configuration (rectangle or circle).
   final ButtonShape shape;
 
-  const ButtonStyle({
+  /// Creates a custom [VNLButtonStyle] with the specified variance and modifiers.
+  ///
+  /// Parameters:
+  /// - [variance] (required): The base button style variant
+  /// - [size]: The button size. Defaults to [VNLButtonSize.normal]
+  /// - [density]: The button density. Defaults to [ButtonDensity.normal]
+  /// - [shape]: The button shape. Defaults to [ButtonShape.rectangle]
+  const VNLButtonStyle({
     required this.variance,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
   });
 
-  const ButtonStyle.primary({
-    this.size = ButtonSize.normal,
+  /// Creates a primary button style with prominent filled appearance.
+  ///
+  /// Primary buttons use the theme's primary color with high contrast, making them
+  /// ideal for the main action on a screen.
+  const VNLButtonStyle.primary({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.primary;
+  }) : variance = VNLButtonVariance.primary;
 
-  const ButtonStyle.secondary({
-    this.size = ButtonSize.normal,
+  /// Creates a secondary button style with muted appearance.
+  ///
+  /// Secondary buttons have less visual prominence than primary buttons, suitable
+  /// for supporting or alternative actions.
+  const VNLButtonStyle.secondary({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.secondary;
+  }) : variance = VNLButtonVariance.secondary;
 
-  const ButtonStyle.outline({
-    this.size = ButtonSize.normal,
+  /// Creates an outline button style with border and no background.
+  ///
+  /// Outline buttons feature a border with transparent background, providing a
+  /// clear but subtle appearance for secondary actions.
+  const VNLButtonStyle.outline({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.outline;
+  }) : variance = VNLButtonVariance.outline;
 
-  const ButtonStyle.ghost({
-    this.size = ButtonSize.normal,
+  /// Creates a ghost button style with minimal visual presence.
+  ///
+  /// Ghost buttons have no background or border, only showing on hover, making
+  /// them ideal for tertiary actions.
+  const VNLButtonStyle.ghost({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.ghost;
+  }) : variance = VNLButtonVariance.ghost;
 
-  const ButtonStyle.link({
-    this.size = ButtonSize.normal,
+  /// Creates a link button style resembling a text hyperlink.
+  ///
+  /// Link buttons appear as inline links with underline decoration, typically
+  /// used for navigation or inline actions.
+  const VNLButtonStyle.link({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.link;
+  }) : variance = VNLButtonVariance.link;
 
-  const ButtonStyle.text({
-    this.size = ButtonSize.normal,
+  /// Creates a text-only button style with no background or border.
+  ///
+  /// Text buttons display only their text content, making them the most minimal
+  /// button style for unobtrusive actions.
+  const VNLButtonStyle.text({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.text;
+  }) : variance = VNLButtonVariance.text;
 
-  const ButtonStyle.destructive({
-    this.size = ButtonSize.normal,
+  /// Creates a destructive button style for delete/remove actions.
+  ///
+  /// Destructive buttons use warning colors (typically red) to indicate actions
+  /// that remove or delete data.
+  const VNLButtonStyle.destructive({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.destructive;
+  }) : variance = VNLButtonVariance.destructive;
 
-  const ButtonStyle.fixed({
-    this.size = ButtonSize.normal,
+  /// Creates a fixed-size button style with consistent dimensions.
+  ///
+  /// Fixed buttons maintain specific dimensions regardless of content, useful
+  /// for icon buttons or grid layouts.
+  const VNLButtonStyle.fixed({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.fixed;
+  }) : variance = VNLButtonVariance.fixed;
 
-  const ButtonStyle.menu({
-    this.size = ButtonSize.normal,
+  /// Creates a menu button style for dropdown menu triggers.
+  ///
+  /// Menu buttons are designed for triggering dropdown menus, with appropriate
+  /// spacing and styling for menu contexts.
+  const VNLButtonStyle.menu({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.menu;
+  }) : variance = VNLButtonVariance.menu;
 
-  const ButtonStyle.menubar({
-    this.size = ButtonSize.normal,
+  /// Creates a menubar button style for menubar items.
+  ///
+  /// VNLMenubar buttons are optimized for horizontal menu bars with appropriate
+  /// padding and hover effects.
+  const VNLButtonStyle.menubar({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.menubar;
+  }) : variance = VNLButtonVariance.menubar;
 
-  const ButtonStyle.muted({
-    this.size = ButtonSize.normal,
+  /// Creates a muted button style with subdued appearance.
+  ///
+  /// Muted buttons use low-contrast colors for minimal visual impact while
+  /// remaining functional.
+  const VNLButtonStyle.muted({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.muted;
+  }) : variance = VNLButtonVariance.muted;
 
-  const ButtonStyle.primaryIcon({
-    this.size = ButtonSize.normal,
+  /// Creates a primary icon button style with compact icon density.
+  ///
+  /// Icon buttons are optimized for displaying icons without text, using
+  /// [ButtonDensity.icon] for appropriate spacing.
+  const VNLButtonStyle.primaryIcon({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.primary;
+  }) : variance = VNLButtonVariance.primary;
 
-  const ButtonStyle.secondaryIcon({
-    this.size = ButtonSize.normal,
+  /// Creates a secondary icon button style with compact icon density.
+  const VNLButtonStyle.secondaryIcon({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.secondary;
+  }) : variance = VNLButtonVariance.secondary;
 
-  const ButtonStyle.outlineIcon({
-    this.size = ButtonSize.normal,
+  /// Creates an outline icon button style with compact icon density.
+  const VNLButtonStyle.outlineIcon({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.outline;
+  }) : variance = VNLButtonVariance.outline;
 
-  const ButtonStyle.ghostIcon({
-    this.size = ButtonSize.normal,
+  /// Creates a ghost icon button style with compact icon density.
+  const VNLButtonStyle.ghostIcon({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.ghost;
+  }) : variance = VNLButtonVariance.ghost;
 
-  const ButtonStyle.linkIcon({
-    this.size = ButtonSize.normal,
+  /// Creates a link icon button style with compact icon density.
+  const VNLButtonStyle.linkIcon({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.link;
+  }) : variance = VNLButtonVariance.link;
 
-  const ButtonStyle.textIcon({
-    this.size = ButtonSize.normal,
+  /// Creates a text icon button style with compact icon density.
+  const VNLButtonStyle.textIcon({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.text;
+  }) : variance = VNLButtonVariance.text;
 
-  const ButtonStyle.destructiveIcon({
-    this.size = ButtonSize.normal,
+  /// Creates a destructive icon button style with compact icon density.
+  const VNLButtonStyle.destructiveIcon({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.destructive;
+  }) : variance = VNLButtonVariance.destructive;
 
-  const ButtonStyle.fixedIcon({
-    this.size = ButtonSize.normal,
+  /// Creates a fixed icon button style with compact icon density.
+  const VNLButtonStyle.fixedIcon({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.fixed;
+  }) : variance = VNLButtonVariance.fixed;
 
-  const ButtonStyle.card({
-    this.size = ButtonSize.normal,
+  /// Creates a card button style with elevated appearance.
+  ///
+  /// VNLCard buttons feature subtle shadows and borders creating an elevated,
+  /// card-like appearance suitable for content-heavy layouts.
+  const VNLButtonStyle.card({
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
-  }) : variance = ButtonVariance.card;
+  }) : variance = VNLButtonVariance.card;
 
   @override
   ButtonStateProperty<Decoration> get decoration {
@@ -1015,7 +1984,8 @@ class ButtonStyle implements AbstractButtonStyle {
     return variance.decoration;
   }
 
-  Decoration _resolveCircleDecoration(BuildContext context, Set<WidgetState> states) {
+  Decoration _resolveCircleDecoration(
+      BuildContext context, Set<WidgetState> states) {
     var decoration = variance.decoration(context, states);
     if (decoration is BoxDecoration) {
       return BoxDecoration(
@@ -1029,7 +1999,9 @@ class ButtonStyle implements AbstractButtonStyle {
         backgroundBlendMode: decoration.backgroundBlendMode,
       );
     } else if (decoration is ShapeDecoration) {
-      return decoration.copyWith(shape: shape == ButtonShape.circle ? const CircleBorder() : null);
+      return decoration.copyWith(
+        shape: shape == ButtonShape.circle ? const CircleBorder() : null,
+      );
     } else {
       throw Exception('Unsupported decoration type ${decoration.runtimeType}');
     }
@@ -1042,19 +2014,22 @@ class ButtonStyle implements AbstractButtonStyle {
 
   @override
   ButtonStateProperty<EdgeInsetsGeometry> get padding {
-    if (size == ButtonSize.normal && density == ButtonDensity.normal) {
+    if (size == VNLButtonSize.normal && density == ButtonDensity.normal) {
       return variance.padding;
     }
     return _resolvePadding;
   }
 
-  EdgeInsetsGeometry _resolvePadding(BuildContext context, Set<WidgetState> states) {
-    return density.modifier(variance.padding(context, states).optionallyResolve(context) * size.scale);
+  EdgeInsetsGeometry _resolvePadding(
+      BuildContext context, Set<WidgetState> states) {
+    return density.modifier(
+        variance.padding(context, states).optionallyResolve(context) *
+            size.scale);
   }
 
   @override
   ButtonStateProperty<TextStyle> get textStyle {
-    if (size == ButtonSize.normal) {
+    if (size == VNLButtonSize.normal) {
       return variance.textStyle;
     }
     return _resolveTextStyle;
@@ -1066,21 +2041,26 @@ class ButtonStyle implements AbstractButtonStyle {
       final textStyle = DefaultTextStyle.of(context).style;
       fontSize = textStyle.fontSize ?? 14;
     }
-    return variance.textStyle(context, states).copyWith(fontSize: fontSize * size.scale);
+    return variance.textStyle(context, states).copyWith(
+          fontSize: fontSize * size.scale,
+        );
   }
 
   @override
   ButtonStateProperty<IconThemeData> get iconTheme {
-    if (size == ButtonSize.normal) {
+    if (size == VNLButtonSize.normal) {
       return variance.iconTheme;
     }
     return _resolveIconTheme;
   }
 
-  IconThemeData _resolveIconTheme(BuildContext context, Set<WidgetState> states) {
+  IconThemeData _resolveIconTheme(
+      BuildContext context, Set<WidgetState> states) {
     var iconSize = variance.iconTheme(context, states).size;
     iconSize ??= IconTheme.of(context).size ?? 24;
-    return variance.iconTheme(context, states).copyWith(size: iconSize * size.scale);
+    return variance.iconTheme(context, states).copyWith(
+          size: iconSize * size.scale,
+        );
   }
 
   @override
@@ -1089,15 +2069,49 @@ class ButtonStyle implements AbstractButtonStyle {
   }
 }
 
-abstract class VNLButtonTheme {
+/// Abstract base class for button theme customization.
+///
+/// [VNLButtonTheme] provides optional style property delegates that can override
+/// or modify the default button styling. Subclasses implement specific button
+/// variants (primary, secondary, outline, etc.) allowing theme-level customization
+/// of button appearances throughout an application.
+///
+/// Each property is a [ButtonStatePropertyDelegate] that receives the context,
+/// current states, and the default value, allowing for context-aware and
+/// state-dependent style modifications.
+///
+/// Implementations include [PrimaryButtonTheme], [VNLSecondaryButtonTheme],
+/// [VNLOutlineButtonTheme], and others for each button variant.
+abstract class VNLButtonTheme extends ComponentThemeData {
+  /// Optional decoration override (background, border, shadows).
   final ButtonStatePropertyDelegate<Decoration>? decoration;
+
+  /// Optional mouse cursor override.
   final ButtonStatePropertyDelegate<MouseCursor>? mouseCursor;
+
+  /// Optional padding override.
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding;
+
+  /// Optional text style override.
   final ButtonStatePropertyDelegate<TextStyle>? textStyle;
+
+  /// Optional icon theme override.
   final ButtonStatePropertyDelegate<IconThemeData>? iconTheme;
+
+  /// Optional margin override.
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin;
 
-  const VNLButtonTheme({this.decoration, this.mouseCursor, this.padding, this.textStyle, this.iconTheme, this.margin});
+  /// Creates a [VNLButtonTheme] with optional style property delegates.
+  ///
+  /// All parameters are optional, allowing selective override of specific
+  /// style properties while leaving others to use default values.
+  const VNLButtonTheme(
+      {this.decoration,
+      this.mouseCursor,
+      this.padding,
+      this.textStyle,
+      this.iconTheme,
+      this.margin});
 
   @override
   bool operator ==(Object other) {
@@ -1112,18 +2126,44 @@ abstract class VNLButtonTheme {
   }
 
   @override
-  int get hashCode => Object.hash(decoration, mouseCursor, padding, textStyle, iconTheme, margin);
+  int get hashCode => Object.hash(
+      decoration, mouseCursor, padding, textStyle, iconTheme, margin);
 
   @override
   String toString() =>
       '$runtimeType{decoration: $decoration, mouseCursor: $mouseCursor, padding: $padding, textStyle: $textStyle, iconTheme: $iconTheme, margin: $margin}';
 }
 
-class ComponentThemeButtonStyle<T extends VNLButtonTheme> implements AbstractButtonStyle {
-  final AbstractButtonStyle fallback;
+/// Theme-aware button style that integrates with the component theme system.
+///
+/// [ComponentThemeButtonStyle] implements [VNLAbstractButtonStyle] and provides
+/// automatic theme integration by looking up theme overrides from the widget tree's
+/// [ComponentTheme]. If a theme override is found, it's applied; otherwise, the
+/// fallback style is used.
+///
+/// This enables global button style customization through the theme system while
+/// maintaining type-safe access to specific button theme types.
+///
+/// Example:
+/// ```dart
+/// const ComponentThemeButtonStyle<PrimaryButtonTheme>(
+///   fallback: VNLButtonVariance.primary,
+/// )
+/// ```
+class ComponentThemeButtonStyle<T extends VNLButtonTheme>
+    implements VNLAbstractButtonStyle {
+  /// The fallback style used when no theme override is found.
+  final VNLAbstractButtonStyle fallback;
 
+  /// Creates a [ComponentThemeButtonStyle] with the specified fallback style.
+  ///
+  /// Parameters:
+  /// - [fallback] (required): The default style used when theme override is not available.
   const ComponentThemeButtonStyle({required this.fallback});
 
+  /// Looks up the button theme of type [T] from the component theme.
+  ///
+  /// Returns the theme instance if found in the widget tree, or `null` if not present.
   T? find(BuildContext context) {
     return ComponentTheme.maybeOf<T>(context);
   }
@@ -1133,21 +2173,25 @@ class ComponentThemeButtonStyle<T extends VNLButtonTheme> implements AbstractBut
 
   Decoration _resolveDecoration(BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.decoration(context, states);
-    return find(context)?.decoration?.call(context, states, resolved) ?? resolved;
+    return find(context)?.decoration?.call(context, states, resolved) ??
+        resolved;
   }
 
   @override
   ButtonStateProperty<IconThemeData> get iconTheme => _resolveIconTheme;
 
-  IconThemeData _resolveIconTheme(BuildContext context, Set<WidgetState> states) {
+  IconThemeData _resolveIconTheme(
+      BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.iconTheme(context, states);
-    return find(context)?.iconTheme?.call(context, states, resolved) ?? resolved;
+    return find(context)?.iconTheme?.call(context, states, resolved) ??
+        resolved;
   }
 
   @override
   ButtonStateProperty<EdgeInsetsGeometry> get margin => _resolveMargin;
 
-  EdgeInsetsGeometry _resolveMargin(BuildContext context, Set<WidgetState> states) {
+  EdgeInsetsGeometry _resolveMargin(
+      BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.margin(context, states);
     return find(context)?.margin?.call(context, states, resolved) ?? resolved;
   }
@@ -1155,15 +2199,18 @@ class ComponentThemeButtonStyle<T extends VNLButtonTheme> implements AbstractBut
   @override
   ButtonStateProperty<MouseCursor> get mouseCursor => _resolveMouseCursor;
 
-  MouseCursor _resolveMouseCursor(BuildContext context, Set<WidgetState> states) {
+  MouseCursor _resolveMouseCursor(
+      BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.mouseCursor(context, states);
-    return find(context)?.mouseCursor?.call(context, states, resolved) ?? resolved;
+    return find(context)?.mouseCursor?.call(context, states, resolved) ??
+        resolved;
   }
 
   @override
   ButtonStateProperty<EdgeInsetsGeometry> get padding => _resolvePadding;
 
-  EdgeInsetsGeometry _resolvePadding(BuildContext context, Set<WidgetState> states) {
+  EdgeInsetsGeometry _resolvePadding(
+      BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.padding(context, states);
     return find(context)?.padding?.call(context, states, resolved) ?? resolved;
   }
@@ -1173,11 +2220,28 @@ class ComponentThemeButtonStyle<T extends VNLButtonTheme> implements AbstractBut
 
   TextStyle _resolveTextStyle(BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.textStyle(context, states);
-    return find(context)?.textStyle?.call(context, states, resolved) ?? resolved;
+    return find(context)?.textStyle?.call(context, states, resolved) ??
+        resolved;
   }
 }
 
+/// Extension methods for [ShapeDecoration] providing copyWith functionality.
+///
+/// Adds a `copyWith` method to [ShapeDecoration] for creating modified copies
+/// with selectively updated properties, similar to the pattern used in Flutter
+/// for other decoration types.
 extension ShapeDecorationExtension on ShapeDecoration {
+  /// Creates a copy of this [ShapeDecoration] with specified properties replaced.
+  ///
+  /// Parameters:
+  /// - [shape]: Replacement shape border
+  /// - [color]: Replacement fill color
+  /// - [gradient]: Replacement gradient
+  /// - [shadows]: Replacement shadow list
+  /// - [image]: Replacement decoration image
+  ///
+  /// Returns a new [ShapeDecoration] with the specified properties updated
+  /// and all other properties copied from the original.
   ShapeDecoration copyWith({
     ShapeBorder? shape,
     Color? color,
@@ -1195,7 +2259,29 @@ extension ShapeDecorationExtension on ShapeDecoration {
   }
 }
 
+/// Extension methods for [Decoration] providing type-safe copyWith operations.
+///
+/// Adds convenience methods to [Decoration] for creating modified copies when
+/// the decoration is either a [BoxDecoration] or [ShapeDecoration]. These methods
+/// handle type checking and provide appropriate defaults when the decoration
+/// doesn't match the expected type.
 extension DecorationExtension on Decoration {
+  /// Creates a [BoxDecoration] copy with specified properties replaced.
+  ///
+  /// If this decoration is a [BoxDecoration], creates a modified copy.
+  /// Otherwise, creates a new [BoxDecoration] with the provided properties.
+  ///
+  /// Parameters:
+  /// - [color]: Replacement or new background color
+  /// - [image]: Replacement or new decoration image
+  /// - [border]: Replacement or new border
+  /// - [borderRadius]: Replacement or new border radius
+  /// - [boxShadow]: Replacement or new shadow list
+  /// - [gradient]: Replacement or new gradient
+  /// - [shape]: Replacement or new box shape
+  /// - [backgroundBlendMode]: Replacement or new blend mode
+  ///
+  /// Returns a [BoxDecoration] with the specified properties.
   BoxDecoration copyWithIfBoxDecoration({
     Color? color,
     DecorationImage? image,
@@ -1216,7 +2302,8 @@ extension DecorationExtension on Decoration {
         boxShadow: boxShadow ?? boxDecoration.boxShadow,
         gradient: gradient ?? boxDecoration.gradient,
         shape: shape ?? boxDecoration.shape,
-        backgroundBlendMode: backgroundBlendMode ?? boxDecoration.backgroundBlendMode,
+        backgroundBlendMode:
+            backgroundBlendMode ?? boxDecoration.backgroundBlendMode,
       );
     }
     return BoxDecoration(
@@ -1231,6 +2318,19 @@ extension DecorationExtension on Decoration {
     );
   }
 
+  /// Creates a [ShapeDecoration] copy with specified properties replaced.
+  ///
+  /// If this decoration is a [ShapeDecoration], creates a modified copy.
+  /// Otherwise, creates a new [ShapeDecoration] with the provided properties.
+  ///
+  /// Parameters:
+  /// - [shape]: Replacement or new shape border
+  /// - [color]: Replacement or new fill color
+  /// - [gradient]: Replacement or new gradient
+  /// - [shadows]: Replacement or new shadow list
+  /// - [image]: Replacement or new decoration image
+  ///
+  /// Returns a [ShapeDecoration] with the specified properties.
   ShapeDecoration copyWithIfShapeDecoration({
     ShapeBorder? shape,
     Color? color,
@@ -1258,357 +2358,450 @@ extension DecorationExtension on Decoration {
   }
 }
 
+/// Theme configuration for primary button styling.
+///
+/// [PrimaryButtonTheme] extends [VNLButtonTheme] to provide theme-level customization
+/// for primary buttons. It can be registered in the component theme system to
+/// override default primary button styles throughout the application.
+///
+/// Example:
+/// ```dart
+/// PrimaryButtonTheme(
+///   decoration: (context, states, defaultValue) {
+///     // Customize primary button decoration
+///     return customDecoration;
+///   },
+/// )
+/// ```
 class PrimaryButtonTheme extends VNLButtonTheme {
-  const PrimaryButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+  /// Creates a [PrimaryButtonTheme] with optional style property delegates.
+  const PrimaryButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
+  /// Creates a copy of this theme with selectively replaced properties.
   PrimaryButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
     return PrimaryButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
-class SecondaryButtonTheme extends VNLButtonTheme {
-  const SecondaryButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+/// Theme configuration for secondary button styling.
+///
+/// Provides theme-level customization for secondary buttons through the component
+/// theme system. Secondary buttons have muted styling suitable for supporting actions.
+class VNLSecondaryButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLSecondaryButtonTheme] with optional style property delegates.
+  const VNLSecondaryButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
-  SecondaryButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+  /// Creates a copy of this theme with selectively replaced properties.
+  VNLSecondaryButtonTheme copyWith({
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return SecondaryButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+    return VNLSecondaryButtonTheme(
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
-class OutlineButtonTheme extends VNLButtonTheme {
-  const OutlineButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+/// Theme configuration for outline button styling.
+///
+/// Provides theme-level customization for outline buttons through the component
+/// theme system. Outline buttons feature borders with transparent backgrounds.
+class VNLOutlineButtonTheme extends VNLButtonTheme {
+  /// Creates an [VNLOutlineButtonTheme] with optional style property delegates.
+  const VNLOutlineButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
-  OutlineButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+  /// Creates a copy of this theme with selectively replaced properties.
+  VNLOutlineButtonTheme copyWith({
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return OutlineButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+    return VNLOutlineButtonTheme(
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
-class GhostButtonTheme extends VNLButtonTheme {
-  const GhostButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+/// Theme configuration for ghost button styling.
+///
+/// Provides theme-level customization for ghost buttons. Ghost buttons have minimal
+/// visual presence with no background or border by default.
+class VNLGhostButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLGhostButtonTheme] with optional style property delegates.
+  const VNLGhostButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
-  GhostButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+  /// Creates a copy of this theme with selectively replaced properties.
+  VNLGhostButtonTheme copyWith({
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return GhostButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+    return VNLGhostButtonTheme(
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
-class LinkButtonTheme extends VNLButtonTheme {
-  const LinkButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+/// Theme configuration for link button styling.
+///
+/// Provides theme-level customization for link buttons. Link buttons appear as
+/// inline hyperlinks with underline decoration.
+class VNLLinkButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLLinkButtonTheme] with optional style property delegates.
+  const VNLLinkButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
-  LinkButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+  /// Creates a copy of this theme with selectively replaced properties.
+  VNLLinkButtonTheme copyWith({
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return LinkButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+    return VNLLinkButtonTheme(
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
-class TextButtonTheme extends VNLButtonTheme {
-  const TextButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+/// Theme configuration for text button styling.
+///
+/// Provides theme-level customization for text buttons. Text buttons display only
+/// their text content without background or border decoration.
+class VNLTextButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLTextButtonTheme] with optional style property delegates.
+  const VNLTextButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
-  TextButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+  /// Creates a copy of this theme with selectively replaced properties.
+  VNLTextButtonTheme copyWith({
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return TextButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+    return VNLTextButtonTheme(
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
-class DestructiveButtonTheme extends VNLButtonTheme {
-  const DestructiveButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+/// Theme configuration for destructive button styling.
+///
+/// Provides theme-level customization for destructive buttons. Destructive buttons
+/// use warning colors (typically red) for actions that delete or remove data.
+class VNLDestructiveButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLDestructiveButtonTheme] with optional style property delegates.
+  const VNLDestructiveButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
-  DestructiveButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+  /// Creates a copy of this theme with selectively replaced properties.
+  VNLDestructiveButtonTheme copyWith({
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return DestructiveButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+    return VNLDestructiveButtonTheme(
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
+/// Theme configuration for fixed button styling.
+///
+/// Provides theme-level customization for fixed buttons. Fixed buttons maintain
+/// consistent dimensions regardless of content.
 class FixedButtonTheme extends VNLButtonTheme {
-  const FixedButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+  /// Creates a [FixedButtonTheme] with optional style property delegates.
+  const FixedButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
+  /// Creates a copy of this theme with selectively replaced properties.
   FixedButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
     return FixedButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
-class MenuButtonTheme extends VNLButtonTheme {
-  const MenuButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+/// Theme configuration for menu button styling.
+///
+/// Provides theme-level customization for menu buttons. Menu buttons are designed
+/// for triggering dropdown menus with appropriate spacing and styling.
+class VNLMenuButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLMenuButtonTheme] with optional style property delegates.
+  const VNLMenuButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
-  MenuButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+  /// Creates a copy of this theme with selectively replaced properties.
+  VNLMenuButtonTheme copyWith({
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return MenuButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+    return VNLMenuButtonTheme(
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
+/// Theme configuration for menubar button styling.
+///
+/// Provides theme-level customization for menubar buttons. VNLMenubar buttons are
+/// optimized for horizontal menu bars with appropriate padding and hover effects.
 class MenubarButtonTheme extends VNLButtonTheme {
-  const MenubarButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+  /// Creates a [MenubarButtonTheme] with optional style property delegates.
+  const MenubarButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
+  /// Creates a copy of this theme with selectively replaced properties.
   MenubarButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
     return MenubarButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
+/// Theme configuration for muted button styling.
+///
+/// Provides theme-level customization for muted buttons. Muted buttons use
+/// low-contrast colors for minimal visual impact while remaining functional.
 class MutedButtonTheme extends VNLButtonTheme {
-  const MutedButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+  /// Creates a [MutedButtonTheme] with optional style property delegates.
+  const MutedButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
+  /// Creates a copy of this theme with selectively replaced properties.
   MutedButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
     return MutedButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
-class CardButtonTheme extends VNLButtonTheme {
-  const CardButtonTheme({
-    super.decoration,
-    super.mouseCursor,
-    super.padding,
-    super.textStyle,
-    super.iconTheme,
-    super.margin,
-  });
+/// Theme configuration for card button styling.
+///
+/// Provides theme-level customization for card buttons. VNLCard buttons feature
+/// subtle shadows and borders creating an elevated, card-like appearance.
+class VNLCardButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLCardButtonTheme] with optional style property delegates.
+  const VNLCardButtonTheme(
+      {super.decoration,
+      super.mouseCursor,
+      super.padding,
+      super.textStyle,
+      super.iconTheme,
+      super.margin});
 
-  CardButtonTheme copyWith({
-    ButtonStatePropertyDelegate<Decoration>? decoration,
-    ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
-    ButtonStatePropertyDelegate<TextStyle>? textStyle,
-    ButtonStatePropertyDelegate<IconThemeData>? iconTheme,
-    ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin,
+  /// Creates a copy of this theme with selectively replaced properties.
+  VNLCardButtonTheme copyWith({
+    ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
+    ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
+    ValueGetter<ButtonStatePropertyDelegate<TextStyle>?>? textStyle,
+    ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
+    ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return CardButtonTheme(
-      decoration: decoration ?? this.decoration,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
-      padding: padding ?? this.padding,
-      textStyle: textStyle ?? this.textStyle,
-      iconTheme: iconTheme ?? this.iconTheme,
-      margin: margin ?? this.margin,
+    return VNLCardButtonTheme(
+      decoration: decoration == null ? this.decoration : decoration(),
+      mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
+      padding: padding == null ? this.padding : padding(),
+      textStyle: textStyle == null ? this.textStyle : textStyle(),
+      iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
+      margin: margin == null ? this.margin : margin(),
     );
   }
 }
 
-class ButtonVariance implements AbstractButtonStyle {
-  static const AbstractButtonStyle primary = ComponentThemeButtonStyle<PrimaryButtonTheme>(
-    fallback: ButtonVariance(
+/// Implementation of [VNLAbstractButtonStyle] providing concrete button style variants.
+///
+/// [VNLButtonVariance] implements [VNLAbstractButtonStyle] with state property functions
+/// and provides static constants for all standard button variants (primary, secondary,
+/// outline, etc.). Each variant is wrapped in a [ComponentThemeButtonStyle] to enable
+/// theme-level customization.
+///
+/// The static variance constants serve as the base styles used by [VNLButtonStyle]'s
+/// named constructors and can be used directly when creating custom button styles.
+///
+/// Example:
+/// ```dart
+/// // Use a variant directly
+/// VNLButton(
+///   style: VNLButtonVariance.primary,
+///   child: Text('Click Me'),
+/// )
+/// ```
+class VNLButtonVariance implements VNLAbstractButtonStyle {
+  /// Primary button variant with prominent filled appearance.
+  ///
+  /// Features high-contrast styling suitable for the main action on a screen.
+  static const VNLAbstractButtonStyle primary =
+      ComponentThemeButtonStyle<PrimaryButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonPrimaryDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonPadding,
@@ -1617,8 +2810,13 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle secondary = ComponentThemeButtonStyle<SecondaryButtonTheme>(
-    fallback: ButtonVariance(
+
+  /// Secondary button variant with muted appearance.
+  ///
+  /// Features subtle styling suitable for supporting or alternative actions.
+  static const VNLAbstractButtonStyle secondary =
+      ComponentThemeButtonStyle<VNLSecondaryButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonSecondaryDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonPadding,
@@ -1627,8 +2825,13 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle outline = ComponentThemeButtonStyle<OutlineButtonTheme>(
-    fallback: ButtonVariance(
+
+  /// Outline button variant with border and transparent background.
+  ///
+  /// Features a visible border without filled background, suitable for secondary actions.
+  static const VNLAbstractButtonStyle outline =
+      ComponentThemeButtonStyle<VNLOutlineButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonOutlineDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonPadding,
@@ -1637,8 +2840,13 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle ghost = ComponentThemeButtonStyle<GhostButtonTheme>(
-    fallback: ButtonVariance(
+
+  /// Ghost button variant with minimal visual presence.
+  ///
+  /// Features no background or border by default, only showing on hover.
+  static const VNLAbstractButtonStyle ghost =
+      ComponentThemeButtonStyle<VNLGhostButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonGhostDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonPadding,
@@ -1647,8 +2855,13 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle link = ComponentThemeButtonStyle<LinkButtonTheme>(
-    fallback: ButtonVariance(
+
+  /// Link button variant resembling a text hyperlink.
+  ///
+  /// Features inline link styling with underline decoration.
+  static const VNLAbstractButtonStyle link =
+      ComponentThemeButtonStyle<VNLLinkButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonLinkDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonPadding,
@@ -1657,8 +2870,13 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle text = ComponentThemeButtonStyle<TextButtonTheme>(
-    fallback: ButtonVariance(
+
+  /// Text button variant with only text content.
+  ///
+  /// Features minimal styling with no background or border decoration.
+  static const VNLAbstractButtonStyle text =
+      ComponentThemeButtonStyle<VNLTextButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonTextDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonPadding,
@@ -1667,8 +2885,13 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle destructive = ComponentThemeButtonStyle<DestructiveButtonTheme>(
-    fallback: ButtonVariance(
+
+  /// Destructive button variant for delete/remove actions.
+  ///
+  /// Features warning colors (typically red) to indicate data-destructive actions.
+  static const VNLAbstractButtonStyle destructive =
+      ComponentThemeButtonStyle<VNLDestructiveButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonDestructiveDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonPadding,
@@ -1678,8 +2901,12 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle fixed = ComponentThemeButtonStyle<FixedButtonTheme>(
-    fallback: ButtonVariance(
+  /// Fixed button variant with consistent dimensions.
+  ///
+  /// Features fixed sizing regardless of content, suitable for icon buttons.
+  static const VNLAbstractButtonStyle fixed =
+      ComponentThemeButtonStyle<FixedButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonTextDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonPadding,
@@ -1689,8 +2916,12 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle menu = ComponentThemeButtonStyle<MenuButtonTheme>(
-    fallback: ButtonVariance(
+  /// Menu button variant for dropdown menu triggers.
+  ///
+  /// Features appropriate spacing and styling for menu contexts.
+  static const VNLAbstractButtonStyle menu =
+      ComponentThemeButtonStyle<VNLMenuButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonMenuDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonMenuPadding,
@@ -1700,8 +2931,12 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle menubar = ComponentThemeButtonStyle<MenubarButtonTheme>(
-    fallback: ButtonVariance(
+  /// VNLMenubar button variant for horizontal menu bars.
+  ///
+  /// Features optimized padding and styling for menubar contexts.
+  static const VNLAbstractButtonStyle menubar =
+      ComponentThemeButtonStyle<MenubarButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonMenuDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonMenubarPadding,
@@ -1711,8 +2946,12 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle muted = ComponentThemeButtonStyle<MutedButtonTheme>(
-    fallback: ButtonVariance(
+  /// Muted button variant with subdued appearance.
+  ///
+  /// Features low-contrast styling for minimal visual impact.
+  static const VNLAbstractButtonStyle muted =
+      ComponentThemeButtonStyle<MutedButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonTextDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonPadding,
@@ -1722,8 +2961,12 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle card = ComponentThemeButtonStyle<CardButtonTheme>(
-    fallback: ButtonVariance(
+  /// VNLCard button variant with elevated appearance.
+  ///
+  /// Features subtle shadows and borders creating a card-like elevated look.
+  static const VNLAbstractButtonStyle card =
+      ComponentThemeButtonStyle<VNLCardButtonTheme>(
+    fallback: VNLButtonVariance(
       decoration: _buttonCardDecoration,
       mouseCursor: _buttonMouseCursor,
       padding: _buttonCardPadding,
@@ -1746,7 +2989,11 @@ class ButtonVariance implements AbstractButtonStyle {
   @override
   final ButtonStateProperty<EdgeInsetsGeometry> margin;
 
-  const ButtonVariance({
+  /// Creates a custom [VNLButtonVariance] with the specified style properties.
+  ///
+  /// All parameters are required [ButtonStateProperty] functions that resolve
+  /// values based on the button's current state.
+  const VNLButtonVariance({
     required this.decoration,
     required this.mouseCursor,
     required this.padding,
@@ -1759,7 +3006,7 @@ class ButtonVariance implements AbstractButtonStyle {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ButtonVariance &&
+    return other is VNLButtonVariance &&
         other.decoration == decoration &&
         other.mouseCursor == mouseCursor &&
         other.padding == padding &&
@@ -1770,20 +3017,40 @@ class ButtonVariance implements AbstractButtonStyle {
 
   @override
   int get hashCode {
-    return Object.hash(decoration, mouseCursor, padding, textStyle, iconTheme, margin);
+    return Object.hash(
+        decoration, mouseCursor, padding, textStyle, iconTheme, margin);
   }
 
   @override
   String toString() {
-    return 'ButtonVariance(decoration: $decoration, mouseCursor: $mouseCursor, padding: $padding, textStyle: $textStyle, iconTheme: $iconTheme, margin: $margin)';
+    return 'VNLButtonVariance(decoration: $decoration, mouseCursor: $mouseCursor, padding: $padding, textStyle: $textStyle, iconTheme: $iconTheme, margin: $margin)';
   }
 }
 
+/// A button state property delegate that always returns the same value.
+///
+/// [ButtonStylePropertyAll] implements a [ButtonStatePropertyDelegate] that
+/// ignores the context, states, and default value parameters, always returning
+/// its stored [value]. This is useful for creating static style properties that
+/// don't change based on button state.
+///
+/// Example:
+/// ```dart
+/// final alwaysRedDecoration = ButtonStylePropertyAll<Decoration>(
+///   BoxDecoration(color: VNLColors.red),
+/// );
+/// ```
 class ButtonStylePropertyAll<T> {
+  /// The constant value to return regardless of state.
   final T value;
 
+  /// Creates a [ButtonStylePropertyAll] with the specified constant value.
   const ButtonStylePropertyAll(this.value);
 
+  /// Returns the stored [value], ignoring all parameters.
+  ///
+  /// This method signature matches [ButtonStatePropertyDelegate] for compatibility,
+  /// but the [context], [states], and [value] parameters are unused.
   T call(BuildContext context, Set<WidgetState> states, T value) {
     return this.value;
   }
@@ -1804,8 +3071,28 @@ class ButtonStylePropertyAll<T> {
   String toString() => 'ButtonStylePropertyAll(value: $value)';
 }
 
-extension ButtonStyleExtension on AbstractButtonStyle {
-  AbstractButtonStyle copyWith({
+/// Extension methods on [VNLAbstractButtonStyle] for convenient style modifications.
+///
+/// Provides utility methods to create modified copies of button styles with
+/// selective property changes. These methods enable fluent style customization
+/// without manually implementing [VNLButtonVariance] instances.
+extension ButtonStyleExtension on VNLAbstractButtonStyle {
+  /// Creates a copy of this style with selectively replaced properties.
+  ///
+  /// Each parameter is a [ButtonStatePropertyDelegate] that can modify or
+  /// replace the corresponding style property. If all parameters are `null`,
+  /// returns the original style unchanged for efficiency.
+  ///
+  /// Example:
+  /// ```dart
+  /// final customStyle = VNLButtonVariance.primary.copyWith(
+  ///   decoration: (context, states, defaultDecoration) {
+  ///     // Custom decoration logic
+  ///     return myCustomDecoration;
+  ///   },
+  /// );
+  /// ```
+  VNLAbstractButtonStyle copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
     ButtonStatePropertyDelegate<MouseCursor>? mouseCursor,
     ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding,
@@ -1821,22 +3108,51 @@ extension ButtonStyleExtension on AbstractButtonStyle {
         margin == null) {
       return this;
     }
-    return _CopyWithButtonStyle(this, decoration, mouseCursor, padding, textStyle, iconTheme, margin);
+    return _CopyWithButtonStyle(
+      this,
+      decoration,
+      mouseCursor,
+      padding,
+      textStyle,
+      iconTheme,
+      margin,
+    );
   }
 
-  AbstractButtonStyle withBackgroundColor({Color? color, Color? hoverColor, Color? focusColor, Color? disabledColor}) {
+  /// Creates a copy with custom background colors for different states.
+  ///
+  /// Modifies the decoration to apply state-specific background colors.
+  /// Only works with [BoxDecoration]; other decoration types are returned unchanged.
+  ///
+  /// Parameters:
+  /// - [color]: Background color for normal state
+  /// - [hoverColor]: Background color when hovered
+  /// - [focusColor]: Background color when focused
+  /// - [disabledColor]: Background color when disabled
+  ///
+  /// Example:
+  /// ```dart
+  /// final style = VNLButtonVariance.primary.withBackgroundColor(
+  ///   color: VNLColors.blue,
+  ///   hoverColor: VNLColors.blue.shade700,
+  /// );
+  /// ```
+  VNLAbstractButtonStyle withBackgroundColor(
+      {Color? color,
+      Color? hoverColor,
+      Color? focusColor,
+      Color? disabledColor}) {
     return copyWith(
       decoration: (context, states, decoration) {
         if (decoration is BoxDecoration) {
           return decoration.copyWith(
-            color:
-                states.disabled
-                    ? disabledColor ?? decoration.color
-                    : states.hovered
+            color: states.disabled
+                ? disabledColor ?? decoration.color
+                : states.hovered
                     ? hoverColor ?? decoration.color
                     : states.focused
-                    ? focusColor ?? decoration.color
-                    : color,
+                        ? focusColor ?? decoration.color
+                        : color,
           );
         }
         return decoration;
@@ -1844,48 +3160,89 @@ extension ButtonStyleExtension on AbstractButtonStyle {
     );
   }
 
-  AbstractButtonStyle withForegroundColor({Color? color, Color? hoverColor, Color? focusColor, Color? disabledColor}) {
+  /// Creates a copy with custom foreground colors for different states.
+  ///
+  /// Modifies both text style and icon theme to apply state-specific foreground
+  /// colors for text and icons.
+  ///
+  /// Parameters:
+  /// - [color]: Foreground color for normal state
+  /// - [hoverColor]: Foreground color when hovered
+  /// - [focusColor]: Foreground color when focused
+  /// - [disabledColor]: Foreground color when disabled
+  ///
+  /// Example:
+  /// ```dart
+  /// final style = VNLButtonVariance.outline.withForegroundColor(
+  ///   color: VNLColors.black,
+  ///   disabledColor: VNLColors.grey,
+  /// );
+  /// ```
+  VNLAbstractButtonStyle withForegroundColor(
+      {Color? color,
+      Color? hoverColor,
+      Color? focusColor,
+      Color? disabledColor}) {
     return copyWith(
       textStyle: (context, states, textStyle) {
         return textStyle.copyWith(
-          color:
-              states.disabled
-                  ? disabledColor ?? textStyle.color
-                  : states.hovered
+          color: states.disabled
+              ? disabledColor ?? textStyle.color
+              : states.hovered
                   ? hoverColor ?? textStyle.color
                   : states.focused
-                  ? focusColor ?? textStyle.color
-                  : color,
+                      ? focusColor ?? textStyle.color
+                      : color,
         );
       },
       iconTheme: (context, states, iconTheme) {
         return iconTheme.copyWith(
-          color:
-              states.disabled
-                  ? disabledColor ?? iconTheme.color
-                  : states.hovered
+          color: states.disabled
+              ? disabledColor ?? iconTheme.color
+              : states.hovered
                   ? hoverColor ?? iconTheme.color
                   : states.focused
-                  ? focusColor ?? iconTheme.color
-                  : color,
+                      ? focusColor ?? iconTheme.color
+                      : color,
         );
       },
     );
   }
 
-  AbstractButtonStyle withBorder({Border? border, Border? hoverBorder, Border? focusBorder, Border? disabledBorder}) {
+  /// Creates a copy with custom borders for different states.
+  ///
+  /// Modifies the decoration to apply state-specific borders.
+  /// Only works with [BoxDecoration]; other decoration types are returned unchanged.
+  ///
+  /// Parameters:
+  /// - [border]: Border for normal state
+  /// - [hoverBorder]: Border when hovered
+  /// - [focusBorder]: Border when focused
+  /// - [disabledBorder]: Border when disabled
+  ///
+  /// Example:
+  /// ```dart
+  /// final style = VNLButtonVariance.outline.withBorder(
+  ///   border: Border.all(color: VNLColors.blue),
+  ///   hoverBorder: Border.all(color: VNLColors.blue.shade700, width: 2),
+  /// );
+  /// ```
+  VNLAbstractButtonStyle withBorder(
+      {Border? border,
+      Border? hoverBorder,
+      Border? focusBorder,
+      Border? disabledBorder}) {
     return copyWith(
       decoration: (context, states, decoration) {
         if (decoration is BoxDecoration) {
           return decoration.copyWith(
-            border:
-                states.disabled
-                    ? disabledBorder ?? decoration.border
-                    : states.hovered
+            border: states.disabled
+                ? disabledBorder ?? decoration.border
+                : states.hovered
                     ? hoverBorder ?? decoration.border
                     : states.focused
-                    ? focusBorder ?? decoration.border
-                    : border,
+                        ? focusBorder ?? decoration.border
+                        : border,
           );
         }
         return decoration;
@@ -1893,24 +3250,40 @@ extension ButtonStyleExtension on AbstractButtonStyle {
     );
   }
 
-  AbstractButtonStyle withBorderRadius({
-    BorderRadiusGeometry? borderRadius,
-    BorderRadiusGeometry? hoverBorderRadius,
-    BorderRadiusGeometry? focusBorderRadius,
-    BorderRadiusGeometry? disabledBorderRadius,
-  }) {
+  /// Creates a copy with custom border radius for different states.
+  ///
+  /// Modifies the decoration to apply state-specific border radius.
+  /// Only works with [BoxDecoration]; other decoration types are returned unchanged.
+  ///
+  /// Parameters:
+  /// - [borderRadius]: Border radius for normal state
+  /// - [hoverBorderRadius]: Border radius when hovered
+  /// - [focusBorderRadius]: Border radius when focused
+  /// - [disabledBorderRadius]: Border radius when disabled
+  ///
+  /// Example:
+  /// ```dart
+  /// final style = VNLButtonVariance.primary.withBorderRadius(
+  ///   borderRadius: BorderRadius.circular(8),
+  ///   hoverBorderRadius: BorderRadius.circular(12),
+  /// );
+  /// ```
+  VNLAbstractButtonStyle withBorderRadius(
+      {BorderRadiusGeometry? borderRadius,
+      BorderRadiusGeometry? hoverBorderRadius,
+      BorderRadiusGeometry? focusBorderRadius,
+      BorderRadiusGeometry? disabledBorderRadius}) {
     return copyWith(
       decoration: (context, states, decoration) {
         if (decoration is BoxDecoration) {
           return decoration.copyWith(
-            borderRadius:
-                states.disabled
-                    ? disabledBorderRadius ?? decoration.borderRadius
-                    : states.hovered
+            borderRadius: states.disabled
+                ? disabledBorderRadius ?? decoration.borderRadius
+                : states.hovered
                     ? hoverBorderRadius ?? decoration.borderRadius
                     : states.focused
-                    ? focusBorderRadius ?? decoration.borderRadius
-                    : borderRadius,
+                        ? focusBorderRadius ?? decoration.borderRadius
+                        : borderRadius,
           );
         }
         return decoration;
@@ -1918,36 +3291,69 @@ extension ButtonStyleExtension on AbstractButtonStyle {
     );
   }
 
-  AbstractButtonStyle withPadding({
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? hoverPadding,
-    EdgeInsetsGeometry? focusPadding,
-    EdgeInsetsGeometry? disabledPadding,
-  }) {
+  /// Creates a copy with custom padding for different states.
+  ///
+  /// Modifies the padding to apply state-specific values.
+  ///
+  /// Parameters:
+  /// - [padding]: Padding for normal state
+  /// - [hoverPadding]: Padding when hovered
+  /// - [focusPadding]: Padding when focused
+  /// - [disabledPadding]: Padding when disabled
+  VNLAbstractButtonStyle withPadding(
+      {EdgeInsetsGeometry? padding,
+      EdgeInsetsGeometry? hoverPadding,
+      EdgeInsetsGeometry? focusPadding,
+      EdgeInsetsGeometry? disabledPadding}) {
     return copyWith(
-      padding: (context, states, padding) {
+      padding: (context, states, defaultPadding) {
+        final fallbackPadding = padding ?? defaultPadding;
         return states.disabled
-            ? disabledPadding ?? padding
+            ? disabledPadding ?? fallbackPadding
             : states.hovered
-            ? hoverPadding ?? padding
-            : states.focused
-            ? focusPadding ?? padding
-            : padding;
+                ? hoverPadding ?? fallbackPadding
+                : states.focused
+                    ? focusPadding ?? fallbackPadding
+                    : fallbackPadding;
       },
     );
   }
 }
 
-typedef ButtonStatePropertyDelegate<T> = T Function(BuildContext context, Set<WidgetState> states, T value);
+/// Function signature for button state property delegates with default value.
+///
+/// [ButtonStatePropertyDelegate] extends [ButtonStateProperty] by adding a
+/// `value` parameter representing the default or base value. This allows delegates
+/// to modify existing values rather than always creating them from scratch.
+///
+/// The delegate receives:
+/// - [context]: Build context for accessing theme data
+/// - [states]: Current widget states
+/// - [value]: The default value from the base style
+///
+/// Returns the final property value of type [T], which may be the default value,
+/// a modified version of it, or a completely new value.
+///
+/// Example:
+/// ```dart
+/// ButtonStatePropertyDelegate<Color> customColor = (context, states, defaultColor) {
+///   if (states.contains(WidgetState.disabled)) {
+///     return defaultColor.withOpacity(0.5); // Modify default
+///   }
+///   return defaultColor; // Use default
+/// };
+/// ```
+typedef ButtonStatePropertyDelegate<T> = T Function(
+    BuildContext context, Set<WidgetState> states, T value);
 
-class _CopyWithButtonStyle implements AbstractButtonStyle {
+class _CopyWithButtonStyle implements VNLAbstractButtonStyle {
   final ButtonStatePropertyDelegate<Decoration>? _decoration;
   final ButtonStatePropertyDelegate<MouseCursor>? _mouseCursor;
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? _padding;
   final ButtonStatePropertyDelegate<TextStyle>? _textStyle;
   final ButtonStatePropertyDelegate<IconThemeData>? _iconTheme;
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? _margin;
-  final AbstractButtonStyle _delegate;
+  final VNLAbstractButtonStyle _delegate;
 
   const _CopyWithButtonStyle(
     this._delegate,
@@ -1991,7 +3397,8 @@ class _CopyWithButtonStyle implements AbstractButtonStyle {
     return _buildPadding;
   }
 
-  EdgeInsetsGeometry _buildPadding(BuildContext context, Set<WidgetState> states) {
+  EdgeInsetsGeometry _buildPadding(
+      BuildContext context, Set<WidgetState> states) {
     return _padding!(context, states, _delegate.padding(context, states));
   }
 
@@ -2004,7 +3411,8 @@ class _CopyWithButtonStyle implements AbstractButtonStyle {
   }
 
   MouseCursor _buildMouseCursor(BuildContext context, Set<WidgetState> states) {
-    return _mouseCursor!(context, states, _delegate.mouseCursor(context, states));
+    return _mouseCursor!(
+        context, states, _delegate.mouseCursor(context, states));
   }
 
   @override
@@ -2027,7 +3435,8 @@ class _CopyWithButtonStyle implements AbstractButtonStyle {
     return _buildMargin;
   }
 
-  EdgeInsetsGeometry _buildMargin(BuildContext context, Set<WidgetState> states) {
+  EdgeInsetsGeometry _buildMargin(
+      BuildContext context, Set<WidgetState> states) {
     return _margin!(context, states, _delegate.margin(context, states));
   }
 
@@ -2047,7 +3456,8 @@ class _CopyWithButtonStyle implements AbstractButtonStyle {
 
   @override
   int get hashCode {
-    return Object.hash(_delegate, _decoration, _mouseCursor, _padding, _textStyle, _iconTheme, _margin);
+    return Object.hash(_delegate, _decoration, _mouseCursor, _padding,
+        _textStyle, _iconTheme, _margin);
   }
 
   @override
@@ -2061,99 +3471,150 @@ EdgeInsets _buttonZeroMargin(BuildContext context, Set<WidgetState> states) {
 }
 
 MouseCursor _buttonMouseCursor(BuildContext context, Set<WidgetState> states) {
-  return states.contains(WidgetState.disabled) ? SystemMouseCursors.basic : SystemMouseCursors.click;
+  return states.contains(WidgetState.disabled)
+      ? SystemMouseCursors.basic
+      : SystemMouseCursors.click;
 }
 
 EdgeInsets _buttonPadding(BuildContext context, Set<WidgetState> states) {
-  final theme = VNLTheme.of(context);
-  return EdgeInsets.symmetric(horizontal: theme.scaling * 16, vertical: theme.scaling * 8);
+  final theme = Theme.of(context);
+  final baseContentPadding = theme.density.baseContentPadding * theme.scaling;
+  final baseGap = theme.density.baseGap * theme.scaling;
+  return EdgeInsets.symmetric(
+    horizontal: baseContentPadding,
+    vertical: baseGap,
+  );
 }
 
 // CARD
 TextStyle _buttonCardTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return themeData.typography.small.copyWith(color: themeData.colorScheme.cardForeground);
+  var themeData = Theme.of(context);
+  return themeData.typography.small.copyWith(
+    color: themeData.colorScheme.cardForeground,
+  );
 }
 
-IconThemeData _buttonCardIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return IconThemeData(color: themeData.colorScheme.cardForeground);
+IconThemeData _buttonCardIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return IconThemeData(
+    color: themeData.colorScheme.cardForeground,
+  );
 }
 
-Decoration _buttonCardDecoration(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+Decoration _buttonCardDecoration(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.muted,
       borderRadius: BorderRadius.circular(themeData.radiusXl),
-      border: Border.all(color: themeData.colorScheme.border, width: 1),
+      border: Border.all(
+        color: themeData.colorScheme.border,
+        width: 1,
+      ),
     );
   }
-  if (states.contains(WidgetState.hovered) || states.contains(WidgetState.selected)) {
+  if (states.contains(WidgetState.hovered) ||
+      states.contains(WidgetState.selected)) {
     return BoxDecoration(
       color: themeData.colorScheme.border,
       borderRadius: BorderRadius.circular(themeData.radiusXl),
-      border: Border.all(color: themeData.colorScheme.border, width: 1),
+      border: Border.all(
+        color: themeData.colorScheme.border,
+        width: 1,
+      ),
     );
   }
   return BoxDecoration(
     color: themeData.colorScheme.card,
     borderRadius: BorderRadius.circular(themeData.radiusXl),
-    border: Border.all(color: themeData.colorScheme.border, width: 1),
+    border: Border.all(
+      color: themeData.colorScheme.border,
+      width: 1,
+    ),
   );
 }
 
 EdgeInsets _buttonCardPadding(BuildContext context, Set<WidgetState> states) {
-  final theme = VNLTheme.of(context);
-  return const EdgeInsets.all(16) * theme.scaling;
+  final theme = Theme.of(context);
+  return EdgeInsets.all(theme.density.baseContentPadding * theme.scaling);
 }
 
 // MENUBUTTON
-Decoration _buttonMenuDecoration(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+Decoration _buttonMenuDecoration(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return const BoxDecoration();
   }
   if (states.contains(WidgetState.focused) ||
       states.contains(WidgetState.hovered) ||
       states.contains(WidgetState.selected)) {
-    return BoxDecoration(color: themeData.colorScheme.accent, borderRadius: BorderRadius.circular(themeData.radiusSm));
+    return BoxDecoration(
+      color: themeData.colorScheme.accent,
+      borderRadius: BorderRadius.circular(themeData.radiusSm),
+    );
   }
   return const BoxDecoration();
 }
 
 TextStyle _buttonMenuTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+  var themeData = Theme.of(context);
   if (states.contains(WidgetState.disabled)) {
-    return themeData.typography.small.copyWith(color: themeData.colorScheme.accentForeground.scaleAlpha(0.5));
+    return themeData.typography.small.copyWith(
+      color: themeData.colorScheme.accentForeground.scaleAlpha(0.5),
+    );
   }
-  return themeData.typography.small.copyWith(color: themeData.colorScheme.accentForeground);
+  return themeData.typography.small.copyWith(
+    color: themeData.colorScheme.accentForeground,
+  );
 }
 
 EdgeInsets _buttonMenuPadding(BuildContext context, Set<WidgetState> states) {
-  final theme = VNLTheme.of(context);
+  final theme = Theme.of(context);
   final scaling = theme.scaling;
-  final menuGroupData = Data.maybeOf<MenuGroupData>(context);
+  final baseContentPadding = theme.density.baseContentPadding * scaling;
+  final baseGap = theme.density.baseGap * scaling;
+  final menuGroupData = Data.maybeOf<VNLMenuGroupData>(context);
   if (menuGroupData != null && menuGroupData.direction == Axis.horizontal) {
-    return const EdgeInsets.symmetric(horizontal: 18, vertical: 6) * scaling;
+    return EdgeInsets.symmetric(
+      horizontal: baseContentPadding * 1.125,
+      vertical: baseGap * 0.75,
+    );
   }
-  return const EdgeInsets.only(left: 8, top: 6, right: 6, bottom: 6) * scaling;
+  return EdgeInsets.only(
+    left: baseGap,
+    top: baseGap * 0.75,
+    right: baseGap * 0.75,
+    bottom: baseGap * 0.75,
+  );
 }
 
-EdgeInsets _buttonMenubarPadding(BuildContext context, Set<WidgetState> states) {
-  final theme = VNLTheme.of(context);
+EdgeInsets _buttonMenubarPadding(
+    BuildContext context, Set<WidgetState> states) {
+  final theme = Theme.of(context);
   final scaling = theme.scaling;
-  return const EdgeInsets.symmetric(horizontal: 12, vertical: 4) * scaling;
+  final baseContentPadding = theme.density.baseContentPadding * scaling;
+  final baseGap = theme.density.baseGap * scaling;
+  return EdgeInsets.symmetric(
+    horizontal: baseContentPadding * 0.75,
+    vertical: baseGap * 0.5,
+  );
 }
 
-IconThemeData _buttonMenuIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return IconThemeData(color: themeData.colorScheme.accentForeground);
+IconThemeData _buttonMenuIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return IconThemeData(
+    color: themeData.colorScheme.accentForeground,
+  );
 }
 
 // PRIMARY
-Decoration _buttonPrimaryDecoration(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+Decoration _buttonPrimaryDecoration(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.mutedForeground,
@@ -2166,24 +3627,32 @@ Decoration _buttonPrimaryDecoration(BuildContext context, Set<WidgetState> state
       borderRadius: BorderRadius.circular(themeData.radiusMd),
     );
   }
-  return BoxDecoration(color: themeData.colorScheme.primary, borderRadius: BorderRadius.circular(themeData.radiusMd));
+  return BoxDecoration(
+    color: themeData.colorScheme.primary,
+    borderRadius: BorderRadius.circular(themeData.radiusMd),
+  );
 }
 
-TextStyle _buttonPrimaryTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return themeData.typography.small
-      .merge(themeData.typography.medium)
-      .copyWith(color: themeData.colorScheme.primaryForeground);
+TextStyle _buttonPrimaryTextStyle(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
+        color: themeData.colorScheme.primaryForeground,
+      );
 }
 
-IconThemeData _buttonPrimaryIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return IconThemeData(color: themeData.colorScheme.primaryForeground);
+IconThemeData _buttonPrimaryIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return IconThemeData(
+    color: themeData.colorScheme.primaryForeground,
+  );
 }
 
 // SECONDARY
-Decoration _buttonSecondaryDecoration(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+Decoration _buttonSecondaryDecoration(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.primaryForeground,
@@ -2196,78 +3665,93 @@ Decoration _buttonSecondaryDecoration(BuildContext context, Set<WidgetState> sta
       borderRadius: BorderRadius.circular(themeData.radiusMd),
     );
   }
-  return BoxDecoration(color: themeData.colorScheme.secondary, borderRadius: BorderRadius.circular(themeData.radiusMd));
-}
-
-TextStyle _buttonSecondaryTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return themeData.typography.small
-      .merge(themeData.typography.medium)
-      .copyWith(
-        color:
-            states.contains(WidgetState.disabled)
-                ? themeData.colorScheme.mutedForeground
-                : themeData.colorScheme.secondaryForeground,
-      );
-}
-
-IconThemeData _buttonSecondaryIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return IconThemeData(
-    color:
-        states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.secondaryForeground,
+  return BoxDecoration(
+    color: themeData.colorScheme.secondary,
+    borderRadius: BorderRadius.circular(themeData.radiusMd),
   );
 }
 
-Decoration _buttonOutlineDecoration(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+TextStyle _buttonSecondaryTextStyle(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
+        color: states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : themeData.colorScheme.secondaryForeground,
+      );
+}
+
+IconThemeData _buttonSecondaryIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return IconThemeData(
+    color: states.contains(WidgetState.disabled)
+        ? themeData.colorScheme.mutedForeground
+        : themeData.colorScheme.secondaryForeground,
+  );
+}
+
+Decoration _buttonOutlineDecoration(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
-      color: themeData.colorScheme.border.withValues(alpha: 0),
-      border: Border.all(color: themeData.colorScheme.border, width: 1),
+      color: themeData.colorScheme.border.withValues(
+        alpha: 0,
+      ),
+      border: Border.all(
+        color: themeData.colorScheme.border,
+        width: 1,
+        strokeAlign: BorderSide.strokeAlignCenter,
+      ),
       borderRadius: BorderRadius.circular(themeData.radiusMd),
     );
   }
   if (states.contains(WidgetState.hovered)) {
     return BoxDecoration(
-      color: themeData.colorScheme.muted.scaleAlpha(0.8),
-      border: Border.all(color: themeData.colorScheme.muted.scaleAlpha(0.8), width: 1),
+      color: themeData.colorScheme.input.scaleAlpha(0.5),
+      border: Border.all(
+        color: themeData.colorScheme.input,
+        width: 1,
+        strokeAlign: BorderSide.strokeAlignCenter,
+      ),
       borderRadius: BorderRadius.circular(themeData.radiusMd),
     );
   }
   return BoxDecoration(
-    color: themeData.colorScheme.muted.withValues(alpha: 0),
-    border: Border.all(color: themeData.colorScheme.muted, width: 1),
+    color: themeData.colorScheme.input.scaleAlpha(0.3),
+    border: Border.all(
+      color: themeData.colorScheme.border,
+      strokeAlign: BorderSide.strokeAlignCenter,
+      width: 1,
+    ),
     borderRadius: BorderRadius.circular(themeData.radiusMd),
   );
 }
 
-TextStyle _buttonOutlineTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return themeData.typography.small
-      .merge(themeData.typography.medium)
-      .copyWith(
-        color:
-            states.contains(WidgetState.disabled)
-                ? themeData.colorScheme.mutedForeground
-                : themeData.colorScheme.foreground,
+TextStyle _buttonOutlineTextStyle(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
+        color: states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : themeData.colorScheme.foreground,
       );
 }
 
-IconThemeData _buttonOutlineIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+IconThemeData _buttonOutlineIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   return IconThemeData(
-    color:
-        states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.foreground,
+    color: states.contains(WidgetState.disabled)
+        ? themeData.colorScheme.mutedForeground
+        : themeData.colorScheme.foreground,
   );
 }
 
-Decoration _buttonGhostDecoration(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+Decoration _buttonGhostDecoration(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.muted.withValues(alpha: 0),
@@ -2287,93 +3771,99 @@ Decoration _buttonGhostDecoration(BuildContext context, Set<WidgetState> states)
 }
 
 TextStyle _buttonGhostTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return themeData.typography.small
-      .merge(themeData.typography.medium)
-      .copyWith(
-        color:
-            states.contains(WidgetState.disabled)
-                ? themeData.colorScheme.mutedForeground
-                : themeData.colorScheme.foreground,
+  var themeData = Theme.of(context);
+  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
+        color: states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : themeData.colorScheme.foreground,
       );
 }
 
-IconThemeData _buttonGhostIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+IconThemeData _buttonGhostIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   return IconThemeData(
-    color:
-        states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.foreground,
+    color: states.contains(WidgetState.disabled)
+        ? themeData.colorScheme.mutedForeground
+        : themeData.colorScheme.foreground,
   );
 }
 
 TextStyle _buttonMutedTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return themeData.typography.small
-      .merge(themeData.typography.medium)
-      .copyWith(color: themeData.colorScheme.mutedForeground);
+  var themeData = Theme.of(context);
+  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
+        color: themeData.colorScheme.mutedForeground,
+      );
 }
 
-IconThemeData _buttonMutedIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return IconThemeData(color: themeData.colorScheme.mutedForeground);
+IconThemeData _buttonMutedIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return IconThemeData(
+    color: themeData.colorScheme.mutedForeground,
+  );
 }
 
-Decoration _buttonLinkDecoration(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return BoxDecoration(borderRadius: BorderRadius.circular(themeData.radiusMd));
+Decoration _buttonLinkDecoration(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return BoxDecoration(
+    borderRadius: BorderRadius.circular(themeData.radiusMd),
+  );
 }
 
 TextStyle _buttonLinkTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return themeData.typography.small
-      .merge(themeData.typography.medium)
-      .copyWith(
-        color:
-            states.contains(WidgetState.disabled)
-                ? themeData.colorScheme.mutedForeground
-                : themeData.colorScheme.foreground,
-        decoration: states.contains(WidgetState.hovered) ? TextDecoration.underline : TextDecoration.none,
+  var themeData = Theme.of(context);
+  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
+        color: states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : themeData.colorScheme.foreground,
+        decoration: states.contains(WidgetState.hovered)
+            ? TextDecoration.underline
+            : TextDecoration.none,
       );
 }
 
-IconThemeData _buttonLinkIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+IconThemeData _buttonLinkIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   return IconThemeData(
-    color:
-        states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.foreground,
+    color: states.contains(WidgetState.disabled)
+        ? themeData.colorScheme.mutedForeground
+        : themeData.colorScheme.foreground,
   );
 }
 
-Decoration _buttonTextDecoration(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return BoxDecoration(borderRadius: BorderRadius.circular(themeData.radiusMd));
+Decoration _buttonTextDecoration(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return BoxDecoration(
+    borderRadius: BorderRadius.circular(themeData.radiusMd),
+  );
 }
 
 TextStyle _buttonTextTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return themeData.typography.small
-      .merge(themeData.typography.medium)
-      .copyWith(
-        color:
-            states.contains(WidgetState.hovered)
-                ? themeData.colorScheme.primary
-                : themeData.colorScheme.mutedForeground,
+  var themeData = Theme.of(context);
+  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
+        color: states.contains(WidgetState.hovered)
+            ? themeData.colorScheme.primary
+            : themeData.colorScheme.mutedForeground,
       );
 }
 
-IconThemeData _buttonTextIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+IconThemeData _buttonTextIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   return IconThemeData(
-    color: states.contains(WidgetState.hovered) ? themeData.colorScheme.primary : themeData.colorScheme.mutedForeground,
+    color: states.contains(WidgetState.hovered)
+        ? themeData.colorScheme.primary
+        : themeData.colorScheme.mutedForeground,
   );
 }
 
-Decoration _buttonDestructiveDecoration(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+Decoration _buttonDestructiveDecoration(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.primaryForeground,
@@ -2387,75 +3877,153 @@ Decoration _buttonDestructiveDecoration(BuildContext context, Set<WidgetState> s
     );
   }
   return BoxDecoration(
-    color: themeData.colorScheme.destructive,
+    color: themeData.colorScheme.destructive.scaleAlpha(0.5),
     borderRadius: BorderRadius.circular(themeData.radiusMd),
   );
 }
 
-TextStyle _buttonDestructiveTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
-  return themeData.typography.small
-      .merge(themeData.typography.medium)
-      .copyWith(
-        color:
-            states.contains(WidgetState.disabled)
-                ? themeData.colorScheme.mutedForeground
-                : themeData.colorScheme.destructiveForeground,
+TextStyle _buttonDestructiveTextStyle(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
+  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
+        color: states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : VNLColors
+                .white, // yeah ik, its straight up white regardless light or dark mode
       );
 }
 
-IconThemeData _buttonDestructiveIconTheme(BuildContext context, Set<WidgetState> states) {
-  var themeData = VNLTheme.of(context);
+IconThemeData _buttonDestructiveIconTheme(
+    BuildContext context, Set<WidgetState> states) {
+  var themeData = Theme.of(context);
   return IconThemeData(
-    color:
-        states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.destructiveForeground,
+    color: states.contains(WidgetState.disabled)
+        ? themeData.colorScheme.mutedForeground
+        : VNLColors.white,
   );
 }
 
 // STATIC BUTTON
-TextStyle _buttonStaticTextStyle(BuildContext context, Set<WidgetState> states) {
-  final theme = VNLTheme.of(context);
-  return theme.typography.small.merge(theme.typography.medium).copyWith(color: theme.colorScheme.foreground);
+TextStyle _buttonStaticTextStyle(
+    BuildContext context, Set<WidgetState> states) {
+  final theme = Theme.of(context);
+  return theme.typography.small.merge(theme.typography.medium).copyWith(
+        color: theme.colorScheme.foreground,
+      );
 }
 
-IconThemeData _buttonStaticIconTheme(BuildContext context, Set<WidgetState> states) {
+IconThemeData _buttonStaticIconTheme(
+    BuildContext context, Set<WidgetState> states) {
   return const IconThemeData();
 }
 
+/// Convenience widget for creating a primary button.
+///
+/// [PrimaryButton] is a simplified wrapper around [VNLButton] that automatically
+/// applies the primary button style. It provides a cleaner API for the common
+/// case of creating primary buttons without manually specifying the style.
+///
+/// This widget exposes all the same properties as [VNLButton] but defaults to
+/// [VNLButtonStyle.primary] for consistent styling.
+///
+/// Example:
+/// ```dart
+/// PrimaryButton(
+///   onPressed: () => submitForm(),
+///   leading: Icon(Icons.check),
+///   child: Text('Submit'),
+/// )
+/// ```
 // Backward compatibility
 class PrimaryButton extends StatelessWidget {
+  /// The widget displayed as the button's main content.
   final Widget child;
+
+  /// Called when the button is pressed. If `null`, the button is disabled.
   final VoidCallback? onPressed;
+
+  /// Whether the button is enabled. Overrides the `onPressed` check if provided.
   final bool? enabled;
+
+  /// Widget displayed before the [child].
   final Widget? leading;
+
+  /// Widget displayed after the [child].
   final Widget? trailing;
+
+  /// Alignment of the button's content.
   final AlignmentGeometry? alignment;
-  final ButtonSize size;
+
+  /// Size variant of the button (defaults to [VNLButtonSize.normal]).
+  final VNLButtonSize size;
+
+  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
   final ButtonDensity density;
+
+  /// Shape of the button (defaults to [ButtonShape.rectangle]).
   final ButtonShape shape;
+
+  /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
+
+  /// Whether to disable style transition animations (defaults to `false`).
   final bool disableTransition;
+
+  /// Called when hover state changes.
   final ValueChanged<bool>? onHover;
+
+  /// Called when focus state changes.
   final ValueChanged<bool>? onFocus;
+
+  /// Whether to enable haptic/audio feedback.
   final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
   final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
   final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
   final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
   final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
   final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
   final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
   final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
   final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
   final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
   final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
   final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
   final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
   final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
   final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
+  /// Creates a primary button with the specified properties.
   const PrimaryButton({
     super.key,
     required this.child,
@@ -2464,7 +4032,7 @@ class PrimaryButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
     this.focusNode,
@@ -2497,7 +4065,7 @@ class PrimaryButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style: ButtonStyle.primary(size: size, density: density, shape: shape),
+      style: VNLButtonStyle.primary(size: size, density: density, shape: shape),
       focusNode: focusNode,
       disableTransition: disableTransition,
       onHover: onHover,
@@ -2523,39 +4091,100 @@ class PrimaryButton extends StatelessWidget {
   }
 }
 
-class SecondaryButton extends StatelessWidget {
+/// Convenience widget for creating a secondary button.
+///
+/// A simplified wrapper around [VNLButton.secondary] with the same properties
+/// as [PrimaryButton] but using secondary button styling for supporting actions.
+class VNLSecondaryButton extends StatelessWidget {
+  /// The widget to display as the button's content.
   final Widget child;
+
+  /// Called when the button is pressed. If `null`, the button is disabled.
   final VoidCallback? onPressed;
+
+  /// Whether the button is enabled. Overrides the `onPressed` check if provided.
   final bool? enabled;
+
+  /// Widget displayed before the [child].
   final Widget? leading;
+
+  /// Widget displayed after the [child].
   final Widget? trailing;
+
+  /// Alignment of the button's content.
   final AlignmentGeometry? alignment;
-  final ButtonSize size;
+
+  /// Size variant of the button (defaults to [VNLButtonSize.normal]).
+  final VNLButtonSize size;
+
+  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
   final ButtonDensity density;
+
+  /// Shape of the button (defaults to [ButtonShape.rectangle]).
   final ButtonShape shape;
+
+  /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
+
+  /// Whether to disable style transition animations (defaults to `false`).
   final bool disableTransition;
+
+  /// Called when hover state changes.
   final ValueChanged<bool>? onHover;
+
+  /// Called when focus state changes.
   final ValueChanged<bool>? onFocus;
 
+  /// Whether to enable haptic/audio feedback.
   final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
   final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
   final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
   final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
   final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
   final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
   final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
   final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
   final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
   final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
   final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
   final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
   final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
   final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
   final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const SecondaryButton({
+  /// Creates a secondary button with the specified properties.
+  const VNLSecondaryButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -2563,7 +4192,7 @@ class SecondaryButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
     this.focusNode,
@@ -2596,7 +4225,7 @@ class SecondaryButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style: ButtonStyle.secondary(size: size, density: density, shape: shape),
+      style: VNLButtonStyle.secondary(size: size, density: density, shape: shape),
       focusNode: focusNode,
       disableTransition: disableTransition,
       onHover: onHover,
@@ -2622,39 +4251,100 @@ class SecondaryButton extends StatelessWidget {
   }
 }
 
-class OutlineButton extends StatelessWidget {
+/// Convenience widget for creating an outline button.
+///
+/// A simplified wrapper around [VNLButton.outline] with the same properties
+/// as [PrimaryButton] but using outline button styling with a visible border.
+class VNLOutlineButton extends StatelessWidget {
+  /// The widget to display as the button's content.
   final Widget child;
+
+  /// Called when the button is pressed. If `null`, the button is disabled.
   final VoidCallback? onPressed;
+
+  /// Whether the button is enabled. Overrides the `onPressed` check if provided.
   final bool? enabled;
+
+  /// Widget displayed before the [child].
   final Widget? leading;
+
+  /// Widget displayed after the [child].
   final Widget? trailing;
+
+  /// Alignment of the button's content.
   final AlignmentGeometry? alignment;
-  final ButtonSize size;
+
+  /// Size variant of the button (defaults to [VNLButtonSize.normal]).
+  final VNLButtonSize size;
+
+  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
   final ButtonDensity density;
+
+  /// Shape of the button (defaults to [ButtonShape.rectangle]).
   final ButtonShape shape;
+
+  /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
+
+  /// Whether to disable style transition animations (defaults to `false`).
   final bool disableTransition;
+
+  /// Called when hover state changes.
   final ValueChanged<bool>? onHover;
+
+  /// Called when focus state changes.
   final ValueChanged<bool>? onFocus;
 
+  /// Whether to enable haptic/audio feedback.
   final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
   final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
   final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
   final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
   final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
   final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
   final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
   final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
   final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
   final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
   final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
   final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
   final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
   final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
   final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const OutlineButton({
+  /// Creates an outline button with the specified properties.
+  const VNLOutlineButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -2662,7 +4352,7 @@ class OutlineButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
     this.focusNode,
@@ -2695,7 +4385,7 @@ class OutlineButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style: ButtonStyle.outline(size: size, density: density, shape: shape),
+      style: VNLButtonStyle.outline(size: size, density: density, shape: shape),
       focusNode: focusNode,
       disableTransition: disableTransition,
       onHover: onHover,
@@ -2721,39 +4411,100 @@ class OutlineButton extends StatelessWidget {
   }
 }
 
-class GhostButton extends StatelessWidget {
+/// Convenience widget for creating a ghost button.
+///
+/// A simplified wrapper around [VNLButton.ghost] with the same properties
+/// as [PrimaryButton] but using ghost button styling with minimal visual presence.
+class VNLGhostButton extends StatelessWidget {
+  /// The widget to display as the button's content.
   final Widget child;
+
+  /// Called when the button is pressed. If `null`, the button is disabled.
   final VoidCallback? onPressed;
+
+  /// Whether the button is enabled. Overrides the `onPressed` check if provided.
   final bool? enabled;
+
+  /// Widget displayed before the [child].
   final Widget? leading;
+
+  /// Widget displayed after the [child].
   final Widget? trailing;
+
+  /// Alignment of the button's content.
   final AlignmentGeometry? alignment;
-  final ButtonSize size;
+
+  /// Size variant of the button (defaults to [VNLButtonSize.normal]).
+  final VNLButtonSize size;
+
+  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
   final ButtonDensity density;
+
+  /// Shape of the button (defaults to [ButtonShape.rectangle]).
   final ButtonShape shape;
+
+  /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
+
+  /// Whether to disable style transition animations (defaults to `false`).
   final bool disableTransition;
+
+  /// Called when hover state changes.
   final ValueChanged<bool>? onHover;
+
+  /// Called when focus state changes.
   final ValueChanged<bool>? onFocus;
 
+  /// Whether to enable haptic/audio feedback.
   final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
   final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
   final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
   final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
   final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
   final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
   final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
   final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
   final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
   final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
   final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
   final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
   final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
   final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
   final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const GhostButton({
+  /// Creates a ghost button with the specified properties.
+  const VNLGhostButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -2761,7 +4512,7 @@ class GhostButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
     this.focusNode,
@@ -2794,7 +4545,7 @@ class GhostButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style: ButtonStyle.ghost(size: size, density: density, shape: shape),
+      style: VNLButtonStyle.ghost(size: size, density: density, shape: shape),
       focusNode: focusNode,
       disableTransition: disableTransition,
       onHover: onHover,
@@ -2820,39 +4571,100 @@ class GhostButton extends StatelessWidget {
   }
 }
 
-class LinkButton extends StatelessWidget {
+/// Convenience widget for creating a link button.
+///
+/// A simplified wrapper around [VNLButton.link] with the same properties
+/// as [PrimaryButton] but using link button styling that resembles a hyperlink.
+class VNLLinkButton extends StatelessWidget {
+  /// The widget to display as the button's content.
   final Widget child;
+
+  /// Called when the button is pressed. If `null`, the button is disabled.
   final VoidCallback? onPressed;
+
+  /// Whether the button is enabled. Overrides the `onPressed` check if provided.
   final bool? enabled;
+
+  /// Widget displayed before the [child].
   final Widget? leading;
+
+  /// Widget displayed after the [child].
   final Widget? trailing;
+
+  /// Alignment of the button's content.
   final AlignmentGeometry? alignment;
-  final ButtonSize size;
+
+  /// Size variant of the button (defaults to [VNLButtonSize.normal]).
+  final VNLButtonSize size;
+
+  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
   final ButtonDensity density;
+
+  /// Shape of the button (defaults to [ButtonShape.rectangle]).
   final ButtonShape shape;
+
+  /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
+
+  /// Whether to disable style transition animations (defaults to `false`).
   final bool disableTransition;
+
+  /// Called when hover state changes.
   final ValueChanged<bool>? onHover;
+
+  /// Called when focus state changes.
   final ValueChanged<bool>? onFocus;
 
+  /// Whether to enable haptic/audio feedback.
   final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
   final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
   final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
   final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
   final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
   final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
   final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
   final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
   final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
   final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
   final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
   final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
   final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
   final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
   final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const LinkButton({
+  /// Creates a link button with the specified properties.
+  const VNLLinkButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -2860,7 +4672,7 @@ class LinkButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
     this.focusNode,
@@ -2893,7 +4705,7 @@ class LinkButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style: ButtonStyle.link(size: size, density: density, shape: shape),
+      style: VNLButtonStyle.link(size: size, density: density, shape: shape),
       focusNode: focusNode,
       disableTransition: disableTransition,
       onHover: onHover,
@@ -2919,38 +4731,100 @@ class LinkButton extends StatelessWidget {
   }
 }
 
-class TextButton extends StatelessWidget {
+/// Convenience widget for creating a text button.
+///
+/// A simplified wrapper around [VNLButton.text] with the same properties
+/// as [PrimaryButton] but using text button styling with minimal styling.
+class VNLTextButton extends StatelessWidget {
+  /// The widget to display as the button's content.
   final Widget child;
+
+  /// Called when the button is pressed. If `null`, the button is disabled.
   final VoidCallback? onPressed;
+
+  /// Whether the button is enabled. Overrides the `onPressed` check if provided.
   final bool? enabled;
+
+  /// Widget displayed before the [child].
   final Widget? leading;
+
+  /// Widget displayed after the [child].
   final Widget? trailing;
+
+  /// Alignment of the button's content.
   final AlignmentGeometry? alignment;
-  final ButtonSize size;
+
+  /// Size variant of the button (defaults to [VNLButtonSize.normal]).
+  final VNLButtonSize size;
+
+  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
   final ButtonDensity density;
+
+  /// Shape of the button (defaults to [ButtonShape.rectangle]).
   final ButtonShape shape;
+
+  /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
+
+  /// Whether to disable style transition animations (defaults to `false`).
   final bool disableTransition;
+
+  /// Called when hover state changes.
   final ValueChanged<bool>? onHover;
+
+  /// Called when focus state changes.
   final ValueChanged<bool>? onFocus;
+
+  /// Whether to enable haptic/audio feedback.
   final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
   final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
   final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
   final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
   final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
   final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
   final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
   final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
   final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
   final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
   final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
   final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
   final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
   final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
   final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const TextButton({
+  /// Creates a text button with the specified properties.
+  const VNLTextButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -2958,7 +4832,7 @@ class TextButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
     this.focusNode,
@@ -2991,7 +4865,7 @@ class TextButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style: ButtonStyle.text(size: size, density: density, shape: shape),
+      style: VNLButtonStyle.text(size: size, density: density, shape: shape),
       focusNode: focusNode,
       disableTransition: disableTransition,
       child: child,
@@ -2999,39 +4873,100 @@ class TextButton extends StatelessWidget {
   }
 }
 
-class DestructiveButton extends StatelessWidget {
+/// Convenience widget for creating a destructive button.
+///
+/// A simplified wrapper around [VNLButton.destructive] with the same properties
+/// as [PrimaryButton] but using destructive button styling for dangerous actions.
+class VNLDestructiveButton extends StatelessWidget {
+  /// The widget to display as the button's content.
   final Widget child;
+
+  /// Called when the button is pressed. If `null`, the button is disabled.
   final VoidCallback? onPressed;
+
+  /// Whether the button is enabled. Overrides the `onPressed` check if provided.
   final bool? enabled;
+
+  /// Widget displayed before the [child].
   final Widget? leading;
+
+  /// Widget displayed after the [child].
   final Widget? trailing;
+
+  /// Alignment of the button's content.
   final AlignmentGeometry? alignment;
-  final ButtonSize size;
+
+  /// Size variant of the button (defaults to [VNLButtonSize.normal]).
+  final VNLButtonSize size;
+
+  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
   final ButtonDensity density;
+
+  /// Shape of the button (defaults to [ButtonShape.rectangle]).
   final ButtonShape shape;
+
+  /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
+
+  /// Whether to disable style transition animations (defaults to `false`).
   final bool disableTransition;
+
+  /// Called when hover state changes.
   final ValueChanged<bool>? onHover;
+
+  /// Called when focus state changes.
   final ValueChanged<bool>? onFocus;
 
+  /// Whether to enable haptic/audio feedback.
   final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
   final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
   final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
   final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
   final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
   final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
   final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
   final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
   final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
   final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
   final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
   final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
   final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
   final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
   final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const DestructiveButton({
+  /// Creates a destructive button with the specified properties.
+  const VNLDestructiveButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -3039,7 +4974,7 @@ class DestructiveButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.normal,
     this.shape = ButtonShape.rectangle,
     this.focusNode,
@@ -3072,205 +5007,8 @@ class DestructiveButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style: ButtonStyle.destructive(size: size, density: density, shape: shape),
-      focusNode: focusNode,
-      disableTransition: disableTransition,
-      onHover: onHover,
-      onFocus: onFocus,
-      enableFeedback: enableFeedback,
-      onTapDown: onTapDown,
-      onTapUp: onTapUp,
-      onTapCancel: onTapCancel,
-      onSecondaryTapDown: onSecondaryTapDown,
-      onSecondaryTapUp: onSecondaryTapUp,
-      onSecondaryTapCancel: onSecondaryTapCancel,
-      onTertiaryTapDown: onTertiaryTapDown,
-      onTertiaryTapUp: onTertiaryTapUp,
-      onTertiaryTapCancel: onTertiaryTapCancel,
-      onLongPressStart: onLongPressStart,
-      onLongPressUp: onLongPressUp,
-      onLongPressMoveUpdate: onLongPressMoveUpdate,
-      onLongPressEnd: onLongPressEnd,
-      onSecondaryLongPress: onSecondaryLongPress,
-      onTertiaryLongPress: onTertiaryLongPress,
-      child: child,
-    );
-  }
-}
-
-class TabButton extends StatelessWidget {
-  final Widget child;
-  final VoidCallback? onPressed;
-  final bool? enabled;
-  final Widget? leading;
-  final Widget? trailing;
-  final AlignmentGeometry? alignment;
-  final ButtonSize size;
-  final ButtonDensity density;
-  final ButtonShape shape;
-  final FocusNode? focusNode;
-  final bool disableTransition;
-  final ValueChanged<bool>? onHover;
-  final ValueChanged<bool>? onFocus;
-
-  final bool? enableFeedback;
-  final GestureTapDownCallback? onTapDown;
-  final GestureTapUpCallback? onTapUp;
-  final GestureTapCancelCallback? onTapCancel;
-  final GestureTapDownCallback? onSecondaryTapDown;
-  final GestureTapUpCallback? onSecondaryTapUp;
-  final GestureTapCancelCallback? onSecondaryTapCancel;
-  final GestureTapDownCallback? onTertiaryTapDown;
-  final GestureTapUpCallback? onTertiaryTapUp;
-  final GestureTapCancelCallback? onTertiaryTapCancel;
-  final GestureLongPressStartCallback? onLongPressStart;
-  final GestureLongPressUpCallback? onLongPressUp;
-  final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
-  final GestureLongPressEndCallback? onLongPressEnd;
-  final GestureLongPressUpCallback? onSecondaryLongPress;
-  final GestureLongPressUpCallback? onTertiaryLongPress;
-
-  const TabButton({
-    super.key,
-    required this.child,
-    this.onPressed,
-    this.enabled,
-    this.leading,
-    this.trailing,
-    this.alignment,
-    this.size = ButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
-    this.focusNode,
-    this.disableTransition = false,
-    this.onHover,
-    this.onFocus,
-    this.enableFeedback,
-    this.onTapDown,
-    this.onTapUp,
-    this.onTapCancel,
-    this.onSecondaryTapDown,
-    this.onSecondaryTapUp,
-    this.onSecondaryTapCancel,
-    this.onTertiaryTapDown,
-    this.onTertiaryTapUp,
-    this.onTertiaryTapCancel,
-    this.onLongPressStart,
-    this.onLongPressUp,
-    this.onLongPressMoveUpdate,
-    this.onLongPressEnd,
-    this.onSecondaryLongPress,
-    this.onTertiaryLongPress,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return VNLButton(
-      onPressed: onPressed,
-      enabled: enabled,
-      leading: leading,
-      trailing: trailing,
-      alignment: alignment,
-      style: ButtonStyle.fixed(size: size, density: density, shape: shape),
-      focusNode: focusNode,
-      disableTransition: disableTransition,
-      onHover: onHover,
-      onFocus: onFocus,
-      enableFeedback: enableFeedback,
-      onTapDown: onTapDown,
-      onTapUp: onTapUp,
-      onTapCancel: onTapCancel,
-      onSecondaryTapDown: onSecondaryTapDown,
-      onSecondaryTapUp: onSecondaryTapUp,
-      onSecondaryTapCancel: onSecondaryTapCancel,
-      onTertiaryTapDown: onTertiaryTapDown,
-      onTertiaryTapUp: onTertiaryTapUp,
-      onTertiaryTapCancel: onTertiaryTapCancel,
-      onLongPressStart: onLongPressStart,
-      onLongPressUp: onLongPressUp,
-      onLongPressMoveUpdate: onLongPressMoveUpdate,
-      onLongPressEnd: onLongPressEnd,
-      onSecondaryLongPress: onSecondaryLongPress,
-      onTertiaryLongPress: onTertiaryLongPress,
-      child: child,
-    );
-  }
-}
-
-class CardButton extends StatelessWidget {
-  final Widget child;
-  final VoidCallback? onPressed;
-  final bool? enabled;
-  final Widget? leading;
-  final Widget? trailing;
-  final AlignmentGeometry? alignment;
-  final ButtonSize size;
-  final ButtonDensity density;
-  final ButtonShape shape;
-  final FocusNode? focusNode;
-  final bool disableTransition;
-  final ValueChanged<bool>? onHover;
-  final ValueChanged<bool>? onFocus;
-
-  final bool? enableFeedback;
-  final GestureTapDownCallback? onTapDown;
-  final GestureTapUpCallback? onTapUp;
-  final GestureTapCancelCallback? onTapCancel;
-  final GestureTapDownCallback? onSecondaryTapDown;
-  final GestureTapUpCallback? onSecondaryTapUp;
-  final GestureTapCancelCallback? onSecondaryTapCancel;
-  final GestureTapDownCallback? onTertiaryTapDown;
-  final GestureTapUpCallback? onTertiaryTapUp;
-  final GestureTapCancelCallback? onTertiaryTapCancel;
-  final GestureLongPressStartCallback? onLongPressStart;
-  final GestureLongPressUpCallback? onLongPressUp;
-  final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
-  final GestureLongPressEndCallback? onLongPressEnd;
-  final GestureLongPressUpCallback? onSecondaryLongPress;
-  final GestureLongPressUpCallback? onTertiaryLongPress;
-
-  const CardButton({
-    super.key,
-    required this.child,
-    this.onPressed,
-    this.enabled,
-    this.leading,
-    this.trailing,
-    this.alignment,
-    this.size = ButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
-    this.focusNode,
-    this.disableTransition = false,
-    this.onHover,
-    this.onFocus,
-    this.enableFeedback,
-    this.onTapDown,
-    this.onTapUp,
-    this.onTapCancel,
-    this.onSecondaryTapDown,
-    this.onSecondaryTapUp,
-    this.onSecondaryTapCancel,
-    this.onTertiaryTapDown,
-    this.onTertiaryTapUp,
-    this.onTertiaryTapCancel,
-    this.onLongPressStart,
-    this.onLongPressUp,
-    this.onLongPressMoveUpdate,
-    this.onLongPressEnd,
-    this.onSecondaryLongPress,
-    this.onTertiaryLongPress,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return VNLButton(
-      onPressed: onPressed,
-      enabled: enabled,
-      leading: leading,
-      trailing: trailing,
-      alignment: alignment,
-      style: ButtonStyle.card(size: size, density: density, shape: shape),
+      style:
+          VNLButtonStyle.destructive(size: size, density: density, shape: shape),
       focusNode: focusNode,
       disableTransition: disableTransition,
       onHover: onHover,
@@ -3296,39 +5034,518 @@ class CardButton extends StatelessWidget {
   }
 }
 
-class IconButton extends StatelessWidget {
+/// Convenience widget for creating a tab button.
+///
+/// A simplified wrapper around [VNLButton] with the same properties
+/// as [PrimaryButton] but using tab button styling for tabbed navigation.
+class VNLTabButton extends StatelessWidget {
+  /// The widget to display as the button's content.
+  final Widget child;
+
+  /// Called when the button is pressed. If `null`, the button is disabled.
+  final VoidCallback? onPressed;
+
+  /// Whether the button is enabled. Overrides the `onPressed` check if provided.
+  final bool? enabled;
+
+  /// Widget displayed before the [child].
+  final Widget? leading;
+
+  /// Widget displayed after the [child].
+  final Widget? trailing;
+
+  /// Alignment of the button's content.
+  final AlignmentGeometry? alignment;
+
+  /// Size variant of the button (defaults to [VNLButtonSize.normal]).
+  final VNLButtonSize size;
+
+  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
+  final ButtonDensity density;
+
+  /// Shape of the button (defaults to [ButtonShape.rectangle]).
+  final ButtonShape shape;
+
+  /// Focus node for keyboard focus management.
+  final FocusNode? focusNode;
+
+  /// Whether to disable style transition animations (defaults to `false`).
+  final bool disableTransition;
+
+  /// Called when hover state changes.
+  final ValueChanged<bool>? onHover;
+
+  /// Called when focus state changes.
+  final ValueChanged<bool>? onFocus;
+
+  /// Whether to enable haptic/audio feedback.
+  final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
+  final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
+  final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
+  final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
+  final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
+  final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
+  final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
+  final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
+  final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
+  final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
+  final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
+  final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
+  final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
+  final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
+  final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
+  final GestureLongPressUpCallback? onTertiaryLongPress;
+
+  /// Creates a tab button with the specified properties.
+  const VNLTabButton({
+    super.key,
+    required this.child,
+    this.onPressed,
+    this.enabled,
+    this.leading,
+    this.trailing,
+    this.alignment,
+    this.size = VNLButtonSize.normal,
+    this.density = ButtonDensity.normal,
+    this.shape = ButtonShape.rectangle,
+    this.focusNode,
+    this.disableTransition = false,
+    this.onHover,
+    this.onFocus,
+    this.enableFeedback,
+    this.onTapDown,
+    this.onTapUp,
+    this.onTapCancel,
+    this.onSecondaryTapDown,
+    this.onSecondaryTapUp,
+    this.onSecondaryTapCancel,
+    this.onTertiaryTapDown,
+    this.onTertiaryTapUp,
+    this.onTertiaryTapCancel,
+    this.onLongPressStart,
+    this.onLongPressUp,
+    this.onLongPressMoveUpdate,
+    this.onLongPressEnd,
+    this.onSecondaryLongPress,
+    this.onTertiaryLongPress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return VNLButton(
+      onPressed: onPressed,
+      enabled: enabled,
+      leading: leading,
+      trailing: trailing,
+      alignment: alignment,
+      style: VNLButtonStyle.fixed(size: size, density: density, shape: shape),
+      focusNode: focusNode,
+      disableTransition: disableTransition,
+      onHover: onHover,
+      onFocus: onFocus,
+      enableFeedback: enableFeedback,
+      onTapDown: onTapDown,
+      onTapUp: onTapUp,
+      onTapCancel: onTapCancel,
+      onSecondaryTapDown: onSecondaryTapDown,
+      onSecondaryTapUp: onSecondaryTapUp,
+      onSecondaryTapCancel: onSecondaryTapCancel,
+      onTertiaryTapDown: onTertiaryTapDown,
+      onTertiaryTapUp: onTertiaryTapUp,
+      onTertiaryTapCancel: onTertiaryTapCancel,
+      onLongPressStart: onLongPressStart,
+      onLongPressUp: onLongPressUp,
+      onLongPressMoveUpdate: onLongPressMoveUpdate,
+      onLongPressEnd: onLongPressEnd,
+      onSecondaryLongPress: onSecondaryLongPress,
+      onTertiaryLongPress: onTertiaryLongPress,
+      child: child,
+    );
+  }
+}
+
+/// A button styled as a card with elevated appearance and extensive gesture support.
+///
+/// Provides an alternative button presentation that resembles a card with
+/// elevated styling, typically used for prominent actions or content sections
+/// that need to stand out from the background. The card styling provides
+/// visual depth and emphasis compared to standard button variants.
+///
+/// Supports the full range of button features including leading/trailing widgets,
+/// focus management, gesture handling, and accessibility features. The card
+/// appearance is defined by [VNLButtonStyle.card] with customizable size,
+/// density, and shape properties.
+///
+/// The component handles complex gesture interactions including primary,
+/// secondary, and tertiary taps, long presses, hover states, and focus
+/// management, making it suitable for rich interactive experiences.
+///
+/// Example:
+/// ```dart
+/// VNLCardButton(
+///   leading: Icon(Icons.dashboard),
+///   trailing: Icon(Icons.arrow_forward),
+///   size: VNLButtonSize.large,
+///   onPressed: () => Navigator.pushNamed(context, '/dashboard'),
+///   child: Column(
+///     children: [
+///       Text('Dashboard', style: TextStyle(fontWeight: FontWeight.bold)),
+///       Text('View analytics and reports'),
+///     ],
+///   ),
+/// )
+/// ```
+class VNLCardButton extends StatelessWidget {
+  /// The primary content displayed within the card button.
+  ///
+  /// Typically contains text, icons, or complex layouts that represent
+  /// the button's purpose. The content is styled with card appearance
+  /// and elevated visual treatment.
+  final Widget child;
+
+  /// Callback invoked when the button is pressed.
+  ///
+  /// Called when the user taps or clicks the button. If null,
+  /// the button is disabled and does not respond to interactions.
+  final VoidCallback? onPressed;
+
+  /// Whether this button is enabled and accepts user input.
+  ///
+  /// When false, the button is displayed in a disabled state and
+  /// ignores user interactions. When null, enabled state is determined
+  /// by whether [onPressed] is provided.
+  final bool? enabled;
+
+  /// Optional widget displayed before the main content.
+  ///
+  /// Commonly used for icons that visually represent the button's action.
+  /// Positioned to the left of the content in LTR layouts.
+  final Widget? leading;
+
+  /// Optional widget displayed after the main content.
+  ///
+  /// Often used for indicators, chevrons, or secondary actions.
+  /// Positioned to the right of the content in LTR layouts.
+  final Widget? trailing;
+
+  /// Alignment of content within the button.
+  ///
+  /// Controls how the button's content is positioned within its bounds.
+  /// Defaults to center alignment if not specified.
+  final AlignmentGeometry? alignment;
+
+  /// Size variant for the button appearance.
+  ///
+  /// Controls padding, font size, and overall dimensions. Available
+  /// sizes include small, normal, large, and extra large variants.
+  final VNLButtonSize size;
+
+  /// Density setting affecting button compactness.
+  ///
+  /// Controls spacing and padding to create more or less compact
+  /// appearance. Useful for dense interfaces or accessibility needs.
+  final ButtonDensity density;
+
+  /// Shape configuration for the button's appearance.
+  ///
+  /// Defines border radius and corner styling. Options include
+  /// rectangle, rounded corners, and circular shapes.
+  final ButtonShape shape;
+
+  /// Focus node for keyboard navigation and accessibility.
+  ///
+  /// Manages focus state for the button. If not provided, a focus
+  /// node is created automatically by the underlying button system.
+  final FocusNode? focusNode;
+
+  /// Whether to disable visual transition animations.
+  ///
+  /// When true, the button skips animation effects for state changes.
+  /// Useful for performance optimization or accessibility preferences.
+  final bool disableTransition;
+
+  /// Callback invoked when hover state changes.
+  ///
+  /// Called with true when the mouse enters the button area,
+  /// and false when it exits. Useful for custom hover effects.
+  final ValueChanged<bool>? onHover;
+
+  /// Callback invoked when focus state changes.
+  ///
+  /// Called with true when the button gains focus, and false
+  /// when it loses focus. Supports keyboard navigation patterns.
+  final ValueChanged<bool>? onFocus;
+
+  /// Whether to enable haptic/audio feedback.
+  final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
+  final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
+  final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
+  final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
+  final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
+  final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
+  final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
+  final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
+  final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
+  final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
+  final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
+  final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
+  final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
+  final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
+  final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
+  final GestureLongPressUpCallback? onTertiaryLongPress;
+
+  /// Creates a [VNLCardButton] with card-styled appearance and comprehensive interaction support.
+  ///
+  /// The [child] parameter is required and provides the button's main content.
+  /// The button uses card styling with elevated appearance for visual prominence.
+  /// Extensive gesture support enables complex interactions beyond simple taps.
+  ///
+  /// Parameters include standard button properties (onPressed, enabled, leading,
+  /// trailing) along with size, density, and shape customization options.
+  /// Gesture callbacks support primary, secondary, tertiary taps and long presses.
+  ///
+  /// Parameters:
+  /// - [child] (Widget, required): The main content displayed in the button
+  /// - [onPressed] (VoidCallback?, optional): Primary action when button is pressed
+  /// - [enabled] (bool?, optional): Whether button accepts input (null uses onPressed)
+  /// - [size] (VNLButtonSize, default: normal): Size variant for button dimensions
+  /// - [density] (ButtonDensity, default: normal): Spacing density setting
+  /// - [shape] (ButtonShape, default: rectangle): Border radius and corner styling
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLCardButton(
+  ///   size: VNLButtonSize.large,
+  ///   leading: Icon(Icons.star),
+  ///   onPressed: () => _handleFavorite(),
+  ///   child: Text('Add to Favorites'),
+  /// )
+  /// ```
+  const VNLCardButton({
+    super.key,
+    required this.child,
+    this.onPressed,
+    this.enabled,
+    this.leading,
+    this.trailing,
+    this.alignment,
+    this.size = VNLButtonSize.normal,
+    this.density = ButtonDensity.normal,
+    this.shape = ButtonShape.rectangle,
+    this.focusNode,
+    this.disableTransition = false,
+    this.onHover,
+    this.onFocus,
+    this.enableFeedback,
+    this.onTapDown,
+    this.onTapUp,
+    this.onTapCancel,
+    this.onSecondaryTapDown,
+    this.onSecondaryTapUp,
+    this.onSecondaryTapCancel,
+    this.onTertiaryTapDown,
+    this.onTertiaryTapUp,
+    this.onTertiaryTapCancel,
+    this.onLongPressStart,
+    this.onLongPressUp,
+    this.onLongPressMoveUpdate,
+    this.onLongPressEnd,
+    this.onSecondaryLongPress,
+    this.onTertiaryLongPress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return VNLButton(
+      onPressed: onPressed,
+      enabled: enabled,
+      leading: leading,
+      trailing: trailing,
+      alignment: alignment,
+      style: VNLButtonStyle.card(size: size, density: density, shape: shape),
+      focusNode: focusNode,
+      disableTransition: disableTransition,
+      onHover: onHover,
+      onFocus: onFocus,
+      enableFeedback: enableFeedback,
+      onTapDown: onTapDown,
+      onTapUp: onTapUp,
+      onTapCancel: onTapCancel,
+      onSecondaryTapDown: onSecondaryTapDown,
+      onSecondaryTapUp: onSecondaryTapUp,
+      onSecondaryTapCancel: onSecondaryTapCancel,
+      onTertiaryTapDown: onTertiaryTapDown,
+      onTertiaryTapUp: onTertiaryTapUp,
+      onTertiaryTapCancel: onTertiaryTapCancel,
+      onLongPressStart: onLongPressStart,
+      onLongPressUp: onLongPressUp,
+      onLongPressMoveUpdate: onLongPressMoveUpdate,
+      onLongPressEnd: onLongPressEnd,
+      onSecondaryLongPress: onSecondaryLongPress,
+      onTertiaryLongPress: onTertiaryLongPress,
+      child: child,
+    );
+  }
+}
+
+/// Icon-only button widget with support for multiple visual styles.
+///
+/// [VNLIconButton] is optimized for displaying buttons with icon content,
+/// using icon-specific density and sizing by default. Supports various
+/// button styles through named constructors or the [variance] parameter.
+class VNLIconButton extends StatelessWidget {
+  /// The icon widget to display in the button.
   final Widget icon;
-  final VoidCallback? onPressed;
-  final bool? enabled;
-  final Widget? leading;
-  final Widget? trailing;
-  final AlignmentGeometry? alignment;
-  final ButtonSize size;
-  final ButtonDensity density;
-  final ButtonShape shape;
-  final FocusNode? focusNode;
-  final bool disableTransition;
-  final ValueChanged<bool>? onHover;
-  final ValueChanged<bool>? onFocus;
-  final bool? enableFeedback;
-  final GestureTapDownCallback? onTapDown;
-  final GestureTapUpCallback? onTapUp;
-  final GestureTapCancelCallback? onTapCancel;
-  final GestureTapDownCallback? onSecondaryTapDown;
-  final GestureTapUpCallback? onSecondaryTapUp;
-  final GestureTapCancelCallback? onSecondaryTapCancel;
-  final GestureTapDownCallback? onTertiaryTapDown;
-  final GestureTapUpCallback? onTertiaryTapUp;
-  final GestureTapCancelCallback? onTertiaryTapCancel;
-  final GestureLongPressStartCallback? onLongPressStart;
-  final GestureLongPressUpCallback? onLongPressUp;
-  final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
-  final GestureLongPressEndCallback? onLongPressEnd;
-  final GestureLongPressUpCallback? onSecondaryLongPress;
-  final GestureLongPressUpCallback? onTertiaryLongPress;
-  final AbstractButtonStyle variance;
 
-  const IconButton({
+  /// Called when the button is pressed. If `null`, the button is disabled.
+  final VoidCallback? onPressed;
+
+  /// Whether the button is enabled. Overrides the `onPressed` check if provided.
+  final bool? enabled;
+
+  /// Widget displayed before the [icon].
+  final Widget? leading;
+
+  /// Widget displayed after the [icon].
+  final Widget? trailing;
+
+  /// Alignment of the button's content.
+  final AlignmentGeometry? alignment;
+
+  /// Size variant of the button (defaults to [VNLButtonSize.normal]).
+  final VNLButtonSize size;
+
+  /// Density variant affecting spacing (defaults to [ButtonDensity.icon]).
+  final ButtonDensity density;
+
+  /// Shape of the button (defaults to [ButtonShape.rectangle]).
+  final ButtonShape shape;
+
+  /// Focus node for keyboard focus management.
+  final FocusNode? focusNode;
+
+  /// Whether to disable style transition animations (defaults to `false`).
+  final bool disableTransition;
+
+  /// Called when hover state changes.
+  final ValueChanged<bool>? onHover;
+
+  /// Called when focus state changes.
+  final ValueChanged<bool>? onFocus;
+
+  /// Whether to enable haptic/audio feedback.
+  final bool? enableFeedback;
+
+  /// Called when primary tap down occurs.
+  final GestureTapDownCallback? onTapDown;
+
+  /// Called when primary tap up occurs.
+  final GestureTapUpCallback? onTapUp;
+
+  /// Called when primary tap is cancelled.
+  final GestureTapCancelCallback? onTapCancel;
+
+  /// Called when secondary tap down occurs.
+  final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// Called when secondary tap up occurs.
+  final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// Called when secondary tap is cancelled.
+  final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// Called when tertiary tap down occurs.
+  final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// Called when tertiary tap up occurs.
+  final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// Called when tertiary tap is cancelled.
+  final GestureTapCancelCallback? onTertiaryTapCancel;
+
+  /// Called when long press starts.
+  final GestureLongPressStartCallback? onLongPressStart;
+
+  /// Called when long press is released.
+  final GestureLongPressUpCallback? onLongPressUp;
+
+  /// Called when long press moves.
+  final GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate;
+
+  /// Called when long press ends.
+  final GestureLongPressEndCallback? onLongPressEnd;
+
+  /// Called when secondary long press completes.
+  final GestureLongPressUpCallback? onSecondaryLongPress;
+
+  /// Called when tertiary long press completes.
+  final GestureLongPressUpCallback? onTertiaryLongPress;
+
+  /// The button style variant to apply.
+  final VNLAbstractButtonStyle variance;
+
+  /// Creates an icon button with the specified style variance.
+  const VNLIconButton({
     super.key,
     required this.icon,
     required this.variance,
@@ -3337,7 +5554,7 @@ class IconButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
     this.focusNode,
@@ -3362,7 +5579,8 @@ class IconButton extends StatelessWidget {
     this.onTertiaryLongPress,
   });
 
-  const IconButton.primary({
+  /// Creates an icon button with primary styling.
+  const VNLIconButton.primary({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3370,7 +5588,7 @@ class IconButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -3391,12 +5609,13 @@ class IconButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
-    this.variance = ButtonVariance.primary,
+    this.variance = VNLButtonVariance.primary,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.secondary({
+  /// Creates an icon button with secondary styling.
+  const VNLIconButton.secondary({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3404,7 +5623,7 @@ class IconButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -3425,12 +5644,13 @@ class IconButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
-    this.variance = ButtonVariance.secondary,
+    this.variance = VNLButtonVariance.secondary,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.outline({
+  /// Creates an icon button with outline styling.
+  const VNLIconButton.outline({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3438,7 +5658,7 @@ class IconButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -3459,12 +5679,13 @@ class IconButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
-    this.variance = ButtonVariance.outline,
+    this.variance = VNLButtonVariance.outline,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.ghost({
+  /// Creates an icon button with ghost styling.
+  const VNLIconButton.ghost({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3472,7 +5693,7 @@ class IconButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -3493,12 +5714,13 @@ class IconButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
-    this.variance = ButtonVariance.ghost,
+    this.variance = VNLButtonVariance.ghost,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.link({
+  /// Creates an icon button with link styling.
+  const VNLIconButton.link({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3506,7 +5728,7 @@ class IconButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -3527,12 +5749,13 @@ class IconButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
-    this.variance = ButtonVariance.link,
+    this.variance = VNLButtonVariance.link,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.text({
+  /// Creates an icon button with text styling.
+  const VNLIconButton.text({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3540,7 +5763,7 @@ class IconButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -3561,12 +5784,13 @@ class IconButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
-    this.variance = ButtonVariance.text,
+    this.variance = VNLButtonVariance.text,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.destructive({
+  /// Creates an icon button with destructive styling.
+  const VNLIconButton.destructive({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3574,7 +5798,7 @@ class IconButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.alignment,
-    this.size = ButtonSize.normal,
+    this.size = VNLButtonSize.normal,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -3595,7 +5819,7 @@ class IconButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
-    this.variance = ButtonVariance.destructive,
+    this.variance = VNLButtonVariance.destructive,
     this.density = ButtonDensity.icon,
     this.shape = ButtonShape.rectangle,
   });
@@ -3608,7 +5832,12 @@ class IconButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style: ButtonStyle(variance: variance, size: size, density: density, shape: shape),
+      style: VNLButtonStyle(
+        variance: variance,
+        size: size,
+        density: density,
+        shape: shape,
+      ),
       focusNode: focusNode,
       disableTransition: disableTransition,
       onHover: onHover,
@@ -3634,17 +5863,64 @@ class IconButton extends StatelessWidget {
   }
 }
 
-class ButtonStyleOverride extends StatelessWidget {
+/// Widget for locally overriding button styles within a subtree.
+///
+/// [VNLButtonStyleOverride] allows selective customization of button style properties
+/// for all descendant buttons without replacing the entire button style. It provides
+/// style property delegates that can intercept and modify the default values.
+///
+/// The widget supports two modes:
+/// - **Replace mode** (default): Applies overrides directly
+/// - **Inherit mode**: Chains with parent overrides, allowing nested customization
+///
+/// Example:
+/// ```dart
+/// VNLButtonStyleOverride(
+///   decoration: (context, states, defaultDecoration) {
+///     // Customize decoration for all buttons in this subtree
+///     return BoxDecoration(color: VNLColors.red);
+///   },
+///   child: Column(
+///     children: [
+///       PrimaryButton(child: Text('Red VNLButton')),
+///       VNLSecondaryButton(child: Text('Also Red')),
+///     ],
+///   ),
+/// )
+/// ```
+class VNLButtonStyleOverride extends StatelessWidget {
+  /// Whether to inherit and chain with parent overrides.
+  ///
+  /// When `true`, this override's delegates receive the parent override's result
+  /// as their default value, allowing nested style modifications. When `false`,
+  /// parent overrides are ignored.
   final bool inherit;
+
+  /// Optional decoration override delegate.
   final ButtonStatePropertyDelegate<Decoration>? decoration;
+
+  /// Optional mouse cursor override delegate.
   final ButtonStatePropertyDelegate<MouseCursor>? mouseCursor;
+
+  /// Optional padding override delegate.
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding;
+
+  /// Optional text style override delegate.
   final ButtonStatePropertyDelegate<TextStyle>? textStyle;
+
+  /// Optional icon theme override delegate.
   final ButtonStatePropertyDelegate<IconThemeData>? iconTheme;
+
+  /// Optional margin override delegate.
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin;
+
+  /// The widget subtree where overrides apply.
   final Widget child;
 
-  const ButtonStyleOverride({
+  /// Creates a button style override in replace mode.
+  ///
+  /// Overrides apply to all descendant buttons, ignoring parent overrides.
+  const VNLButtonStyleOverride({
     super.key,
     this.decoration,
     this.mouseCursor,
@@ -3655,7 +5931,11 @@ class ButtonStyleOverride extends StatelessWidget {
     required this.child,
   }) : inherit = false;
 
-  const ButtonStyleOverride.inherit({
+  /// Creates a button style override in inherit mode.
+  ///
+  /// Overrides chain with parent overrides, allowing nested customization where
+  /// each level can modify the result of the previous level.
+  const VNLButtonStyleOverride.inherit({
     super.key,
     this.decoration,
     this.mouseCursor,
@@ -3675,42 +5955,48 @@ class ButtonStyleOverride extends StatelessWidget {
     var iconTheme = this.iconTheme;
     var margin = this.margin;
     if (inherit) {
-      var data = Data.maybeOf<ButtonStyleOverrideData>(context);
+      var data = Data.maybeOf<VNLButtonStyleOverrideData>(context);
       if (data != null) {
         decoration = (context, state, value) {
-          return data.decoration?.call(context, state, decoration?.call(context, state, value) ?? value) ??
+          return data.decoration?.call(context, state,
+                  decoration?.call(context, state, value) ?? value) ??
               decoration?.call(context, state, value) ??
               value;
         };
         mouseCursor = (context, state, value) {
-          return data.mouseCursor?.call(context, state, mouseCursor?.call(context, state, value) ?? value) ??
+          return data.mouseCursor?.call(context, state,
+                  mouseCursor?.call(context, state, value) ?? value) ??
               mouseCursor?.call(context, state, value) ??
               value;
         };
         padding = (context, state, value) {
-          return data.padding?.call(context, state, padding?.call(context, state, value) ?? value) ??
+          return data.padding?.call(context, state,
+                  padding?.call(context, state, value) ?? value) ??
               padding?.call(context, state, value) ??
               value;
         };
         textStyle = (context, state, value) {
-          return data.textStyle?.call(context, state, textStyle?.call(context, state, value) ?? value) ??
+          return data.textStyle?.call(context, state,
+                  textStyle?.call(context, state, value) ?? value) ??
               textStyle?.call(context, state, value) ??
               value;
         };
         iconTheme = (context, state, value) {
-          return data.iconTheme?.call(context, state, iconTheme?.call(context, state, value) ?? value) ??
+          return data.iconTheme?.call(context, state,
+                  iconTheme?.call(context, state, value) ?? value) ??
               iconTheme?.call(context, state, value) ??
               value;
         };
         margin = (context, state, value) {
-          return data.margin?.call(context, state, margin?.call(context, state, value) ?? value) ??
+          return data.margin?.call(context, state,
+                  margin?.call(context, state, value) ?? value) ??
               margin?.call(context, state, value) ??
               value;
         };
       }
     }
     return Data.inherit(
-      data: ButtonStyleOverrideData(
+      data: VNLButtonStyleOverrideData(
         decoration: decoration,
         mouseCursor: mouseCursor,
         padding: padding,
@@ -3723,15 +6009,35 @@ class ButtonStyleOverride extends StatelessWidget {
   }
 }
 
-class ButtonStyleOverrideData {
+/// Data class holding button style override delegates.
+///
+/// [VNLButtonStyleOverrideData] is used internally by [VNLButtonStyleOverride] to pass
+/// style override delegates through the widget tree via the [Data] inherited widget
+/// system. It stores optional delegates for each button style property.
+///
+/// This class is typically not used directly by application code; instead, use
+/// [VNLButtonStyleOverride] widget to apply style overrides.
+class VNLButtonStyleOverrideData {
+  /// Optional decoration override delegate.
   final ButtonStatePropertyDelegate<Decoration>? decoration;
+
+  /// Optional mouse cursor override delegate.
   final ButtonStatePropertyDelegate<MouseCursor>? mouseCursor;
+
+  /// Optional padding override delegate.
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? padding;
+
+  /// Optional text style override delegate.
   final ButtonStatePropertyDelegate<TextStyle>? textStyle;
+
+  /// Optional icon theme override delegate.
   final ButtonStatePropertyDelegate<IconThemeData>? iconTheme;
+
+  /// Optional margin override delegate.
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin;
 
-  const ButtonStyleOverrideData({
+  /// Creates button style override data with the specified delegates.
+  const VNLButtonStyleOverrideData({
     this.decoration,
     this.mouseCursor,
     this.padding,
@@ -3744,7 +6050,7 @@ class ButtonStyleOverrideData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
-    return other is ButtonStyleOverrideData &&
+    return other is VNLButtonStyleOverrideData &&
         other.decoration == decoration &&
         other.mouseCursor == mouseCursor &&
         other.padding == padding &&
@@ -3755,95 +6061,398 @@ class ButtonStyleOverrideData {
 
   @override
   int get hashCode {
-    return Object.hash(decoration, mouseCursor, padding, textStyle, iconTheme, margin);
+    return Object.hash(
+      decoration,
+      mouseCursor,
+      padding,
+      textStyle,
+      iconTheme,
+      margin,
+    );
   }
 
   @override
   String toString() {
-    return 'ButtonStyleOverrideData(decoration: $decoration, mouseCursor: $mouseCursor, padding: $padding, textStyle: $textStyle, iconTheme: $iconTheme, margin: $margin)';
+    return 'VNLButtonStyleOverrideData(decoration: $decoration, mouseCursor: $mouseCursor, padding: $padding, textStyle: $textStyle, iconTheme: $iconTheme, margin: $margin)';
   }
 }
 
-class ButtonGroup extends StatelessWidget {
+/// A widget that groups multiple buttons together with connected borders.
+///
+/// [VNLButtonGroup] visually connects a series of related buttons by removing
+/// the borders between adjacent buttons and maintaining consistent styling.
+/// This creates a segmented appearance where the buttons appear as a single
+/// cohesive unit.
+///
+/// The group can be oriented horizontally or vertically, and automatically
+/// handles border radius adjustments so that only the first and last buttons
+/// in the group have rounded corners on their outer edges.
+///
+/// Commonly used for:
+/// - VNLToggle button groups (like text formatting options)
+/// - Related action sets (like alignment controls)
+/// - VNLPagination controls
+/// - View switchers
+///
+/// Example:
+/// ```dart
+/// VNLButtonGroup(
+///   direction: Axis.horizontal,
+///   children: [
+///     VNLButton.secondary(
+///       onPressed: () => align('left'),
+///       child: Icon(Icons.format_align_left),
+///     ),
+///     VNLButton.secondary(
+///       onPressed: () => align('center'),
+///       child: Icon(Icons.format_align_center),
+///     ),
+///     VNLButton.secondary(
+///       onPressed: () => align('right'),
+///       child: Icon(Icons.format_align_right),
+///     ),
+///   ],
+/// );
+/// ```
+class VNLButtonGroup extends StatelessWidget {
+  /// The layout direction for the button group.
+  ///
+  /// [Axis.horizontal] arranges buttons in a row, removing vertical borders
+  /// between adjacent buttons. [Axis.vertical] arranges buttons in a column,
+  /// removing horizontal borders between adjacent buttons.
   final Axis direction;
+
+  /// The list of button widgets to group together.
+  ///
+  /// Each widget should typically be a [VNLButton] or similar interactive widget.
+  /// The group automatically applies border modifications to create the
+  /// connected appearance.
   final List<Widget> children;
 
-  const ButtonGroup({super.key, this.direction = Axis.horizontal, required this.children});
+  /// Whether the button group should be shrink-wrapped or expanded.
+  ///
+  /// When true, the group will expand to fill available space in the
+  /// cross axis. When false, the group will size itself based on its
+  /// children's intrinsic size.
+  final bool expands;
+
+  /// Creates a [VNLButtonGroup] that arranges buttons with connected borders.
+  ///
+  /// Parameters:
+  /// - [direction] (Axis, default: Axis.horizontal): Layout direction for the buttons.
+  /// - [children] (`List<Widget>`, required): The buttons to group together.
+  ///
+  /// The group automatically handles:
+  /// - Border radius adjustments for first/middle/last buttons
+  /// - Proper sizing with [IntrinsicHeight] or [IntrinsicWidth]
+  /// - Stretch alignment for consistent button heights/widths
+  ///
+  /// Example:
+  /// ```dart
+  /// VNLButtonGroup(
+  ///   direction: Axis.vertical,
+  ///   children: [
+  ///     VNLButton.outline(child: Text('Option 1')),
+  ///     VNLButton.outline(child: Text('Option 2')),
+  ///     VNLButton.outline(child: Text('Option 3')),
+  ///   ],
+  /// );
+  /// ```
+  const VNLButtonGroup({
+    super.key,
+    this.direction = Axis.horizontal,
+    this.expands = false,
+    required this.children,
+  });
+
+  /// Creates a horizontal button group.
+  ///
+  /// A convenience constructor equivalent to `VNLButtonGroup(direction: Axis.horizontal)`.
+  /// Arranges buttons in a row with connected borders.
+  const VNLButtonGroup.horizontal({
+    super.key,
+    this.expands = false,
+    required this.children,
+  }) : direction = Axis.horizontal;
+
+  /// Creates a vertical button group.
+  ///
+  /// A convenience constructor equivalent to `VNLButtonGroup(direction: Axis.vertical)`.
+  /// Arranges buttons in a column with connected borders.
+  const VNLButtonGroup.vertical({
+    super.key,
+    this.expands = false,
+    required this.children,
+  }) : direction = Axis.vertical;
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = this.children;
+    final parentGroupData = Data.maybeOf<ButtonGroupData>(context);
+    List<Widget> children = List.from(this.children);
     if (children.length > 1) {
       for (int i = 0; i < children.length; i++) {
-        children[i] = ButtonStyleOverride(
-          decoration: (context, states, value) {
-            if (value is BoxDecoration) {
-              BorderRadius resolvedBorderRadius;
-              BorderRadiusGeometry? borderRadius = value.borderRadius;
-              if (borderRadius is BorderRadius) {
-                resolvedBorderRadius = borderRadius;
-              } else if (borderRadius == null) {
-                resolvedBorderRadius = BorderRadius.zero;
-              } else {
-                resolvedBorderRadius = borderRadius.resolve(Directionality.of(context));
+        var groupData = direction == Axis.horizontal
+            ? ButtonGroupData.horizontalIndex(i, children.length)
+            : ButtonGroupData.verticalIndex(i, children.length);
+        if (parentGroupData != null) {
+          groupData = parentGroupData.applyToButtonGroupData(groupData);
+        }
+        children[i] = Data.inherit(
+          data: groupData,
+          child: VNLButtonStyleOverride(
+            decoration: (context, states, value) {
+              if (value is BoxDecoration) {
+                final borderRadius = groupData.applyToBorderRadius(
+                    value.borderRadius ?? BorderRadius.zero,
+                    Directionality.of(context));
+                return value.copyWith(borderRadius: borderRadius);
               }
-              if (direction == Axis.horizontal) {
-                if (i == 0) {
-                  return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(topRight: Radius.zero, bottomRight: Radius.zero),
-                  );
-                } else if (i == children.length - 1) {
-                  return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(topLeft: Radius.zero, bottomLeft: Radius.zero),
-                  );
-                } else {
-                  return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(
-                      topLeft: Radius.zero,
-                      topRight: Radius.zero,
-                      bottomLeft: Radius.zero,
-                      bottomRight: Radius.zero,
-                    ),
-                  );
-                }
-              } else {
-                if (i == 0) {
-                  return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(bottomLeft: Radius.zero, bottomRight: Radius.zero),
-                  );
-                } else if (i == children.length - 1) {
-                  return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(topLeft: Radius.zero, topRight: Radius.zero),
-                  );
-                } else {
-                  return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(
-                      topLeft: Radius.zero,
-                      topRight: Radius.zero,
-                      bottomLeft: Radius.zero,
-                      bottomRight: Radius.zero,
-                    ),
-                  );
-                }
-              }
-            }
-            return value;
-          },
-          child: children[i],
+              return value;
+            },
+            child: children[i],
+          ),
         );
       }
     }
     Widget flex = Flex(
+      clipBehavior: Clip.none,
       mainAxisSize: MainAxisSize.min,
       direction: direction,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: children,
     );
-    if (direction == Axis.horizontal) {
-      flex = IntrinsicHeight(child: flex);
-    } else {
-      flex = IntrinsicWidth(child: flex);
+    if (!expands) {
+      if (direction == Axis.horizontal) {
+        flex = IntrinsicHeight(child: flex);
+      } else {
+        flex = IntrinsicWidth(child: flex);
+      }
     }
     return flex;
+  }
+}
+
+/// Data class defining border radius multipliers for grouped buttons.
+///
+/// [ButtonGroupData] specifies which corners of a button should have reduced
+/// border radius when part of a [VNLButtonGroup]. Values of 0.0 remove the radius
+/// entirely (for internal buttons), while 1.0 preserves the full radius (for
+/// end buttons).
+///
+/// This class uses directional values (start/end) to support RTL layouts properly.
+/// The static constants provide common configurations for different positions
+/// within a button group.
+///
+/// Example:
+/// ```dart
+/// // First button in horizontal group - preserve left radius, remove right
+/// ButtonGroupData.horizontal(end: 0.0)
+///
+/// // Middle button - remove all radius
+/// ButtonGroupData.zero
+///
+/// // Last button in horizontal group - remove left radius, preserve right
+/// ButtonGroupData.horizontal(start: 0.0)
+/// ```
+class ButtonGroupData {
+  /// No modification - full border radius on all corners.
+  static const ButtonGroupData none = ButtonGroupData.all(1.0);
+
+  /// Zero radius - removes border radius from all corners.
+  static const ButtonGroupData zero = ButtonGroupData.all(0.0);
+
+  /// Horizontal start position - full start radius, no end radius.
+  static const ButtonGroupData horizontalStart =
+      ButtonGroupData.horizontal(end: 0.0);
+
+  /// Horizontal end position - no start radius, full end radius.
+  static const ButtonGroupData horizontalEnd =
+      ButtonGroupData.horizontal(start: 0.0);
+
+  /// Vertical top position - full top radius, no bottom radius.
+  static const ButtonGroupData verticalTop =
+      ButtonGroupData.vertical(bottom: 0.0);
+
+  /// Vertical bottom position - no top radius, full bottom radius.
+  static const ButtonGroupData verticalBottom =
+      ButtonGroupData.vertical(top: 0.0);
+
+  /// Border radius multiplier for top-start corner (0.0 to 1.0).
+  final double topStartValue;
+
+  /// Border radius multiplier for top-end corner (0.0 to 1.0).
+  final double topEndValue;
+
+  /// Border radius multiplier for bottom-start corner (0.0 to 1.0).
+  final double bottomStartValue;
+
+  /// Border radius multiplier for bottom-end corner (0.0 to 1.0).
+  final double bottomEndValue;
+
+  /// Creates button group data with individual corner multipliers.
+  const ButtonGroupData({
+    required this.topStartValue,
+    required this.topEndValue,
+    required this.bottomStartValue,
+    required this.bottomEndValue,
+  });
+
+  /// Creates horizontal group data with start and end multipliers.
+  ///
+  /// Both top and bottom on each side use the same value.
+  const ButtonGroupData.horizontal({
+    double start = 1.0,
+    double end = 1.0,
+  })  : topStartValue = start,
+        topEndValue = end,
+        bottomStartValue = start,
+        bottomEndValue = end;
+
+  /// Creates vertical group data with top and bottom multipliers.
+  ///
+  /// Both start and end on each side use the same value.
+  const ButtonGroupData.vertical({
+    double top = 1.0,
+    double bottom = 1.0,
+  })  : topStartValue = top,
+        topEndValue = top,
+        bottomStartValue = bottom,
+        bottomEndValue = bottom;
+
+  /// Creates group data with the same multiplier for all corners.
+  const ButtonGroupData.all(double value)
+      : topStartValue = value,
+        topEndValue = value,
+        bottomStartValue = value,
+        bottomEndValue = value;
+
+  /// Creates group data for a button at [index] in a horizontal group of [length] buttons.
+  ///
+  /// Returns:
+  /// - [horizontalStart] for the first button (index 0)
+  /// - [zero] for middle buttons
+  /// - [horizontalEnd] for the last button
+  /// - [none] if group has only one button
+  factory ButtonGroupData.horizontalIndex(int index, int length) {
+    if (length <= 1) {
+      return none;
+    } else {
+      if (index == 0) {
+        return horizontalStart;
+      } else if (index == length - 1) {
+        return horizontalEnd;
+      } else {
+        return zero;
+      }
+    }
+  }
+
+  /// Creates group data for a button at [index] in a vertical group of [length] buttons.
+  ///
+  /// Returns:
+  /// - [verticalTop] for the first button (index 0)
+  /// - [zero] for middle buttons
+  /// - [verticalBottom] for the last button
+  /// - [none] if group has only one button
+  factory ButtonGroupData.verticalIndex(int index, int length) {
+    if (length <= 1) {
+      return none;
+    } else {
+      if (index == 0) {
+        return verticalTop;
+      } else if (index == length - 1) {
+        return verticalBottom;
+      } else {
+        return zero;
+      }
+    }
+  }
+
+  /// Applies corner multipliers to a border radius.
+  ///
+  /// Multiplies each corner's radius by the corresponding corner value,
+  /// properly handling text direction for start/end mapping to left/right.
+  ///
+  /// Parameters:
+  /// - [borderRadius]: The base border radius to modify
+  /// - [textDirection]: Text direction for resolving start/end to left/right
+  ///
+  /// Returns a new [BorderRadiusGeometry] with modified corner radii.
+  BorderRadiusGeometry applyToBorderRadius(
+      BorderRadiusGeometry borderRadius, TextDirection textDirection) {
+    final topLeftValue =
+        textDirection == TextDirection.ltr ? topStartValue : topEndValue;
+    final topRightValue =
+        textDirection == TextDirection.ltr ? topEndValue : topStartValue;
+    final bottomLeftValue =
+        textDirection == TextDirection.ltr ? bottomStartValue : bottomEndValue;
+    final bottomRightValue =
+        textDirection == TextDirection.ltr ? bottomEndValue : bottomStartValue;
+    final resolvedBorderRadius = borderRadius.resolve(textDirection);
+    return BorderRadius.only(
+      topLeft: Radius.elliptical(
+        resolvedBorderRadius.topLeft.x * topLeftValue,
+        resolvedBorderRadius.topLeft.y * topLeftValue,
+      ),
+      topRight: Radius.elliptical(
+        resolvedBorderRadius.topRight.x * topRightValue,
+        resolvedBorderRadius.topRight.y * topRightValue,
+      ),
+      bottomLeft: Radius.elliptical(
+        resolvedBorderRadius.bottomLeft.x * bottomLeftValue,
+        resolvedBorderRadius.bottomLeft.y * bottomLeftValue,
+      ),
+      bottomRight: Radius.elliptical(
+        resolvedBorderRadius.bottomRight.x * bottomRightValue,
+        resolvedBorderRadius.bottomRight.y * bottomRightValue,
+      ),
+    );
+  }
+
+  /// Combines this group data with another by multiplying corresponding corner values.
+  ///
+  /// Useful for nesting button groups or applying multiple grouping effects.
+  /// Each corner value is multiplied: result = this.value * other.value.
+  ///
+  /// Example:
+  /// ```dart
+  /// final half = ButtonGroupData.all(0.5);
+  /// final end = ButtonGroupData.horizontal(start: 0.0);
+  /// final combined = half.applyToButtonGroupData(end);
+  /// // combined has: topStart=0, bottomStart=0, topEnd=0.5, bottomEnd=0.5
+  /// ```
+  ButtonGroupData applyToButtonGroupData(ButtonGroupData other) {
+    return ButtonGroupData(
+      topStartValue: topStartValue * other.topStartValue,
+      topEndValue: topEndValue * other.topEndValue,
+      bottomStartValue: bottomStartValue * other.bottomStartValue,
+      bottomEndValue: bottomEndValue * other.bottomEndValue,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'ButtonGroupData(topStartValue: $topStartValue, topEndValue: $topEndValue, bottomStartValue: $bottomStartValue, bottomEndValue: $bottomEndValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
+    return other is ButtonGroupData &&
+        other.topStartValue == topStartValue &&
+        other.topEndValue == topEndValue &&
+        other.bottomStartValue == bottomStartValue &&
+        other.bottomEndValue == bottomEndValue;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      topStartValue,
+      topEndValue,
+      bottomStartValue,
+      bottomEndValue,
+    );
   }
 }

@@ -1,12 +1,55 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-typedef ValidatedBuilder = Widget Function(BuildContext context, ValidationResult? error, Widget? child);
+/// Builder function for validated widgets.
+///
+/// Creates a widget based on the validation state.
+///
+/// Parameters:
+/// - [context] (`BuildContext`): Build context.
+/// - [error] (`VNLValidationResult?`): Validation error if validation failed, `null` if valid.
+/// - [child] (`Widget?`): Optional child widget passed through.
+///
+/// Returns: `Widget` — the built widget reflecting the validation state.
+typedef ValidatedBuilder = Widget Function(
+    BuildContext context, VNLValidationResult? error, Widget? child);
 
+/// A widget that displays validation feedback for form entries.
+///
+/// Wraps a form entry with a custom builder that receives validation results,
+/// allowing you to customize the visual presentation of validation errors and
+/// success states.
+///
+/// Example:
+/// ```dart
+/// Validated<String>(
+///   validator: (value) => value.isEmpty ? VNLValidationResult.error('Required') : null,
+///   builder: (context, error, child) {
+///     return Column(
+///       children: [
+///         child!,
+///         if (error != null) Text(error.message, style: TextStyle(color: VNLColors.red)),
+///       ],
+///     );
+///   },
+///   child: VNLTextField(),
+/// )
+/// ```
 class Validated<T> extends StatefulWidget {
+  /// Builder function that creates the widget based on validation state.
   final ValidatedBuilder builder;
+
+  /// The validator to apply to the form entry.
   final Validator<T> validator;
+
+  /// Optional child widget to display.
   final Widget? child;
 
+  /// Creates a [Validated].
+  ///
+  /// Parameters:
+  /// - [builder] (`ValidatedBuilder`, required): Builds widget with validation feedback.
+  /// - [validator] (`Validator<T>`, required): Validation logic.
+  /// - [child] (`Widget?`, optional): Child widget to wrap.
   const Validated({
     super.key,
     required this.builder,
@@ -26,7 +69,7 @@ class _ValidatedState extends State<Validated> {
       child: FormEntry(
         key: formKey,
         validator: widget.validator,
-        child: FormEntryErrorBuilder(
+        child: VNLFormEntryErrorBuilder(
           builder: (context, error, child) {
             return widget.builder(context, error, child);
           },

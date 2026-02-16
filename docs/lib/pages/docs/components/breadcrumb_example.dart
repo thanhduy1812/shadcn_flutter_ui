@@ -13,10 +13,10 @@ class BreadcrumbExample extends StatelessWidget {
       name: 'breadcrumb',
       description:
           'Breadcrumbs are a secondary navigation scheme that reveals the user’s location in a website or web application.',
-      displayName: 'Breadcrumb',
+      displayName: 'VNLBreadcrumb',
       children: [
         WidgetUsageExample(
-          title: 'Breadcrumb Example',
+          title: 'VNLBreadcrumb Example',
           path: 'lib/pages/docs/components/breadcrumb/breadcrumb_example_1.dart',
           child: BreadcrumbExample1(),
         ),

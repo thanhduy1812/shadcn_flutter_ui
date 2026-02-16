@@ -1,5 +1,8 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
+
+// Demonstrates VNLTabs as a header paired with an IndexedStack body.
+// VNLTabs manages the active index; the stack swaps content without unmounting.
 
 class TabsExample1 extends StatefulWidget {
   const TabsExample1({super.key});
@@ -15,19 +18,23 @@ class _TabsExample1State extends State<TabsExample1> {
     return Column(
       children: [
         VNLTabs(
+          // Bind the active tab index; VNLTabs is the header-only control.
           index: index,
           children: const [
-            TabItem(child: Text('Tab 1')),
-            TabItem(child: Text('Tab 2')),
-            TabItem(child: Text('Tab 3')),
+            VNLTabItem(child: Text('Tab 1')),
+            VNLTabItem(child: Text('Tab 2')),
+            VNLTabItem(child: Text('Tab 3')),
           ],
           onChanged: (int value) {
+            // Keep header and body in sync by updating state.
             setState(() {
               index = value;
             });
           },
         ),
         const Gap(8),
+        // The IndexedStack acts as the tab body; it switches content by index
+        // without unmounting inactive children.
         IndexedStack(
           index: index,
           children: const [

@@ -1,13 +1,65 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-class DesktopEditableTextContextMenu extends StatelessWidget {
+/// Theme for [VNLContextMenuPopup] and context menu widgets.
+class VNLContextMenuTheme extends ComponentThemeData {
+  /// Surface opacity for the popup container.
+  final double? surfaceOpacity;
+
+  /// Surface blur for the popup container.
+  final double? surfaceBlur;
+
+  /// Creates a [ContextMenuTheme].
+  const VNLContextMenuTheme({this.surfaceOpacity, this.surfaceBlur});
+
+  /// Returns a copy of this theme with the given fields replaced.
+  VNLContextMenuTheme copyWith({
+    ValueGetter<double?>? surfaceOpacity,
+    ValueGetter<double?>? surfaceBlur,
+  }) {
+    return VNLContextMenuTheme(
+      surfaceOpacity:
+          surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
+      surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is VNLContextMenuTheme &&
+        other.surfaceOpacity == surfaceOpacity &&
+        other.surfaceBlur == surfaceBlur;
+  }
+
+  @override
+  int get hashCode => Object.hash(surfaceOpacity, surfaceBlur);
+}
+
+/// Context menu for editable text fields on desktop platforms.
+///
+/// Provides standard text editing actions like cut, copy, paste, select all,
+/// and undo/redo. Automatically integrates with EditableText state.
+///
+/// Typically used internally by text input widgets.
+class VNLDesktopEditableTextContextMenu extends StatelessWidget {
+  /// Build context for positioning the menu.
   final BuildContext anchorContext;
+
+  /// State of the editable text field.
   final EditableTextState editableTextState;
+
+  /// Optional controller for undo/redo functionality.
   final UndoHistoryController? undoHistoryController;
 
-  const DesktopEditableTextContextMenu({
+  /// Creates a [VNLDesktopEditableTextContextMenu].
+  ///
+  /// Parameters:
+  /// - [anchorContext] (`BuildContext`, required): Anchor context.
+  /// - [editableTextState] (`EditableTextState`, required): Text field state.
+  /// - [undoHistoryController] (`UndoHistoryController?`, optional): Undo controller.
+  const VNLDesktopEditableTextContextMenu({
     super.key,
     required this.anchorContext,
     required this.editableTextState,
@@ -16,14 +68,17 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
     final localizations = VNLookLocalizations.of(context);
     var undoHistoryController = this.undoHistoryController;
-    var contextMenuButtonItems = List.of(editableTextState.contextMenuButtonItems);
+    var contextMenuButtonItems =
+        List.of(editableTextState.contextMenuButtonItems);
 
     ContextMenuButtonItem? take(ContextMenuButtonType type) {
-      var item = contextMenuButtonItems.where((element) => element.type == type).firstOrNull;
+      var item = contextMenuButtonItems
+          .where((element) => element.type == type)
+          .firstOrNull;
       if (item != null) {
         contextMenuButtonItems.remove(item);
       }
@@ -37,31 +92,46 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
     var shareButton = take(ContextMenuButtonType.share);
     var searchWebButton = take(ContextMenuButtonType.searchWeb);
     var liveTextInput = take(ContextMenuButtonType.liveTextInput);
-    var cutButtonWidget = MenuButton(
+    var cutButtonWidget = VNLMenuButton(
       enabled: cutButton != null,
       onPressed: (context) {
         cutButton?.onPressed?.call();
       },
-      trailing: const MenuShortcut(activator: SingleActivator(LogicalKeyboardKey.keyX, control: true)),
+      trailing: const VNLMenuShortcut(
+        activator: SingleActivator(
+          LogicalKeyboardKey.keyX,
+          control: true,
+        ),
+      ),
       child: Text(localizations.menuCut),
     );
-    var copyButtonWidget = MenuButton(
+    var copyButtonWidget = VNLMenuButton(
       enabled: copyButton != null,
       onPressed: (context) {
         copyButton?.onPressed?.call();
       },
-      trailing: const MenuShortcut(activator: SingleActivator(LogicalKeyboardKey.keyC, control: true)),
+      trailing: const VNLMenuShortcut(
+        activator: SingleActivator(
+          LogicalKeyboardKey.keyC,
+          control: true,
+        ),
+      ),
       child: Text(localizations.menuCopy),
     );
-    var pasteButtonWidget = MenuButton(
+    var pasteButtonWidget = VNLMenuButton(
       enabled: pasteButton != null,
       onPressed: (context) {
         pasteButton?.onPressed?.call();
       },
-      trailing: const MenuShortcut(activator: SingleActivator(LogicalKeyboardKey.keyV, control: true)),
+      trailing: const VNLMenuShortcut(
+        activator: SingleActivator(
+          LogicalKeyboardKey.keyV,
+          control: true,
+        ),
+      ),
       child: Text(localizations.menuPaste),
     );
-    var selectAllButtonWidget = MenuButton(
+    var selectAllButtonWidget = VNLMenuButton(
       enabled: selectAllButton != null,
       onPressed: (context) {
         // somehow, we lost focus upon context menu open
@@ -69,53 +139,53 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
           selectAllButton?.onPressed?.call();
         });
       },
-      trailing: const MenuShortcut(activator: SingleActivator(LogicalKeyboardKey.keyA, control: true)),
+      trailing: const VNLMenuShortcut(
+        activator: SingleActivator(
+          LogicalKeyboardKey.keyA,
+          control: true,
+        ),
+      ),
       child: Text(localizations.menuSelectAll),
     );
-    List<MenuItem> extras = [];
+    List<VNLMenuItem> extras = [];
     if (shareButton != null) {
-      extras.add(
-        MenuButton(
-          onPressed: (context) {
-            shareButton.onPressed?.call();
-          },
-          child: Text(localizations.menuShare),
-        ),
-      );
+      extras.add(VNLMenuButton(
+        onPressed: (context) {
+          shareButton.onPressed?.call();
+        },
+        child: Text(localizations.menuShare),
+      ));
     }
     if (searchWebButton != null) {
-      extras.add(
-        MenuButton(
-          onPressed: (context) {
-            searchWebButton.onPressed?.call();
-          },
-          child: Text(localizations.menuSearchWeb),
-        ),
-      );
+      extras.add(VNLMenuButton(
+        onPressed: (context) {
+          searchWebButton.onPressed?.call();
+        },
+        child: Text(localizations.menuSearchWeb),
+      ));
     }
     if (liveTextInput != null) {
-      extras.add(
-        MenuButton(
-          onPressed: (context) {
-            liveTextInput.onPressed?.call();
-          },
-          child: Text(localizations.menuLiveTextInput),
-        ),
-      );
+      extras.add(VNLMenuButton(
+        onPressed: (context) {
+          liveTextInput.onPressed?.call();
+        },
+        child: Text(localizations.menuLiveTextInput),
+      ));
     }
     if (undoHistoryController == null) {
       return TextFieldTapRegion(
         child: VNLookUI(
-          child: ContextMenuPopup(
+          child: VNLContextMenuPopup(
             anchorSize: Size.zero,
             anchorContext: anchorContext,
-            position: editableTextState.contextMenuAnchors.primaryAnchor + const Offset(8, -8) * scaling,
+            position: editableTextState.contextMenuAnchors.primaryAnchor +
+                const Offset(8, -8) * scaling,
             children: [
               cutButtonWidget,
               copyButtonWidget,
               pasteButtonWidget,
               selectAllButtonWidget,
-              if (extras.isNotEmpty) const MenuDivider(),
+              if (extras.isNotEmpty) const VNLMenuDivider(),
               ...extras,
             ],
           ),
@@ -125,53 +195,78 @@ class DesktopEditableTextContextMenu extends StatelessWidget {
     return TextFieldTapRegion(
       child: VNLookUI(
         child: AnimatedBuilder(
-          animation: undoHistoryController,
-          builder: (context, child) {
-            return ContextMenuPopup(
-              anchorContext: anchorContext,
-              position: editableTextState.contextMenuAnchors.primaryAnchor + const Offset(8, -8) * scaling,
-              children: [
-                MenuButton(
-                  enabled: undoHistoryController.value.canUndo,
-                  onPressed: (context) {
-                    undoHistoryController.undo();
-                  },
-                  trailing: const MenuShortcut(activator: SingleActivator(LogicalKeyboardKey.keyZ, control: true)),
-                  child: const Text('Undo'),
-                ),
-                MenuButton(
-                  enabled: undoHistoryController.value.canRedo,
-                  onPressed: (context) {
-                    undoHistoryController.redo();
-                  },
-                  trailing: const MenuShortcut(
-                    activator: SingleActivator(LogicalKeyboardKey.keyZ, control: true, shift: true),
+            animation: undoHistoryController,
+            builder: (context, child) {
+              return VNLContextMenuPopup(
+                anchorContext: anchorContext,
+                position: editableTextState.contextMenuAnchors.primaryAnchor +
+                    const Offset(8, -8) * scaling,
+                children: [
+                  VNLMenuButton(
+                    enabled: undoHistoryController.value.canUndo,
+                    onPressed: (context) {
+                      undoHistoryController.undo();
+                    },
+                    trailing: const VNLMenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyZ,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Undo'),
                   ),
-                  child: const Text('Redo'),
-                ),
-                const MenuDivider(),
-                cutButtonWidget,
-                copyButtonWidget,
-                pasteButtonWidget,
-                selectAllButtonWidget,
-                if (extras.isNotEmpty) const MenuDivider(),
-                ...extras,
-              ],
-            );
-          },
-        ),
+                  VNLMenuButton(
+                    enabled: undoHistoryController.value.canRedo,
+                    onPressed: (context) {
+                      undoHistoryController.redo();
+                    },
+                    trailing: const VNLMenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyZ,
+                        control: true,
+                        shift: true,
+                      ),
+                    ),
+                    child: const Text('Redo'),
+                  ),
+                  const VNLMenuDivider(),
+                  cutButtonWidget,
+                  copyButtonWidget,
+                  pasteButtonWidget,
+                  selectAllButtonWidget,
+                  if (extras.isNotEmpty) const VNLMenuDivider(),
+                  ...extras,
+                ],
+              );
+            }),
       ),
     );
   }
 }
 
-// mostly same as desktop, but direction is horizontal, and shows no menu shortcuts
-class MobileEditableTextContextMenu extends StatelessWidget {
+/// Context menu for editable text fields on mobile platforms.
+///
+/// Similar to [VNLDesktopEditableTextContextMenu] but optimized for mobile
+/// with horizontal layout and no keyboard shortcuts displayed.
+///
+/// Typically used internally by text input widgets on mobile platforms.
+class VNLMobileEditableTextContextMenu extends StatelessWidget {
+  /// Build context for positioning the menu.
   final BuildContext anchorContext;
+
+  /// State of the editable text field.
   final EditableTextState editableTextState;
+
+  /// Optional controller for undo/redo functionality.
   final UndoHistoryController? undoHistoryController;
 
-  const MobileEditableTextContextMenu({
+  /// Creates a [VNLMobileEditableTextContextMenu].
+  ///
+  /// Parameters:
+  /// - [anchorContext] (`BuildContext`, required): Anchor context.
+  /// - [editableTextState] (`EditableTextState`, required): Text field state.
+  /// - [undoHistoryController] (`UndoHistoryController?`, optional): Undo controller.
+  const VNLMobileEditableTextContextMenu({
     super.key,
     required this.anchorContext,
     required this.editableTextState,
@@ -180,14 +275,17 @@ class MobileEditableTextContextMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     final scaling = theme.scaling;
     final localizations = VNLookLocalizations.of(context);
     var undoHistoryController = this.undoHistoryController;
-    var contextMenuButtonItems = List.of(editableTextState.contextMenuButtonItems);
+    var contextMenuButtonItems =
+        List.of(editableTextState.contextMenuButtonItems);
 
     ContextMenuButtonItem? take(ContextMenuButtonType type) {
-      var item = contextMenuButtonItems.where((element) => element.type == type).firstOrNull;
+      var item = contextMenuButtonItems
+          .where((element) => element.type == type)
+          .firstOrNull;
       if (item != null) {
         contextMenuButtonItems.remove(item);
       }
@@ -203,109 +301,98 @@ class MobileEditableTextContextMenu extends StatelessWidget {
     var searchWebButton = take(ContextMenuButtonType.searchWeb);
     var liveTextInput = take(ContextMenuButtonType.liveTextInput);
 
-    List<MenuItem> modificationCategory = [];
+    List<VNLMenuItem> modificationCategory = [];
     if (cutButton != null) {
-      modificationCategory.add(
-        MenuButton(
-          onPressed: (context) {
-            cutButton.onPressed?.call();
-          },
-          child: Text(localizations.menuCut),
-        ),
-      );
+      modificationCategory.add(VNLMenuButton(
+        onPressed: (context) {
+          cutButton.onPressed?.call();
+        },
+        child: Text(localizations.menuCut),
+      ));
     }
     if (copyButton != null) {
-      modificationCategory.add(
-        MenuButton(
-          onPressed: (context) {
-            copyButton.onPressed?.call();
-          },
-          child: Text(localizations.menuCopy),
-        ),
-      );
+      modificationCategory.add(VNLMenuButton(
+        onPressed: (context) {
+          copyButton.onPressed?.call();
+        },
+        child: Text(localizations.menuCopy),
+      ));
     }
     if (pasteButton != null) {
-      modificationCategory.add(
-        MenuButton(
-          onPressed: (context) {
-            pasteButton.onPressed?.call();
-          },
-          child: Text(localizations.menuPaste),
-        ),
-      );
+      modificationCategory.add(VNLMenuButton(
+        onPressed: (context) {
+          pasteButton.onPressed?.call();
+        },
+        child: Text(localizations.menuPaste),
+      ));
     }
     if (selectAllButton != null) {
-      modificationCategory.add(
-        MenuButton(
-          onPressed: (context) {
-            selectAllButton.onPressed?.call();
-          },
-          child: Text(localizations.menuSelectAll),
-        ),
-      );
+      modificationCategory.add(VNLMenuButton(
+        onPressed: (context) {
+          selectAllButton.onPressed?.call();
+        },
+        child: Text(localizations.menuSelectAll),
+      ));
     }
 
-    List<MenuItem> destructiveCategory = [];
+    List<VNLMenuItem> destructiveCategory = [];
     if (deleteButton != null) {
-      destructiveCategory.add(
-        MenuButton(
-          onPressed: (context) {
-            deleteButton.onPressed?.call();
-          },
-          child: Text(localizations.menuDelete),
-        ),
-      );
+      destructiveCategory.add(VNLMenuButton(
+        onPressed: (context) {
+          deleteButton.onPressed?.call();
+        },
+        child: Text(localizations.menuDelete),
+      ));
     }
 
     if (shareButton != null) {
-      destructiveCategory.add(
-        MenuButton(
-          onPressed: (context) {
-            shareButton.onPressed?.call();
-          },
-          child: Text(localizations.menuShare),
-        ),
-      );
+      destructiveCategory.add(VNLMenuButton(
+        onPressed: (context) {
+          shareButton.onPressed?.call();
+        },
+        child: Text(localizations.menuShare),
+      ));
     }
 
     if (searchWebButton != null) {
-      destructiveCategory.add(
-        MenuButton(
-          onPressed: (context) {
-            searchWebButton.onPressed?.call();
-          },
-          child: Text(localizations.menuSearchWeb),
-        ),
-      );
+      destructiveCategory.add(VNLMenuButton(
+        onPressed: (context) {
+          searchWebButton.onPressed?.call();
+        },
+        child: Text(localizations.menuSearchWeb),
+      ));
     }
 
     if (liveTextInput != null) {
-      destructiveCategory.add(
-        MenuButton(
-          onPressed: (context) {
-            liveTextInput.onPressed?.call();
-          },
-          child: Text(localizations.menuLiveTextInput),
-        ),
-      );
+      destructiveCategory.add(VNLMenuButton(
+        onPressed: (context) {
+          liveTextInput.onPressed?.call();
+        },
+        child: Text(localizations.menuLiveTextInput),
+      ));
     }
 
-    var primaryAnchor =
-        (editableTextState.contextMenuAnchors.secondaryAnchor ?? editableTextState.contextMenuAnchors.primaryAnchor) +
+    var primaryAnchor = (editableTextState.contextMenuAnchors.secondaryAnchor ??
+            editableTextState.contextMenuAnchors.primaryAnchor) +
         const Offset(-8, 8) * scaling;
     if (undoHistoryController == null) {
-      List<List<MenuItem>> categories = [
+      List<List<VNLMenuItem>> categories = [
         if (modificationCategory.isNotEmpty) modificationCategory,
         if (destructiveCategory.isNotEmpty) destructiveCategory,
       ];
       return TextFieldTapRegion(
         child: VNLookUI(
-          child: ContextMenuPopup(
+          child: VNLContextMenuPopup(
             anchorSize: Size.zero,
             anchorContext: anchorContext,
             position: primaryAnchor,
             direction: Axis.horizontal,
-            children: categories.expand((element) => [...element]).toList().joinSeparator(const MenuDivider()),
+            children: categories
+                .expand((element) => [
+                      ...element,
+                    ])
+                .toList()
+                .joinSeparator(const VNLMenuDivider()),
           ),
         ),
       );
@@ -314,62 +401,93 @@ class MobileEditableTextContextMenu extends StatelessWidget {
     return TextFieldTapRegion(
       child: VNLookUI(
         child: AnimatedBuilder(
-          animation: undoHistoryController,
-          builder: (context, child) {
-            List<MenuItem> historyCategory = [];
-            if (undoHistoryController.value.canUndo) {
-              historyCategory.add(
-                MenuButton(
+            animation: undoHistoryController,
+            builder: (context, child) {
+              List<VNLMenuItem> historyCategory = [];
+              if (undoHistoryController.value.canUndo) {
+                historyCategory.add(VNLMenuButton(
                   enabled: undoHistoryController.value.canUndo,
                   onPressed: (context) {
                     undoHistoryController.undo();
                   },
                   child: Text(localizations.menuUndo),
-                ),
-              );
-            }
-            if (undoHistoryController.value.canRedo) {
-              historyCategory.add(
-                MenuButton(
+                ));
+              }
+              if (undoHistoryController.value.canRedo) {
+                historyCategory.add(VNLMenuButton(
                   enabled: undoHistoryController.value.canRedo,
                   onPressed: (context) {
                     undoHistoryController.redo();
                   },
                   child: Text(localizations.menuRedo),
-                ),
-              );
-            }
-            List<List<MenuItem>> categories = [
-              if (historyCategory.isNotEmpty) historyCategory,
-              if (modificationCategory.isNotEmpty) modificationCategory,
-              if (destructiveCategory.isNotEmpty) destructiveCategory,
-            ];
+                ));
+              }
+              List<List<VNLMenuItem>> categories = [
+                if (historyCategory.isNotEmpty) historyCategory,
+                if (modificationCategory.isNotEmpty) modificationCategory,
+                if (destructiveCategory.isNotEmpty) destructiveCategory,
+              ];
 
-            return ContextMenuPopup(
-              direction: Axis.horizontal,
-              anchorContext: anchorContext,
-              position: primaryAnchor,
-              anchorSize: Size.zero,
-              children: categories.expand((element) => [...element]).toList().joinSeparator(const MenuDivider()),
-            );
-          },
-        ),
+              return VNLContextMenuPopup(
+                direction: Axis.horizontal,
+                anchorContext: anchorContext,
+                position: primaryAnchor,
+                anchorSize: Size.zero,
+                children: categories
+                    .expand((element) => [
+                          ...element,
+                        ])
+                    .toList()
+                    .joinSeparator(const VNLMenuDivider()),
+              );
+            }),
       ),
     );
   }
 }
 
+/// Builds an appropriate context menu for editable text based on platform.
+///
+/// Automatically selects between desktop and mobile context menu implementations
+/// based on the current platform.
+///
+/// Parameters:
+/// - [innerContext] (`BuildContext`, required): Build context.
+/// - [editableTextState] (`EditableTextState`, required): Text field state.
+/// - [undoHistoryController] (`UndoHistoryController?`, optional): Undo controller.
+/// - [platform] (`TargetPlatform?`, optional): Override platform detection.
+///
+/// Note: If [platform] is not provided, it will be inferred from the theme, and
+/// on web, it may be treated as mobile on small screens (width < height * 0.8).
+///
+/// Returns: Platform-appropriate context menu widget.
 Widget buildEditableTextContextMenu(
-  BuildContext innerContext,
-  EditableTextState editableTextState, [
-  UndoHistoryController? undoHistoryController,
-]) {
-  TargetPlatform platform = VNLTheme.of(innerContext).platform;
+    BuildContext innerContext, EditableTextState editableTextState,
+    {UndoHistoryController? undoHistoryController, TargetPlatform? platform}) {
+  if (platform == null) {
+    // First we check if the user specified a platform via the theme.
+    // When set, this one is favored.
+    platform ??= Theme.of(innerContext).specifiedPlatform;
+
+    // If the user did not specify a platform, we do some heuristics for web.
+    // On web, we may treat it as mobile on small screens.
+    if (kIsWeb && platform == null) {
+      final size = MediaQuery.of(innerContext).size;
+      // that is, if the width is significantly smaller than height
+      if (size.width < size.height * 0.8) {
+        // Treat as mobile on small web screens
+        platform = TargetPlatform.iOS;
+      }
+    }
+
+    // Finally, if still null, fall back to default platform.
+    platform ??= defaultTargetPlatform;
+  }
 
   switch (platform) {
     case TargetPlatform.android:
     case TargetPlatform.iOS:
-      return MobileEditableTextContextMenu(
+      return VNLMobileEditableTextContextMenu(
         anchorContext: innerContext,
         editableTextState: editableTextState,
         undoHistoryController: undoHistoryController,
@@ -378,7 +496,16 @@ Widget buildEditableTextContextMenu(
     case TargetPlatform.windows:
     case TargetPlatform.linux:
     case TargetPlatform.fuchsia:
-      return DesktopEditableTextContextMenu(
+      return VNLDesktopEditableTextContextMenu(
+        anchorContext: innerContext,
+        editableTextState: editableTextState,
+        undoHistoryController: undoHistoryController,
+      );
+    // flutter forks might have some additional platforms
+    // (e.g. flutter ohos has ohos platforms in TargetPlatform enum)
+    // ignore: unreachable_switch_default
+    default:
+      return VNLDesktopEditableTextContextMenu(
         anchorContext: innerContext,
         editableTextState: editableTextState,
         undoHistoryController: undoHistoryController,
@@ -386,28 +513,58 @@ Widget buildEditableTextContextMenu(
   }
 }
 
+/// A widget that shows a context menu when right-clicked or long-pressed.
+///
+/// Wraps a child widget and displays a customizable menu on context menu triggers.
+///
+/// Example:
+/// ```dart
+/// VNLContextMenu(
+///   items: [
+///     VNLMenuButton(onPressed: (_) => print('Edit'), child: Text('Edit')),
+///     VNLMenuButton(onPressed: (_) => print('Delete'), child: Text('Delete')),
+///   ],
+///   child: Container(child: Text('Right-click me')),
+/// )
+/// ```
 class VNLContextMenu extends StatefulWidget {
+  /// The child widget that triggers the context menu.
   final Widget child;
-  final List<MenuItem> items;
+
+  /// Menu items to display in the context menu.
+  final List<VNLMenuItem> items;
+
+  /// How hit testing behaves for the child.
   final HitTestBehavior behavior;
+
+  /// Direction to lay out menu items.
   final Axis direction;
+
+  /// Whether the context menu is enabled.
   final bool enabled;
 
-  const VNLContextMenu({
-    super.key,
-    required this.child,
-    required this.items,
-    this.behavior = HitTestBehavior.translucent,
-    this.direction = Axis.vertical,
-    this.enabled = true,
-  });
+  /// Creates a [VNLContextMenu].
+  ///
+  /// Parameters:
+  /// - [child] (`Widget`, required): Widget that triggers menu.
+  /// - [items] (`List<VNLMenuItem>`, required): Menu items.
+  /// - [behavior] (`HitTestBehavior`, optional): Hit test behavior.
+  /// - [direction] (`Axis`, optional): Menu layout direction.
+  /// - [enabled] (`bool`, optional): Whether menu is enabled.
+  const VNLContextMenu(
+      {super.key,
+      required this.child,
+      required this.items,
+      this.behavior = HitTestBehavior.translucent,
+      this.direction = Axis.vertical,
+      this.enabled = true});
 
   @override
   State<VNLContextMenu> createState() => _ContextMenuState();
 }
 
 class _ContextMenuState extends State<VNLContextMenu> {
-  late ValueNotifier<List<MenuItem>> _children;
+  late ValueNotifier<List<VNLMenuItem>> _children;
 
   @override
   void initState() {
@@ -433,23 +590,24 @@ class _ContextMenuState extends State<VNLContextMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final platform = VNLTheme.of(context).platform;
-    final bool enableLongPress =
-        platform == TargetPlatform.iOS || platform == TargetPlatform.android || platform == TargetPlatform.fuchsia;
+    final platform = Theme.of(context).platform;
+    final bool enableLongPress = platform == TargetPlatform.iOS ||
+        platform == TargetPlatform.android ||
+        platform == TargetPlatform.fuchsia;
     return GestureDetector(
       behavior: widget.behavior,
-      onSecondaryTapDown:
-          !widget.enabled
-              ? null
-              : (details) {
-                _showContextMenu(context, details.globalPosition, _children, widget.direction);
-              },
-      onLongPressStart:
-          enableLongPress && widget.enabled
-              ? (details) {
-                _showContextMenu(context, details.globalPosition, _children, widget.direction);
-              }
-              : null,
+      onSecondaryTapDown: !widget.enabled
+          ? null
+          : (details) {
+              _showContextMenu(
+                  context, details.globalPosition, _children, widget.direction);
+            },
+      onLongPressStart: enableLongPress && widget.enabled
+          ? (details) {
+              _showContextMenu(
+                  context, details.globalPosition, _children, widget.direction);
+            }
+          : null,
       child: widget.child,
     );
   }
@@ -458,12 +616,12 @@ class _ContextMenuState extends State<VNLContextMenu> {
 Future<void> _showContextMenu(
   BuildContext context,
   Offset position,
-  ValueListenable<List<MenuItem>> children,
+  ValueListenable<List<VNLMenuItem>> children,
   Axis direction,
 ) async {
   final key = GlobalKey<OverlayHandlerStateMixin>();
-  final theme = VNLTheme.of(context);
-  final overlayManager = OverlayManager.of(context);
+  final theme = Theme.of(context);
+  final overlayManager = VNLOverlayManager.of(context);
   return overlayManager
       .showMenu(
         key: key,
@@ -476,48 +634,86 @@ Future<void> _showContextMenu(
         follow: false,
         consumeOutsideTaps: false,
         dismissBackdropFocus: false,
-        overlayBarrier: OverlayBarrier(
+        overlayBarrier: VNLOverlayBarrier(
           borderRadius: BorderRadius.circular(theme.radiusMd),
           barrierColor: const Color(0xB2000000),
         ),
         builder: (context) {
           return AnimatedBuilder(
-            animation: children,
-            builder: (context, child) {
-              bool isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
-              return ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: 192),
-                child: MenuGroup(
-                  itemPadding:
-                      isSheetOverlay ? const EdgeInsets.symmetric(horizontal: 8) * theme.scaling : EdgeInsets.zero,
-                  direction: direction,
-                  regionGroupId: key,
-                  subMenuOffset: const Offset(8, -4),
-                  onDismissed: () {
-                    closeOverlay(context);
-                  },
-                  builder: (context, children) {
-                    return MenuPopup(children: children);
-                  },
-                  children: children.value,
-                ),
-              );
-            },
-          );
+              animation: children,
+              builder: (context, child) {
+                bool isSheetOverlay =
+                    VNLSheetOverlayHandler.isSheetOverlay(context);
+                return ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    minWidth: 192,
+                  ),
+                  child: VNLMenuGroup(
+                    itemPadding: isSheetOverlay
+                        ? const EdgeInsets.symmetric(horizontal: 8) *
+                            theme.scaling
+                        : EdgeInsets.zero,
+                    direction: direction,
+                    regionGroupId: key,
+                    subMenuOffset: const Offset(8, -4),
+                    onDismissed: () {
+                      closeOverlay(context);
+                    },
+                    builder: (context, children) {
+                      final compTheme =
+                          ComponentTheme.maybeOf<VNLContextMenuTheme>(context);
+                      return VNLMenuPopup(
+                        surfaceOpacity: compTheme?.surfaceOpacity,
+                        surfaceBlur: compTheme?.surfaceBlur,
+                        children: children,
+                      );
+                    },
+                    children: children.value,
+                  ),
+                );
+              });
         },
       )
       .future;
 }
 
-class ContextMenuPopup extends StatelessWidget {
+/// Internal widget for rendering a context menu popup.
+///
+/// Displays the actual menu content in an overlay with positioning and theming.
+/// Typically used internally by [VNLContextMenu].
+class VNLContextMenuPopup extends StatelessWidget {
+  /// Build context for anchoring the popup.
   final BuildContext anchorContext;
+
+  /// Position to display the popup.
   final Offset position;
-  final List<MenuItem> children;
+
+  /// Menu items to display.
+  final List<VNLMenuItem> children;
+
+  /// Captured themes for consistent styling.
   final CapturedThemes? themes;
+
+  /// Direction to lay out menu items.
   final Axis direction;
-  final ValueChanged<PopoverOverlayWidgetState>? onTickFollow;
+
+  /// Callback when popup follows the anchor.
+  final ValueChanged<VNLPopoverOverlayWidgetState>? onTickFollow;
+
+  /// Size of the anchor widget.
   final Size? anchorSize;
-  const ContextMenuPopup({
+
+  /// Creates a [VNLContextMenuPopup].
+  ///
+  /// Parameters:
+  /// - [anchorContext] (`BuildContext`, required): Anchor context.
+  /// - [position] (`Offset`, required): Popup position.
+  /// - [children] (`List<VNLMenuItem>`, required): Menu items.
+  /// - [themes] (`CapturedThemes?`, optional): Captured themes.
+  /// - [direction] (`Axis`, default: `Axis.vertical`): Layout direction.
+  /// - [onTickFollow] (`ValueChanged<VNLPopoverOverlayWidgetState>?`, optional): Follow callback.
+  /// - [anchorSize] (`Size?`, optional): Anchor size.
+  const VNLContextMenuPopup({
     super.key,
     required this.anchorContext,
     required this.position,
@@ -535,8 +731,8 @@ class ContextMenuPopup extends StatelessWidget {
       initialValue: 0.0,
       duration: const Duration(milliseconds: 100),
       builder: (context, animation) {
-        final isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
-        return PopoverOverlayWidget(
+        final isSheetOverlay = VNLSheetOverlayHandler.isSheetOverlay(context);
+        return VNLPopoverOverlayWidget(
           anchorContext: anchorContext,
           position: position,
           anchorSize: anchorSize,
@@ -545,15 +741,26 @@ class ContextMenuPopup extends StatelessWidget {
           follow: onTickFollow != null,
           onTickFollow: onTickFollow,
           builder: (context) {
-            final theme = VNLTheme.of(context);
+            final theme = Theme.of(context);
+            final densityContentPadding =
+                theme.density.baseContentPadding * theme.scaling;
             return LimitedBox(
               maxWidth: 192 * theme.scaling,
-              child: MenuGroup(
+              child: VNLMenuGroup(
                 direction: direction,
-                itemPadding:
-                    isSheetOverlay ? const EdgeInsets.symmetric(horizontal: 8) * theme.scaling : EdgeInsets.zero,
+                itemPadding: isSheetOverlay
+                    ? EdgeInsets.symmetric(
+                        horizontal: densityContentPadding * 0.5,
+                      )
+                    : EdgeInsets.zero,
                 builder: (context, children) {
-                  return MenuPopup(children: children);
+                  final compTheme =
+                      ComponentTheme.maybeOf<VNLContextMenuTheme>(context);
+                  return VNLMenuPopup(
+                    surfaceOpacity: compTheme?.surfaceOpacity,
+                    surfaceBlur: compTheme?.surfaceBlur,
+                    children: children,
+                  );
                 },
                 children: children,
               ),

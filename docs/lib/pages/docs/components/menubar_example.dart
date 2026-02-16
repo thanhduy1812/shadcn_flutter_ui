@@ -11,7 +11,7 @@ class MenubarExample extends StatelessWidget {
     return const ComponentPage(
       name: 'menubar',
       description: 'A bar of buttons that provies quick access to common actions.',
-      displayName: 'Menubar',
+      displayName: 'VNLMenubar',
       children: [
         WidgetUsageExample(
           title: 'Example',

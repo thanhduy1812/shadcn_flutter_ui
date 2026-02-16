@@ -1,5 +1,9 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+/// VNLCalendar with single-date selection and a "today" marker.
+///
+/// Uses [CalendarSelectionMode.single] to allow selecting exactly one date,
+/// and passes `now` to highlight the current day in the view.
 class CalendarExample2 extends StatefulWidget {
   const CalendarExample2({super.key});
 
@@ -8,8 +12,8 @@ class CalendarExample2 extends StatefulWidget {
 }
 
 class _CalendarExample2State extends State<CalendarExample2> {
-  CalendarValue? _value;
-  CalendarView _view = CalendarView.now();
+  VNLCalendarValue? _value;
+  VNLCalendarView _view = VNLCalendarView.now();
   @override
   Widget build(BuildContext context) {
     VNLookLocalizations localizations = VNLookLocalizations.of(context);
@@ -21,7 +25,7 @@ class _CalendarExample2State extends State<CalendarExample2> {
           children: [
             Row(
               children: [
-                OutlineButton(
+                VNLOutlineButton(
                   density: ButtonDensity.icon,
                   onPressed: () {
                     setState(() {
@@ -31,7 +35,7 @@ class _CalendarExample2State extends State<CalendarExample2> {
                   child: const Icon(Icons.arrow_back).iconXSmall(),
                 ),
                 Text('${localizations.getMonth(_view.month)} ${_view.year}').small().medium().center().expanded(),
-                OutlineButton(
+                VNLOutlineButton(
                   density: ButtonDensity.icon,
                   onPressed: () {
                     setState(() {
@@ -52,6 +56,7 @@ class _CalendarExample2State extends State<CalendarExample2> {
                 });
               },
               selectionMode: CalendarSelectionMode.single,
+              // Provide a "today" reference for visual emphasis.
               now: DateTime.now(),
             ),
           ],

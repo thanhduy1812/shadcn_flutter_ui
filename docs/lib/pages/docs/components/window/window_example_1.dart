@@ -1,6 +1,9 @@
 import 'package:docs/debug.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+// Demonstrates a VNLWindowNavigator simulating multiple desktop-style windows,
+// with an action to add a new window at runtime.
+
 class WindowExample1 extends StatefulWidget {
   const WindowExample1({super.key});
 
@@ -15,19 +18,20 @@ class _WindowExample1State extends State<WindowExample1> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        OutlinedContainer(
+        VNLOutlinedContainer(
           height: 600, // for example purpose
-          child: WindowNavigator(
+          child: VNLWindowNavigator(
             key: navigatorKey,
+            // Pre-populate with two windows, each with its own bounds and title.
             initialWindows: [
-              Window(
+              VNLWindow(
                 bounds: const Rect.fromLTWH(0, 0, 200, 200),
-                title: const Text('Window 1'),
+                title: const Text('VNLWindow 1'),
                 content: const RebuildCounter(),
               ),
-              Window(
+              VNLWindow(
                 bounds: const Rect.fromLTWH(200, 0, 200, 200),
-                title: const Text('Window 2'),
+                title: const Text('VNLWindow 2'),
                 content: const RebuildCounter(),
               ),
             ],
@@ -37,12 +41,13 @@ class _WindowExample1State extends State<WindowExample1> {
           ),
         ),
         PrimaryButton(
-          child: const Text('Add Window'),
+          child: const Text('Add VNLWindow'),
           onPressed: () {
+            // Push a new window via the navigator; title uses the current count.
             navigatorKey.currentState?.pushWindow(
-              Window(
+              VNLWindow(
                 bounds: const Rect.fromLTWH(0, 0, 200, 200),
-                title: Text('Window ${navigatorKey.currentState!.windows.length + 1}'),
+                title: Text('VNLWindow ${navigatorKey.currentState!.windows.length + 1}'),
                 content: const RebuildCounter(),
               ),
             );

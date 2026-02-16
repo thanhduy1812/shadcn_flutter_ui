@@ -39,20 +39,20 @@ class SidebarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var data = VNLTheme.of(context);
+    var data = Theme.of(context);
     if (selected) {
       data = data.copyWith(
-        colorScheme: data.colorScheme.copyWith(
-          mutedForeground: data.colorScheme.secondaryForeground,
+        colorScheme: () => data.colorScheme.copyWith(
+          mutedForeground: () => data.colorScheme.secondaryForeground,
         ),
       );
     }
-    return VNLTheme(
+    return Theme(
       data: data,
       child: VNLButton(
         onPressed: onPressed,
         alignment: AlignmentDirectional.centerStart,
-        style: ButtonVariance.text.copyWith(
+        style: VNLButtonVariance.text.copyWith(
           padding: (context, states, value) {
             return const EdgeInsets.symmetric(vertical: 4, horizontal: 8) * data.scaling;
           },
@@ -99,20 +99,20 @@ class _DocsNavigationButtonState extends State<DocsNavigationButton> {
 
   @override
   Widget build(BuildContext context) {
-    var data = VNLTheme.of(context);
+    var data = Theme.of(context);
     if (!widget.selected) {
       data = data.copyWith(
-        colorScheme: data.colorScheme.copyWith(
-          foreground: data.colorScheme.mutedForeground,
+        colorScheme: () => data.colorScheme.copyWith(
+          foreground: () => data.colorScheme.mutedForeground,
         ),
       );
     }
-    return VNLTheme(
+    return Theme(
       data: data,
       child: VNLButton(
         onPressed: widget.onPressed,
         alignment: AlignmentDirectional.centerStart,
-        style: ButtonVariance.link.copyWith(
+        style: VNLButtonVariance.link.copyWith(
           padding: _padding,
           textStyle: _textStyle,
         ),

@@ -1,5 +1,6 @@
+import 'package:docs/code_highlighter.dart';
 import 'package:docs/radix_icons.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 import '../../bootstrap_icons.dart';
 import '../../lucide_icons.dart';
@@ -9,10 +10,10 @@ class IconsPage extends StatefulWidget {
   const IconsPage({super.key});
 
   @override
-  _IconsPageState createState() => _IconsPageState();
+  IconsPageState createState() => IconsPageState();
 }
 
-class _IconsPageState extends State<IconsPage> {
+class IconsPageState extends State<IconsPage> {
   // this separates "separateByCamelCase" to "separate By Camel Case"
   List<String> _separateByCamelCase(String text) {
     List<String> result = [];
@@ -45,7 +46,8 @@ class _IconsPageState extends State<IconsPage> {
       context: context,
       builder: (context) {
         return VNLAlertDialog(
-          title: Text(capitalizeWords(_separateByCamelCase(entry.key)).join(' ')),
+          title:
+              Text(capitalizeWords(_separateByCamelCase(entry.key)).join(' ')),
           leading: Icon(entry.value, size: 48),
           content: IntrinsicWidth(
             child: Column(
@@ -53,7 +55,7 @@ class _IconsPageState extends State<IconsPage> {
               children: [
                 const Text('Use this code to display this icon:'),
                 const Gap(8),
-                CodeSnippet(
+                CodeBlock(
                   code: 'Icon($className.${entry.key})',
                   mode: 'dart',
                 ),
@@ -75,7 +77,7 @@ class _IconsPageState extends State<IconsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = VNLTheme.of(context);
+    final theme = Theme.of(context);
     return DocsPage(
       name: 'icons',
       scrollable: false,
@@ -147,7 +149,9 @@ class _IconsPageState extends State<IconsPage> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const Text('Icons').h1(),
-                                const Text('Use bundled icons in your application').lead(),
+                                const Text(
+                                        'Use bundled icons in your application')
+                                    .lead(),
                                 Row(
                                   children: [
                                     Expanded(
@@ -158,10 +162,14 @@ class _IconsPageState extends State<IconsPage> {
                                           children: [
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Text('${kRadixIcons.length}').textLarge(),
-                                                const Text('Radix Icons').muted().textSmall(),
+                                                Text('${kRadixIcons.length}')
+                                                    .textLarge(),
+                                                const Text('Radix Icons')
+                                                    .muted()
+                                                    .textSmall(),
                                               ],
                                             ),
                                             Positioned(
@@ -170,7 +178,9 @@ class _IconsPageState extends State<IconsPage> {
                                               child: const Icon(
                                                 RadixIcons.iconjarLogo,
                                                 size: 96,
-                                              ).iconMutedForeground().withOpacity(0.3),
+                                              )
+                                                  .iconMutedForeground()
+                                                  .withOpacity(0.3),
                                             ),
                                           ],
                                         ),
@@ -184,10 +194,14 @@ class _IconsPageState extends State<IconsPage> {
                                           children: [
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Text('${kBootstrapIcons.length}').textLarge(),
-                                                const Text('Bootstrap Icons').muted().textSmall(),
+                                                Text('${kBootstrapIcons.length}')
+                                                    .textLarge(),
+                                                const Text('Bootstrap Icons')
+                                                    .muted()
+                                                    .textSmall(),
                                               ],
                                             ),
                                             Positioned(
@@ -196,7 +210,9 @@ class _IconsPageState extends State<IconsPage> {
                                               child: const Icon(
                                                 BootstrapIcons.bootstrap,
                                                 size: 96,
-                                              ).iconMutedForeground().withOpacity(0.3),
+                                              )
+                                                  .iconMutedForeground()
+                                                  .withOpacity(0.3),
                                             ),
                                           ],
                                         ),
@@ -210,10 +226,14 @@ class _IconsPageState extends State<IconsPage> {
                                           children: [
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Text('${kLucideIcons.length}').textLarge(),
-                                                const Text('Lucide Icons').muted().textSmall(),
+                                                Text('${kLucideIcons.length}')
+                                                    .textLarge(),
+                                                const Text('Lucide Icons')
+                                                    .muted()
+                                                    .textSmall(),
                                               ],
                                             ),
                                             Positioned(
@@ -222,7 +242,9 @@ class _IconsPageState extends State<IconsPage> {
                                               child: const Icon(
                                                 LucideIcons.badgeInfo,
                                                 size: 96,
-                                              ).iconMutedForeground().withOpacity(0.3),
+                                              )
+                                                  .iconMutedForeground()
+                                                  .withOpacity(0.3),
                                             ),
                                           ],
                                         ),
@@ -232,9 +254,11 @@ class _IconsPageState extends State<IconsPage> {
                                 ).gap(12).p(),
                                 const Gap(32),
                                 VNLTextField(
-                                  leading: const Icon(Icons.search),
                                   placeholder: const Text('Search icons'),
                                   controller: _controller,
+                                  features: const [
+                                    VNLInputFeature.leading(Icon(Icons.search)),
+                                  ],
                                 ),
                               ],
                             ),
@@ -251,7 +275,8 @@ class _IconsPageState extends State<IconsPage> {
                     SliverPadding(
                       padding: const EdgeInsets.only(top: 16),
                       sliver: SliverGrid(
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 120,
                           mainAxisSpacing: 8,
                           crossAxisSpacing: 8,
@@ -260,10 +285,10 @@ class _IconsPageState extends State<IconsPage> {
                           (context, index) {
                             var e = filteredRadixIcons[index];
                             return VNLTooltip(
-                              tooltip: TooltipContainer(
+                              tooltip: VNLTooltipContainer(
                                 child: Text(e.key),
                               ),
-                              child: OutlineButton(
+                              child: VNLOutlineButton(
                                 onPressed: () {
                                   _onTap('RadixIcons', e);
                                 },
@@ -284,7 +309,8 @@ class _IconsPageState extends State<IconsPage> {
                     SliverPadding(
                       padding: const EdgeInsets.only(top: 16),
                       sliver: SliverGrid(
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 120,
                           mainAxisSpacing: 8,
                           crossAxisSpacing: 8,
@@ -293,10 +319,10 @@ class _IconsPageState extends State<IconsPage> {
                           (context, index) {
                             var e = filteredBootstrapIcons[index];
                             return VNLTooltip(
-                              tooltip: TooltipContainer(
+                              tooltip: VNLTooltipContainer(
                                 child: Text(e.key),
                               ),
-                              child: OutlineButton(
+                              child: VNLOutlineButton(
                                 onPressed: () {
                                   _onTap('BootstrapIcons', e);
                                 },
@@ -317,7 +343,8 @@ class _IconsPageState extends State<IconsPage> {
                     SliverPadding(
                       padding: const EdgeInsets.only(top: 16, bottom: 16),
                       sliver: SliverGrid(
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 120,
                           mainAxisSpacing: 8,
                           crossAxisSpacing: 8,
@@ -326,10 +353,10 @@ class _IconsPageState extends State<IconsPage> {
                           (context, index) {
                             var e = filteredLucideIcons[index];
                             return VNLTooltip(
-                              tooltip: TooltipContainer(
+                              tooltip: VNLTooltipContainer(
                                 child: Text(e.key),
                               ),
-                              child: OutlineButton(
+                              child: VNLOutlineButton(
                                 onPressed: () {
                                   _onTap('LucideIcons', e);
                                 },
@@ -356,8 +383,9 @@ class _Header extends SliverPersistentHeaderDelegate {
   _Header(this.text);
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final theme = VNLTheme.of(context);
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final theme = Theme.of(context);
     return Container(
       color: theme.colorScheme.background,
       child: Column(

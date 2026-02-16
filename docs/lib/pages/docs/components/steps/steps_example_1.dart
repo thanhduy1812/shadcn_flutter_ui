@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class StepsExample1 extends StatelessWidget {
   const StepsExample1({super.key});
@@ -6,21 +6,22 @@ class StepsExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VNLSteps(
+      // Static steps list with titles and supporting content lines.
       children: [
-        StepItem(
+        VNLStepItem(
           title: Text('Create a project'),
           content: [
             Text('Create a new project in the project manager.'),
             Text('Add the required files to the project.'),
           ],
         ),
-        StepItem(
+        VNLStepItem(
           title: Text('Add dependencies'),
           content: [
             Text('Add the required dependencies to the project.'),
           ],
         ),
-        StepItem(
+        VNLStepItem(
           title: Text('Run the project'),
           content: [
             Text('Run the project in the project manager.'),

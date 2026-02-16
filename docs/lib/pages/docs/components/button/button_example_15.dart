@@ -6,7 +6,7 @@ class ButtonExample15 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PrimaryButton(
-      leading: const StatedWidget.map(
+      leading: const VNLStatedWidget.map(
         states: {
           'disabled': Icon(Icons.close),
           {WidgetState.hovered, WidgetState.focused}: Icon(Icons.add_a_photo_rounded),
@@ -15,7 +15,7 @@ class ButtonExample15 extends StatelessWidget {
         child: Icon(Icons.add_a_photo_outlined),
       ),
       onPressed: () {},
-      child: const StatedWidget(
+      child: const VNLStatedWidget(
         focused: Text('Focused'),
         hovered: Text('Hovered'),
         pressed: Text('Pressed'),

@@ -12,10 +12,10 @@ class AlertDialogExample extends StatelessWidget {
     return const ComponentPage(
       name: 'alert_dialog',
       description: 'An alert dialog informs the user about situations that require acknowledgement.',
-      displayName: 'Alert Dialog',
+      displayName: 'VNLAlert Dialog',
       children: [
         WidgetUsageExample(
-          title: 'Alert Dialog Example',
+          title: 'VNLAlert Dialog Example',
           path: 'lib/pages/docs/components/alert_dialog/alert_dialog_example_1.dart',
           child: AlertDialogExample1(),
         ),

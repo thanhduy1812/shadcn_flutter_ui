@@ -5,9 +5,9 @@ class ButtonExample12 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return VNLTextButton(
       onPressed: () {},
-      child: const Text('Text Button'),
+      child: const Text('Text VNLButton'),
     );
   }
 }

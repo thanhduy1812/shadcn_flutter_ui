@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 const Map<String, IconData> kLucideIcons = {
   'aArrowDown': LucideIcons.aArrowDown,
@@ -20,7 +20,8 @@ const Map<String, IconData> kLucideIcons = {
   'alignCenter': LucideIcons.alignCenter,
   'alignEndHorizontal': LucideIcons.alignEndHorizontal,
   'alignEndVertical': LucideIcons.alignEndVertical,
-  'alignHorizontalDistributeCenter': LucideIcons.alignHorizontalDistributeCenter,
+  'alignHorizontalDistributeCenter':
+      LucideIcons.alignHorizontalDistributeCenter,
   'alignHorizontalDistributeEnd': LucideIcons.alignHorizontalDistributeEnd,
   'alignHorizontalDistributeStart': LucideIcons.alignHorizontalDistributeStart,
   'alignHorizontalJustifyCenter': LucideIcons.alignHorizontalJustifyCenter,

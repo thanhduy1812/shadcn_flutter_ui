@@ -1,27 +1,41 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
+/// AnimatedValueBuilder example with an initial value and manual rebuild key.
+///
+/// Compared to the first example, this one:
+/// - Specifies [initialValue] so the animation starts from transparent.
+/// - Provides a [ValueKey] tied to [rebuildCount] to force the widget to
+///   reset its internal animation state when desired.
 class AnimatedValueBuilderExample2 extends StatefulWidget {
   const AnimatedValueBuilderExample2({super.key});
 
   @override
-  State<AnimatedValueBuilderExample2> createState() => _AnimatedValueBuilderExample2State();
+  State<AnimatedValueBuilderExample2> createState() =>
+      _AnimatedValueBuilderExample2State();
 }
 
-class _AnimatedValueBuilderExample2State extends State<AnimatedValueBuilderExample2> {
+class _AnimatedValueBuilderExample2State
+    extends State<AnimatedValueBuilderExample2> {
+  // The same color palette as before.
   List<Color> colors = [
     VNLColors.red,
     VNLColors.green,
     VNLColors.blue,
   ];
+  // Current target index.
   int index = 0;
+  // Changing this key forces the AnimatedValueBuilder to rebuild from scratch.
   int rebuildCount = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         AnimatedValueBuilder(
+          // When the key changes, Flutter treats this as a new widget
+          // instance and reinitializes the animation.
           key: ValueKey(rebuildCount),
           value: colors[index],
+          // Start from the same color but fully transparent, then animate in.
           initialValue: colors[index].withValues(alpha: 0),
           duration: const Duration(seconds: 1),
           lerp: Color.lerp,
@@ -40,6 +54,7 @@ class _AnimatedValueBuilderExample2State extends State<AnimatedValueBuilderExamp
             PrimaryButton(
               onPressed: () {
                 setState(() {
+                  // Change the target color to trigger a new tween.
                   index = (index + 1) % colors.length;
                 });
               },
@@ -49,6 +64,7 @@ class _AnimatedValueBuilderExample2State extends State<AnimatedValueBuilderExamp
             PrimaryButton(
               onPressed: () {
                 setState(() {
+                  // Force the AnimatedValueBuilder to restart by changing the key.
                   rebuildCount++;
                 });
               },

@@ -8,7 +8,7 @@ class ColorPickerExample1 extends StatefulWidget {
 }
 
 class _ColorPickerExample1State extends State<ColorPickerExample1> {
-  ColorDerivative color = ColorDerivative.fromColor(VNLColors.blue);
+  VNLColorDerivative color = VNLColorDerivative.fromColor(VNLColors.blue);
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -19,29 +19,31 @@ class _ColorPickerExample1State extends State<ColorPickerExample1> {
           SizedBox(
             width: 32,
             height: 32,
-            child: ColorInput(
-              color: color,
-              mode: PromptMode.popover,
+            child: VNLColorInput(
+              // A compact square color input that opens a popover prompt.
+              value: color,
+              orientation: Axis.horizontal,
+              promptMode: PromptMode.popover,
               onChanged: (value) {
                 setState(() {
                   color = value;
                 });
               },
-              storage: ColorHistoryStorage.of(context),
             ),
           ),
           const Gap(16),
-          ColorInput(
-            color: color,
-            mode: PromptMode.dialog,
+          VNLColorInput(
+            value: color,
+            // Full dialog mode with a title.
+            promptMode: PromptMode.dialog,
             dialogTitle: const Text('Select Color'),
             onChanged: (value) {
               setState(() {
                 color = value;
               });
             },
+            // Show the textual label/hex alongside the swatch.
             showLabel: true,
-            storage: ColorHistoryStorage.of(context),
           ),
         ],
       ),

@@ -1,5 +1,8 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
+// Demonstrates a basic VNLTable with a header row and body rows,
+// including right-aligned numeric cells for amounts.
+
 class TableExample1 extends StatefulWidget {
   const TableExample1({super.key});
 
@@ -8,8 +11,9 @@ class TableExample1 extends StatefulWidget {
 }
 
 class _TableExample1State extends State<TableExample1> {
-  TableCell buildHeaderCell(String text, [bool alignRight = false]) {
-    return TableCell(
+  // Helper to build a header cell with muted, semibold text.
+  VNLTableCell buildHeaderCell(String text, [bool alignRight = false]) {
+    return VNLTableCell(
       child: Container(
         padding: const EdgeInsets.all(8),
         alignment: alignRight ? Alignment.centerRight : null,
@@ -18,8 +22,9 @@ class _TableExample1State extends State<TableExample1> {
     );
   }
 
-  TableCell buildCell(String text, [bool alignRight = false]) {
-    return TableCell(
+  // Helper to build a regular body cell with optional right alignment.
+  VNLTableCell buildCell(String text, [bool alignRight = false]) {
+    return VNLTableCell(
       child: Container(
         padding: const EdgeInsets.all(8),
         alignment: alignRight ? Alignment.centerRight : null,
@@ -30,9 +35,10 @@ class _TableExample1State extends State<TableExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return Table(
+    return VNLTable(
       rows: [
-        TableRow(
+        // Header row: typically use VNLTableHeader, but a VNLTableRow works for simple cases.
+        VNLTableRow(
           cells: [
             buildHeaderCell('Invoice'),
             buildHeaderCell('Status'),
@@ -40,15 +46,16 @@ class _TableExample1State extends State<TableExample1> {
             buildHeaderCell('Amount', true),
           ],
         ),
-        TableRow(
+        // Body rows with invoice data.
+        VNLTableRow(
           cells: [
             buildCell('INV001'),
             buildCell('Paid'),
-            buildCell('Credit Card'),
+            buildCell('Credit VNLCard'),
             buildCell('\$250.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV002'),
             buildCell('Pending'),
@@ -56,7 +63,7 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$150.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV003'),
             buildCell('Unpaid'),
@@ -64,15 +71,15 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$350.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV004'),
             buildCell('Paid'),
-            buildCell('Credit Card'),
+            buildCell('Credit VNLCard'),
             buildCell('\$450.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV005'),
             buildCell('Paid'),
@@ -80,7 +87,7 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$550.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV006'),
             buildCell('Pending'),
@@ -88,17 +95,18 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$200.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV007'),
             buildCell('Unpaid'),
-            buildCell('Credit Card'),
+            buildCell('Credit VNLCard'),
             buildCell('\$300.00', true),
           ],
         ),
-        TableFooter(
+        // Footer supports spanning across columns via VNLTableCell.columnSpan.
+        VNLTableFooter(
           cells: [
-            TableCell(
+            VNLTableCell(
               columnSpan: 4,
               child: Container(
                 padding: const EdgeInsets.all(8),

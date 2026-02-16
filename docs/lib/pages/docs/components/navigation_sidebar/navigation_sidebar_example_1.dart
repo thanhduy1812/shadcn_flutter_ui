@@ -1,17 +1,24 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
+
+// Demonstrates a vertical VNLNavigationSidebar with labels, dividers, and gaps.
+// Selection is index-based and controlled by local state.
 
 class NavigationSidebarExample1 extends StatefulWidget {
   const NavigationSidebarExample1({super.key});
 
   @override
-  State<NavigationSidebarExample1> createState() => _NavigationSidebarExample1State();
+  State<NavigationSidebarExample1> createState() =>
+      _NavigationSidebarExample1State();
 }
 
 class _NavigationSidebarExample1State extends State<NavigationSidebarExample1> {
-  int selected = 0;
+  // Currently selected item index in the sidebar.
+  Key? selected = const ValueKey(0);
 
-  NavigationBarItem buildButton(String label, IconData icon) {
-    return NavigationItem(
+  Widget buildButton(String label, IconData icon, Key key) {
+    // Helper for a standard navigation item with text label and icon.
+    return VNLNavigationItem(
+      key: key,
       label: Text(label),
       child: Icon(icon),
     );
@@ -21,40 +28,71 @@ class _NavigationSidebarExample1State extends State<NavigationSidebarExample1> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 400,
-      child: OutlinedContainer(
+      child: VNLOutlinedContainer(
         child: VNLNavigationSidebar(
-          index: selected,
-          onSelected: (index) {
+          // Wire selection to local state.
+          selectedKey: selected,
+          onSelected: (key) {
             setState(() {
-              selected = index;
+              selected = key;
             });
           },
           children: [
-            const NavigationLabel(child: Text('Discovery')),
-            buildButton('Listen Now', BootstrapIcons.playCircle),
-            buildButton('Browse', BootstrapIcons.grid),
-            buildButton('Radio', BootstrapIcons.broadcast),
-            const NavigationGap(24),
-            const NavigationDivider(),
-            const NavigationLabel(child: Text('Library')),
-            buildButton('Playlist', BootstrapIcons.musicNoteList),
-            buildButton('Songs', BootstrapIcons.musicNote),
-            buildButton('For You', BootstrapIcons.person),
-            buildButton('Artists', BootstrapIcons.mic),
-            buildButton('Albums', BootstrapIcons.record2),
-            const NavigationGap(24),
-            const NavigationDivider(),
-            const NavigationLabel(child: Text('Playlists')),
-            buildButton('Recently Added', BootstrapIcons.musicNoteList),
-            buildButton('Recently Played', BootstrapIcons.musicNoteList),
-            buildButton('Top Songs', BootstrapIcons.musicNoteList),
-            buildButton('Top Albums', BootstrapIcons.musicNoteList),
-            buildButton('Top Artists', BootstrapIcons.musicNoteList),
-            buildButton('Logic Discography With Some Spice', BootstrapIcons.musicNoteList),
-            buildButton('Bedtime Beats', BootstrapIcons.musicNoteList),
-            buildButton('Feeling Happy', BootstrapIcons.musicNoteList),
-            buildButton('I miss Y2K Pop', BootstrapIcons.musicNoteList),
-            buildButton('Runtober', BootstrapIcons.musicNoteList),
+            // A mix of labels, gaps, dividers, and items can be used to
+            // structure the navigation list into logical sections.
+            NavigationGroup(
+              label: const Text('Discovery'),
+              children: [
+                buildButton(
+                    'Listen Now', BootstrapIcons.playCircle, const ValueKey(0)),
+                buildButton('Browse', BootstrapIcons.grid, const ValueKey(1)),
+                buildButton(
+                    'VNLRadio', BootstrapIcons.broadcast, const ValueKey(2)),
+              ],
+            ),
+            const VNLNavigationGap(24),
+            const VNLNavigationDivider(),
+            NavigationGroup(
+              label: const Text('Library'),
+              children: [
+                buildButton('Playlist', BootstrapIcons.musicNoteList,
+                    const ValueKey(3)),
+                buildButton(
+                    'Songs', BootstrapIcons.musicNote, const ValueKey(4)),
+                buildButton(
+                    'For You', BootstrapIcons.person, const ValueKey(5)),
+                buildButton('Artists', BootstrapIcons.mic, const ValueKey(6)),
+                buildButton(
+                    'Albums', BootstrapIcons.record2, const ValueKey(7)),
+              ],
+            ),
+            const VNLNavigationGap(24),
+            const VNLNavigationDivider(),
+            NavigationGroup(
+              label: const Text('Playlists'),
+              children: [
+                buildButton('Recently Added', BootstrapIcons.musicNoteList,
+                    const ValueKey(8)),
+                buildButton('Recently Played', BootstrapIcons.musicNoteList,
+                    const ValueKey(9)),
+                buildButton('Top Songs', BootstrapIcons.musicNoteList,
+                    const ValueKey(10)),
+                buildButton('Top Albums', BootstrapIcons.musicNoteList,
+                    const ValueKey(11)),
+                buildButton('Top Artists', BootstrapIcons.musicNoteList,
+                    const ValueKey(12)),
+                buildButton('Logic Discography With Some Spice',
+                    BootstrapIcons.musicNoteList, const ValueKey(13)),
+                buildButton('Bedtime Beats', BootstrapIcons.musicNoteList,
+                    const ValueKey(14)),
+                buildButton('Feeling Happy', BootstrapIcons.musicNoteList,
+                    const ValueKey(15)),
+                buildButton('I miss Y2K Pop', BootstrapIcons.musicNoteList,
+                    const ValueKey(16)),
+                buildButton('Runtober', BootstrapIcons.musicNoteList,
+                    const ValueKey(17)),
+              ],
+            ),
           ],
         ),
       ),

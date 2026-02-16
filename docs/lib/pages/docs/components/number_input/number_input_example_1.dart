@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 class NumberInputExample1 extends StatefulWidget {
   const NumberInputExample1({super.key});
@@ -23,10 +23,12 @@ class _NumberInputExample1State extends State<NumberInputExample1> {
               });
             },
             features: const [
-              InputFeature.spinner(),
+              // Adds stepper/spinner controls to nudge the value up/down.
+              VNLInputFeature.spinner(min: -50, max: 50),
             ],
             submitFormatters: [
-              TextInputFormatters.mathExpression(),
+              // Allow math expressions (e.g., 1+2*3) that resolve on submit.
+              VNLTextInputFormatters.mathExpression(),
             ],
           ),
         ),

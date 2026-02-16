@@ -1,14 +1,20 @@
-import 'package:vnl_common_ui/vnl_ui.dart';
+import 'package:vnl_common_ui/shadcn_flutter.dart';
 
+/// VNLAvatar with image and initials fallback.
+///
+/// If the image fails to load, the [initials] will be shown over the
+/// [backgroundColor]. This example uses a remote GitHub avatar URL.
 class AvatarExample1 extends StatelessWidget {
   const AvatarExample1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Avatar(
+    return VNLAvatar(
       backgroundColor: VNLColors.red,
-      initials: Avatar.getInitials('sunarya-thito'),
-      provider: const NetworkImage('https://avatars.githubusercontent.com/u/64018564?v=4'),
+      // Helper to derive initials from a username or full name.
+      initials: VNLAvatar.getInitials('sunarya-thito'),
+      provider: const NetworkImage(
+          'https://avatars.githubusercontent.com/u/64018564?v=4'),
     );
   }
 }
