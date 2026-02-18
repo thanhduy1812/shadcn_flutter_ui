@@ -2,4 +2,8 @@ library vnl_ui_extension;
 
 // This file exports extensions only.
 
-export 'src/theme/theme_extension.dart'; 
+// Preferred public entrypoint (VNL prefix).
+//
+// Keep `shadcn_flutter_extension.dart` as the source-of-truth entrypoint to
+// reduce merge conflicts when syncing from upstream forks.
+export 'shadcn_flutter_extension.dart';
