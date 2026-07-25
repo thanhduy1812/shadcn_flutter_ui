@@ -1,7 +1,6 @@
 arb-dir: lib/l10n
 template-arb-file: shadcn_en.arb
 output-localization-file: shadcn_localizations.dart
-output-class: ShadcnLocalizations
+output-class: VNLookLocalizations
 output-dir: lib/src/components/locale
 nullable-getter: false
-

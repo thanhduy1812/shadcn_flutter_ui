@@ -5,8 +5,8 @@ import 'shadcn_localizations.dart';
 // ignore_for_file: type=lint
 
 /// The translations for English (`en`).
-class ShadcnLocalizationsEn extends ShadcnLocalizations {
-  ShadcnLocalizationsEn([String locale = 'en']) : super(locale);
+class VNLookLocalizationsEn extends VNLookLocalizations {
+  VNLookLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
   String get formNotEmpty => 'This field cannot be empty';
@@ -206,6 +206,9 @@ class ShadcnLocalizationsEn extends ShadcnLocalizations {
 
   @override
   String get abbreviatedDecember => 'Dec';
+
+  @override
+  String get buttonOk => 'OK';
 
   @override
   String get buttonCancel => 'Cancel';
