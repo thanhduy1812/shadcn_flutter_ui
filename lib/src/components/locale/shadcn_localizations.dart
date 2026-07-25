@@ -9,10 +9,10 @@ import 'shadcn_localizations_en.dart';
 
 // ignore_for_file: type=lint
 
-/// Callers can lookup localized strings with an instance of VNLookLocalizations
-/// returned by `VNLookLocalizations.of(context)`.
+/// Callers can lookup localized strings with an instance of ShadcnLocalizations
+/// returned by `ShadcnLocalizations.of(context)`.
 ///
-/// Applications need to include `VNLookLocalizations.delegate()` in their app's
+/// Applications need to include `ShadcnLocalizations.delegate()` in their app's
 /// `localizationDelegates` list, and the locales they support in the app's
 /// `supportedLocales` list. For example:
 ///
@@ -20,8 +20,8 @@ import 'shadcn_localizations_en.dart';
 /// import 'locale/shadcn_localizations.dart';
 ///
 /// return MaterialApp(
-///   localizationsDelegates: VNLookLocalizations.localizationsDelegates,
-///   supportedLocales: VNLookLocalizations.supportedLocales,
+///   localizationsDelegates: ShadcnLocalizations.localizationsDelegates,
+///   supportedLocales: ShadcnLocalizations.supportedLocales,
 ///   home: MyApplicationHome(),
 /// );
 /// ```
@@ -58,20 +58,20 @@ import 'shadcn_localizations_en.dart';
 /// Select and expand the newly-created Localizations item then, for each
 /// locale your application supports, add a new item and select the locale
 /// you wish to add from the pop-up menu in the Value field. This list should
-/// be consistent with the languages listed in the VNLookLocalizations.supportedLocales
+/// be consistent with the languages listed in the ShadcnLocalizations.supportedLocales
 /// property.
-abstract class VNLookLocalizations {
-  VNLookLocalizations(String locale)
+abstract class ShadcnLocalizations {
+  ShadcnLocalizations(String locale)
       : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
-  static VNLookLocalizations of(BuildContext context) {
-    return Localizations.of<VNLookLocalizations>(context, VNLookLocalizations)!;
+  static ShadcnLocalizations of(BuildContext context) {
+    return Localizations.of<ShadcnLocalizations>(context, ShadcnLocalizations)!;
   }
 
-  static const LocalizationsDelegate<VNLookLocalizations> delegate =
-      _VNLookLocalizationsDelegate();
+  static const LocalizationsDelegate<ShadcnLocalizations> delegate =
+      _ShadcnLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -400,12 +400,6 @@ abstract class VNLookLocalizations {
   /// **'Cancel'**
   String get buttonCancel;
 
-  /// No description provided for @buttonOk.
-  ///
-  /// In en, this message translates to:
-  /// **'OK'**
-  String get buttonOk;
-
   /// No description provided for @buttonSave.
   ///
   /// In en, this message translates to:
@@ -731,13 +725,13 @@ abstract class VNLookLocalizations {
   String get durationSecond;
 }
 
-class _VNLookLocalizationsDelegate
-    extends LocalizationsDelegate<VNLookLocalizations> {
-  const _VNLookLocalizationsDelegate();
+class _ShadcnLocalizationsDelegate
+    extends LocalizationsDelegate<ShadcnLocalizations> {
+  const _ShadcnLocalizationsDelegate();
 
   @override
-  Future<VNLookLocalizations> load(Locale locale) {
-    return SynchronousFuture<VNLookLocalizations>(
+  Future<ShadcnLocalizations> load(Locale locale) {
+    return SynchronousFuture<ShadcnLocalizations>(
         lookupShadcnLocalizations(locale));
   }
 
@@ -746,18 +740,18 @@ class _VNLookLocalizationsDelegate
       <String>['en'].contains(locale.languageCode);
 
   @override
-  bool shouldReload(_VNLookLocalizationsDelegate old) => false;
+  bool shouldReload(_ShadcnLocalizationsDelegate old) => false;
 }
 
-VNLookLocalizations lookupShadcnLocalizations(Locale locale) {
+ShadcnLocalizations lookupShadcnLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en':
-      return VNLookLocalizationsEn();
+      return ShadcnLocalizationsEn();
   }
 
   throw FlutterError(
-      'VNLookLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'ShadcnLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
       'an issue with the localizations generation tool. Please file an issue '
       'on GitHub with a reproducible sample app and the gen-l10n configuration '
       'that was used.');
